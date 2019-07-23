@@ -157,7 +157,6 @@
 		8427DC491E124D9B0071C038 /* ShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
 		8427DC4C1E124D9B0071C038 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		8427DC4E1E124D9B0071C038 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8427DC561E1254780071C038 /* Copy to Cube.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Copy to Cube.entitlements"; sourceTree = "<group>"; };
 		8427DC571E12633A0071C038 /* ImportedAudioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportedAudioViewController.h; sourceTree = "<group>"; };
 		8427DC581E12633A0071C038 /* ImportedAudioViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImportedAudioViewController.mm; sourceTree = "<group>"; };
 		8429BDD41D5DD839004CED76 /* RegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationViewController.h; sourceTree = "<group>"; };
@@ -229,6 +228,7 @@
 		844C4A721D4B393800CF3DB4 /* UserSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserSettingsViewController.m; sourceTree = "<group>"; };
 		844C4A771D4B736700CF3DB4 /* SwitchCreation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchCreation.h; sourceTree = "<group>"; };
 		844C4A781D4B736700CF3DB4 /* SwitchCreation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchCreation.m; sourceTree = "<group>"; };
+		8453544D22E6DBE3009EF382 /* Copy to Xan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Copy to Xan.entitlements"; sourceTree = "<group>"; };
 		845A96761DDDEF9A007F460C /* NSData+AES256.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+AES256.h"; sourceTree = "<group>"; };
 		845A96771DDDEF9A007F460C /* NSData+AES256.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+AES256.m"; sourceTree = "<group>"; };
 		846A561E219AA51400EC0B3C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -272,7 +272,7 @@
 		847D959F1D5F157C00145C32 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		847D95BE1D5F292700145C32 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		847D95CA1D5F325600145C32 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
-		847DCBBF1DE590FD002D78BB /* Cube.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cube.entitlements; sourceTree = "<group>"; };
+		847DCBBF1DE590FD002D78BB /* Xan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Xan.entitlements; sourceTree = "<group>"; };
 		8480AAF81D787DD500473651 /* Keychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Keychain.h; sourceTree = "<group>"; };
 		8480AAF91D787DD500473651 /* Keychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Keychain.m; sourceTree = "<group>"; };
 		8488B7B81FC6A8C7006FE0FA /* TableViewButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewButton.h; sourceTree = "<group>"; };
@@ -302,8 +302,8 @@
 		84BA563221B00A6200765A65 /* TCsFinal.docx */ = {isa = PBXFileReference; lastKnownFileType = file; name = TCsFinal.docx; path = Xan/TCsFinal.docx; sourceTree = "<group>"; };
 		84BD03041FC2DD7C006C45A6 /* DocFilesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DocFilesViewController.h; sourceTree = "<group>"; };
 		84BD03051FC2DD7C006C45A6 /* DocFilesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DocFilesViewController.m; sourceTree = "<group>"; };
-		84BFFB4921ABDD8500DD8E04 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = CubeX/Libraries/Rechability/Reachability.m; sourceTree = SOURCE_ROOT; };
-		84BFFB4A21ABDD8500DD8E04 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = CubeX/Libraries/Rechability/Reachability.h; sourceTree = SOURCE_ROOT; };
+		84BFFB4921ABDD8500DD8E04 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Xan/Libraries/Rechability/Reachability.m; sourceTree = SOURCE_ROOT; };
+		84BFFB4A21ABDD8500DD8E04 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Xan/Libraries/Rechability/Reachability.h; sourceTree = SOURCE_ROOT; };
 		84CC5F711D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferredOrDeletedAudioDetailsViewController.h; sourceTree = "<group>"; };
 		84CC5F721D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferredOrDeletedAudioDetailsViewController.m; sourceTree = "<group>"; };
 		84CC5F741D74351900D1E982 /* DepartMent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepartMent.h; sourceTree = "<group>"; };
@@ -406,7 +406,7 @@
 		8427DC471E124D9B0071C038 /* Copy to Xan */ = {
 			isa = PBXGroup;
 			children = (
-				8427DC561E1254780071C038 /* Copy to Cube.entitlements */,
+				8453544D22E6DBE3009EF382 /* Copy to Xan.entitlements */,
 				8427DC481E124D9B0071C038 /* ShareViewController.h */,
 				8427DC491E124D9B0071C038 /* ShareViewController.m */,
 				8427DC4B1E124D9B0071C038 /* MainInterface.storyboard */,
@@ -557,7 +557,7 @@
 		847222401D47368A00C00F20 /* Xan */ = {
 			isa = PBXGroup;
 			children = (
-				847DCBBF1DE590FD002D78BB /* Cube.entitlements */,
+				847DCBBF1DE590FD002D78BB /* Xan.entitlements */,
 				845A96751DDDEF9A007F460C /* Categories */,
 				846DE6871D728B210004C886 /* AudioSessionManager */,
 				846DE6811D7288420004C886 /* Database */,
@@ -1147,25 +1147,25 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Copy to Cube/Copy to Cube.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Copy to Xan/Copy to Xan.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
 				DEVELOPMENT_TEAM = Y56BAH343T;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Copy\\ to\\ Cube",
+					"$(PROJECT_DIR)/Copy\\ to\\ Xan",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "Copy to Cube/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Copy to Xan/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.Xan.CopytoXan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.coreflexSolutions.Xan.CopyToXan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0e8eea66-bdda-4edd-8661-5b7df9f7e67e";
-				PROVISIONING_PROFILE_SPECIFIER = CubeXAppGroup;
+				PROVISIONING_PROFILE_SPECIFIER = XanAppGroupDevelopment;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1179,21 +1179,21 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Copy to Cube/Copy to Cube.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Copy to Xan/Copy to Xan.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
 				DEVELOPMENT_TEAM = Y56BAH343T;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Copy\\ to\\ Cube",
+					"$(PROJECT_DIR)/Copy\\ to\\ Xan",
 				);
-				INFOPLIST_FILE = "Copy to Cube/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Copy to Xan/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.Xan.CopytoXan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.coreflexSolutions.Xan.CopyToXan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "9f74969c-d172-411b-b6fa-c0c9399e893e";
-				PROVISIONING_PROFILE_SPECIFIER = CubeXAppGroupDistribution;
+				PROVISIONING_PROFILE_SPECIFIER = XanAppGroupDistribution;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1309,7 +1309,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Xan/Cube.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Xan/Xan.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
 				DEVELOPMENT_TEAM = Y56BAH343T;
@@ -1324,10 +1324,10 @@
 				New_Setting = "";
 				OTHER_LDFLAGS = "";
 				"OTHER_LDFLAGS[arch=*]" = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.Xan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.coreflexSolutions.Xan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "f49954c7-7a84-46c2-a188-f37f052d8ade";
-				PROVISIONING_PROFILE_SPECIFIER = CubeXDevelopment;
+				PROVISIONING_PROFILE_SPECIFIER = XanDevelopment;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1340,7 +1340,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Xan/Cube.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Xan/Xan.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
 				DEVELOPMENT_TEAM = Y56BAH343T;
@@ -1354,10 +1354,10 @@
 				LIBRARY_SEARCH_PATHS = "";
 				New_Setting = "";
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.Xan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.coreflexSolutions.Xan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1053c5ee-d822-4b57-a364-b7526972681b";
-				PROVISIONING_PROFILE_SPECIFIER = CubeXDistribution;
+				PROVISIONING_PROFILE_SPECIFIER = XanDistribution;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
