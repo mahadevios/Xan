@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		50BFF78422E7092000A60099 /* SuperAdminHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BFF78322E7091F00A60099 /* SuperAdminHomeViewController.m */; };
 		8400457B1EC1F1470001369A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 846DE68E1D72BDB10004C886 /* AVFoundation.framework */; };
 		8400457C1EC1F1520001369A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840045761EC1EB0A0001369A /* AudioToolbox.framework */; };
 		840AC7551D8280F200EF6AF7 /* CAStreamBasicDescription.mm in Sources */ = {isa = PBXBuildFile; fileRef = 840AC7511D8280F200EF6AF7 /* CAStreamBasicDescription.mm */; };
@@ -144,6 +145,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		50BFF78222E7091F00A60099 /* SuperAdminHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SuperAdminHomeViewController.h; sourceTree = "<group>"; };
+		50BFF78322E7091F00A60099 /* SuperAdminHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SuperAdminHomeViewController.m; sourceTree = "<group>"; };
 		840045761EC1EB0A0001369A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		840AC74F1D8280F200EF6AF7 /* CADebugMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADebugMacros.h; sourceTree = "<group>"; };
 		840AC7501D8280F200EF6AF7 /* CAMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAMath.h; sourceTree = "<group>"; };
@@ -749,6 +752,8 @@
 				846B5A5120B43EAB0012F6D9 /* EmptyViewController.m */,
 				84A180C021AD7632004F539D /* TandCViewController.h */,
 				84A180C121AD7632004F539D /* TandCViewController.m */,
+				50BFF78222E7091F00A60099 /* SuperAdminHomeViewController.h */,
+				50BFF78322E7091F00A60099 /* SuperAdminHomeViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1071,6 +1076,7 @@
 				84D0B52D1D81B4D70084E016 /* SBJson4StreamWriterState.m in Sources */,
 				84CC5F761D74351900D1E982 /* DepartMent.m in Sources */,
 				843B33E120452B630080F355 /* DDXMLElementAdditions.m in Sources */,
+				50BFF78422E7092000A60099 /* SuperAdminHomeViewController.m in Sources */,
 				843B341020452BD20080F355 /* aescrypt.c in Sources */,
 				840AC7551D8280F200EF6AF7 /* CAStreamBasicDescription.mm in Sources */,
 			);
