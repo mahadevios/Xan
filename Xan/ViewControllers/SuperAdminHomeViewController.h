@@ -1,0 +1,25 @@
+//
+//  SuperAdminHomeViewController.h
+//  Xan
+//
+//  Created by Martina Makasare on 7/23/19.
+//  Copyright © 2019 Xanadutec. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface SuperAdminHomeViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIView *hospitalView;
+@property (weak, nonatomic) IBOutlet UIView *departmentView;
+@property (weak, nonatomic) IBOutlet UIView *practitionerView;
+@property (weak, nonatomic) IBOutlet UIView *secretaryView;
+@property (weak, nonatomic) IBOutlet UILabel *hospitalLabel;
+@property (weak, nonatomic) IBOutlet UILabel *practitionerLabel;
+@property (weak, nonatomic) IBOutlet UILabel *secretaryLabel;
+@property (weak, nonatomic) IBOutlet UILabel *Department;
+
+@end
+
+NS_ASSUME_NONNULL_END
