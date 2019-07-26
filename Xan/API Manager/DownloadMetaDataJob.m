@@ -462,28 +462,28 @@ if ([self.downLoadEntityJobName isEqualToString:VALIDATE_PIN_API])
     }
 //
 //
-if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
-{
-    
-    if (response != nil)
-    {
-        
-        if ([[response objectForKey:@"code"] isEqualToString:SUCCESS])
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DICTATIONS_INSERT_API object:response];
-            
-            
-        }else
-        {
-            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-        }
-    }else
-    {
-        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
-
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-    }
-}
+//if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
+//{
+//    
+//    if (response != nil)
+//    {
+//        
+//        if ([[response objectForKey:@"code"] isEqualToString:SUCCESS])
+//        {
+//            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DICTATIONS_INSERT_API object:response];
+//            
+//            
+//        }else
+//        {
+//            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//        }
+//    }else
+//    {
+//        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+//
+//        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//    }
+//}
     
     if ([self.downLoadEntityJobName isEqualToString:SEND_DICTATION_IDS_API])
     {
@@ -534,27 +534,27 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
             [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
         }
     }
-    
-    if ([self.downLoadEntityJobName isEqualToString:DATA_SYNCHRONISATION_API])
-    {
-        
-        if (response != nil)
-        {
-            
-            if ([[response objectForKey:@"code"] isEqualToString:SUCCESS])
-            {
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DATA_SYNCHRONISATION_API object:response];
-                
-                
-            }else
-            {
-                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-            }
-        }else
-        {
-            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-        }
-    }
+//
+//    if ([self.downLoadEntityJobName isEqualToString:DATA_SYNCHRONISATION_API])
+//    {
+//
+//        if (response != nil)
+//        {
+//
+//            if ([[response objectForKey:@"code"] isEqualToString:SUCCESS])
+//            {
+//                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DATA_SYNCHRONISATION_API object:response];
+//
+//
+//            }else
+//            {
+//                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//            }
+//        }else
+//        {
+//            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//        }
+//    }
 //
     
     if ([self.downLoadEntityJobName isEqualToString:FILE_DOWNLOAD_API])

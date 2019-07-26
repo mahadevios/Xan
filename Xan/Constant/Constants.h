@@ -30,8 +30,8 @@
 #define  AUTHENTICATE_API                     @"encrdecr_MobileAuthenticate"
 #define  ACCEPT_PIN_API                       @"encrdecr_MobileAcceptPIN"
 #define  VALIDATE_PIN_API                     @"encrdecr_MobileValidatePIN"
-#define  DICTATIONS_INSERT_API                @"encrdecr_MobileDictationsInsert"
-#define  DATA_SYNCHRONISATION_API             @"encrdecr_MobileDataSynchronisation"
+//#define  DICTATIONS_INSERT_API                @"encrdecr_MobileDictationsInsert"
+//#define  DATA_SYNCHRONISATION_API             @"encrdecr_MobileDataSynchronisation"
 //#define  FILE_UPLOAD_API                      @"encrdecr_MobileFileUpload"
 #define  FILE_UPLOAD_API                      @"encrdecr_MobileFileUpload"
 

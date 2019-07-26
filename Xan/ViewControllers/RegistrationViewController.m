@@ -48,7 +48,23 @@
                                                object:nil];
 
 
+//    [self displayLocalVariable];
 }
+
+//-(void)printWeak
+//{
+//    NSLog(@"My name is = %@", self.dummyName);
+//    NSLog(@"My name is = %ld", (long)self.view.tag);
+//
+//}
+//-(void)displayLocalVariable
+//{
+////    NSString *myName = @"ABC";
+////    NSLog(@"My name is = %@", myName);
+//    self.dummyName = [[UIView alloc] init];
+//
+//
+//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -163,6 +179,8 @@
 }
 - (IBAction)cancelButtonClicked:(id)sender
 {
+//    [self printWeak];
+    
     IDTextField.text=@"";
     passwordTextfield.text=@"";
     [IDTextField becomeFirstResponder];
