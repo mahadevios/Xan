@@ -11,6 +11,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SuperAdminHomeViewController : UIViewController
+
+{
+    UITapGestureRecognizer* hospitalViewTapRecogniser;
+    UITapGestureRecognizer* departmentViewTapRecogniser;
+    UITapGestureRecognizer* practitionerViewTapRecogniser;
+    UITapGestureRecognizer* secretaryViewTapRecogniser;
+}
 @property (weak, nonatomic) IBOutlet UIView *hospitalView;
 @property (weak, nonatomic) IBOutlet UIView *departmentView;
 @property (weak, nonatomic) IBOutlet UIView *practitionerView;
