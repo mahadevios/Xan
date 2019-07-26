@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *pinCode2TextField;
 @property (weak, nonatomic) IBOutlet UITextField *pinCode3TextField;
 @property (weak, nonatomic) IBOutlet UITextField *pinCode4TextField;
+@property (weak, nonatomic) IBOutlet UIView *boxView;
 - (IBAction)submitButtonCilcked:(id)sender;
 - (IBAction)cancelButtonClicked:(id)sender;
 @property (weak, nonatomic) MBProgressHUD *hud;

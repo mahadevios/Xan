@@ -14,7 +14,8 @@
 
 @implementation SuperAdminHomeViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.hospitalView.layer.cornerRadius = 10.0;
     self.hospitalView.layer.shadowColor = [[UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:1] CGColor];
@@ -50,6 +51,16 @@
         [self.secretaryLabel setFont:boldFont];
         NSLog(@"Device height is less than 568");
     }
+    
+    hospitalViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showHospitalList:)];
+    departmentViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showDepartmentList:)];
+    practitionerViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showPractitionerList:)];
+    secretaryViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showSecretaryList:)];
+    
+    [self.hospitalView addGestureRecognizer:hospitalViewTapRecogniser];
+    [self.departmentView addGestureRecognizer:departmentViewTapRecogniser];
+    [self.practitionerView addGestureRecognizer:practitionerViewTapRecogniser];
+    [self.secretaryView addGestureRecognizer:secretaryViewTapRecogniser];
 //    self.navigationController.navigationBar.barTintColor = [UIColor redColor];
 //    self.navigationController.navigationBar.tintColor = [UIColor clearColor];
 
@@ -58,6 +69,47 @@
     // Do any additional setup after loading the view.
 }
 
+-(void)showHospitalList:(UITapGestureRecognizer*)sender
+{
+    NSString * storyboardName = @"Main";
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+
+    UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"HospitalListViewController"];
+    vc.navigationItem.title = @"Hospitals";
+    [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil]];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+-(void)showDepartmentList:(UITapGestureRecognizer*)sender
+{
+    NSString * storyboardName = @"Main";
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
+    //    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+-(void)showPractitionerList:(UITapGestureRecognizer*)sender
+{
+    NSString * storyboardName = @"Main";
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
+    //    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"HospitalListViewController"];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+-(void)showSecretaryList:(UITapGestureRecognizer*)sender
+{
+    NSString * storyboardName = @"Main";
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
+    //    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"HospitalListViewController"];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 /*
 #pragma mark - Navigation
 

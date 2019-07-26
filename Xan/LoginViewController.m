@@ -55,7 +55,11 @@
 {
 
     NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
-    
+    self.boxView.layer.cornerRadius = 10.0;
+    self.boxView.layer.shadowColor = [[UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:1] CGColor];
+    self.boxView.layer.shadowOffset = CGSizeMake(0.0, 0.0);
+    self.boxView.layer.shadowRadius = 12.0;
+    self.boxView.layer.shadowOpacity = 1;
     //self.navigationItem.title=@"Pin Login";
     //[self.navigationController.navigationBar setTitleTextAttributes:
     //@{NSForegroundColorAttributeName:[UIColor orangeColor]}];
