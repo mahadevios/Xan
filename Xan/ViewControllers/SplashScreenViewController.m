@@ -30,7 +30,7 @@
     //    [[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
     
    
-   
+
     
 }
 
@@ -84,8 +84,10 @@
     }
     
 
-
 }
+
+
+
 -(void)checkDeviceRegistration
 {
     NSString*     macId=[Keychain getStringForKey:@"udid"];
@@ -109,6 +111,8 @@
 //        [retryButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 
     }
+    
+    
 }
 
 -(void)addAlertView

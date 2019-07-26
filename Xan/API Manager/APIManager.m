@@ -420,43 +420,43 @@ static APIManager *singleton = nil;
     }
     
 }
--(void)mobileDictationsInsertMobileStatus:(NSString* )mobilestatus OriginalFileName:(NSString*)OriginalFileName andMacID:(NSString*)macID
-{
-    if ([[AppPreferences sharedAppPreferences] isReachable])
-    {
-        NSArray *params = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"mobilestatus=%@",mobilestatus], [NSString stringWithFormat:@"OriginalFileName=%@",OriginalFileName] ,[NSString stringWithFormat:@"macID=%@",macID],nil];
-        
-        NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:params,REQUEST_PARAMETER, nil];
-        NSString* downloadMethodType = @"urlConnection";
+//-(void)mobileDictationsInsertMobileStatus:(NSString* )mobilestatus OriginalFileName:(NSString*)OriginalFileName andMacID:(NSString*)macID
+//{
+//    if ([[AppPreferences sharedAppPreferences] isReachable])
+//    {
+//        NSArray *params = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"mobilestatus=%@",mobilestatus], [NSString stringWithFormat:@"OriginalFileName=%@",OriginalFileName] ,[NSString stringWithFormat:@"macID=%@",macID],nil];
+//
+//        NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:params,REQUEST_PARAMETER, nil];
+//        NSString* downloadMethodType = @"urlConnection";
+//
+//        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:DICTATIONS_INSERT_API withRequestParameter:dictionary withResourcePath:DICTATIONS_INSERT_API withHttpMethd:POST downloadMethodType:downloadMethodType];
+//        [downloadmetadatajob startMetaDataDownLoad];
+//    }
+//    else
+//    {
+//        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//    }
+//
+//}
 
-        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:DICTATIONS_INSERT_API withRequestParameter:dictionary withResourcePath:DICTATIONS_INSERT_API withHttpMethd:POST downloadMethodType:downloadMethodType];
-        [downloadmetadatajob startMetaDataDownLoad];
-    }
-    else
-    {
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-    }
-    
-}
-
--(void)mobileDataSynchronisationMobileStatus:(NSString*)mobilestatus OriginalFileName:(NSString*)OriginalFileName macID:(NSString*)macid DeleteFlag:(NSString*)DeleteFlag
-{
-    if ([[AppPreferences sharedAppPreferences] isReachable])
-    {
-        NSArray *params = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"mobilestatus=%@",mobilestatus], [NSString stringWithFormat:@"OriginalFileName=%@",OriginalFileName] ,[NSString stringWithFormat:@"macID=%@",macid],nil];
-        
-        NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:params,REQUEST_PARAMETER, nil];
-        NSString* downloadMethodType = @"urlConnection";
-
-        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:DATA_SYNCHRONISATION_API withRequestParameter:dictionary withResourcePath:DATA_SYNCHRONISATION_API withHttpMethd:POST downloadMethodType:downloadMethodType];
-        [downloadmetadatajob startMetaDataDownLoad];
-    }
-    else
-    {
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-    }
-    
-}
+//-(void)mobileDataSynchronisationMobileStatus:(NSString*)mobilestatus OriginalFileName:(NSString*)OriginalFileName macID:(NSString*)macid DeleteFlag:(NSString*)DeleteFlag
+//{
+//    if ([[AppPreferences sharedAppPreferences] isReachable])
+//    {
+//        NSArray *params = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"mobilestatus=%@",mobilestatus], [NSString stringWithFormat:@"OriginalFileName=%@",OriginalFileName] ,[NSString stringWithFormat:@"macID=%@",macid],nil];
+//        
+//        NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:params,REQUEST_PARAMETER, nil];
+//        NSString* downloadMethodType = @"urlConnection";
+//
+//        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:DATA_SYNCHRONISATION_API withRequestParameter:dictionary withResourcePath:DATA_SYNCHRONISATION_API withHttpMethd:POST downloadMethodType:downloadMethodType];
+//        [downloadmetadatajob startMetaDataDownLoad];
+//    }
+//    else
+//    {
+//        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//    }
+//    
+//}
 
 
 
