@@ -126,7 +126,7 @@ SLComposeSheetConfigurationItem *item;
 
 -(void)viewWillLayoutSubviews
 {
-    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.coreFlexSolutions.CubeDictate"];
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.coreflexSolutions.Xan"];
 
     if([self orientation] == InterfaceOrientationTypePortrait)
     {
@@ -251,7 +251,7 @@ SLComposeSheetConfigurationItem *item;
     NSExtensionItem *item = self.extensionContext.inputItems.firstObject;
     NSItemProvider *itemProvider = item.attachments.firstObject;
     //NSArray* arr= itemProvider.registeredTypeIdentifiers;
-    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.coreFlexSolutions.CubeDictate"];
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.coreflexSolutions.Xan"];
     
     //[sharedDefaults setObject:arr forKey:@"array"];
     if ([itemProvider hasItemConformingToTypeIdentifier:typeIdentifier]) {
@@ -620,11 +620,11 @@ SLComposeSheetConfigurationItem *item;
     
     NSFileManager* fileManagaer=[NSFileManager defaultManager];
     
-    NSURL* sharedGroupUrl= [fileManagaer containerURLForSecurityApplicationGroupIdentifier:@"group.com.coreFlexSolutions.CubeDictate"];
+    NSURL* sharedGroupUrl= [fileManagaer containerURLForSecurityApplicationGroupIdentifier:@"group.com.coreflexSolutions.Xan"];
     
     NSString* audioFolderString=[sharedGroupUrl.path stringByAppendingPathComponent:@"audio"] ;
     
-    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.coreFlexSolutions.CubeDictate"];
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.coreflexSolutions.Xan"];
     
     [sharedDefaults setObject:audioFolderString forKey:@"audioFolderPath"];//set the folder path where file will b stored
     
@@ -665,7 +665,7 @@ SLComposeSheetConfigurationItem *item;
 
 -(void) convertToWavCopy
 {
-    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.coreFlexSolutions.CubeDictate"];
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.coreflexSolutions.Xan"];
     
     NSString* sharedAudioFolderPathString=[sharedDefaults objectForKey:@"audioFolderPath"];
     

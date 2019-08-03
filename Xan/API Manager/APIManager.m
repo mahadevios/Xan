@@ -189,9 +189,9 @@ static APIManager *singleton = nil;
         [[[[UIApplication sharedApplication] keyWindow] viewWithTag:222] removeFromSuperview];//to remove no internet message
         
         NSError* error;
-        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macID,@"macid", nil];
 
-        
+        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macID,@"macId", nil];
+
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
                                                            options:0 // Pass 0 if you don't care about the readability of the generated string
                                                              error:&error];
@@ -203,7 +203,9 @@ static APIManager *singleton = nil;
         NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
         
         NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
-        
+//        NSData *jsonData = [NSKeyedArchiver archivedDataWithRootObject:dictionary2];
+
+//        NSJSONSerialization JSONObjectWithData:<#(nonnull NSData *)#> options:<#(NSJSONReadingOptions)#> error:<#(NSError * _Nullable __autoreleasing * _Nullable)#>
         NSString* downloadMethodType = @"urlConnection";
         
         DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:CHECK_DEVICE_REGISTRATION withRequestParameter:array withResourcePath:CHECK_DEVICE_REGISTRATION withHttpMethd:POST downloadMethodType:downloadMethodType];

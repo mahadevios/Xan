@@ -26,6 +26,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *practitionerLabel;
 @property (weak, nonatomic) IBOutlet UILabel *secretaryLabel;
 @property (weak, nonatomic) IBOutlet UILabel *Department;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet UIView *contentView;
 
 @end
 

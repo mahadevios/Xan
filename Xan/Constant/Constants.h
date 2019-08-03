@@ -132,7 +132,7 @@
 
 
 
-#define SHARED_GROUP_IDENTIFIER                @"group.com.coreFlexSolutions.CubeDictate"
+#define SHARED_GROUP_IDENTIFIER                @"group.com.coreflexSolutions.Xan"
 //#define MAC_ID                                 @"e0:2c:b2:eb:5a:8e"
 //#define MAC_ID                                 @"e0:2c:b2:ec:5a:8e"
 

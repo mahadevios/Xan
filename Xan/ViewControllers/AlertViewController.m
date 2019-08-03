@@ -64,6 +64,8 @@
 {
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
     
+    [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
+
     self.navigationItem.title=@"Alert";
     
     app.incompleteFileTransferCount= [db getCountOfTransfersOfDicatationStatus:@"RecordingPause"];
@@ -255,7 +257,7 @@
 {
     
     NSArray* subViewArray=[NSArray arrayWithObjects:@"User Settings", nil];
-    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+20, 160, 40) andSubViews:subViewArray :self];
+    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, 20, 160, 40) andSubViews:subViewArray :self];
     [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
     
 }

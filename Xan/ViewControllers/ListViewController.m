@@ -8,7 +8,7 @@
 
 #import "ListViewController.h"
 #import "PopUpCustomView.h"
-
+#import "UIColor+ApplicationColors.h"
 
 @interface ListViewController ()
 
@@ -75,6 +75,7 @@
     
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
     
+    [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
     self.navigationItem.leftBarButtonItem = nil;
     
     [self.checkedIndexPath removeAllObjects];
@@ -217,74 +218,57 @@
         toolBarAdded=NO;
         
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
-
+        [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
         
     }
 }
 -(void)addToolbar
 {
+    //-50.0f, 10.0f, 187.0f, 44.01f
     toolBarAdded=YES;
     UIToolbar *tools = [[UIToolbar alloc]
-                        initWithFrame:CGRectMake(30.0f, 10.0f, 150.0f, 44.01f)]; // 44.01 shifts it up 1px for some reason
-    //tools.layer.borderWidth = 1;
+                        initWithFrame:CGRectMake(10.0f, 10.0f, 170.0f, 44.01f)]; // 44.01 shifts it up 1px for some reason
     tools.tag=101;
     tools.layer.borderColor = [[UIColor whiteColor] CGColor];
     tools.clipsToBounds = YES;
-    
+    tools.barTintColor = [UIColor appNavyBlueColor];
+    tools.translucent = NO;
+
     NSMutableArray *buttons = [[NSMutableArray alloc] initWithCapacity:5];
-    // Create a standard refresh button.
     UIBarButtonItem *bi = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Delete"] style:UIBarButtonItemStylePlain target:self action:@selector(deleteMutipleFiles)];
-    
+    [bi setTintColor:[UIColor whiteColor]];
     [buttons addObject:bi];
     
     //Create a spacer.
     bi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     bi.width = 12.0f;
     [buttons addObject:bi];
-    
-    
-    // Add profile button.
    
-    
     bi = [[UIBarButtonItem alloc]initWithTitle:@"Select all" style:UIBarButtonItemStylePlain target:self action:@selector(selectAllFiles:)];
     bi.tag=102;
+    [bi setTintColor:[UIColor whiteColor]];
     [buttons addObject:bi];
-    
-    
-    // Add buttons to toolbar and toolbar to nav bar.
+   
     [tools setItems:buttons animated:NO];
     UIBarButtonItem *threeButtons = [[UIBarButtonItem alloc] initWithCustomView:tools];
     self.navigationItem.rightBarButtonItem = threeButtons;
     
-    
-    
-    
+   
     self.navigationItem.leftBarButtonItem=nil;
-    //UIToolbar *tools1 = [[UIToolbar alloc]
-    //                   initWithFrame:CGRectMake(-50.0f, 10.0f, 150.0f, 44.01f)]; // 44.01 shifts it up 1px for some reason
     UIToolbar *tools1 = [[UIToolbar alloc]
                          initWithFrame:CGRectMake(-70.0f, 0.0f, 80.0f, 44.01f)]; // 44.01 shifts it up 1px for some reason
-    //tools.layer.borderWidth = 1;
+    tools1.barTintColor = [UIColor appNavyBlueColor];
+    tools1.translucent = NO;
     tools1.tag=101;
     tools1.layer.borderColor = [[UIColor whiteColor] CGColor];
     tools1.clipsToBounds = YES;
     
     NSMutableArray *buttons1 = [[NSMutableArray alloc] initWithCapacity:4];
-    // Create a standard refresh button.
-//    UIBarButtonItem *bi1 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
-//    bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
-//    [buttons1 addObject:bi1];
-    
-    //Create a spacer.
-//     UIBarButtonItem *bi1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-//    bi1.width = 8.0f;
-//    [buttons1 addObject:bi1];
-    
-    
-    // Add profile button.
     selectedCountLabel=[[UILabel alloc]initWithFrame:CGRectMake(0, 5, 30, 20)];
+    selectedCountLabel.textColor = [UIColor whiteColor];
     selectedCountLabel.text=[NSString stringWithFormat:@"%ld",arrayOfMarked.count];
      UIBarButtonItem *bi1 = [[UIBarButtonItem alloc]initWithCustomView:selectedCountLabel];
+    [bi1 setTintColor:[UIColor whiteColor]];
     [buttons1 addObject:bi1];
     
     bi1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
@@ -292,11 +276,9 @@
     [buttons1 addObject:bi1];
     
     bi1 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Check"] style:UIBarButtonItemStylePlain target:self action:nil];
-    //bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
+    [bi1 setTintColor:[UIColor whiteColor]];
     [buttons1 addObject:bi1];
-    
-    
-    // Add buttons to toolbar and toolbar to nav bar.
+  
     [tools1 setItems:buttons1 animated:NO];
     UIBarButtonItem *threeButtons1 = [[UIBarButtonItem alloc] initWithCustomView:tools1];
     self.navigationItem.leftBarButtonItem = threeButtons1;
@@ -367,6 +349,7 @@
         //  self.navigationItem.title=self.currentViewName;
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
         //        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+        [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
         isMultipleFilesActivated=NO;
         [self.checkedIndexPath removeAllObjects];
         [arrayOfMarked removeAllObjects];
@@ -416,7 +399,8 @@
                             NSDictionary* awaitingFileTransferDict= [app.transferredListArray objectAtIndex:indexPath.row];
                             NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
                             self.navigationItem.title=self.currentViewName;
-                            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];;
+                            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
+                            [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
                             self.navigationItem.leftBarButtonItem = nil;
                             //                            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
                             isMultipleFilesActivated=NO;
@@ -445,7 +429,7 @@
                         self.navigationItem.title=self.currentViewName;
                         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
                         self.navigationItem.leftBarButtonItem = nil;
-                        
+                        [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
                         isMultipleFilesActivated=NO;
                         toolBarAdded=NO;
                         
@@ -474,7 +458,7 @@
 {
     
     NSArray* subViewArray=[NSArray arrayWithObjects:@"User Settings", nil];
-    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+20, 160, 40) andSubViews:subViewArray :self];
+    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, 20, 160, 40) andSubViews:subViewArray :self];
     [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
     
 }
@@ -829,6 +813,7 @@
     {
         self.navigationItem.leftBarButtonItem = nil;
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
+         [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
         self.navigationItem.title = @"List";
         [self.checkedIndexPath removeAllObjects];
     

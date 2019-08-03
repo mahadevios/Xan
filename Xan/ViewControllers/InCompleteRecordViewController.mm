@@ -8,7 +8,10 @@
 
 #import "InCompleteRecordViewController.h"
 #import "DepartMent.h"
+#import "UIColor+ApplicationColors.h"
+
 #define IMPEDE_PLAYBACK NO
+
 extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSType outputFormat, Float64 outputSampleRate);
 
 @interface InCompleteRecordViewController ()
@@ -776,8 +779,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
             circleView.layer.borderWidth = 3.0f;
         
-            circleView.backgroundColor=[UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1];
-        
+//            circleView.backgroundColor=[UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1];
+            circleView.backgroundColor=[UIColor CBlueRecordingOnColor];
+
             audioDurationLAbel= [self.view viewWithTag:104];
 
             audioDurationLAbel.textAlignment=NSTextAlignmentCenter;
@@ -843,8 +847,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             
             circleView.layer.borderWidth = 3.0f;
             
-            circleView.backgroundColor=[UIColor blackColor];
-            
+//            circleView.backgroundColor=[UIColor blackColor];
+            circleView.backgroundColor = [UIColor CLightBlueColor];
+            circleView.layer.borderColor = [UIColor appNavyBlueColor].CGColor;
+            circleView.layer.borderWidth = 1.0;
             audioDurationLAbel= [self.view viewWithTag:104];
             
             audioDurationLAbel.textAlignment=NSTextAlignmentCenter;
@@ -948,10 +954,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UIView* startRecordingView= [self.view viewWithTag:303];
     
-    if ([startRecordingView.backgroundColor isEqual:[UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1]] || [startRecordingView.backgroundColor isEqual:[UIColor blackColor]])
+    if ([startRecordingView.backgroundColor isEqual:[UIColor CBlueRecordingOnColor]] || [startRecordingView.backgroundColor isEqual:[UIColor CLightBlueColor]])
     {
         
-        if ([startRecordingView.backgroundColor isEqual:[UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1]])
+        if ([startRecordingView.backgroundColor isEqual:[UIColor CBlueRecordingOnColor]])
         {
             
             UIImageView* startRecordingImageView;
@@ -1032,7 +1038,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         else
         {
-            startRecordingView.backgroundColor=[UIColor blackColor];
+            startRecordingView.backgroundColor=[UIColor CLightBlueColor];
             
             UIImageView* startRecordingImageView= [startRecordingView viewWithTag:403];
             
@@ -1278,7 +1284,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     
     
-    startRecordingView.backgroundColor=[UIColor blackColor];
+    startRecordingView.backgroundColor=[UIColor CLightBlueColor];
+    startRecordingView.layer.borderColor = [UIColor appNavyBlueColor].CGColor;
+    startRecordingView.layer.borderWidth = 1.0;
     
     UIImageView* startRecordingImageView= [startRecordingView viewWithTag:403];
     
@@ -1445,7 +1453,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
    
     [RecordingLabel setHidden:YES];
     
-    startRecordingView.backgroundColor=[UIColor blackColor];
+//    startRecordingView.backgroundColor=[UIColor blackColor];
+    startRecordingView.backgroundColor=[UIColor CLightBlueColor];
+    startRecordingView.layer.borderColor = [UIColor appNavyBlueColor].CGColor;
+    startRecordingView.layer.borderWidth = 1;
     
     UIImageView* startRecordingImageView= [startRecordingView viewWithTag:403];
     
@@ -1595,7 +1606,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UIButton* uploadAudioButton=[[UIButton alloc]initWithFrame:CGRectMake(animatedView.frame.size.width*0.1, animatedView.frame.size.height*0.2, animatedView.frame.size.width*0.8, 36)];
     
-    uploadAudioButton.backgroundColor=[UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1];
+    uploadAudioButton.backgroundColor=[UIColor CBlueRecordingOnColor];
     
     uploadAudioButton.userInteractionEnabled=YES;
     
@@ -1615,7 +1626,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UIButton* uploadLaterButton=[[UIButton alloc]initWithFrame:CGRectMake(animatedView.frame.size.width*0.1, uploadAudioButton.frame.origin.y+uploadAudioButton.frame.size.height+10, uploadAudioButton.frame.size.width*0.48, 36)];
     
-    uploadLaterButton.backgroundColor=[UIColor colorWithRed:64/255.0 green:64/255.0 blue:64/255.0 alpha:1];
+    uploadLaterButton.backgroundColor=[UIColor CUploadLaterLGaryColor];
     
     [uploadLaterButton setTitle:@"Upload Later" forState:UIControlStateNormal];
     
@@ -1633,7 +1644,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UIButton* recordNewButton=[[UIButton alloc]initWithFrame:CGRectMake(uploadLaterButton.frame.origin.x+uploadLaterButton.frame.size.width+uploadAudioButton.frame.size.width*0.04, uploadAudioButton.frame.origin.y+uploadAudioButton.frame.size.height+10, uploadAudioButton.frame.size.width*0.48, 36)];
     
-    recordNewButton.backgroundColor=[UIColor colorWithRed:64/255.0 green:64/255.0 blue:64/255.0 alpha:1];
+    recordNewButton.backgroundColor=[UIColor CUploadLaterDGaryColor];
     
     [recordNewButton setTitle:@"Record New" forState:UIControlStateNormal];
     
@@ -3217,7 +3228,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     startLabel.text = @"Pause";
     
-    startLabel.textColor = [UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1];
+    startLabel.textColor = [UIColor CBlueRecordingOnColor];
     
     UIImageView* startRecordingImageView;
     
@@ -3268,7 +3279,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [self audioRecord]; // prepare separate recorder for editing with different recording filename(i.e. editedCopy for compose purpose)
     
-    startRecordingView.backgroundColor=[UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1];
+    startRecordingView.backgroundColor=[UIColor CBlueRecordingOnColor];
     
     recordingStatusLabel.text=@"Your audio is being recorded";
     

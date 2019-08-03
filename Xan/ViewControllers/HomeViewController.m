@@ -42,12 +42,23 @@
 
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
     
+    self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
+    
     transferFailedView.layer.cornerRadius = 4.0f;
+    transferFailedView.layer.borderColor = [UIColor colorWithRed:75/255.0 green:101/255.0 blue:132/255.0 alpha:1.0].CGColor;
+    transferFailedView.layer.borderWidth = 1.0;
     
     transferredView.layer.cornerRadius = 4.0f;
+    transferredView.layer.borderColor = [UIColor colorWithRed:75/255.0 green:101/255.0 blue:132/255.0 alpha:1.0].CGColor;
+    transferredView.layer.borderWidth = 1.0;
     
     awaitingTransferView.layer.cornerRadius = 4.0f;
+    awaitingTransferView.layer.borderColor = [UIColor colorWithRed:75/255.0 green:101/255.0 blue:132/255.0 alpha:1.0].CGColor;
+    awaitingTransferView.layer.borderWidth = 1.0;
     
+    VRSDOCFilesView.layer.cornerRadius = 4.0f;
+    VRSDOCFilesView.layer.borderColor = [UIColor colorWithRed:75/255.0 green:101/255.0 blue:132/255.0 alpha:1.0].CGColor;
+    VRSDOCFilesView.layer.borderWidth = 1.0;
     // tap gesture recognisers for four title views
     transferredTodayViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
     awaitingViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
@@ -556,7 +567,7 @@
 {
     NSArray* subViewArray = [NSArray arrayWithObjects:@"User Settings",@"Logout", nil];
     
-    UIView* pop = [[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+20, 160, 84) andSubViews:subViewArray :self];
+    UIView* pop = [[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, 20, 160, 84) andSubViews:subViewArray :self];
     
     [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
 }

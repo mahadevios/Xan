@@ -16,6 +16,7 @@
 #import "APIManager.h"
 #import "AppPreferences.h"
 #import "Constants.h"
+#import "UIColor+ApplicationColors.h"
 
 #define IMPEDE_PLAYBACK NO
 
@@ -327,7 +328,8 @@
         
         uploadRecordButton.tag = 801;
         
-        uploadRecordButton.backgroundColor=[UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1];
+//        uploadRecordButton.backgroundColor=[UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1];
+        uploadRecordButton.backgroundColor = [UIColor CGreenColor];
         
         [uploadRecordButton setTitle:@"Upload Recording" forState:UIControlStateNormal];
         
@@ -339,15 +341,14 @@
         
         [uploadRecordButton addTarget:self action:@selector(transferDictationButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         
-        
-        
-        
         UIButton* deleteRecordButton = [[UIButton alloc]initWithFrame:CGRectMake(uploadRecordButton.frame.origin.x, uploadRecordButton.frame.origin.y+uploadRecordButton.frame.size.height+12, uploadRecordButton.frame.size.width*0.48, uploadRecordButton.frame.size.height)];
         
         deleteRecordButton.tag = 802;
         
-        deleteRecordButton.backgroundColor=[UIColor colorWithRed:64/255.0 green:64/255.0 blue:64/255.0 alpha:1];
-        
+//        deleteRecordButton.backgroundColor=[UIColor colorWithRed:64/255.0 green:64/255.0 blue:64/255.0 alpha:1];
+
+        deleteRecordButton.backgroundColor=[UIColor CRedColor];
+
         [deleteRecordButton setTitle:@"Delete Recording" forState:UIControlStateNormal];
         
         deleteRecordButton.titleLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightSemibold];
@@ -364,7 +365,9 @@
         
         editRecordButton.tag = 803;
         
-        editRecordButton.backgroundColor=[UIColor colorWithRed:64/255.0 green:64/255.0 blue:64/255.0 alpha:1];
+//        editRecordButton.backgroundColor=[UIColor colorWithRed:64/255.0 green:64/255.0 blue:64/255.0 alpha:1];
+
+        editRecordButton.backgroundColor=[UIColor CBlackColor];
         
         [editRecordButton setTitle:@"Edit Recording" forState:UIControlStateNormal];
         
@@ -404,7 +407,7 @@
     
     
     [transferDictationButton removeFromSuperview];
-    
+
     [deleteDictationButton removeFromSuperview];
     
 }
