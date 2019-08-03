@@ -14,6 +14,7 @@
 #import "APIManager.h"
 #import "AppPreferences.h"
 #import "Constants.h"
+#import "UIColor+ApplicationColors.h"
 
 @interface TransferListViewController ()
 
@@ -95,6 +96,7 @@
     
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
     
+    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = nil;
     
     APIManager* app=[APIManager sharedManager];
@@ -720,7 +722,7 @@ else//to disaalow single row while that row is uploading
 //                }
                 detailVC.selectedRow=indexPath.row ;
                 detailVC.selectedView=self.currentViewName;
-                [self.navigationController presentViewController:detailVC animated:YES completion:nil];
+                [self presentViewController:detailVC animated:YES completion:nil];
 //                self.tableView.allowsMultipleSelection = NO;
             
             }
@@ -898,7 +900,9 @@ else//to disaalow single row while that row is uploading
 
         self.navigationItem.rightBarButtonItem = nil;
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+        self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
 
+        
     }
 }
 
@@ -928,87 +932,90 @@ else//to disaalow single row while that row is uploading
 -(void)addToolbar
 {
     toolBarAdded=YES;
+    
+    // right bar button tool bar
     UIToolbar *tools = [[UIToolbar alloc]
                         initWithFrame:CGRectMake(-50.0f, 10.0f, 187.0f, 44.01f)]; // 44.01 shifts it up 1px for some reason
-    //tools.layer.borderWidth = 1;
+    tools.barTintColor = [UIColor appNavyBlueColor];
+    tools.translucent = NO;
     tools.tag=101;
-    tools.layer.borderColor = [[UIColor whiteColor] CGColor];
     tools.clipsToBounds = YES;
 
     NSMutableArray *buttons = [[NSMutableArray alloc] initWithCapacity:5];
-    // Create a standard refresh button.
-    UIBarButtonItem *bi = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Delete"] style:UIBarButtonItemStylePlain target:self action:@selector(deleteMutipleFiles)];
     
+    UIBarButtonItem *bi = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Delete"] style:UIBarButtonItemStylePlain target:self action:@selector(deleteMutipleFiles)];
+    [bi setTintColor:[UIColor whiteColor]];
     [buttons addObject:bi];
     
      //Create a spacer.
     bi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     bi.width = 12.0f;
+    [bi setTintColor:[UIColor whiteColor]];
     [buttons addObject:bi];
     
-    
-    // Add profile button.
     bi = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Upload"] style:UIBarButtonItemStylePlain target:self action:@selector(uploadMultipleFilesToserver)];
+    [bi setTintColor:[UIColor whiteColor]];
     [buttons addObject:bi];
 
     bi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     bi.width = 9.0f;
+    [bi setTintColor:[UIColor whiteColor]];
     [buttons addObject:bi];
     
     bi = [[UIBarButtonItem alloc]initWithTitle:@"Select all" style:UIBarButtonItemStylePlain target:self action:@selector(selectAllFiles:)];
     bi.tag=102;
+    [bi setTintColor:[UIColor whiteColor]];
     [buttons addObject:bi];
-    
-    
-    // Add buttons to toolbar and toolbar to nav bar.
+
     [tools setItems:buttons animated:NO];
     UIBarButtonItem *threeButtons = [[UIBarButtonItem alloc] initWithCustomView:tools];
     self.navigationItem.rightBarButtonItem = threeButtons;
-    
-    
-    
+
     
     self.navigationItem.leftBarButtonItem=nil;
-    //UIToolbar *tools1 = [[UIToolbar alloc]
-     //                   initWithFrame:CGRectMake(-50.0f, 10.0f, 150.0f, 44.01f)]; // 44.01 shifts it up 1px for some reason
+     // left bar button tool bar
     UIToolbar *tools1 = [[UIToolbar alloc]
                          initWithFrame:CGRectMake(0.0f, 0.0f, 95.0f, 44.01f)]; // 44.01 shifts it up 1px for some reason
-    //tools.layer.borderWidth = 1;
     tools1.tag=101;
     tools1.layer.borderColor = [[UIColor whiteColor] CGColor];
     tools1.clipsToBounds = YES;
-    
+    tools1.barTintColor = [UIColor appNavyBlueColor];
+    tools1.translucent = NO;
+
     NSMutableArray *buttons1 = [[NSMutableArray alloc] initWithCapacity:4];
-    // Create a standard refresh button.
     UIBarButtonItem *bi1 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
-bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
+    bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
+    [bi1 setTintColor:[UIColor whiteColor]];
     [buttons1 addObject:bi1];
     
     //Create a spacer.
     bi1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     bi1.width = 8.0f;
+    [bi1 setTintColor:[UIColor whiteColor]];
     [buttons1 addObject:bi1];
-    
-    
+
     // Add profile button.
     selectedCountLabel=[[UILabel alloc]initWithFrame:CGRectMake(0, 5, 30, 20)];
     selectedCountLabel.text=[NSString stringWithFormat:@"%ld",arrayOfMarked.count];
+    selectedCountLabel.textColor = [UIColor whiteColor];
     bi1 = [[UIBarButtonItem alloc]initWithCustomView:selectedCountLabel];
+    [bi1 setTintColor:[UIColor whiteColor]];
     [buttons1 addObject:bi1];
     
     bi1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     bi1.width = -15.0f;
+    [bi1 setTintColor:[UIColor whiteColor]];
     [buttons1 addObject:bi1];
     
     bi1 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Check"] style:UIBarButtonItemStylePlain target:self action:nil];
-    //bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
+    [bi1 setTintColor:[UIColor whiteColor]];
     [buttons1 addObject:bi1];
-    
-    
+  
     // Add buttons to toolbar and toolbar to nav bar.
     [tools1 setItems:buttons1 animated:NO];
     UIBarButtonItem *threeButtons1 = [[UIBarButtonItem alloc] initWithCustomView:tools1];
     self.navigationItem.leftBarButtonItem = threeButtons1;
+
     
     int uploadFileCount=0;
     for (NSInteger i = 0; i < [APIManager sharedManager].awaitingFileTransferNamesArray.count; ++i)
@@ -1032,8 +1039,9 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
         [button setTitle:@"Deselect all"];
     }
 
-
     
+
+//    navigationController.navigationBar.tintColor = .white
 }
 
 
@@ -1071,6 +1079,8 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
                             self.navigationItem.title=self.currentViewName;
                             self.navigationItem.rightBarButtonItem = nil;
                             self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+                            self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+
                             toolBarAdded=NO;
                             [db updateAudioFileStatus:@"RecordingDelete" fileName:fileName dateAndTime:dateAndTimeString];
                             [app deleteFile:fileName];
@@ -1096,6 +1106,8 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
                             self.navigationItem.title=self.currentViewName;
                             self.navigationItem.rightBarButtonItem = nil;
                         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+                        self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+
                             isMultipleFilesActivated=NO;
                         self.tableView.allowsMultipleSelection = NO; // for ipad
 
@@ -1151,6 +1163,8 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
                             self.navigationItem.title=self.currentViewName;
                             self.navigationItem.rightBarButtonItem = nil;
                             self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+                            self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+
                             toolBarAdded=NO;
                             
                             NSString* transferStatus = [awaitingFileTransferDict valueForKey:@"TransferStatus"];
@@ -1204,6 +1218,8 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
                         self.navigationItem.rightBarButtonItem = nil;
                         
                         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+                        self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+
                         isMultipleFilesActivated=NO;
                         self.tableView.allowsMultipleSelection = NO; // for ipad
                         toolBarAdded=NO;
@@ -1225,6 +1241,8 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
         self.navigationItem.rightBarButtonItem = nil;
         
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+        self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+
         isMultipleFilesActivated=NO;
         self.tableView.allowsMultipleSelection = NO; // for ipad
         toolBarAdded=NO;
@@ -1280,6 +1298,8 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
         self.navigationItem.title=self.currentViewName;
         self.navigationItem.rightBarButtonItem = nil;
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+        self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+        
         isMultipleFilesActivated=NO;
         self.tableView.allowsMultipleSelection = NO; // for ipad
         [self.checkedIndexPath removeAllObjects];

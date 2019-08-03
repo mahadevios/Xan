@@ -28,7 +28,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     self.navigationItem.title=@"Imported Dictations";
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
-    
+    [self.navigationItem.leftBarButtonItem setTintColor:[UIColor whiteColor]];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(validateFileUploadResponse:) name:NOTIFICATION_FILE_UPLOAD_API
                                                object:nil];
@@ -116,7 +117,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         
         self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
-        
+        [self.navigationItem.leftBarButtonItem setTintColor:[UIColor whiteColor]];
+
         [self.tabBarController.tabBar setHidden:YES];
         
     }

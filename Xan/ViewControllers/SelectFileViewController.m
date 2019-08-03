@@ -36,6 +36,8 @@
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
     
+    [self.navigationItem.leftBarButtonItem setTintColor:[UIColor whiteColor]];
+
     [self.tabBarController.tabBar setHidden:YES];
     
     
