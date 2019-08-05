@@ -815,9 +815,19 @@ static Database *db;
                     //NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
                 {}
                 
+                AudioDetails *audioDetails = [AudioDetails new];
+                
+                audioDetails.fileName = RecordItemName;
+                audioDetails.recordingDate = RecordCreatedDate;
+                audioDetails.department = Department;
+                audioDetails.uploadStatus = TransferStatus;
+                audioDetails.currentDuration = CurrentDuration;
+                audioDetails.transferDate = transferDate;
+                audioDetails.deleteStatus = deleteStatus;
+                audioDetails.dictationStatus = dictationStatus;
                 
                 dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:RecordItemName,@"RecordItemName",RecordCreatedDate,@"RecordCreatedDate",Department,@"Department",TransferStatus,@"TransferStatus",CurrentDuration,@"CurrentDuration",transferDate,@"TransferDate",deleteStatus,@"DeleteStatus",dictationStatus,@"DictationStatus",nil];
-                [listArray addObject:dict];
+                [listArray addObject:audioDetails];
             }
             
             

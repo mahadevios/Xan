@@ -113,18 +113,18 @@
     
     UITableViewCell *cell = [tableview dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
-    NSDictionary* awaitingFileTransferDict= [app.inCompleteFileTransferNamesArray objectAtIndex:indexPath.row];
+    AudioDetails* audioDetails = [app.inCompleteFileTransferNamesArray objectAtIndex:indexPath.row];
     
     UILabel* recordItemName=[cell viewWithTag:101];
-    recordItemName.text=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
+    recordItemName.text = audioDetails.fileName;
     
-    NSString* dateAndTimeString=[awaitingFileTransferDict valueForKey:@"RecordCreatedDate"];
+    NSString* dateAndTimeString = audioDetails.recordingDate;
     NSArray* dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
     
     
     UILabel* recordingDurationLabel=[cell viewWithTag:102];
-    int audioHour= [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue]/(60*60);
-    int audioHourByMod= [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue]%(60*60);
+    int audioHour= [audioDetails.currentDuration intValue]/(60*60);
+    int audioHourByMod= [audioDetails.currentDuration intValue]%(60*60);
 
     int audioMinutes = audioHourByMod / 60;
     int audioSeconds = audioHourByMod % 60;
@@ -133,7 +133,7 @@
   //  NSLog(@"%@",recordingDurationLabel.text);
     
     UILabel* departmentNameLabel=[cell viewWithTag:103];
-    departmentNameLabel.text=[awaitingFileTransferDict valueForKey:@"Department"];
+    departmentNameLabel.text = audioDetails.currentDuration;
     
     UILabel* dateLabel=[cell viewWithTag:104];
     

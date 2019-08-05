@@ -5,7 +5,7 @@
 //  Created by mac on 28/07/16.
 //  Copyright © 2016 Xanadutec. All rights reserved.
 //
-//self.checkedIndexPath contain file names to be upload,arrayOfChecked contain indexpathof selected cells
+//self.checkedIndexPath contain file names to be upload,arrayOfMarked contain indexpathof selected cells
 
 //check in cell for row at index path where we adding the indexpath to array
 #import "TransferListViewController.h"
@@ -30,6 +30,7 @@
     
     [self addGestureRecogniser];
     
+    [self setSearchController];
 //    [self beginAppearanceTransition:true animated:true];
 
     
@@ -53,6 +54,15 @@
     
     [self setFirstRowSelected];
 
+    [self prepareForSearchBar];
+    
+    NSLog(@"1st parent = %@", self.parentViewController);
+    
+    NSLog(@"2nd parent = %@", self.parentViewController.parentViewController);
+
+    NSLog(@"2nd parent = %@", self.parentViewController.parentViewController.parentViewController);
+
+    self.parentViewController.parentViewController;
 }
 
 -(void)addGestureRecogniser
@@ -107,6 +117,8 @@
     
     app.failedTransferNamesArray = [[NSMutableArray alloc]init];
     
+    [self prepareDataSourceForTableView];
+    
     [self.tableView reloadData];
     
     [self.tabBarController.tabBar setHidden:YES];
@@ -119,6 +131,75 @@
     
 }
 
+-(void)setSearchController
+{
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.searchBar.delegate = self;
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.navigationController.definesPresentationContext = YES;
+    self.searchController.obscuresBackgroundDuringPresentation = NO;
+    self.searchController.hidesNavigationBarDuringPresentation=NO;
+    self.navigationController.definesPresentationContext = YES;
+}
+
+-(void)prepareForSearchBar
+{
+    APIManager* app = [APIManager sharedManager];
+    Database* db = [Database shareddatabase];
+    if ([self.currentViewName isEqualToString:@"Transferred Today"])
+    {
+        app.todaysFileTransferNamesArray = [db getListOfFileTransfersOfStatus:@"Transferred"];
+        self.genericFilesArray = [[NSMutableArray alloc] initWithArray:app.todaysFileTransferNamesArray];
+        self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:app.todaysFileTransferNamesArray];
+    }
+    else
+    if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
+    {
+        app.awaitingFileTransferNamesArray = [db getListOfFileTransfersOfStatus:@"RecordingComplete"];
+        self.genericFilesArray = [[NSMutableArray alloc] initWithArray:app.awaitingFileTransferNamesArray];
+        self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:app.awaitingFileTransferNamesArray];
+    }
+    else
+    {
+        app.failedTransferNamesArray = [db getListOfFileTransfersOfStatus:@"TransferFailed"];
+        self.genericFilesArray = [[NSMutableArray alloc] initWithArray:app.failedTransferNamesArray];
+        self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:app.failedTransferNamesArray];
+    }
+    
+    
+   
+    
+}
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+    if ([self.searchController.searchBar.text isEqual:@""])
+    {
+        self.genericFilesArray = [[NSMutableArray alloc] initWithArray:self.genericFilesPredicateArray];
+
+        [self.tableView reloadData];
+      
+    }
+    else
+    {
+        self.genericFilesArray = [[NSMutableArray alloc]init];
+        NSArray *predicateResultArray =[[NSMutableArray alloc]init];
+        
+        NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"fileName CONTAINS [cd] %@", self.searchController.searchBar.text];
+        NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"recordingDate CONTAINS [cd] %@", self.searchController.searchBar.text];
+//        NSPredicate *predicate3 = [NSPredicate predicateWithFormat:@"subject CONTAINS [cd] %@", self.searchController.searchBar.text];
+        NSPredicate *mainPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicate1, predicate2]];
+        
+        predicateResultArray = [self.genericFilesPredicateArray filteredArrayUsingPredicate:mainPredicate];
+        
+        self.genericFilesArray = [NSMutableArray arrayWithArray:predicateResultArray];
+        
+        [self.tableView reloadData];
+    }
+}
 
 -(void)setTimer
 {
@@ -167,7 +248,7 @@
         if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
         {
             
-            if(app.awaitingFileTransferNamesArray.count == 0) // if transferred count 0 then show empty VC  else show audio details
+            if(self.genericFilesArray.count == 0) // if transferred count 0 then show empty VC  else show audio details
             {
                 [self addEmptyVCToSplitVC];
             }
@@ -181,12 +262,12 @@
                 {
                     BOOL isWithoutUploadingFileAvailable = false;
                     
-                    for (int i = 0; i < [APIManager sharedManager].awaitingFileTransferNamesArray.count; i++)
+                    for (int i = 0; i < self.genericFilesArray.count; i++)
                     {
-                        NSDictionary* awaitingFileTransferDict = [[APIManager sharedManager].awaitingFileTransferNamesArray objectAtIndex:i];
+                        AudioDetails *audioDetails = [self.genericFilesArray objectAtIndex:i];
                         
 //                        NSDictionary* dict  = [AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict;
-                        if (!([[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray containsObject:[awaitingFileTransferDict valueForKey:@"RecordItemName"]] || [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray containsObject:[awaitingFileTransferDict valueForKey:@"RecordItemName"]]))
+                        if (!(audioDetails.fileName || [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray containsObject:audioDetails.fileName]))
                         {
                             isWithoutUploadingFileAvailable = true;
                             
@@ -288,6 +369,8 @@
 -(void)validateFileUploadResponse:(NSNotification*)obj
 {
   
+    NSString* fileName = obj.object;
+    
     [progressTimer invalidate];
     
     [progressIndexPathArray removeAllObjects];
@@ -300,8 +383,29 @@
     self.tableView.allowsMultipleSelection = NO; // for ipad
     [self hideAndShowUploadButton:NO];
     
+    /////// remove the uploaded file obj from predicate array so when serach result clears then predicatearray copy will get replicate to original array
+    BOOL isUploadedFileObjectFound = false;
+    
+    for (AudioDetails* audioDetails in self.genericFilesPredicateArray)
+    {
+        if ([audioDetails.fileName isEqualToString:fileName])
+        {
+            [self.genericFilesPredicateArray removeObject:audioDetails];
+            
+            isUploadedFileObjectFound = true;
+        }
+        
+        if (isUploadedFileObjectFound)
+        {
+            break;
+        }
+    }
+    
+    [self prepareDataSourceForTableView];
+    
     [self.tableView reloadData];//to update table agter getting file trnasfer response
     
+    [self updateSerachBarManually];
     
     
     if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
@@ -312,15 +416,26 @@
    
     //[self.tableView endUpdates];
 }
+
+-(void)updateSerachBarManually
+{
+    self.searchController.active = YES;
+    self.searchController.searchBar.text = self.searchController.searchBar.text;
+    
+}
 -(void)updateProgresCount
 {
 
     if (progressIndexPathArray.count>0)
     {
+        if ([self.searchController.searchBar.text isEqualToString:@""] || self.searchController.searchBar.text == nil)
+        {
+            self.genericFilesArray = [[Database shareddatabase] getListOfFileTransfersOfStatus:@"RecordingComplete"] ;
+            
+            [self.tableView reloadRowsAtIndexPaths:progressIndexPathArray withRowAnimation:UITableViewRowAnimationNone];
+       
+        }
         
-        [APIManager sharedManager].awaitingFileTransferNamesArray= [[Database shareddatabase] getListOfFileTransfersOfStatus:@"RecordingComplete"] ;
-
-        [self.tableView reloadRowsAtIndexPaths:progressIndexPathArray withRowAnimation:UITableViewRowAnimationNone];
 
     }
     
@@ -349,9 +464,9 @@
         
         if (cell.accessoryType == UITableViewCellAccessoryNone && (![deleteStatusLabel.text containsString:@"Uploading"]))
         {
-            NSDictionary* awaitingFileTransferDict= [app.awaitingFileTransferNamesArray objectAtIndex:indexPath.row];
+            AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
             
-            NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
+            NSString* fileName = audioDetails.fileName;
 
             [self.checkedIndexPath addObject:fileName];
             
@@ -361,7 +476,7 @@
             
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
             
-            longPressAdded=YES;
+//            longPressAdded=YES;
         }
         
     }
@@ -383,6 +498,28 @@
 
 #pragma mark: tableView delegates adn datasource
 
+-(void)prepareDataSourceForTableView
+{
+    Database* db=[Database shareddatabase];
+    
+    if ([self.currentViewName isEqualToString:@"Transferred Today"])
+    {
+        self.genericFilesArray = [db getListOfFileTransfersOfStatus:@"Transferred"];
+        
+    }
+    else
+    if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
+    {
+        self.genericFilesArray = [db getListOfFileTransfersOfStatus:@"RecordingComplete"];
+        
+    }
+    else
+    {
+        self.genericFilesArray = [db getListOfFileTransfersOfStatus:@"TransferFailed"];
+        
+    }
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -391,52 +528,25 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    Database* db=[Database shareddatabase];
-    APIManager* app=[APIManager sharedManager];
-    if ([self.currentViewName isEqualToString:@"Transferred Today"])
-    {
-        app.todaysFileTransferNamesArray = [db getListOfFileTransfersOfStatus:@"Transferred"];
-
-        return app.todaysFileTransferNamesArray.count;
-
-    }
-    if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
-    {
-        app.awaitingFileTransferNamesArray= [db getListOfFileTransfersOfStatus:@"RecordingComplete"];
-
-        return app.awaitingFileTransferNamesArray.count;
-    }
-    else
-    {
-        app.failedTransferNamesArray= [db getListOfFileTransfersOfStatus:@"TransferFailed"];
-
-        return app.failedTransferNamesArray.count;
-    }
+    return self.genericFilesArray.count;
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableview cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    APIManager* app=[APIManager sharedManager];
-    NSDictionary* awaitingFileTransferDict;
-    if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
-    {
-        awaitingFileTransferDict= [app.awaitingFileTransferNamesArray objectAtIndex:indexPath.row];
-    }
-    else
-    if ([self.currentViewName isEqualToString:@"Transferred Today"])
-    {
-        awaitingFileTransferDict= [app.todaysFileTransferNamesArray objectAtIndex:indexPath.row];
-    }
-    else
-        awaitingFileTransferDict= [app.failedTransferNamesArray objectAtIndex:indexPath.row];
+//    APIManager* app=[APIManager sharedManager];
+    AudioDetails* audioDetails;
+   
+    audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
+   
 
     UITableViewCell *cell = [tableview dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
    
     UILabel* departmentNameLabel=[cell viewWithTag:101];
-    departmentNameLabel.text=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
-    NSString* dateAndTimeString=[awaitingFileTransferDict valueForKey:@"RecordCreatedDate"];
-    NSString* transferStatusString=[awaitingFileTransferDict valueForKey:@"TransferStatus"];
-    NSString* deleteStatusString = [awaitingFileTransferDict valueForKey:@"DeleteStatus"];
+    departmentNameLabel.text = audioDetails.fileName;
+    NSString* dateAndTimeString = audioDetails.recordingDate;
+    NSString* transferStatusString = audioDetails.uploadStatus;
+    NSString* deleteStatusString = audioDetails.deleteStatus;
     NSArray* dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
     
     
@@ -448,7 +558,7 @@
     timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
     
     UILabel* nameLabel=[cell viewWithTag:103];
-    nameLabel.text=[awaitingFileTransferDict valueForKey:@"Department"];
+    nameLabel.text = audioDetails.department;
     
     UILabel* deleteStatusLabel=[cell viewWithTag:105];
 
@@ -475,8 +585,8 @@
     }
     
    
-    int audioHour= [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue]/(60*60);
-    int audioHourByMod= [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue]%(60*60);
+    int audioHour= [audioDetails.currentDuration intValue]/(60*60);
+    int audioHourByMod= [audioDetails.currentDuration intValue]%(60*60);
     
     int audioMinutes = audioHourByMod / 60;
     int audioSeconds = audioHourByMod % 60;
@@ -485,7 +595,7 @@
     
     if ([self.currentViewName isEqualToString:@"Transferred Today"])
     {
-        dateAndTimeString=[awaitingFileTransferDict valueForKey:@"TransferDate"];
+        dateAndTimeString = audioDetails.currentDuration;
         dateAndTimeArray=nil;
         dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
         
@@ -536,7 +646,7 @@
     
  
     
-    if ([[awaitingFileTransferDict valueForKey:@"DictationStatus"] isEqualToString:@"RecordingFileUpload"] && ([[awaitingFileTransferDict valueForKey:@"TransferStatus"] isEqualToString:@"NotTransferred"] || [[awaitingFileTransferDict valueForKey:@"TransferStatus"] isEqualToString:@"Resend"] || [[awaitingFileTransferDict valueForKey:@"TransferStatus"] isEqualToString:@"ResendFailed"]))
+    if ([audioDetails.dictationStatus isEqualToString:@"RecordingFileUpload"] && ([audioDetails.uploadStatus isEqualToString:@"NotTransferred"] || [audioDetails.uploadStatus isEqualToString:@"Resend"] || [audioDetails.uploadStatus isEqualToString:@"ResendFailed"]))
     {
         if (![progressIndexPathArray containsObject:indexPath])
         {
@@ -546,12 +656,12 @@
             [indexPathFileNameDict setObject:indexPath forKey:departmentNameLabel.text];
         }
         //deleteStatusLabel.text=@"Uploading";
-        if ([[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:[awaitingFileTransferDict valueForKey:@"RecordItemName"]]== NULL)
+        if ([[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:audioDetails.fileName]== NULL)
         {
             deleteStatusLabel.text= @"Uploading 0%";
         }
         else
-        deleteStatusLabel.text = [NSString stringWithFormat:@"Uploading %@",[[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:[awaitingFileTransferDict valueForKey:@"RecordItemName"]]];
+        deleteStatusLabel.text = [NSString stringWithFormat:@"Uploading %@",[[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:audioDetails.fileName]];
 
     }
     else
@@ -582,18 +692,11 @@
 
     if (isMultipleFilesActivated)
     {
-//        if (arrayOfMarked.count == 0 && self.checkedIndexPath.count == 0)
-//        {
-//           cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        }
-//        else
-//        {
-//            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-//        }
-        int uploadFileCount;
+
+        int uploadFileCount = 0;
         UILabel* deleteStatusLabel=[cell viewWithTag:105];
-        NSDictionary* awaitingFileTransferDict= [app.awaitingFileTransferNamesArray objectAtIndex:indexPath.row];
-        NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
+        AudioDetails *audioDetails= [app.awaitingFileTransferNamesArray objectAtIndex:indexPath.row];
+        NSString* fileName = audioDetails.fileName;
         
         for (NSInteger i = 0; i < app.awaitingFileTransferNamesArray.count; ++i)
         {
@@ -605,7 +708,7 @@
                 ++uploadFileCount;
             }
         }
-        if ((app.awaitingFileTransferNamesArray.count - uploadFileCount == 1) || (arrayOfMarked.count == app.awaitingFileTransferNamesArray.count-uploadFileCount))
+        if ((self.genericFilesArray.count - uploadFileCount == 1) || (arrayOfMarked.count == self.genericFilesArray.count-uploadFileCount))
         {
             UIBarButtonItem* vc=self.navigationItem.rightBarButtonItem;
             UIToolbar* view=  vc.customView;
@@ -638,7 +741,7 @@
             
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
             //
-            if (arrayOfMarked.count == app.awaitingFileTransferNamesArray.count)
+            if (arrayOfMarked.count == self.genericFilesArray.count)
             {
                 UIBarButtonItem* vc=self.navigationItem.rightBarButtonItem;
                 UIToolbar* view=  vc.customView;
@@ -842,16 +945,16 @@ else//to disaalow single row while that row is uploading
     if (self.splitViewController != nil) // for ipad reguler width reguler height
     {
         
-        if ([self.currentViewName isEqualToString:@"Awaiting Transfer"] && [APIManager sharedManager].awaitingFileTransferNamesArray.count >0)
+        if ([self.currentViewName isEqualToString:@"Awaiting Transfer"] && self.genericFilesArray.count >0)
         {
             
-            for (int i = 0; i < [APIManager sharedManager].awaitingFileTransferNamesArray.count; i++)
+            for (int i = 0; i < self.genericFilesArray.count; i++)
             {
-                NSDictionary* awaitingFileTransferDict = [[APIManager sharedManager].awaitingFileTransferNamesArray objectAtIndex:i];
+                AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:i];
                 
                 //                 if ([[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:[awaitingFileTransferDict valueForKey:@"RecordItemName"]]== NULL)
                 //                if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count < 1 && [AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count < 1)
-                if (!([[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray containsObject:[awaitingFileTransferDict valueForKey:@"RecordItemName"]] || [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray containsObject:[awaitingFileTransferDict valueForKey:@"RecordItemName"]]))
+                if (!([[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray containsObject:audioDetails.fileName] || [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray containsObject:audioDetails.fileName]))
                     
                 {
                     NSIndexPath *firstRowPath = [NSIndexPath indexPathForRow:i inSection:0];
@@ -869,7 +972,7 @@ else//to disaalow single row while that row is uploading
             
         }
         else
-            if ([self.currentViewName isEqualToString:@"Transferred Today"] && [APIManager sharedManager].todaysFileTransferNamesArray.count >0)
+            if ([self.currentViewName isEqualToString:@"Transferred Today"] && self.genericFilesArray.count >0)
             {
                 NSIndexPath *firstRowPath = [NSIndexPath indexPathForRow:0 inSection:0];
                 
@@ -1018,7 +1121,7 @@ else//to disaalow single row while that row is uploading
 
     
     int uploadFileCount=0;
-    for (NSInteger i = 0; i < [APIManager sharedManager].awaitingFileTransferNamesArray.count; ++i)
+    for (NSInteger i = 0; i < self.genericFilesArray.count; ++i)
     {
         NSIndexPath* indexPath= [NSIndexPath indexPathForRow:i inSection:0];
         UITableViewCell* cell= [self.tableView cellForRowAtIndexPath:indexPath];
@@ -1074,8 +1177,8 @@ else//to disaalow single row while that row is uploading
                             NSString* dateAndTimeString=[app getDateAndTimeString];
                             NSIndexPath* indexPath=[arrayOfMarked objectAtIndex:i];
                             
-                            NSDictionary* awaitingFileTransferDict= [app.awaitingFileTransferNamesArray objectAtIndex:indexPath.row];
-                            NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
+                            AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
+                            NSString* fileName = audioDetails.fileName;
                             self.navigationItem.title=self.currentViewName;
                             self.navigationItem.rightBarButtonItem = nil;
                             self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
@@ -1090,6 +1193,7 @@ else//to disaalow single row while that row is uploading
                         }
                         [arrayOfMarked removeAllObjects];
                         [self.checkedIndexPath removeAllObjects];
+                        [self prepareDataSourceForTableView];
                         [self.tableView reloadData];
 
                     }]; //You can use a block here to handle a press on this button
@@ -1115,6 +1219,7 @@ else//to disaalow single row while that row is uploading
                             
                         [arrayOfMarked removeAllObjects];
                         [self.checkedIndexPath removeAllObjects];
+                        [self prepareDataSourceForTableView];
                         [self.tableView reloadData];
                         
                     }]; //You can use a block here to handle a press on this button
@@ -1145,6 +1250,9 @@ else//to disaalow single row while that row is uploading
                                             style:UIAlertActionStyleDefault
                                           handler:^(UIAlertAction * action)
                     {
+                        dispatch_async(dispatch_get_main_queue(), ^(void) {
+                            
+                       
                         isMultipleFilesActivated = NO;
                         self.tableView.allowsMultipleSelection = NO; // for ipad
 
@@ -1157,8 +1265,8 @@ else//to disaalow single row while that row is uploading
                             APIManager* app=[APIManager sharedManager];
                             NSIndexPath* indexPath=[arrayOfMarked objectAtIndex:i];
                             //[aarayOfMarkedCopy addObject:[arrayOfMarked objectAtIndex:i]];
-                            NSDictionary* awaitingFileTransferDict= [app.awaitingFileTransferNamesArray objectAtIndex:indexPath.row];
-                            NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
+                            AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
+                            NSString* fileName = audioDetails.fileName;
                             
                             self.navigationItem.title=self.currentViewName;
                             self.navigationItem.rightBarButtonItem = nil;
@@ -1167,7 +1275,7 @@ else//to disaalow single row while that row is uploading
 
                             toolBarAdded=NO;
                             
-                            NSString* transferStatus = [awaitingFileTransferDict valueForKey:@"TransferStatus"];
+                            NSString* transferStatus = audioDetails.uploadStatus;
 
                             if ([transferStatus isEqualToString:@"TransferFailed"])
                             {
@@ -1186,14 +1294,22 @@ else//to disaalow single row while that row is uploading
                         [aarayOfMarkedCopy addObjectsFromArray:self.checkedIndexPath];
                         
                         [self.checkedIndexPath removeAllObjects];
+                        
+                        [self prepareDataSourceForTableView];
+                        
+                        self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:self.genericFilesArray];
+
+                        [self updateSerachBarManually];
+                            
                         [self.tableView reloadData];
+//                            [self updateSerachBarManually];
                         for (int i=0; i<aarayOfMarkedCopy.count; i++)
                         {
                              NSString* fileName=[aarayOfMarkedCopy objectAtIndex:i];
                              dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                 
                                 APIManager* app=[APIManager sharedManager];
                                 
-                                 
                                 [app uploadFileToServer:fileName jobName:FILE_UPLOAD_API];
                                 
                             });
@@ -1201,9 +1317,7 @@ else//to disaalow single row while that row is uploading
                         isMultipleFilesActivated=NO;
                         self.tableView.allowsMultipleSelection = NO; // for ipad
 
-                        //////////////
-                        
-  
+                             });
                     }]; //You can use a block here to handle a press on this button
     [alertController addAction:actionDelete];
     
@@ -1226,6 +1340,7 @@ else//to disaalow single row while that row is uploading
 
                         [self.checkedIndexPath removeAllObjects];
                         [arrayOfMarked removeAllObjects];
+                        [self prepareDataSourceForTableView];
                         [self.tableView reloadData];
 
                     }]; //You can use a block here to handle a press on this button
@@ -1249,6 +1364,7 @@ else//to disaalow single row while that row is uploading
         
         [self.checkedIndexPath removeAllObjects];
         [arrayOfMarked removeAllObjects];
+        [self prepareDataSourceForTableView];
         [self.tableView reloadData];
 
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
@@ -1256,7 +1372,6 @@ else//to disaalow single row while that row is uploading
 
     
 }
-
 
 -(void)selectAllFiles:(UIBarButtonItem*)sender
 {
@@ -1268,18 +1383,18 @@ else//to disaalow single row while that row is uploading
         [arrayOfMarked removeAllObjects];
         APIManager* app=[APIManager sharedManager];
         Database* db=[Database shareddatabase];
-        app.awaitingFileTransferNamesArray= [db getListOfFileTransfersOfStatus:@"RecordingComplete"];
+        self.genericFilesArray = [db getListOfFileTransfersOfStatus:@"RecordingComplete"];
 
-        for (NSInteger i = 0; i < app.awaitingFileTransferNamesArray.count; ++i)
+        for (NSInteger i = 0; i < self.genericFilesArray.count; ++i)
         {
           NSIndexPath* indexPath= [NSIndexPath indexPathForRow:i inSection:0];
             UITableViewCell* cell= [self.tableView cellForRowAtIndexPath:indexPath];
-            NSDictionary* awaitingFileTransferDict= [app.awaitingFileTransferNamesArray objectAtIndex:i];
-            NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
+            AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:i];
+            NSString* fileName = audioDetails.fileName;
 
 //            NSLog(@"filename = %@, dic status = %@",fileName, [awaitingFileTransferDict valueForKey:@"DictationStatus"]);
             
-           if (![[awaitingFileTransferDict valueForKey:@"DictationStatus"] isEqualToString:@"RecordingFileUpload"])
+           if (![audioDetails.dictationStatus isEqualToString:@"RecordingFileUpload"])
             {
 
                 [arrayOfMarked addObject:indexPath];
@@ -1290,6 +1405,7 @@ else//to disaalow single row while that row is uploading
             selectedCountLabel.text=[NSString stringWithFormat:@"%ld",arrayOfMarked.count];
 
         }
+        [self prepareDataSourceForTableView];
         [self.tableView reloadData];
     }
     else
@@ -1307,6 +1423,7 @@ else//to disaalow single row while that row is uploading
         selectedCountLabel.text=[NSString stringWithFormat:@"%ld",arrayOfMarked.count];
 
         toolBarAdded=NO;
+        [self prepareDataSourceForTableView];
         [self.tableView reloadData];
         
         
@@ -1318,6 +1435,7 @@ else//to disaalow single row while that row is uploading
 
 - (void)myClassDelegateMethod:(AudioDetailsViewController *)sender
 {
+    [self prepareDataSourceForTableView];
     [self.tableView reloadData];
     
     [self addEmptyVCToSplitVC];

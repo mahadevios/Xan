@@ -754,7 +754,7 @@ static APIManager *singleton = nil;
                                
                                [[Database shareddatabase] deleteIdentifierFromDatabase:taskIdentifier];
                                
-                               [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_API object:nil];
+                               [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_API object:fileName];
                                
                                [[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict removeObjectForKey:fileName];
                               
@@ -812,7 +812,7 @@ static APIManager *singleton = nil;
                     NSString* fileName = [[Database shareddatabase] getfileNameFromTaskIdentifier:taskIdentifier];
      
                     [[Database shareddatabase] updateAudioFileUploadedStatus:@"TransferFailed" fileName:fileName dateAndTime:@"" mobiledictationidval:0];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_API object:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_API object:fileName];
                     
                     NSLog(@"%@",fileName);
                     

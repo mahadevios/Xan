@@ -16,9 +16,11 @@
 @property(nonatomic) int downloadStatus;
 @property(nonatomic, strong) NSString* transferDate;
 @property(nonatomic, strong) NSString* department;
+@property(nonatomic, strong) NSString* departmentCopy;
 @property(nonatomic) int mobiledictationidval;
 @property(nonatomic, strong) NSString* currentDuration;
 @property(nonatomic, strong) NSString* recordingDate;
 @property(nonatomic, strong) NSString* fileSize;
+@property(nonatomic, strong) NSString* deleteStatus;
 
 @end
