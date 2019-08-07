@@ -23,6 +23,9 @@
 {
     [super viewDidLoad];
     
+    self.transferredListPredicateArray = [NSMutableArray new];
+    
+    self.deletedListPredicateArray = [NSMutableArray new];
     
     [self setUpForMultipleFileSelection];
     
@@ -50,6 +53,9 @@
     
     [self setAlertBadge];
    
+    [self setSearchController];
+    
+    [self prepareForSearchBar];
     
     [self.tableView reloadData];
     
@@ -63,6 +69,8 @@
     
         [self setFirstRowSelected];
     }
+    
+   
 }
 
 
@@ -90,6 +98,90 @@
 
 }
 
+-(void)setSearchController
+{
+ 
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    [self.serachBarBGView addSubview:self.searchController.searchBar];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.searchBar.delegate = self;
+//    self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.navigationController.definesPresentationContext = YES;
+    self.searchController.obscuresBackgroundDuringPresentation = NO;
+    self.searchController.hidesNavigationBarDuringPresentation=NO;
+    self.navigationController.definesPresentationContext = YES;
+}
+
+-(void)prepareForSearchBar
+{
+    
+    [APIManager sharedManager].transferredListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Transferred"];
+    
+    self.transferredListPredicateArray = [APIManager sharedManager].transferredListArray;
+    
+    [APIManager sharedManager].deletedListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Deleted"];
+    
+    self.deletedListPredicateArray = [APIManager sharedManager].deletedListArray;
+
+    
+}
+
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+    if ([self.searchController.searchBar.text isEqual:@""])
+    {
+        if (segment.selectedSegmentIndex==0)
+        {
+            [APIManager sharedManager].transferredListArray = [[NSMutableArray alloc] initWithArray:self.transferredListPredicateArray];
+        }
+        else
+        {
+            [APIManager sharedManager].deletedListArray = [[NSMutableArray alloc] initWithArray:self.deletedListPredicateArray];
+        }
+
+        [self.tableView reloadData];
+
+    }
+    else
+    {
+    NSArray *commonArray = [[NSMutableArray alloc]init];
+    
+    NSArray *predicateResultArray = [[NSMutableArray alloc]init];
+
+    if (segment.selectedSegmentIndex==0)
+    {
+       commonArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Transferred"];
+    }
+    else
+    {
+        commonArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Deleted"];
+
+    }
+    
+        NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"fileName CONTAINS [cd] %@", self.searchController.searchBar.text];
+        NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"recordingDate CONTAINS [cd] %@", self.searchController.searchBar.text];
+//        NSPredicate *predicate3 = [NSPredicate predicateWithFormat:@"uploadStatus CONTAINS [cd] %@", self.searchController.searchBar.text];
+//        NSPredicate *predicate4 = [NSPredicate predicateWithFormat:@"department CONTAINS [cd] %@", self.searchController.searchBar.text];
+    
+        NSPredicate *mainPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicate1, predicate2]];
+        
+        predicateResultArray = [commonArray filteredArrayUsingPredicate:mainPredicate];
+    
+    if (segment.selectedSegmentIndex==0)
+    {
+        [APIManager sharedManager].transferredListArray = [NSMutableArray arrayWithArray:predicateResultArray];
+    }
+    else
+    {
+        [APIManager sharedManager].deletedListArray = [NSMutableArray arrayWithArray:predicateResultArray];
+
+    }
+    
+    [self.tableView reloadData];
+    }
+    
+}
 -(void)getTransferredAndDeletedList
 {
     
@@ -183,9 +275,9 @@
         //        UILabel* deleteStatusLabel=[cell viewWithTag:105];
         if (cell.accessoryType == UITableViewCellAccessoryNone)
         {
-            NSDictionary* awaitingFileTransferDict= [app.transferredListArray objectAtIndex:indexPath.row];
+            AudioDetails* audioDetails = [app.transferredListArray objectAtIndex:indexPath.row];
             
-            NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
+            NSString* fileName = audioDetails.fileName;
             
             [self.checkedIndexPath addObject:fileName];
             
@@ -325,17 +417,17 @@
         {
             NSIndexPath* indexPath= [NSIndexPath indexPathForRow:i inSection:0];
             UITableViewCell* cell= [self.tableView cellForRowAtIndexPath:indexPath];
-            NSDictionary* awaitingFileTransferDict= [app.transferredListArray objectAtIndex:i];
-            NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
+            AudioDetails* audioDetails = [app.transferredListArray objectAtIndex:i];
+            NSString* fileName = audioDetails.fileName;
             
-            if (![[awaitingFileTransferDict valueForKey:@"DictationStatus"] isEqualToString:@"RecordingFileUpload"])
-            {
-                
+//            if (![[awaitingFileTransferDict valueForKey:@"DictationStatus"] isEqualToString:@"RecordingFileUpload"])
+//            {
+            
                 [arrayOfMarked addObject:indexPath];
                 [cell setSelected:YES];
                 [self.checkedIndexPath addObject:fileName];
                 
-            }
+//            }
             selectedCountLabel.text=[NSString stringWithFormat:@"%ld",arrayOfMarked.count];
             
         }
@@ -396,8 +488,8 @@
                             NSString* dateAndTimeString=[app getDateAndTimeString];
                             NSIndexPath* indexPath=[arrayOfMarked objectAtIndex:i];
                             
-                            NSDictionary* awaitingFileTransferDict= [app.transferredListArray objectAtIndex:indexPath.row];
-                            NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
+                            AudioDetails* audioDetails = [app.transferredListArray objectAtIndex:indexPath.row];
+                            NSString* fileName = audioDetails.fileName;
                             self.navigationItem.title=self.currentViewName;
                             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
                             [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
@@ -412,7 +504,17 @@
                             
                         }
                         [arrayOfMarked removeAllObjects];
+                        
+                        [self prepareDataSourceForTableView];
+                        
+                        self.transferredListPredicateArray = [[NSMutableArray alloc] initWithArray:[APIManager sharedManager].transferredListArray];
+                        
+                        self.deletedListPredicateArray = [[NSMutableArray alloc] initWithArray:[APIManager sharedManager].deletedListArray];
+
+                        [self updateSerachBarManually];
+                        
                         [self.tableView reloadData];
+                        
 //                        [self addEmptyVCToSplitVC];
                         
                     }]; //You can use a block here to handle a press on this button
@@ -444,6 +546,12 @@
     
 }
 
+-(void)updateSerachBarManually
+{
+    self.searchController.active = YES;
+    self.searchController.searchBar.text = self.searchController.searchBar.text;
+    
+}
 #pragma mark: Navigation Bar Methods
 
 -(void)popViewController:(id)sender
@@ -481,6 +589,22 @@
 
 #pragma mark: TableView DataSource and Delegates
 
+-(void)prepareDataSourceForTableView
+{
+    
+    if (segment.selectedSegmentIndex==0)
+    {
+        [APIManager sharedManager].transferredListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Transferred"];
+        
+    }
+    if (segment.selectedSegmentIndex==1)
+    {
+        [APIManager sharedManager].deletedListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Deleted"];
+        
+    }
+}
+
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     
@@ -494,13 +618,13 @@
 {
     if (segment.selectedSegmentIndex==0)
     {
-        [APIManager sharedManager].transferredListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Transferred"];
+//        [APIManager sharedManager].transferredListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Transferred"];
 
         return [APIManager sharedManager].transferredListArray.count;
     }
     if (segment.selectedSegmentIndex==1)
     {
-        [APIManager sharedManager].deletedListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Deleted"];
+//        [APIManager sharedManager].deletedListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Deleted"];
 
         return [APIManager sharedManager].deletedListArray.count;
     }
@@ -521,16 +645,16 @@
 
     
     APIManager* app=[APIManager sharedManager];
-    NSDictionary* dict;
+    AudioDetails* audioDetails;
     if (segment.selectedSegmentIndex==0)
     {
-        dict= [app.transferredListArray objectAtIndex:indexPath.row];
+        audioDetails = [app.transferredListArray objectAtIndex:indexPath.row];
     }
     else
-    dict= [app.deletedListArray objectAtIndex:indexPath.row];
+    audioDetails= [app.deletedListArray objectAtIndex:indexPath.row];
     
-    fileNameLabel.text=[dict valueForKey:@"RecordItemName"];
-    NSString* dateAndTimeString=[dict valueForKey:@"Date"];
+    fileNameLabel.text = audioDetails.fileName;
+    NSString* dateAndTimeString = audioDetails.deleteDate;
     NSArray* dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
     if (segment.selectedSegmentIndex==0)
     {
@@ -546,8 +670,8 @@
 
     }
 
-    int audioHour= [[dict valueForKey:@"CurrentDuration"] intValue]/(60*60);
-    int audioHourByMod= [[dict valueForKey:@"CurrentDuration"] intValue]%(60*60);
+    int audioHour= [audioDetails.currentDuration intValue]/(60*60);
+    int audioHourByMod= [audioDetails.currentDuration intValue]%(60*60);
     
     int audioMinutes = audioHourByMod / 60;
     int audioSeconds = audioHourByMod % 60;
@@ -555,7 +679,7 @@
     durationLabel.text=[NSString stringWithFormat:@"%02d:%02d:%02d",audioHour,audioMinutes,audioSeconds];
     //timeLabel.text=[NSString stringWithFormat:@"%@",@"Transferred 12:18:00 PM"];
 
-    transferByLabel.text = [dict valueForKey:@"Department"];
+    transferByLabel.text = audioDetails.department;
     
     if (dateAndTimeArray.count>0)
     {
@@ -613,16 +737,16 @@
     
     if (isMultipleFilesActivated)
     {
-        int uploadFileCount;
+        int uploadFileCount = 0;
 //        UILabel* deleteStatusLabel=[cell viewWithTag:105];
-        NSDictionary* awaitingFileTransferDict= [app.transferredListArray objectAtIndex:indexPath.row];
-        NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
+        AudioDetails* audioDetails = [app.transferredListArray objectAtIndex:indexPath.row];
+        NSString* fileName = audioDetails.fileName;
         
         for (NSInteger i = 0; i < app.transferredListArray.count; ++i)
         {
-            NSIndexPath* indexPath= [NSIndexPath indexPathForRow:i inSection:0];
-            UITableViewCell* cell= [self.tableView cellForRowAtIndexPath:indexPath];
-            UILabel* deleteStatusLabel=[cell viewWithTag:105];
+            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+            UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            UILabel* deleteStatusLabel = [cell viewWithTag:105];
             if ([deleteStatusLabel.text isEqual:@"Uploading"])
             {
                 ++uploadFileCount;
@@ -825,6 +949,8 @@
     isMultipleFilesActivated = NO;
     toolBarAdded = NO;
     
+    [self prepareDataSourceForTableView];
+    
     [self.tableView reloadData];
     
     [self setAudioDetailOrEmptyViewController:0];
@@ -929,6 +1055,8 @@
 
 - (void)myClassDelegateMethod:(TransferredOrDeletedAudioDetailsViewController *)sender
 {
+    [self prepareDataSourceForTableView];
+    
     [self.tableView reloadData];
     
     [self setFirstRowSelected];
