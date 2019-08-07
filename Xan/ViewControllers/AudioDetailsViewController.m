@@ -1311,7 +1311,7 @@
     
     vc.audioDurationInSeconds = audioDurationSeconds;
     
-    vc.existingAudioDepartmentName = [audioDetails.currentDuration valueForKey:@"Department"];
+    vc.existingAudioDepartmentName = audioDetails.department;
     
     vc.isOpenedFromAudioDetails = YES;
     

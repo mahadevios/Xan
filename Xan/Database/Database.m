@@ -826,7 +826,7 @@ static Database *db;
                 audioDetails.deleteStatus = deleteStatus;
                 audioDetails.dictationStatus = dictationStatus;
                 
-                dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:RecordItemName,@"RecordItemName",RecordCreatedDate,@"RecordCreatedDate",Department,@"Department",TransferStatus,@"TransferStatus",CurrentDuration,@"CurrentDuration",transferDate,@"TransferDate",deleteStatus,@"DeleteStatus",dictationStatus,@"DictationStatus",nil];
+//                dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:RecordItemName,@"RecordItemName",RecordCreatedDate,@"RecordCreatedDate",Department,@"Department",TransferStatus,@"TransferStatus",CurrentDuration,@"CurrentDuration",transferDate,@"TransferDate",deleteStatus,@"DeleteStatus",dictationStatus,@"DictationStatus",nil];
                 [listArray addObject:audioDetails];
             }
             
@@ -1366,6 +1366,8 @@ static Database *db;
             {
                 
                 // [app.feedOrQueryDetailMessageArray addObject:[NSString stringWithUTF8String:message]];
+                AudioDetails* audioDetails = [[AudioDetails alloc] init];
+                
                 RecordItemName=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
                 Date=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 1)];
                 Department=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
@@ -1398,11 +1400,11 @@ static Database *db;
                 
                 if ([listName isEqual:@"Transferred"])
                 {
-                    statusQuery=[NSString stringWithFormat:@"Select DeleteStatus from DeleteStatus Where Id='%@'",status];
+                    statusQuery = [NSString stringWithFormat:@"Select DeleteStatus from DeleteStatus Where Id='%@'",status];
                 }
                 if ([listName isEqual:@"Deleted"])
                 {
-                    statusQuery=[NSString stringWithFormat:@"Select TransferStatus from TransferStatus Where Id='%@'",status];
+                    statusQuery = [NSString stringWithFormat:@"Select TransferStatus from TransferStatus Where Id='%@'",status];
                     
                 }
 
@@ -1427,8 +1429,18 @@ static Database *db;
                 {
                 }
                 
-                dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:RecordItemName,@"RecordItemName",Date,@"Date",Department,@"Department",RecordCreateDate,@"RecordCreateDate",status,@"status",transferDate,@"TransferDate",duration,@"CurrentDuration", nil];
-                [listArray addObject:dict];
+                audioDetails.fileName = RecordItemName;
+                audioDetails.department = Department;
+                audioDetails.recordingDate = RecordCreateDate;
+                audioDetails.transferDate = transferDate;
+                audioDetails.currentDuration = duration;
+                audioDetails.uploadStatus = status;
+                audioDetails.deleteDate = Date;
+                
+//                dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:RecordItemName,@"RecordItemName",Date,@"Date",Department,@"Department",RecordCreateDate,@"RecordCreateDate",status,@"status",transferDate,@"TransferDate",duration,@"CurrentDuration", nil];
+//                [listArray addObject:dict];
+                
+                [listArray addObject:audioDetails];
             }
             
             

@@ -51,4 +51,7 @@
 @property (strong, nonatomic) NSMutableArray* genericFilesPredicateArray;
 
 @property(nonatomic)BOOL longPressAdded;
+
+@property (weak, nonatomic) IBOutlet UIView *serachBarBGView;
+
 @end

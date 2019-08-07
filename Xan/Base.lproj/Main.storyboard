@@ -743,8 +743,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6GV-zq-L63">
+                                <rect key="frame" x="0.0" y="44" width="414" height="53"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="53" id="iat-Ah-Kte"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="72" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8M7-jB-Cx1">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="97" width="414" height="896"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="72" id="Pct-Nd-567">
@@ -842,13 +849,17 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="8M7-jB-Cx1" firstAttribute="centerY" secondItem="NUS-4K-Y9R" secondAttribute="centerY" id="7nX-mR-KaW"/>
                             <constraint firstItem="8M7-jB-Cx1" firstAttribute="width" secondItem="NUS-4K-Y9R" secondAttribute="width" id="Fac-M5-ZOM"/>
                             <constraint firstItem="8M7-jB-Cx1" firstAttribute="centerX" secondItem="NUS-4K-Y9R" secondAttribute="centerX" id="V04-vZ-lDF"/>
+                            <constraint firstItem="6GV-zq-L63" firstAttribute="top" secondItem="Vyl-5s-4R8" secondAttribute="bottom" id="gJ7-ow-fTf"/>
+                            <constraint firstItem="6GV-zq-L63" firstAttribute="centerX" secondItem="NUS-4K-Y9R" secondAttribute="centerX" id="sYT-nd-wud"/>
+                            <constraint firstItem="6GV-zq-L63" firstAttribute="width" secondItem="NUS-4K-Y9R" secondAttribute="width" id="vea-QW-hzV"/>
                             <constraint firstItem="8M7-jB-Cx1" firstAttribute="height" secondItem="NUS-4K-Y9R" secondAttribute="height" id="w4z-BO-GuE"/>
+                            <constraint firstItem="8M7-jB-Cx1" firstAttribute="top" secondItem="6GV-zq-L63" secondAttribute="bottom" id="y53-fb-NfG"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="serachBarBGView" destination="6GV-zq-L63" id="OZf-cs-A8r"/>
                         <outlet property="tableView" destination="8M7-jB-Cx1" id="sxj-jQ-rwq"/>
                     </connections>
                 </viewController>
@@ -1214,7 +1225,6 @@
                                                 <exclude reference="7Hz-jf-NDa"/>
                                                 <exclude reference="LS2-UA-0dh"/>
                                                 <exclude reference="ZEi-3o-Ndj"/>
-                                                <exclude reference="5ON-Tq-jcf"/>
                                                 <exclude reference="7y0-Fk-aWX"/>
                                                 <exclude reference="FRh-Ft-arK"/>
                                                 <exclude reference="Lnz-5q-eXz"/>
@@ -1232,6 +1242,7 @@
                                                 <exclude reference="pUw-yZ-7tD"/>
                                                 <exclude reference="r5I-KF-i6g"/>
                                                 <exclude reference="tZm-bJ-tR5"/>
+                                                <exclude reference="5ON-Tq-jcf"/>
                                                 <exclude reference="6A2-5I-i6h"/>
                                                 <exclude reference="Bkz-ds-l8u"/>
                                                 <exclude reference="Jh8-gG-IaM"/>
@@ -1242,17 +1253,17 @@
                                                 <exclude reference="Roa-TQ-N3v"/>
                                                 <exclude reference="oFS-Yc-xZD"/>
                                                 <exclude reference="tUx-N2-o5X"/>
-                                                <exclude reference="gyl-L5-ngf"/>
                                                 <exclude reference="nhg-s2-KfM"/>
                                                 <exclude reference="s4W-zd-IAu"/>
+                                                <exclude reference="gyl-L5-ngf"/>
                                                 <exclude reference="GEG-lJ-X2e"/>
                                                 <exclude reference="OLL-c5-MUe"/>
                                                 <exclude reference="UgP-3h-0pH"/>
-                                                <exclude reference="rLF-Av-Swu"/>
-                                                <exclude reference="uzu-4R-ABh"/>
                                                 <exclude reference="5gO-uF-Nr7"/>
                                                 <exclude reference="HNW-bX-2dW"/>
                                                 <exclude reference="dfn-vo-Zu9"/>
+                                                <exclude reference="rLF-Av-Swu"/>
+                                                <exclude reference="uzu-4R-ABh"/>
                                                 <exclude reference="Bmh-Ug-a2c"/>
                                                 <exclude reference="zif-nW-beg"/>
                                                 <exclude reference="4NW-xa-cKv"/>
@@ -1568,7 +1579,7 @@
                         <viewControllerLayoutGuide type="top" id="a2N-q2-1iq"/>
                         <viewControllerLayoutGuide type="bottom" id="2kx-RC-boq"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" misplaced="YES" id="iu5-LB-dFO">
+                    <view key="view" contentMode="scaleToFill" id="iu5-LB-dFO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -1586,8 +1597,15 @@
                                     <action selector="segmentChanged:" destination="7S6-gI-PkF" eventType="valueChanged" id="jkQ-YA-6N0"/>
                                 </connections>
                             </segmentedControl>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JXR-Xg-AfP">
+                                <rect key="frame" x="0.0" y="47" width="414" height="56"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="ihy-G7-KsB"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="73" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lp9-Nu-LFI">
-                                <rect key="frame" x="0.0" y="47" width="414" height="645"/>
+                                <rect key="frame" x="0.0" y="105" width="414" height="645"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="73" id="5HH-x6-RJu">
@@ -1657,10 +1675,13 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="lp9-Nu-LFI" firstAttribute="top" secondItem="rKL-JA-OfD" secondAttribute="bottom" constant="2" id="5qI-uk-5Z6"/>
+                            <constraint firstItem="JXR-Xg-AfP" firstAttribute="top" secondItem="rKL-JA-OfD" secondAttribute="bottom" constant="2" id="HP5-rJ-yau"/>
                             <constraint firstItem="rKL-JA-OfD" firstAttribute="width" secondItem="iu5-LB-dFO" secondAttribute="width" multiplier="0.8" id="MjO-rw-Rab"/>
                             <constraint firstItem="lp9-Nu-LFI" firstAttribute="width" secondItem="iu5-LB-dFO" secondAttribute="width" id="OS1-2G-lO0"/>
+                            <constraint firstItem="JXR-Xg-AfP" firstAttribute="centerX" secondItem="iu5-LB-dFO" secondAttribute="centerX" id="PTR-iX-3gh"/>
+                            <constraint firstItem="lp9-Nu-LFI" firstAttribute="top" secondItem="JXR-Xg-AfP" secondAttribute="bottom" constant="2" id="U1i-nn-Klo"/>
                             <constraint firstItem="lp9-Nu-LFI" firstAttribute="centerX" secondItem="iu5-LB-dFO" secondAttribute="centerX" id="e8M-jq-IbI"/>
+                            <constraint firstItem="JXR-Xg-AfP" firstAttribute="width" secondItem="iu5-LB-dFO" secondAttribute="width" id="fS2-aZ-AmB"/>
                             <constraint firstItem="rKL-JA-OfD" firstAttribute="top" secondItem="a2N-q2-1iq" secondAttribute="bottom" constant="10" id="hmK-yA-WLo"/>
                             <constraint firstItem="lp9-Nu-LFI" firstAttribute="height" secondItem="iu5-LB-dFO" secondAttribute="height" constant="-163" id="idZ-g1-ylC"/>
                             <constraint firstItem="lp9-Nu-LFI" firstAttribute="centerY" secondItem="iu5-LB-dFO" secondAttribute="centerY" multiplier="1.2" id="nKP-uh-SJN"/>
@@ -1674,11 +1695,21 @@
                     </view>
                     <navigationItem key="navigationItem" id="fUy-N6-dz8"/>
                     <connections>
+                        <outlet property="searchDisplayController" destination="eqb-8m-ZSH" id="G1r-nm-7Jw"/>
                         <outlet property="segment" destination="rKL-JA-OfD" id="IQV-2S-cQ7"/>
+                        <outlet property="serachBarBGView" destination="JXR-Xg-AfP" id="BEC-tr-d8y"/>
                         <outlet property="tableView" destination="lp9-Nu-LFI" id="i0n-39-OLp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6s6-pc-XqK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="eqb-8m-ZSH">
+                    <connections>
+                        <outlet property="delegate" destination="7S6-gI-PkF" id="YGf-gF-qFb"/>
+                        <outlet property="searchContentsController" destination="7S6-gI-PkF" id="hsV-y6-fPT"/>
+                        <outlet property="searchResultsDataSource" destination="7S6-gI-PkF" id="b6v-Jv-Qgl"/>
+                        <outlet property="searchResultsDelegate" destination="7S6-gI-PkF" id="dOW-dr-BQX"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="177" y="2409"/>
         </scene>

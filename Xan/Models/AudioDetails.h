@@ -22,5 +22,6 @@
 @property(nonatomic, strong) NSString* recordingDate;
 @property(nonatomic, strong) NSString* fileSize;
 @property(nonatomic, strong) NSString* deleteStatus;
+@property(nonatomic, strong) NSString* deleteDate;
 
 @end

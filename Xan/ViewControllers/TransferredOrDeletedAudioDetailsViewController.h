@@ -10,6 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "AudioSessionManager.h"
 #import "PopUpCustomView.h"
+#import "AudioDetails.h";
 //#import "ListViewController.h"
 //#import "MyClass.h"
 @class TransferredOrDeletedAudioDetailsViewController;             //define class, so protocol can see MyClass
@@ -26,7 +27,8 @@
     UIAlertAction *actionDelete;
     UIAlertAction *actionCancel;
     BOOL deleted;
-    NSDictionary* audiorecordDict;
+//    NSDictionary* audiorecordDict;
+    AudioDetails* audioDetails;
     UISlider* audioRecordSlider;
     UIView* sliderPopUpView;
     UIView* popupView;

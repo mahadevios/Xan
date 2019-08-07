@@ -134,11 +134,10 @@
 -(void)setSearchController
 {
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchResultsUpdater = self;
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    [self.serachBarBGView addSubview:self.searchController.searchBar];
     self.searchController.searchResultsUpdater = self;
     self.searchController.searchBar.delegate = self;
-    self.tableView.tableHeaderView = self.searchController.searchBar;
+//    self.tableView.tableHeaderView = self.searchController.searchBar;
     self.navigationController.definesPresentationContext = YES;
     self.searchController.obscuresBackgroundDuringPresentation = NO;
     self.searchController.hidesNavigationBarDuringPresentation=NO;
@@ -190,8 +189,10 @@
         
         NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"fileName CONTAINS [cd] %@", self.searchController.searchBar.text];
         NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"recordingDate CONTAINS [cd] %@", self.searchController.searchBar.text];
-//        NSPredicate *predicate3 = [NSPredicate predicateWithFormat:@"subject CONTAINS [cd] %@", self.searchController.searchBar.text];
-        NSPredicate *mainPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicate1, predicate2]];
+        NSPredicate *predicate3 = [NSPredicate predicateWithFormat:@"uploadStatus CONTAINS [cd] %@", self.searchController.searchBar.text];
+        NSPredicate *predicate4 = [NSPredicate predicateWithFormat:@"department CONTAINS [cd] %@", self.searchController.searchBar.text];
+
+        NSPredicate *mainPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicate1, predicate2, predicate3, predicate4]];
         
         predicateResultArray = [self.genericFilesPredicateArray filteredArrayUsingPredicate:mainPredicate];
         
@@ -222,7 +223,6 @@
     
     [progressIndexPathArray removeAllObjects];
 
-    
     [arrayOfMarked removeAllObjects];
     
     isMultipleFilesActivated=NO;
@@ -232,6 +232,8 @@
     [progressTimer invalidate];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [self.searchController removeFromParentViewController];
     
 }
 
@@ -451,7 +453,7 @@
         [self setAudioDetailOrEmptyViewController:0];
 //        self.tableView.allowsMultipleSelection = YES; //for ipad
 
-        APIManager* app=[APIManager sharedManager];
+//        APIManager* app=[APIManager sharedManager];
         
         CGPoint p = [gestureRecognizer locationInView:self.tableView];
         
@@ -658,7 +660,7 @@
         //deleteStatusLabel.text=@"Uploading";
         if ([[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:audioDetails.fileName]== NULL)
         {
-            deleteStatusLabel.text= @"Uploading 0%";
+            deleteStatusLabel.text= @"Uploading";
         }
         else
         deleteStatusLabel.text = [NSString stringWithFormat:@"Uploading %@",[[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:audioDetails.fileName]];
@@ -1188,12 +1190,17 @@ else//to disaalow single row while that row is uploading
                             [db updateAudioFileStatus:@"RecordingDelete" fileName:fileName dateAndTime:dateAndTimeString];
                             [app deleteFile:fileName];
                             [app deleteFile:[NSString stringWithFormat:@"%@backup",fileName]];
-                            
-                            
+                          
                         }
                         [arrayOfMarked removeAllObjects];
                         [self.checkedIndexPath removeAllObjects];
+                        
                         [self prepareDataSourceForTableView];
+                        
+                        self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:self.genericFilesArray];
+                        
+                        [self updateSerachBarManually];
+
                         [self.tableView reloadData];
 
                     }]; //You can use a block here to handle a press on this button
@@ -1295,7 +1302,7 @@ else//to disaalow single row while that row is uploading
                         
                         [self.checkedIndexPath removeAllObjects];
                         
-                        [self prepareDataSourceForTableView];
+                        [self prepareDataSourceForTableView]; // get the updated data(i.e. searched and long press uploaded) and after getting that data update predicate array with the updated data so when serach bar get clear "genericFilesArray" will get appropriate data
                         
                         self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:self.genericFilesArray];
 
