@@ -152,6 +152,7 @@
     }
     else
     {
+        
         if ([AppPreferences sharedAppPreferences].isReachable)
         {
             hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];

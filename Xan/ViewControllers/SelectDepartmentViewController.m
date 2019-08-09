@@ -79,6 +79,7 @@
     
 //    MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
     
+    
     [[Database shareddatabase] setDepartment];//to insert default department for imported files
     
 //    [[[self presentingViewController] presentingViewController] dismissViewControllerAnimated:true completion:nil];

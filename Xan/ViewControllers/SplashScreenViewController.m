@@ -86,10 +86,6 @@
 
 }
 
--(void)sample
-{
-    
-}
 
 -(void)checkDeviceRegistration
 {

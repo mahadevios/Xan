@@ -17,6 +17,7 @@
 
 @end
 
+
 @implementation PinRegistrationViewController
 @synthesize pinCode1TextField,pinCode2TextField,pinCode3TextField,pinCode4TextField,pinCode5TextField,pinCode6TextField,pinCode7TextField,pinCode8TextField,submitButton,cancelButton,hud;
 - (void)viewDidLoad

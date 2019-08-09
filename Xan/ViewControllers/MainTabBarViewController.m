@@ -33,6 +33,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    
     if ([self.isSplashScreenPresented isEqualToString:@""] || self.isSplashScreenPresented == nil)
     {
          [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SplashScreenViewController"] animated:NO completion:nil];
