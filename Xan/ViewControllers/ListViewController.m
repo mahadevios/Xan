@@ -40,8 +40,10 @@
      
     detailVC.delegate = self;
 
-}
+    [self setSearchController];
 
+  
+}
 
 
 -(void)viewWillAppear:(BOOL)animated
@@ -52,8 +54,6 @@
     [self getTransferredAndDeletedList];
     
     [self setAlertBadge];
-   
-    [self setSearchController];
     
     [self prepareForSearchBar];
     
@@ -70,7 +70,12 @@
         [self setFirstRowSelected];
     }
     
-   
+    self.searchController.searchBar.text = @"";
+    
+    [self.searchController.searchBar resignFirstResponder];
+    
+    [self.searchController.searchBar setShowsCancelButton:NO animated:NO];
+
 }
 
 
@@ -98,90 +103,7 @@
 
 }
 
--(void)setSearchController
-{
- 
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    [self.serachBarBGView addSubview:self.searchController.searchBar];
-    self.searchController.searchResultsUpdater = self;
-    self.searchController.searchBar.delegate = self;
-//    self.tableView.tableHeaderView = self.searchController.searchBar;
-    self.navigationController.definesPresentationContext = YES;
-    self.searchController.obscuresBackgroundDuringPresentation = NO;
-    self.searchController.hidesNavigationBarDuringPresentation=NO;
-    self.navigationController.definesPresentationContext = YES;
-}
 
--(void)prepareForSearchBar
-{
-    
-    [APIManager sharedManager].transferredListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Transferred"];
-    
-    self.transferredListPredicateArray = [APIManager sharedManager].transferredListArray;
-    
-    [APIManager sharedManager].deletedListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Deleted"];
-    
-    self.deletedListPredicateArray = [APIManager sharedManager].deletedListArray;
-
-    
-}
-
-
-- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
-{
-    if ([self.searchController.searchBar.text isEqual:@""])
-    {
-        if (segment.selectedSegmentIndex==0)
-        {
-            [APIManager sharedManager].transferredListArray = [[NSMutableArray alloc] initWithArray:self.transferredListPredicateArray];
-        }
-        else
-        {
-            [APIManager sharedManager].deletedListArray = [[NSMutableArray alloc] initWithArray:self.deletedListPredicateArray];
-        }
-
-        [self.tableView reloadData];
-
-    }
-    else
-    {
-    NSArray *commonArray = [[NSMutableArray alloc]init];
-    
-    NSArray *predicateResultArray = [[NSMutableArray alloc]init];
-
-    if (segment.selectedSegmentIndex==0)
-    {
-       commonArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Transferred"];
-    }
-    else
-    {
-        commonArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Deleted"];
-
-    }
-    
-        NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"fileName CONTAINS [cd] %@", self.searchController.searchBar.text];
-        NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"recordingDate CONTAINS [cd] %@", self.searchController.searchBar.text];
-//        NSPredicate *predicate3 = [NSPredicate predicateWithFormat:@"uploadStatus CONTAINS [cd] %@", self.searchController.searchBar.text];
-//        NSPredicate *predicate4 = [NSPredicate predicateWithFormat:@"department CONTAINS [cd] %@", self.searchController.searchBar.text];
-    
-        NSPredicate *mainPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicate1, predicate2]];
-        
-        predicateResultArray = [commonArray filteredArrayUsingPredicate:mainPredicate];
-    
-    if (segment.selectedSegmentIndex==0)
-    {
-        [APIManager sharedManager].transferredListArray = [NSMutableArray arrayWithArray:predicateResultArray];
-    }
-    else
-    {
-        [APIManager sharedManager].deletedListArray = [NSMutableArray arrayWithArray:predicateResultArray];
-
-    }
-    
-    [self.tableView reloadData];
-    }
-    
-}
 -(void)getTransferredAndDeletedList
 {
     
@@ -229,6 +151,10 @@
         [self tableView:self.tableView didSelectRowAtIndexPath:firstRowPath];
     }
    
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
 }
 
 #pragma mark:Split VC delegate
@@ -480,41 +406,45 @@
                                           handler:^(UIAlertAction * action)
                     {
                         
-                        for (int i=0; i<arrayOfMarked.count; i++)
-                            
-                        {
-                            Database* db=[Database shareddatabase];
-                            APIManager* app=[APIManager sharedManager];
-                            NSString* dateAndTimeString=[app getDateAndTimeString];
-                            NSIndexPath* indexPath=[arrayOfMarked objectAtIndex:i];
-                            
-                            AudioDetails* audioDetails = [app.transferredListArray objectAtIndex:indexPath.row];
-                            NSString* fileName = audioDetails.fileName;
-                            self.navigationItem.title=self.currentViewName;
-                            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
-                            [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
-                            self.navigationItem.leftBarButtonItem = nil;
-                            //                            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
-                            isMultipleFilesActivated=NO;
-                            toolBarAdded=NO;
-                            [db updateAudioFileStatus:@"RecordingDelete" fileName:fileName dateAndTime:dateAndTimeString];
-                            [app deleteFile:fileName];
-                            [app deleteFile:[NSString stringWithFormat:@"%@backup",fileName]];
+                        dispatch_async(dispatch_get_main_queue(), ^(void) {
                             
                             
-                        }
-                        [arrayOfMarked removeAllObjects];
-                        
-                        [self prepareDataSourceForTableView];
-                        
-                        self.transferredListPredicateArray = [[NSMutableArray alloc] initWithArray:[APIManager sharedManager].transferredListArray];
-                        
-                        self.deletedListPredicateArray = [[NSMutableArray alloc] initWithArray:[APIManager sharedManager].deletedListArray];
-
-                        [self updateSerachBarManually];
-                        
-                        [self.tableView reloadData];
-                        
+                            for (int i=0; i<arrayOfMarked.count; i++)
+                                
+                            {
+                                Database* db=[Database shareddatabase];
+                                APIManager* app=[APIManager sharedManager];
+                                NSString* dateAndTimeString=[app getDateAndTimeString];
+                                NSIndexPath* indexPath=[arrayOfMarked objectAtIndex:i];
+                                
+                                AudioDetails* audioDetails = [app.transferredListArray objectAtIndex:indexPath.row];
+                                NSString* fileName = audioDetails.fileName;
+                                self.navigationItem.title=self.currentViewName;
+                                self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
+                                [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
+                                self.navigationItem.leftBarButtonItem = nil;
+                                //                            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+                                isMultipleFilesActivated=NO;
+                                toolBarAdded=NO;
+                                [db updateAudioFileStatus:@"RecordingDelete" fileName:fileName dateAndTime:dateAndTimeString];
+                                [app deleteFile:fileName];
+                                [app deleteFile:[NSString stringWithFormat:@"%@backup",fileName]];
+                                
+                                
+                            }
+                            [arrayOfMarked removeAllObjects];
+                            
+                            [self prepareDataSourceForTableView];
+                            
+                            self.transferredListPredicateArray = [[NSMutableArray alloc] initWithArray:[APIManager sharedManager].transferredListArray];
+                            
+                            self.deletedListPredicateArray = [[NSMutableArray alloc] initWithArray:[APIManager sharedManager].deletedListArray];
+                            
+                            //                        [self updateSerachBarManually];
+                            
+                            [self.tableView reloadData];
+                            
+                        });
 //                        [self addEmptyVCToSplitVC];
                         
                     }]; //You can use a block here to handle a press on this button
@@ -546,12 +476,121 @@
     
 }
 
+#pragma mark: Serach Controller Methods and Delegates
+-(void)setSearchController
+{
+    
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    [self.serachBarBGView addSubview:self.searchController.searchBar];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.searchBar.delegate = self;
+    //    self.tableView.tableHeaderView = self.searchController.searchBar;
+        self.navigationController.definesPresentationContext = YES;
+    self.searchController.obscuresBackgroundDuringPresentation = NO;
+    self.searchController.hidesNavigationBarDuringPresentation=NO;
+    //    self.navigationController.definesPresentationContext = YES;
+}
+
+
+-(void)prepareForSearchBar
+{
+    
+    [APIManager sharedManager].transferredListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Transferred"];
+    
+    self.transferredListPredicateArray = [APIManager sharedManager].transferredListArray;
+    
+    [APIManager sharedManager].deletedListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Deleted"];
+    
+    self.deletedListPredicateArray = [APIManager sharedManager].deletedListArray;
+    
+    
+}
+
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+    [searchController.searchBar setShowsCancelButton:YES animated:NO];
+    
+    if ([self.searchController.searchBar.text isEqual:@""])
+    {
+        if (segment.selectedSegmentIndex==0)
+        {
+            [APIManager sharedManager].transferredListArray = [[NSMutableArray alloc] initWithArray:self.transferredListPredicateArray];
+        }
+        else
+        {
+            [APIManager sharedManager].deletedListArray = [[NSMutableArray alloc] initWithArray:self.deletedListPredicateArray];
+        }
+        
+        [self.tableView reloadData];
+        
+    }
+    else
+    {
+        NSArray *commonArray = [[NSMutableArray alloc]init];
+        
+        NSArray *predicateResultArray = [[NSMutableArray alloc]init];
+        
+        if (segment.selectedSegmentIndex==0)
+        {
+            commonArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Transferred"];
+        }
+        else
+        {
+            commonArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Deleted"];
+            
+        }
+        
+        NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"fileName CONTAINS [cd] %@", self.searchController.searchBar.text];
+        NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"recordingDate CONTAINS [cd] %@", self.searchController.searchBar.text];
+        //        NSPredicate *predicate3 = [NSPredicate predicateWithFormat:@"uploadStatus CONTAINS [cd] %@", self.searchController.searchBar.text];
+        //        NSPredicate *predicate4 = [NSPredicate predicateWithFormat:@"department CONTAINS [cd] %@", self.searchController.searchBar.text];
+        
+        NSPredicate *mainPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicate1, predicate2]];
+        
+        predicateResultArray = [commonArray filteredArrayUsingPredicate:mainPredicate];
+        
+        if (segment.selectedSegmentIndex==0)
+        {
+            [APIManager sharedManager].transferredListArray = [NSMutableArray arrayWithArray:predicateResultArray];
+        }
+        else
+        {
+            [APIManager sharedManager].deletedListArray = [NSMutableArray arrayWithArray:predicateResultArray];
+            
+        }
+        
+        [self.tableView reloadData];
+    }
+    
+}
 -(void)updateSerachBarManually
 {
     self.searchController.active = YES;
     self.searchController.searchBar.text = self.searchController.searchBar.text;
     
 }
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    searchBar.text = @"";
+    
+    [searchBar resignFirstResponder];
+    
+    [self prepareDataSourceForTableView];
+    
+    [self.tableView reloadData];
+}
+
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    
+    [searchBar resignFirstResponder];
+
+}
+
+
 #pragma mark: Navigation Bar Methods
 
 -(void)popViewController:(id)sender
@@ -591,17 +630,9 @@
 
 -(void)prepareDataSourceForTableView
 {
-    
-    if (segment.selectedSegmentIndex==0)
-    {
         [APIManager sharedManager].transferredListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Transferred"];
-        
-    }
-    if (segment.selectedSegmentIndex==1)
-    {
+    
         [APIManager sharedManager].deletedListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Deleted"];
-        
-    }
 }
 
 
@@ -622,14 +653,13 @@
 
         return [APIManager sharedManager].transferredListArray.count;
     }
-    if (segment.selectedSegmentIndex==1)
+    else
     {
 //        [APIManager sharedManager].deletedListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Deleted"];
 
         return [APIManager sharedManager].deletedListArray.count;
     }
-    else
-    return 0;
+    
     
 }
 
@@ -953,22 +983,26 @@
     
     [self.tableView reloadData];
     
-    [self setAudioDetailOrEmptyViewController:0];
-
-    if (sender.selectedSegmentIndex == 1)
+    if (self.splitViewController.isCollapsed == false) // if not collapsed that is reguler width hnce ipad
     {
-        if ([APIManager sharedManager].deletedListArray.count > 0)
+        [self setAudioDetailOrEmptyViewController:0];
+        
+        if (sender.selectedSegmentIndex == 1)
         {
-            [self setFirstRowSelected];
+            if ([APIManager sharedManager].deletedListArray.count > 0)
+            {
+                [self setFirstRowSelected];
+            }
+        }
+        else
+        {
+            if ([APIManager sharedManager].transferredListArray.count > 0)
+            {
+                [self setFirstRowSelected];
+            }
         }
     }
-    else
-    {
-        if ([APIManager sharedManager].transferredListArray.count > 0)
-        {
-            [self setFirstRowSelected];
-        }
-    }
+   
     
 }
 

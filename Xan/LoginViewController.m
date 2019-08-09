@@ -285,10 +285,13 @@
 //        
 //        [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
         
+        
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"])
         {
             [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"] animated:NO completion:nil];
-//            [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"] animated:NO completion:nil];
+//
+//            [self performSegueWithIdentifier:@"PINLoginToDept" sender:nil];
+
             
         }
         else

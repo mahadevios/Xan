@@ -121,7 +121,6 @@
     NSString* dateAndTimeString = audioDetails.recordingDate;
     NSArray* dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
     
-    
     UILabel* recordingDurationLabel=[cell viewWithTag:102];
     int audioHour= [audioDetails.currentDuration intValue]/(60*60);
     int audioHourByMod= [audioDetails.currentDuration intValue]%(60*60);
@@ -133,7 +132,7 @@
   //  NSLog(@"%@",recordingDurationLabel.text);
     
     UILabel* departmentNameLabel=[cell viewWithTag:103];
-    departmentNameLabel.text = audioDetails.currentDuration;
+    departmentNameLabel.text = audioDetails.department;
     
     UILabel* dateLabel=[cell viewWithTag:104];
     

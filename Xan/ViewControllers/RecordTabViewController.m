@@ -9,6 +9,7 @@
 #import "RecordTabViewController.h"
 #import "AppPreferences.h"
 #import "Constants.h"
+#import "RecordViewController.h"
 
 @interface RecordTabViewController ()
 
@@ -35,16 +36,19 @@
     else
         alertViewController.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] valueForKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
    
+    RecordViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"];
+    
     if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"dismiss"] isEqualToString:@"yes"])
     {
         [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"];
         self.tabBarController.selectedIndex=0;
     }
     else
-        [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:YES completion:nil];
+        [self presentViewController:vc animated:YES completion:nil];
 }
 - (void)didReceiveMemoryWarning
 {
+    
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

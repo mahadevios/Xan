@@ -111,12 +111,13 @@
     [self checkFilesToBePurge];
     
     
-    [self setSplitViewController];
+//    [self setSplitViewController];
     
 //    [self deleteDictation];
     NSLog(@"%@",NSHomeDirectory());
    
-    
+    NSLog(@"tabBarController = %@ ",self.tabBarController);
+
 }
 
 #pragma mark:Split VC delegate
@@ -643,9 +644,10 @@
     }
     else
     {
-        [self.navigationController pushViewController:vc animated:true];
+       
+        [self.navigationController pushViewController:vc animated:false];
     }
- 
+
     
 }
 

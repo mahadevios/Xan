@@ -26,7 +26,12 @@
 - (void)viewDidLoad
 {
     
+    
     [super viewDidLoad];
+    
+    self.definesPresentationContext = true;
+
+    self.extendedLayoutIncludesOpaqueBars = YES;
     
     [self addGestureRecogniser];
     
@@ -43,11 +48,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(validateFileUploadResponse:) name:NOTIFICATION_FILE_UPLOAD_API
                                                object:nil];
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(fileUploadClicked:) name:NOTIFICATION_FILE_UPLOAD_CLICKED
-//                                               object:nil];
-    
+  
     [self setUpNavigationView];
     
     [self setAudioDetailOrEmptyViewController:0];
@@ -55,14 +56,12 @@
     [self setFirstRowSelected];
 
     [self prepareForSearchBar];
-    
-    NSLog(@"1st parent = %@", self.parentViewController);
-    
-    NSLog(@"2nd parent = %@", self.parentViewController.parentViewController);
 
-    NSLog(@"2nd parent = %@", self.parentViewController.parentViewController.parentViewController);
-
-    self.parentViewController.parentViewController;
+    self.searchController.searchBar.text = @"";
+    
+    [self.searchController.searchBar resignFirstResponder];
+    
+    [self.searchController.searchBar setShowsCancelButton:NO animated:NO];
 }
 
 -(void)addGestureRecogniser
@@ -131,76 +130,6 @@
     
 }
 
--(void)setSearchController
-{
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    [self.serachBarBGView addSubview:self.searchController.searchBar];
-    self.searchController.searchResultsUpdater = self;
-    self.searchController.searchBar.delegate = self;
-//    self.tableView.tableHeaderView = self.searchController.searchBar;
-    self.navigationController.definesPresentationContext = YES;
-    self.searchController.obscuresBackgroundDuringPresentation = NO;
-    self.searchController.hidesNavigationBarDuringPresentation=NO;
-    self.navigationController.definesPresentationContext = YES;
-}
-
--(void)prepareForSearchBar
-{
-    APIManager* app = [APIManager sharedManager];
-    Database* db = [Database shareddatabase];
-    if ([self.currentViewName isEqualToString:@"Transferred Today"])
-    {
-        app.todaysFileTransferNamesArray = [db getListOfFileTransfersOfStatus:@"Transferred"];
-        self.genericFilesArray = [[NSMutableArray alloc] initWithArray:app.todaysFileTransferNamesArray];
-        self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:app.todaysFileTransferNamesArray];
-    }
-    else
-    if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
-    {
-        app.awaitingFileTransferNamesArray = [db getListOfFileTransfersOfStatus:@"RecordingComplete"];
-        self.genericFilesArray = [[NSMutableArray alloc] initWithArray:app.awaitingFileTransferNamesArray];
-        self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:app.awaitingFileTransferNamesArray];
-    }
-    else
-    {
-        app.failedTransferNamesArray = [db getListOfFileTransfersOfStatus:@"TransferFailed"];
-        self.genericFilesArray = [[NSMutableArray alloc] initWithArray:app.failedTransferNamesArray];
-        self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:app.failedTransferNamesArray];
-    }
-    
-    
-   
-    
-}
-
-- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
-{
-    if ([self.searchController.searchBar.text isEqual:@""])
-    {
-        self.genericFilesArray = [[NSMutableArray alloc] initWithArray:self.genericFilesPredicateArray];
-
-        [self.tableView reloadData];
-      
-    }
-    else
-    {
-        self.genericFilesArray = [[NSMutableArray alloc]init];
-        NSArray *predicateResultArray =[[NSMutableArray alloc]init];
-        
-        NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"fileName CONTAINS [cd] %@", self.searchController.searchBar.text];
-        NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"recordingDate CONTAINS [cd] %@", self.searchController.searchBar.text];
-        NSPredicate *predicate3 = [NSPredicate predicateWithFormat:@"uploadStatus CONTAINS [cd] %@", self.searchController.searchBar.text];
-        NSPredicate *predicate4 = [NSPredicate predicateWithFormat:@"department CONTAINS [cd] %@", self.searchController.searchBar.text];
-
-        NSPredicate *mainPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicate1, predicate2, predicate3, predicate4]];
-        
-        predicateResultArray = [self.genericFilesPredicateArray filteredArrayUsingPredicate:mainPredicate];
-        
-        self.genericFilesArray = [NSMutableArray arrayWithArray:predicateResultArray];
-        
-        [self.tableView reloadData];
-    }
-}
 
 -(void)setTimer
 {
@@ -478,6 +407,15 @@
             
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
             
+            if (arrayOfMarked.count == self.genericFilesArray.count)
+            {
+                UIBarButtonItem* vc=self.navigationItem.rightBarButtonItem;
+                UIToolbar* view=  vc.customView;
+                NSArray* arr= [view items];
+                UIBarButtonItem* button= [arr objectAtIndex:4];
+                //UIButton* button=  [view viewWithTag:102];
+                [button setTitle:@"Deselect all"];
+            }
 //            longPressAdded=YES;
         }
         
@@ -488,7 +426,9 @@
 {
     if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
     {
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.serachBarBGView removeFromSuperview];
+
+        [self.navigationController popViewControllerAnimated:NO];
     }
     else
     {
@@ -496,6 +436,100 @@
     }
     [self.tabBarController.tabBar setHidden:NO];
 
+}
+
+#pragma mark: Serach Controller Methods and Delegates
+-(void)setSearchController
+{
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    [self.serachBarBGView addSubview:self.searchController.searchBar];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.searchBar.delegate = self;
+    //    self.tableView.tableHeaderView = self.searchController.searchBar;
+    
+
+    self.searchController.obscuresBackgroundDuringPresentation = NO;
+    self.searchController.hidesNavigationBarDuringPresentation=NO;
+    //    self.navigationController.definesPresentationContext = YES;
+}
+
+-(void)prepareForSearchBar
+{
+    APIManager* app = [APIManager sharedManager];
+    Database* db = [Database shareddatabase];
+    if ([self.currentViewName isEqualToString:@"Transferred Today"])
+    {
+        app.todaysFileTransferNamesArray = [db getListOfFileTransfersOfStatus:@"Transferred"];
+        self.genericFilesArray = [[NSMutableArray alloc] initWithArray:app.todaysFileTransferNamesArray];
+        self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:app.todaysFileTransferNamesArray];
+    }
+    else
+        if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
+        {
+            app.awaitingFileTransferNamesArray = [db getListOfFileTransfersOfStatus:@"RecordingComplete"];
+            self.genericFilesArray = [[NSMutableArray alloc] initWithArray:app.awaitingFileTransferNamesArray];
+            self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:app.awaitingFileTransferNamesArray];
+        }
+        else
+        {
+            app.failedTransferNamesArray = [db getListOfFileTransfersOfStatus:@"TransferFailed"];
+            self.genericFilesArray = [[NSMutableArray alloc] initWithArray:app.failedTransferNamesArray];
+            self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:app.failedTransferNamesArray];
+        }
+    
+    
+    
+    
+}
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+    [searchController.searchBar setShowsCancelButton:YES animated:NO];
+
+    if ([self.searchController.searchBar.text isEqual:@""])
+    {
+        self.genericFilesArray = [[NSMutableArray alloc] initWithArray:self.genericFilesPredicateArray];
+        
+        [self.tableView reloadData];
+        
+    }
+    else
+    {
+        self.genericFilesArray = [[NSMutableArray alloc]init];
+        NSArray *predicateResultArray =[[NSMutableArray alloc]init];
+        
+        NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"fileName CONTAINS [cd] %@", self.searchController.searchBar.text];
+        NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"recordingDate CONTAINS [cd] %@", self.searchController.searchBar.text];
+        NSPredicate *predicate3 = [NSPredicate predicateWithFormat:@"uploadStatus CONTAINS [cd] %@", self.searchController.searchBar.text];
+        NSPredicate *predicate4 = [NSPredicate predicateWithFormat:@"department CONTAINS [cd] %@", self.searchController.searchBar.text];
+        
+        NSPredicate *mainPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicate1, predicate2, predicate3, predicate4]];
+        
+        predicateResultArray = [self.genericFilesPredicateArray filteredArrayUsingPredicate:mainPredicate];
+        
+        self.genericFilesArray = [NSMutableArray arrayWithArray:predicateResultArray];
+        
+        [self.tableView reloadData];
+    }
+}
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    searchBar.text = @"";
+    
+    [searchBar resignFirstResponder];
+    
+    [self prepareDataSourceForTableView];
+    
+    [self.tableView reloadData];
+}
+
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    
+    [searchBar resignFirstResponder];
+    
 }
 
 #pragma mark: tableView delegates adn datasource
@@ -694,7 +728,7 @@
 
     if (isMultipleFilesActivated)
     {
-
+        
         int uploadFileCount = 0;
         UILabel* deleteStatusLabel=[cell viewWithTag:105];
         AudioDetails *audioDetails= [app.awaitingFileTransferNamesArray objectAtIndex:indexPath.row];
@@ -716,22 +750,20 @@
             UIToolbar* view=  vc.customView;
             NSArray* arr= [view items];
             UIBarButtonItem* button= [arr objectAtIndex:4];
-            //UIButton* button=  [view viewWithTag:102];
-            
             [button setTitle:@"Deselect all"];
         }
-//        if (arrayOfMarked.count == app.awaitingFileTransferNamesArray.count-uploadFileCount)
-//
-//        {
-//            UIBarButtonItem* vc=self.navigationItem.rightBarButtonItem;
-//            UIToolbar* view=  vc.customView;
-//            NSArray* arr= [view items];
-//            UIBarButtonItem* button= [arr objectAtIndex:4];
-//            //UIButton* button=  [view viewWithTag:102];
-//
-//            [button setTitle:@"Deselect all"];
-//        }
-
+        //        if (arrayOfMarked.count == app.awaitingFileTransferNamesArray.count-uploadFileCount)
+        //
+        //        {
+        //            UIBarButtonItem* vc=self.navigationItem.rightBarButtonItem;
+        //            UIToolbar* view=  vc.customView;
+        //            NSArray* arr= [view items];
+        //            UIBarButtonItem* button= [arr objectAtIndex:4];
+        //            //UIButton* button=  [view viewWithTag:102];
+        //
+        //            [button setTitle:@"Deselect all"];
+        //        }
+        
         if (cell.accessoryType == UITableViewCellAccessoryNone && (![deleteStatusLabel.text containsString:@"Uploading"]))
         {
             
@@ -761,9 +793,8 @@
             
             [arrayOfMarked removeObject:indexPath];
             
-            
             selectedCountLabel.text=[NSString stringWithFormat:@"%lu",(unsigned long)arrayOfMarked.count];
-
+            
             UIBarButtonItem* vc=self.navigationItem.rightBarButtonItem;
             
             UIToolbar* view=  vc.customView;
@@ -775,7 +806,7 @@
             [button setTitle:@"Select all"];
             
         }
-    
+        
         if(arrayOfMarked.count > 0)
         {
             //Show upload files button
@@ -791,83 +822,83 @@
             [self hideAndShowUploadButton:NO];
         }
     }
-else//to disaalow single row while that row is uploading
-    if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
-    {
-        UILabel* deleteStatusLabel=[cell viewWithTag:105];
-
-        if(([deleteStatusLabel.text containsString:@"Uploading"]))
+    else//to disaalow single row while that row is uploading
+        if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
         {
-            alertController = [UIAlertController alertControllerWithTitle:@"Alert"
-                                                                  message:@"File is in use"
-                                                           preferredStyle:UIAlertControllerStyleAlert];
-            actionDelete = [UIAlertAction actionWithTitle:@"Ok"
-                                                    style:UIAlertActionStyleDefault
-                                                  handler:^(UIAlertAction * action)
-                            {
-                                [alertController dismissViewControllerAnimated:YES completion:nil];
-                            }]; //You can use a block here to handle a press on this button
-            [alertController addAction:actionDelete];
+            UILabel* deleteStatusLabel=[cell viewWithTag:105];
             
-            
-           
-            [self presentViewController:alertController animated:YES completion:nil];
-
-        }
-        else
-        {
-//            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-
-            if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
+            if(([deleteStatusLabel.text containsString:@"Uploading"]))
             {
-//                if (detailVC == nil)
-//                {
-                    detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
-
-//                }
-                detailVC.selectedRow=indexPath.row ;
-                detailVC.selectedView=self.currentViewName;
-                [self presentViewController:detailVC animated:YES completion:nil];
-//                self.tableView.allowsMultipleSelection = NO;
-            
+                alertController = [UIAlertController alertControllerWithTitle:@"Alert"
+                                                                      message:@"File is in use"
+                                                               preferredStyle:UIAlertControllerStyleAlert];
+                actionDelete = [UIAlertAction actionWithTitle:@"Ok"
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction * action)
+                                {
+                                    [alertController dismissViewControllerAnimated:YES completion:nil];
+                                }]; //You can use a block here to handle a press on this button
+                [alertController addAction:actionDelete];
+                
+                
+                
+                [self presentViewController:alertController animated:YES completion:nil];
+                
             }
             else
             {
-                [self setAudioDetailOrEmptyViewController:indexPath.row];
-
+                //            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+                
+                if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
+                {
+                    //                if (detailVC == nil)
+                    //                {
+                    detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
+                    
+                    //                }
+                    detailVC.selectedRow=indexPath.row ;
+                    detailVC.selectedView=self.currentViewName;
+                    [self.navigationController presentViewController:detailVC animated:YES completion:nil];
+                    //                self.tableView.allowsMultipleSelection = NO;
+                    
+                }
+                else
+                {
+                    [self setAudioDetailOrEmptyViewController:indexPath.row];
+                    
+                }
+                
             }
-           
-         }
-
-        
-    }
-    else
-    if ([self.currentViewName isEqualToString:@"Transferred Today"])
-    {
-        if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
-        {
-            AudioDetailsViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
-            vc.selectedRow=indexPath.row ;
-            vc.selectedView=self.currentViewName;
-            [self.navigationController presentViewController:vc animated:YES completion:nil];
-            //                self.tableView.allowsMultipleSelection = NO;
+            
             
         }
         else
-        {
-            [self setAudioDetailOrEmptyViewController:indexPath.row];
-            
-        }
-    }
-    else
-    {
-        cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-
-        AudioDetailsViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
-        vc.selectedRow=indexPath.row ;
-        vc.selectedView=self.currentViewName;
-        [self.navigationController presentViewController:vc animated:YES completion:nil];
-    }
+            if ([self.currentViewName isEqualToString:@"Transferred Today"])
+            {
+                if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
+                {
+                    AudioDetailsViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
+                    vc.selectedRow=indexPath.row ;
+                    vc.selectedView=self.currentViewName;
+                    [self.navigationController presentViewController:vc animated:YES completion:nil];
+                    //                self.tableView.allowsMultipleSelection = NO;
+                    
+                }
+                else
+                {
+                    [self setAudioDetailOrEmptyViewController:indexPath.row];
+                    
+                }
+            }
+            else
+            {
+                cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+                
+                AudioDetailsViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
+                vc.selectedRow=indexPath.row ;
+                vc.selectedView=self.currentViewName;
+                [self.navigationController presentViewController:vc animated:YES completion:nil];
+            }
 
 }
 
@@ -944,7 +975,7 @@ else//to disaalow single row while that row is uploading
 
 -(void)setFirstRowSelected
 {
-    if (self.splitViewController != nil) // for ipad reguler width reguler height
+    if (self.splitViewController != nil && self.splitViewController.isCollapsed == false) // collapsed false hence ipad hence ser first row selected
     {
         
         if ([self.currentViewName isEqualToString:@"Awaiting Transfer"] && self.genericFilesArray.count >0)
@@ -1390,7 +1421,11 @@ else//to disaalow single row while that row is uploading
         [arrayOfMarked removeAllObjects];
         APIManager* app=[APIManager sharedManager];
         Database* db=[Database shareddatabase];
-        self.genericFilesArray = [db getListOfFileTransfersOfStatus:@"RecordingComplete"];
+        
+        if ([self.searchController.searchBar.text isEqualToString:@""])  // to avoid selection of other than search files
+        {
+            self.genericFilesArray = [db getListOfFileTransfersOfStatus:@"RecordingComplete"];
+        }
 
         for (NSInteger i = 0; i < self.genericFilesArray.count; ++i)
         {
@@ -1412,7 +1447,11 @@ else//to disaalow single row while that row is uploading
             selectedCountLabel.text=[NSString stringWithFormat:@"%ld",arrayOfMarked.count];
 
         }
-        [self prepareDataSourceForTableView];
+        
+        if ([self.searchController.searchBar.text isEqualToString:@""])  // to avoid selection of other than search files
+        {
+            [self prepareDataSourceForTableView];
+        }
         [self.tableView reloadData];
     }
     else

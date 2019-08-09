@@ -77,16 +77,32 @@
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isLoadedFirstTime"];
     
-    MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
+//    MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
+    
     
     [[Database shareddatabase] setDepartment];//to insert default department for imported files
     
-    [self dismissViewControllerAnimated:true completion:nil];
+//    [[[self presentingViewController] presentingViewController] dismissViewControllerAnimated:true completion:nil];
+//
+//    [[self presentingViewController] dismissViewControllerAnimated:true completion:nil];
+//
+//    [self dismissViewControllerAnimated:true completion:nil];
+
     
-    [[self presentingViewController] dismissViewControllerAnimated:true completion:nil];
+    UIViewController *presentingVC = self.presentingViewController;
     
-    [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
+    while (presentingVC.presentingViewController)
+    {
+        presentingVC = presentingVC.presentingViewController;
+    }
     
+    [presentingVC dismissViewControllerAnimated:YES completion:NULL];
+//    [self.presentingViewController.presentingViewController.presentingViewController dismissViewControllerAnimated:false completion:nil];
+
+    //[[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
+    
+    
+    //
 }
 
 - (void) checkAndDismissViewController
