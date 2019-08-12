@@ -31,16 +31,19 @@
     // Dispose of any resources that can be recreated.
 }
 
+//-(void)viewWillAppear:(BOOL)animated
+//{
+//   
+//}
 -(void)viewDidAppear:(BOOL)animated
 {
     
     if ([self.isSplashScreenPresented isEqualToString:@""] || self.isSplashScreenPresented == nil)
     {
-         [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SplashScreenViewController"] animated:NO completion:nil];
+        [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SplashScreenViewController"] animated:NO completion:nil];
         
         self.isSplashScreenPresented = @"yes";
     }
-   
 //    [self performSegueWithIdentifier:@"SP" sender:self];
 }
 /*

@@ -16,6 +16,7 @@
 #import "SpeechRecognitionViewController.h"
 #import <AVKit/AVKit.h>
 #import "UIColor+ApplicationColors.h"
+#import "Constants.h"
 
 #define IMPEDE_PLAYBACK NO
 extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSType outputFormat, Float64 outputSampleRate);
@@ -334,6 +335,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                             
                             [self dismissViewControllerAnimated:YES completion:nil];
                             
+                            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_RECORD_DISMISSED object:nil];
+
+                            
                         }]; //You can use a block here to handle a press on this button
         [alertController addAction:actionDelete];
         
@@ -347,6 +351,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                             [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
                             
                             [self dismissViewControllerAnimated:YES completion:nil];
+                            
+                            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_RECORD_DISMISSED object:nil];
+
                         }]; //You can use a block here to handle a press on this button
         [alertController addAction:actionCancel];
         
@@ -637,6 +644,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
     
     [self dismissViewControllerAnimated:YES completion:nil];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_RECORD_DISMISSED object:nil];
+
 }
 //addCircleViews
 #pragma mark: Add custom CircleViews
@@ -1243,6 +1253,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             {
                 [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
                 [self dismissViewControllerAnimated:YES completion:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_RECORD_DISMISSED object:nil];
+
                 
             }
         }
@@ -1274,6 +1286,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                 {
                                     [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
                                     [self dismissViewControllerAnimated:YES completion:nil];
+                                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_RECORD_DISMISSED object:nil];
+
                                 }
                                 
                             }]; //You can use a block here to handle a press on this button
@@ -1418,6 +1432,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     {
         [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
         [self dismissViewControllerAnimated:YES completion:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_RECORD_DISMISSED object:nil];
+
     }
     
     
@@ -1884,6 +1900,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [AppPreferences sharedAppPreferences].recordNewOffline = YES;
     
     [self dismissViewControllerAnimated:NO completion:nil];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_RECORD_DISMISSED object:nil];
+
     //[self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:NO completion:nil];
     
 }
@@ -1926,6 +1945,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                                        recordingNew=NO;
                                                        
                                                        [self dismissViewControllerAnimated:YES completion:nil];
+                                                       
+                                                       [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_RECORD_DISMISSED object:nil];
+
                                                    });
                                     
                                     
@@ -2191,6 +2213,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
             [self dismissViewControllerAnimated:YES completion:nil];
             
+//              [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_RECORD_DISMISSED object:nil];
+            
         });
         
 
@@ -2210,9 +2234,12 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         [sliderTimer invalidate];
 
         [player stop];
-        
+     
         [self dismissViewControllerAnimated:YES completion:nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_RECORD_DISMISSED object:nil];
 
+  
     }
     
 }
@@ -2868,6 +2895,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                         {
                             [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];//for recordtabarControlr ref to dismiss current view
                             [self dismissViewControllerAnimated:YES completion:nil];
+                            
+                            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_RECORD_DISMISSED object:nil];
+
 
                         }
                         

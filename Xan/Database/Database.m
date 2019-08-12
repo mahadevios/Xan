@@ -666,7 +666,6 @@ static Database *db;
     NSString *dbPath=[db getDatabasePath];
     sqlite3_stmt *statement,*statement1,*statement2,*statement3,*statement4;
     sqlite3* feedbackAndQueryTypesDB;
-    NSMutableDictionary* dict=[[NSMutableDictionary alloc]init];
     NSMutableArray* listArray=[[NSMutableArray alloc]init];
     NSString* RecordItemName,*RecordCreatedDate,*Department,*TransferStatus,*CurrentDuration,*transferDate,*deleteStatus,*dictationStatus;
     NSString *query3;
@@ -675,7 +674,7 @@ static Database *db;
     
     dateAndTimeString=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
 
-    if ([status isEqualToString:@"Transferred"])
+    if ([status isEqualToString:@"Transferred"]) // like is for todays transfer
     {
                query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where (TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') and TransferDate LIKE '%@%%') order by TransferDate desc",status,dateAndTimeString];
 //         query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where (TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') and TransferDate LIKE '%@%%') order by TransferDate desc",status,dateAndTimeString];
@@ -815,14 +814,28 @@ static Database *db;
                     //NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
                 {}
                 
+                
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                NSDate *recordCreatedDate = [dateFormatter dateFromString:RecordCreatedDate];
+                NSDate *transferDateY = [dateFormatter dateFromString:transferDate];
+//                NSDate *deleteDate = [dateFormatter dateFromString:Date];
+                
+                
+                [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+                NSString *recordCreatedDateString = [dateFormatter stringFromDate:recordCreatedDate];
+                NSString *transferDateString = [dateFormatter stringFromDate:transferDateY];
+//                NSString *deleteDateString = [dateFormatter stringFromDate:deleteDate];
+                
                 AudioDetails *audioDetails = [AudioDetails new];
                 
+                
                 audioDetails.fileName = RecordItemName;
-                audioDetails.recordingDate = RecordCreatedDate;
+                audioDetails.recordingDate = recordCreatedDateString;
                 audioDetails.department = Department;
                 audioDetails.uploadStatus = TransferStatus;
                 audioDetails.currentDuration = CurrentDuration;
-                audioDetails.transferDate = transferDate;
+                audioDetails.transferDate = transferDateString;
                 audioDetails.deleteStatus = deleteStatus;
                 audioDetails.dictationStatus = dictationStatus;
                 
@@ -1340,7 +1353,6 @@ static Database *db;
     NSString *dbPath=[db getDatabasePath];
     sqlite3_stmt *statement,*statement1,*statement2;
     sqlite3* feedbackAndQueryTypesDB;
-    NSMutableDictionary* dict=[[NSMutableDictionary alloc]init];
     NSMutableArray* listArray=[[NSMutableArray alloc]init];
     NSString* RecordItemName,*Date,*Department,*RecordCreateDate,*status,*transferDate,*duration;
     NSString* query3,*statusQuery;
@@ -1429,13 +1441,27 @@ static Database *db;
                 {
                 }
                 
+
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                NSDate *recordCreatedDate = [dateFormatter dateFromString:RecordCreateDate];
+                NSDate *transferDateY = [dateFormatter dateFromString:transferDate];
+                NSDate *deleteDate = [dateFormatter dateFromString:Date];
+
+                
+                [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+                NSString *recordCreatedDateString = [dateFormatter stringFromDate:recordCreatedDate];
+                NSString *transferDateString = [dateFormatter stringFromDate:transferDateY];
+                NSString *deleteDateString = [dateFormatter stringFromDate:deleteDate];
+
+                
                 audioDetails.fileName = RecordItemName;
                 audioDetails.department = Department;
-                audioDetails.recordingDate = RecordCreateDate;
-                audioDetails.transferDate = transferDate;
+                audioDetails.recordingDate = recordCreatedDateString;
+                audioDetails.transferDate = transferDateString;
                 audioDetails.currentDuration = duration;
                 audioDetails.uploadStatus = status;
-                audioDetails.deleteDate = Date;
+                audioDetails.deleteDate = deleteDateString;
                 
 //                dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:RecordItemName,@"RecordItemName",Date,@"Date",Department,@"Department",RecordCreateDate,@"RecordCreateDate",status,@"status",transferDate,@"TransferDate",duration,@"CurrentDuration", nil];
 //                [listArray addObject:dict];

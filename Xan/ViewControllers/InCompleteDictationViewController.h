@@ -12,10 +12,14 @@
 #import "AppPreferences.h"
 #import "Constants.h"
 
-@interface InCompleteDictationViewController : UIViewController
+@interface InCompleteDictationViewController : UIViewController<UISearchBarDelegate, UISearchResultsUpdating>
 {
     APIManager* app;
     Database* db;
 }
+@property (weak, nonatomic) IBOutlet UIView *serachBarBGView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) UISearchController *searchController;
+@property (strong, nonatomic) NSMutableArray* inCompleteListPredicateArray;
+
 @end

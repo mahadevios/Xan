@@ -77,6 +77,7 @@
 #define NOTIFICATION_SEND_COMMENT_API               @"commentNotification"
 #define NOTIFICATION_FILE_UPLOAD_CLICKED            @"fileUploadClicked"
 #define NOTIFICATION_STOP_VRS                       @"stopVRS"
+#define NOTIFICATION_RECORD_DISMISSED               @"recordDismissed"
 
 //Settimg Constants
 

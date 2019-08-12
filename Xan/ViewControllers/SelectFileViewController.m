@@ -156,15 +156,15 @@
         
         timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
         
-        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+//        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
         
-        NSDate *date = [dateFormatter dateFromString:[dateAndTimeArray objectAtIndex:0]];
+//        NSDate *date = [dateFormatter dateFromString:[dateAndTimeArray objectAtIndex:0]];
         
         // Convert date object into desired format
-        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
-        NSString *newDateString = [dateFormatter stringFromDate:date];
+//        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+//        NSString *newDateString = [dateFormatter stringFromDate:date];
         
-        dateLabel.text=[NSString stringWithFormat:@"%@",newDateString];
+        dateLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
         
         timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
         
