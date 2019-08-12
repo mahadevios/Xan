@@ -85,8 +85,10 @@
 -(void)viewWillAppear:(BOOL)animated
 {
 //    NSLog(@"navi height = %@", self.navigationController.navigationBar.bounds);
-   
+    [super viewWillAppear:true];
+    
     self.splitViewController.delegate = self;
+    
     [AppPreferences sharedAppPreferences].isRecordView = NO;
 
 //    [UIApplication sharedApplication].idleTimerDisabled = YES;

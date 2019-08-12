@@ -40,6 +40,10 @@
      
     detailVC.delegate = self;
 
+    self.definesPresentationContext = true;
+    
+    self.extendedLayoutIncludesOpaqueBars = YES;
+    
     [self setSearchController];
 
   
@@ -697,7 +701,6 @@
         if (dateAndTimeArray.count>1)
             timeLabel.text=[NSString stringWithFormat:@"Deleted %@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]]];
 
-
     }
 
     int audioHour= [audioDetails.currentDuration intValue]/(60*60);
@@ -713,19 +716,16 @@
     
     if (dateAndTimeArray.count>0)
     {
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-        NSString* dateStr = [NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
-        NSDate *date = [dateFormatter dateFromString:dateStr];
+//        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+//        NSString* dateStr = [NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
+//        NSDate *date = [dateFormatter dateFromString:dateStr];
+//
+//        // Convert date object into desired format
+//        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+//        NSString *newDateString = [dateFormatter stringFromDate:date];
         
-        // Convert date object into desired format
-        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
-        NSString *newDateString = [dateFormatter stringFromDate:date];
-        
-        dateLabel.text = newDateString;
-
-//            dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]]];
-
+        dateLabel.text = [NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];;
     }
     
     if ([arrayOfMarked containsObject:indexPath])

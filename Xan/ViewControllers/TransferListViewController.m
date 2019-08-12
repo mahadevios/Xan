@@ -500,10 +500,10 @@
         
         NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"fileName CONTAINS [cd] %@", self.searchController.searchBar.text];
         NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"recordingDate CONTAINS [cd] %@", self.searchController.searchBar.text];
-        NSPredicate *predicate3 = [NSPredicate predicateWithFormat:@"uploadStatus CONTAINS [cd] %@", self.searchController.searchBar.text];
+//        NSPredicate *predicate3 = [NSPredicate predicateWithFormat:@"uploadStatus CONTAINS [cd] %@", self.searchController.searchBar.text];
         NSPredicate *predicate4 = [NSPredicate predicateWithFormat:@"department CONTAINS [cd] %@", self.searchController.searchBar.text];
         
-        NSPredicate *mainPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicate1, predicate2, predicate3, predicate4]];
+        NSPredicate *mainPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicate1, predicate2, predicate4]];
         
         predicateResultArray = [self.genericFilesPredicateArray filteredArrayUsingPredicate:mainPredicate];
         
@@ -601,22 +601,22 @@
     UILabel* dateLabel=[cell viewWithTag:104];
     
     
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     
     
     if (dateAndTimeArray.count>1)
     {
-        timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
+//        timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
+//
+//
+//        NSDate *date = [dateFormatter dateFromString:[dateAndTimeArray objectAtIndex:0]];
+//
+//        // Convert date object into desired format
+//        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+//        NSString *newDateString = [dateFormatter stringFromDate:date];
         
-        
-        NSDate *date = [dateFormatter dateFromString:[dateAndTimeArray objectAtIndex:0]];
-        
-        // Convert date object into desired format
-        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
-        NSString *newDateString = [dateFormatter stringFromDate:date];
-        
-        dateLabel.text=[NSString stringWithFormat:@"%@",newDateString];
+        dateLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
         
     }
     
@@ -640,15 +640,15 @@
             
                 timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
                 
-                [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-                
-                NSDate *date = [dateFormatter dateFromString:[dateAndTimeArray objectAtIndex:0]];
-                
-                // Convert date object into desired format
-                [dateFormatter setDateFormat:@"dd-MM-yyyy"];
-                NSString *newDateString = [dateFormatter stringFromDate:date];
-                
-                dateLabel.text=[NSString stringWithFormat:@"%@",newDateString];
+//                [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+//
+//                NSDate *date = [dateFormatter dateFromString:[dateAndTimeArray objectAtIndex:0]];
+//
+//                // Convert date object into desired format
+//                [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+//                NSString *newDateString = [dateFormatter stringFromDate:date];
+            
+                dateLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
 
                 timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
 

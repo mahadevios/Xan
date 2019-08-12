@@ -41,6 +41,9 @@
     
     forTableViewObj=[[PopUpCustomView alloc]init];
     
+//    self.definesPresentationContext = true;
+    
+//    self.extendedLayoutIncludesOpaqueBars = YES;
     
     if (self.splitViewController == nil)
     {
@@ -206,16 +209,16 @@
             filenameLabel.text = audioDetails.fileName;
         }
         
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        NSString* dateStr = audioDetails.recordingDate;
-        NSDate *date = [dateFormatter dateFromString:dateStr];
+//        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//        NSString* dateStr = audioDetails.recordingDate;
+//        NSDate *date = [dateFormatter dateFromString:dateStr];
+//
+//        // Convert date object into desired format
+//        [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+//        NSString *newDateString = [dateFormatter stringFromDate:date];
         
-        // Convert date object into desired format
-        [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
-        NSString *newDateString = [dateFormatter stringFromDate:date];
-        
-        dictatedOnLabel.text = newDateString;
+        dictatedOnLabel.text = audioDetails.recordingDate;;
         //    dictatedOnLabel.text=[audiorecordDict valueForKey:@"RecordCreatedDate"];
         
         NSString* departmentName = audioDetails.department;
@@ -227,15 +230,15 @@
         
         //    transferDateLabel.text=[audiorecordDict valueForKey:@"TransferDate"];
         
-        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//        
+//        NSDate *transferDate = [dateFormatter dateFromString:audioDetails.transferDate];
+//        
+//        // Convert date object into desired format
+//        [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+//        NSString *newTransferDateString = [dateFormatter stringFromDate:transferDate];
         
-        NSDate *transferDate = [dateFormatter dateFromString:audioDetails.uploadStatus];
-        
-        // Convert date object into desired format
-        [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
-        NSString *newTransferDateString = [dateFormatter stringFromDate:transferDate];
-        
-        transferDateLabel.text = newTransferDateString;
+        transferDateLabel.text = audioDetails.transferDate;
         
         if ([self.selectedView isEqualToString:@"Transfer Failed"])
         {
@@ -1292,16 +1295,16 @@
     
     if (dateAndTimeArray.count>0)
     {
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-        NSString* dateStr = [dateAndTimeArray objectAtIndex:0];
-        NSDate *date = [dateFormatter dateFromString:dateStr];
+//        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+//        NSString* dateStr = [dateAndTimeArray objectAtIndex:0];
+//        NSDate *date = [dateFormatter dateFromString:dateStr];
+//
+//        // Convert date object into desired format
+//        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+//        NSString *newDateString = [dateFormatter stringFromDate:date];
         
-        // Convert date object into desired format
-        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
-        NSString *newDateString = [dateFormatter stringFromDate:date];
-        
-        vc.existingAudioDate = newDateString;
+        vc.existingAudioDate = [dateAndTimeArray objectAtIndex:0];
         
     }
     
