@@ -33,7 +33,7 @@
     
     AudioDetailsViewController* detailVC;
     
-    
+    BOOL searchBecomeResponsderFromUploadAlert;
     
     
 
