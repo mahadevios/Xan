@@ -445,9 +445,6 @@
     [self.serachBarBGView addSubview:self.searchController.searchBar];
     self.searchController.searchResultsUpdater = self;
     self.searchController.searchBar.delegate = self;
-    //    self.tableView.tableHeaderView = self.searchController.searchBar;
-    
-
     self.searchController.obscuresBackgroundDuringPresentation = NO;
     self.searchController.hidesNavigationBarDuringPresentation=NO;
     //    self.navigationController.definesPresentationContext = YES;
@@ -888,7 +885,7 @@
                     //                }
                     detailVC.selectedRow=indexPath.row ;
                     detailVC.selectedView=self.currentViewName;
-                    [self.navigationController presentViewController:detailVC animated:YES completion:nil];
+                    [self presentViewController:detailVC animated:YES completion:nil];
                     //                self.tableView.allowsMultipleSelection = NO;
                     
                 }

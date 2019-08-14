@@ -45,5 +45,8 @@
 @property (weak, nonatomic) IBOutlet UIView *transferFailedCountView;
 @property (weak, nonatomic) IBOutlet UILabel *transferFailedCountLabel;
 @property(nonatomic, strong)NSMutableArray* VRSDocFilesArray;
+@property (weak, nonatomic) IBOutlet UIView *subTransferredView;
+@property (weak, nonatomic) IBOutlet UIView *subAwaitingView;
+@property (weak, nonatomic) IBOutlet UIView *subVRSView;
 
 @end
