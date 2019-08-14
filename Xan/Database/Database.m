@@ -326,7 +326,7 @@ static Database *db;
                 
                 // [app.feedOrQueryDetailMessageArray addObject:[NSString stringWithUTF8String:message]];
                companyId=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
-                [departmentNameArray addObject:companyId];
+               [departmentNameArray addObject:companyId];
                 
             }
         }
@@ -363,6 +363,65 @@ static Database *db;
     return departmentNameArray;
 }
 
+-(NSMutableArray*)getDepartMentObjList
+{
+    Database *db=[Database shareddatabase];
+    NSString *dbPath=[db getDatabasePath];
+    sqlite3_stmt *statement;
+    sqlite3* feedbackAndQueryTypesDB;
+    NSMutableArray* departmentNameArray=[[NSMutableArray alloc]init];
+    //    NSString *query3=[NSString stringWithFormat:@"Select DepartMentName from DepartMentList Where UserId=%d"];
+    
+    NSString *query3=[NSString stringWithFormat:@"Select * from DepartMentList"];
+    
+    if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
+    {
+        if (sqlite3_prepare_v2(feedbackAndQueryTypesDB, [query3 UTF8String], -1, &statement, NULL) == SQLITE_OK)// 2. Prepare the query
+        {
+            while (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                DepartMent* obj=[[DepartMent alloc]init];
+
+                // [app.feedOrQueryDetailMessageArray addObject:[NSString stringWithUTF8String:message]];
+                obj.Id=sqlite3_column_int(statement, 0);
+                
+                obj.departmentName=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 1)];
+                
+                [departmentNameArray addObject:obj];
+            }
+        }
+        else
+        {
+            //NSLog(@"Can't preapre query due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+        }
+    }
+    else
+    {
+        //NSLog(@"can't open db due error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    if (sqlite3_finalize(statement) == SQLITE_OK)
+    {
+        //NSLog(@"statement is finalized");
+    }
+    else
+    {
+    }
+    //NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    
+    
+    if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
+    {
+        //NSLog(@"db is closed");
+    }
+    else
+    {
+        //NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    
+    return departmentNameArray;
+}
 
 -(NSString*)getfileNameFromDictationID:(NSString*)mobileDictationIdVal
 {

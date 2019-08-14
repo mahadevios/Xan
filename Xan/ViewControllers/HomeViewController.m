@@ -24,7 +24,7 @@
 
 @implementation HomeViewController
 
-@synthesize transferredView,transferFailedView,awaitingTransferView,failedCountLabel,VRSDOCFilesView,VRSFilesCountLabel,VRSDocFilesArray;
+@synthesize transferredView,transferFailedView,awaitingTransferView,failedCountLabel,VRSDOCFilesView,VRSFilesCountLabel,VRSDocFilesArray, subVRSView,subAwaitingView,subTransferredView;
 
 #pragma mark: View Delegate And Associate methods
 
@@ -45,20 +45,24 @@
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
     
     transferFailedView.layer.cornerRadius = 4.0f;
-    transferFailedView.layer.borderColor = [UIColor colorWithRed:75/255.0 green:101/255.0 blue:132/255.0 alpha:1.0].CGColor;
-    transferFailedView.layer.borderWidth = 1.0;
+//    transferFailedView.layer.borderColor = [UIColor colorWithRed:75/255.0 green:101/255.0 blue:132/255.0 alpha:1.0].CGColor;
+//    transferFailedView.layer.borderWidth = 1.0;
     
     transferredView.layer.cornerRadius = 4.0f;
-    transferredView.layer.borderColor = [UIColor colorWithRed:75/255.0 green:101/255.0 blue:132/255.0 alpha:1.0].CGColor;
-    transferredView.layer.borderWidth = 1.0;
+//    transferredView.layer.borderColor = [UIColor colorWithRed:75/255.0 green:101/255.0 blue:132/255.0 alpha:1.0].CGColor;
+//    transferredView.layer.borderWidth = 1.0;
+    subTransferredView.layer.cornerRadius = 4.0f;
     
     awaitingTransferView.layer.cornerRadius = 4.0f;
-    awaitingTransferView.layer.borderColor = [UIColor colorWithRed:75/255.0 green:101/255.0 blue:132/255.0 alpha:1.0].CGColor;
-    awaitingTransferView.layer.borderWidth = 1.0;
+//    awaitingTransferView.layer.borderColor = [UIColor colorWithRed:75/255.0 green:101/255.0 blue:132/255.0 alpha:1.0].CGColor;
+//    awaitingTransferView.layer.borderWidth = 1.0;
+    subAwaitingView.layer.cornerRadius = 4.0f;
     
     VRSDOCFilesView.layer.cornerRadius = 4.0f;
-    VRSDOCFilesView.layer.borderColor = [UIColor colorWithRed:75/255.0 green:101/255.0 blue:132/255.0 alpha:1.0].CGColor;
-    VRSDOCFilesView.layer.borderWidth = 1.0;
+//    VRSDOCFilesView.layer.borderColor = [UIColor colorWithRed:75/255.0 green:101/255.0 blue:132/255.0 alpha:1.0].CGColor;
+//    VRSDOCFilesView.layer.borderWidth = 1.0;
+    VRSDOCFilesView.layer.cornerRadius = 4.0f;
+    
     // tap gesture recognisers for four title views
     transferredTodayViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
     awaitingViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
