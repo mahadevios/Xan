@@ -481,11 +481,41 @@
     
     
 }
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    NSLog(@"text = %@", searchText);
+     NSLog(@"text = %@", searchText);
+}
+
+-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+     NSLog(@"text = %@", searchBar);
+    NSLog(@"text = %@", searchBar);
+}
+
+-(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    if (!searchBecomeResponsderFromUploadAlert)
+    {
+        return YES;
+    }
+    else
+    {
+       searchBecomeResponsderFromUploadAlert = NO;
+       return NO;
+    }
+    
+}
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
+    
     [searchController.searchBar setShowsCancelButton:YES animated:NO];
 
+    [self clearSelectedArrays];
+    
+    [self updateUIAfterMultipleFilesUploadClicked];
+    
     if ([self.searchController.searchBar.text isEqual:@""])
     {
         self.genericFilesArray = [[NSMutableArray alloc] initWithArray:self.genericFilesPredicateArray];
@@ -1288,30 +1318,20 @@
                                             style:UIAlertActionStyleDefault
                                           handler:^(UIAlertAction * action)
                     {
+                        
                         dispatch_async(dispatch_get_main_queue(), ^(void) {
-                            
-                       
-                        isMultipleFilesActivated = NO;
-                        self.tableView.allowsMultipleSelection = NO; // for ipad
+                        
+                        [self updateUIAfterMultipleFilesUploadClicked];
 
                         NSMutableArray* aarayOfMarkedCopy=[[NSMutableArray alloc]init];
                         for (int i=0; i<arrayOfMarked.count; i++)
-                            
                         {
-                            isMultipleFilesActivated=NO;
 
                             APIManager* app=[APIManager sharedManager];
                             NSIndexPath* indexPath=[arrayOfMarked objectAtIndex:i];
                             //[aarayOfMarkedCopy addObject:[arrayOfMarked objectAtIndex:i]];
                             AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
                             NSString* fileName = audioDetails.fileName;
-                            
-                            self.navigationItem.title=self.currentViewName;
-                            self.navigationItem.rightBarButtonItem = nil;
-                            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
-                            self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-
-                            toolBarAdded=NO;
                             
                             NSString* transferStatus = audioDetails.uploadStatus;
 
@@ -1327,19 +1347,22 @@
                             [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:fileName];
                             
                         }
-                        [arrayOfMarked removeAllObjects];//array of marked is for to get marked cells(objects),got the file names from arrayof marked,update the db hence remove all objects,and rload table
-                        //[self.tableView reloadData];
+                       
                         [aarayOfMarkedCopy addObjectsFromArray:self.checkedIndexPath];
                         
-                        [self.checkedIndexPath removeAllObjects];
-                        
+                        [self clearSelectedArrays];
+                       
                         [self prepareDataSourceForTableView]; // get the updated data(i.e. searched and long press uploaded) and after getting that data update predicate array with the updated data so when serach bar get clear "genericFilesArray" will get appropriate data
                         
                         self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:self.genericFilesArray];
-
-                        [self updateSerachBarManually];
                             
+                        [self updateSerachBarManually]; // to update the search bar
+                       
                         [self.tableView reloadData];
+              
+                        [self.searchController.searchBar becomeFirstResponder];
+                 
+                            
 //                            [self updateSerachBarManually];
                         for (int i=0; i<aarayOfMarkedCopy.count; i++)
                         {
@@ -1352,8 +1375,6 @@
                                 
                             });
                         }
-                        isMultipleFilesActivated=NO;
-                        self.tableView.allowsMultipleSelection = NO; // for ipad
 
                              });
                     }]; //You can use a block here to handle a press on this button
@@ -1366,42 +1387,29 @@
                     {
                         [alertController dismissViewControllerAnimated:YES completion:nil];
 
-                        self.navigationItem.title=self.currentViewName;
-                        self.navigationItem.rightBarButtonItem = nil;
+                        [self updateUIAfterMultipleFilesUploadClicked];
+
+                        [self clearSelectedArrays];
                         
-                        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
-                        self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-
-                        isMultipleFilesActivated=NO;
-                        self.tableView.allowsMultipleSelection = NO; // for ipad
-                        toolBarAdded=NO;
-
-                        [self.checkedIndexPath removeAllObjects];
-                        [arrayOfMarked removeAllObjects];
                         [self prepareDataSourceForTableView];
                         [self.tableView reloadData];
 
                     }]; //You can use a block here to handle a press on this button
     [alertController addAction:actionCancel];
+    
+    searchBecomeResponsderFromUploadAlert = YES;
     [self presentViewController:alertController animated:YES completion:nil];
+        
         
     }
     
     
     else
     {
-        self.navigationItem.title=self.currentViewName;
-        self.navigationItem.rightBarButtonItem = nil;
+        [self updateUIAfterMultipleFilesUploadClicked];
         
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
-        self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-
-        isMultipleFilesActivated=NO;
-        self.tableView.allowsMultipleSelection = NO; // for ipad
-        toolBarAdded=NO;
+        [self clearSelectedArrays];
         
-        [self.checkedIndexPath removeAllObjects];
-        [arrayOfMarked removeAllObjects];
         [self prepareDataSourceForTableView];
         [self.tableView reloadData];
 
@@ -1409,6 +1417,24 @@
     }
 
     
+}
+
+-(void)updateUIAfterMultipleFilesUploadClicked
+{
+    isMultipleFilesActivated = NO;
+    self.tableView.allowsMultipleSelection = NO; // for ipad
+    self.navigationItem.title=self.currentViewName;
+    self.navigationItem.rightBarButtonItem = nil;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+    toolBarAdded=NO;
+}
+
+-(void)clearSelectedArrays
+{
+    [self.checkedIndexPath removeAllObjects];
+    [arrayOfMarked removeAllObjects];//array of marked is for to get marked cells(objects),got the file names from arrayof marked,update the db hence remove all objects,and rload table
+    //[self.tableView reloadData];
 }
 
 -(void)selectAllFiles:(UIBarButtonItem*)sender

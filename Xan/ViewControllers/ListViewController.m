@@ -88,20 +88,11 @@
 {
     self.currentViewName = @"List";
 
-    self.navigationItem.title = @"List";
-    
-    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
-    
-    [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
-    self.navigationItem.leftBarButtonItem = nil;
-    
     [self.checkedIndexPath removeAllObjects];
     
     [arrayOfMarked removeAllObjects];
-    
-    isMultipleFilesActivated = NO;
-    
-    toolBarAdded = NO;
+
+    [self updateUIAfterMultipleFilesDeleteClicked];
     
 //    [segment setSelectedSegmentIndex:0];
 
@@ -368,18 +359,12 @@
     else
     {
         sender.title=@"Select all";
-        //  self.navigationItem.title=self.currentViewName;
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
-        //        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
-        [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
-        isMultipleFilesActivated=NO;
-        [self.checkedIndexPath removeAllObjects];
-        [arrayOfMarked removeAllObjects];
-        selectedCountLabel.text=[NSString stringWithFormat:@"%ld",arrayOfMarked.count];
         
-        toolBarAdded=NO;
-        self.navigationItem.title = @"List";
-        self.navigationItem.leftBarButtonItem = nil;
+        [self updateUIAfterMultipleFilesDeleteClicked];
+        
+        selectedCountLabel.text=[NSString stringWithFormat:@"%ld",arrayOfMarked.count];
+       
+        [self clearSelectedArrays];
         [self.tableView reloadData];
         
         
@@ -412,6 +397,7 @@
                         
                         dispatch_async(dispatch_get_main_queue(), ^(void) {
                             
+                            [self updateUIAfterMultipleFilesDeleteClicked];
                             
                             for (int i=0; i<arrayOfMarked.count; i++)
                                 
@@ -423,28 +409,21 @@
                                 
                                 AudioDetails* audioDetails = [app.transferredListArray objectAtIndex:indexPath.row];
                                 NSString* fileName = audioDetails.fileName;
-                                self.navigationItem.title=self.currentViewName;
-                                self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
-                                [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
-                                self.navigationItem.leftBarButtonItem = nil;
-                                //                            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
-                                isMultipleFilesActivated=NO;
-                                toolBarAdded=NO;
+                                
+                                
                                 [db updateAudioFileStatus:@"RecordingDelete" fileName:fileName dateAndTime:dateAndTimeString];
                                 [app deleteFile:fileName];
                                 [app deleteFile:[NSString stringWithFormat:@"%@backup",fileName]];
                                 
                                 
                             }
-                            [arrayOfMarked removeAllObjects];
+                            [self clearSelectedArrays];
                             
                             [self prepareDataSourceForTableView];
                             
                             self.transferredListPredicateArray = [[NSMutableArray alloc] initWithArray:[APIManager sharedManager].transferredListArray];
                             
                             self.deletedListPredicateArray = [[NSMutableArray alloc] initWithArray:[APIManager sharedManager].deletedListArray];
-                            
-                            //                        [self updateSerachBarManually];
                             
                             [self.tableView reloadData];
                             
@@ -461,16 +440,8 @@
                     {
                         [alertController dismissViewControllerAnimated:YES completion:nil];
                         
-                        
-                        self.navigationItem.title=self.currentViewName;
-                        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
-                        self.navigationItem.leftBarButtonItem = nil;
-                        [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
-                        isMultipleFilesActivated=NO;
-                        toolBarAdded=NO;
-                        
-                        [arrayOfMarked removeAllObjects];
-                        [self.checkedIndexPath removeAllObjects];
+                        [self updateUIAfterMultipleFilesDeleteClicked];
+                        [self clearSelectedArrays];
                         [self.tableView reloadData];
                         
                     }]; //You can use a block here to handle a press on this button
@@ -478,6 +449,25 @@
     [self presentViewController:alertController animated:YES completion:nil];
     
     
+}
+
+-(void)updateUIAfterMultipleFilesDeleteClicked
+{
+    
+    self.navigationItem.title=self.currentViewName;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
+    self.navigationItem.leftBarButtonItem = nil;
+    [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
+    isMultipleFilesActivated=NO;
+    toolBarAdded=NO;
+    
+}
+
+-(void)clearSelectedArrays
+{
+    [self.checkedIndexPath removeAllObjects];
+    [arrayOfMarked removeAllObjects];//array of marked is for to get marked cells(objects),got the file names from arrayof marked,update the db hence remove all objects,and rload table
+    //[self.tableView reloadData];
 }
 
 #pragma mark: Serach Controller Methods and Delegates
@@ -514,6 +504,10 @@
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
     [searchController.searchBar setShowsCancelButton:YES animated:NO];
+    
+    [self clearSelectedArrays];
+    
+    [self updateUIAfterMultipleFilesDeleteClicked];
     
     if ([self.searchController.searchBar.text isEqual:@""])
     {
@@ -642,10 +636,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    
-   
     return 1;
-   
 }
 
 
@@ -963,22 +954,13 @@
 - (IBAction)segmentChanged:(UISegmentedControl*)sender
 {
     
-    if (sender.selectedSegmentIndex == 1)
-    {
-        self.navigationItem.leftBarButtonItem = nil;
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
-         [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
-        self.navigationItem.title = @"List";
-        [self.checkedIndexPath removeAllObjects];
     
-        [arrayOfMarked removeAllObjects];
-        
-    }
+    [self updateUIAfterMultipleFilesDeleteClicked];
+    
+    [self clearSelectedArrays];
    
     self.segment.selectedSegmentIndex= sender.selectedSegmentIndex;
-    isMultipleFilesActivated = NO;
-    toolBarAdded = NO;
-    
+   
     [self prepareDataSourceForTableView];
     
     [self.tableView reloadData];
