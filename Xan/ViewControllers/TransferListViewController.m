@@ -332,12 +332,30 @@
         }
     }
     
+//    BOOL isUploadedFileObjectForGenericFound = false;
+//
+//    for (AudioDetails* audioDetails in self.genericFilesArray)
+//    {
+//        if ([audioDetails.fileName isEqualToString:fileName])
+//        {
+//            [self.genericFilesArray removeObject:audioDetails];
+//
+//            isUploadedFileObjectForGenericFound = true;
+//        }
+//
+//        if (isUploadedFileObjectForGenericFound)
+//        {
+//            break;
+//        }
+//    }
+    
     [self prepareDataSourceForTableView];
     
+    self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:self.genericFilesArray];
+
     [self.tableView reloadData];//to update table agter getting file trnasfer response
     
     [self updateSerachBarManually];
-    
     
     if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
     {
@@ -361,7 +379,7 @@
     {
         if ([self.searchController.searchBar.text isEqualToString:@""] || self.searchController.searchBar.text == nil)
         {
-            self.genericFilesArray = [[Database shareddatabase] getListOfFileTransfersOfStatus:@"RecordingComplete"] ;
+//            self.genericFilesArray = [[Database shareddatabase] getListOfFileTransfersOfStatus:@"RecordingComplete"] ;
             
             [self.tableView reloadRowsAtIndexPaths:progressIndexPathArray withRowAnimation:UITableViewRowAnimationNone];
        
@@ -749,7 +767,7 @@
 {
     //NSDictionary* awaitingFileTransferDict;
     UITableViewCell* cell=[tableView cellForRowAtIndexPath:indexPath];
-    APIManager* app=[APIManager sharedManager];
+//    APIManager* app=[APIManager sharedManager];
 
    
 
@@ -758,10 +776,10 @@
         
         int uploadFileCount = 0;
         UILabel* deleteStatusLabel=[cell viewWithTag:105];
-        AudioDetails *audioDetails= [app.awaitingFileTransferNamesArray objectAtIndex:indexPath.row];
+        AudioDetails *audioDetails= [self.genericFilesArray objectAtIndex:indexPath.row];
         NSString* fileName = audioDetails.fileName;
         
-        for (NSInteger i = 0; i < app.awaitingFileTransferNamesArray.count; ++i)
+        for (NSInteger i = 0; i < self.genericFilesArray.count; ++i)
         {
             NSIndexPath* indexPath= [NSIndexPath indexPathForRow:i inSection:0];
             UITableViewCell* cell= [self.tableView cellForRowAtIndexPath:indexPath];
@@ -883,8 +901,9 @@
                     detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
                     
                     //                }
-                    detailVC.selectedRow=indexPath.row ;
-                    detailVC.selectedView=self.currentViewName;
+                    AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
+                    detailVC.audioDetails = audioDetails;
+                    detailVC.selectedView = self.currentViewName;
                     [self presentViewController:detailVC animated:YES completion:nil];
                     //                self.tableView.allowsMultipleSelection = NO;
                     
@@ -905,7 +924,8 @@
                 if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
                 {
                     AudioDetailsViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
-                    vc.selectedRow=indexPath.row ;
+                    AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
+                    vc.audioDetails = audioDetails;
                     vc.selectedView=self.currentViewName;
                     [self.navigationController presentViewController:vc animated:YES completion:nil];
                     //                self.tableView.allowsMultipleSelection = NO;
@@ -922,7 +942,8 @@
                 cell.selectionStyle = UITableViewCellSelectionStyleDefault;
                 
                 AudioDetailsViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
-                vc.selectedRow=indexPath.row ;
+                AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
+                vc.audioDetails = audioDetails;
                 vc.selectedView=self.currentViewName;
                 [self.navigationController presentViewController:vc animated:YES completion:nil];
             }

@@ -25,7 +25,7 @@
     UIAlertAction *actionDelete;
     UIAlertAction *actionCancel;
     BOOL deleted;
-    AudioDetails* audioDetails;
+    
     UISlider* audioRecordSlider;
     UIView* sliderPopUpView;
     UIView* popupView;
@@ -40,6 +40,7 @@
 }
 @property(nonatomic)long selectedRow;
 @property(nonatomic,strong)NSString* selectedView;
+@property(nonatomic,strong)AudioDetails* audioDetails;
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *transferDictationButton;

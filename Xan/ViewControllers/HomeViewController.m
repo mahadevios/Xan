@@ -233,12 +233,24 @@
         
         if (transferFailedCount > 9)
         {
-            self.transferFailedCountLabel.text = [NSString stringWithFormat:@"9+ Failed"];
+            self.transferFailedCountLabel.text = [NSString stringWithFormat:@"9+"];
+
+            self.transferFailedCountView.alpha = 1;
+            [UIView animateWithDuration:.7 delay:0.5 options:UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse animations:^{
+                self.transferFailedCountView.alpha = 0;
+            } completion:nil];
+            
 
         }
         else
         {
-            self.transferFailedCountLabel.text = [NSString stringWithFormat:@"%d Failed", transferFailedCount];
+            self.transferFailedCountLabel.text = [NSString stringWithFormat:@"%d", transferFailedCount];
+
+            self.transferFailedCountView.alpha = 1;
+            [UIView animateWithDuration:.7 delay:0 options:UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse animations:^{
+                self.transferFailedCountView.alpha = 0;
+            } completion:nil];
+           
 
         }
     }
