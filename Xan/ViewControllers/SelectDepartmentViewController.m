@@ -116,8 +116,8 @@
 {
     [self.view endEditing:YES];
     
-    UITableViewCell* cell=[tableview cellForRowAtIndexPath:indexPath];
-    UILabel* departmentNameLabel= [cell viewWithTag:101];
+    UITableViewCell* cell = [tableview cellForRowAtIndexPath:indexPath];
+    UILabel* departmentNameLabel = [cell viewWithTag:101];
   
    
     
