@@ -152,7 +152,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadNextFile) name:NOTIFICATION_UPLOAD_NEXT_FILE object:nil];
 
-
        return YES;
 }
 
@@ -409,6 +408,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 //        ThreadStateEndInterruption();
 //    }
 }
+
 
 #pragma mark -Audio Session Route Change Notification
 

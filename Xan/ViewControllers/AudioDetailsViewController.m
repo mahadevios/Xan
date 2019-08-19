@@ -118,7 +118,7 @@
         {
 //            audioDetails = [app.awaitingFileTransferNamesArray objectAtIndex:self.selectedRow];
             
-            if (![self.audioDetails.uploadStatus isEqualToString:@"TransferFailed"])
+            if (![self.audioDetails.uploadStatus isEqualToString:@"Transfer Failed"])
             {
                 if (isDeleteEditTransferButtonsRemovedAfterTransfer == false)
                 {
@@ -138,11 +138,11 @@
                 
                 NSString* tarnsferStatus = self.audioDetails.uploadStatus;
                 
-                if ([self.audioDetails.deleteStatus isEqualToString:@"Delete"])//to check wether transferred file is deleted
+                if ([self.audioDetails.deleteStatus isEqualToString:@"Deleted"])//to check wether transferred file is deleted
                 {
                     NSString* transferStatusString;
                     
-                    if ([tarnsferStatus isEqualToString:@"TransferFailed"])
+                    if ([tarnsferStatus isEqualToString:@"Transfer Failed"])
                     {
                         transferStatusString = @"Transfer Failed";
                     }
@@ -306,7 +306,7 @@
     
     UILabel* transferStatusLabel=[self.view viewWithTag:505];
 
-    if ([tarnsferStatus isEqualToString:@"TransferFailed"])
+    if ([tarnsferStatus isEqualToString:@"Transfer Failed"])
     {
         transferStatusLabel.text = @"Transfer Failed";
     }
@@ -624,7 +624,7 @@
 
 - (IBAction)playRecordingButtonPressed:(id)sender
 {
-    if ([self.audioDetails.deleteStatus isEqualToString:@"Delete"])//to check wether transferred file is deleted
+    if ([self.audioDetails.deleteStatus isEqualToString:@"Deleted"])//to check wether transferred file is deleted
     {
         alertController = [UIAlertController alertControllerWithTitle:@"File does not exist"
                                                               message:@""
@@ -916,7 +916,7 @@
                                         [AppPreferences sharedAppPreferences].fileUploading=YES;
                                     }
                                     
-                                    if ([transferStatus isEqualToString:@"TransferFailed"])
+                                    if ([transferStatus isEqualToString:@"Transfer Failed"])
                                     {
                                         int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
                                         

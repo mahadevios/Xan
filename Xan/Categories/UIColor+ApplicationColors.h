@@ -10,8 +10,10 @@
 
 @interface UIColor (ApplicationColors)
 
-+(UIColor*)appOrangeColor;
+//+(UIColor*)appOrangeColor;
 +(UIColor*)appNavyBlueColor;
++(UIColor*)appColor;
+
 +(UIColor*)CGreenColor;
 +(UIColor*)CBlackColor;
 +(UIColor*)CRedColor;
@@ -20,5 +22,12 @@
 +(UIColor*)CBlueRecordingOnColor;
 +(UIColor*)CUploadLaterLGaryColor;
 +(UIColor*)CUploadLaterDGaryColor;
+
+
++(UIColor*)darkHomeColor;
+
++(UIColor*)lightHomeColor;
+
++(UIColor*)uploadLaterColor;
 
 @end

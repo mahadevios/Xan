@@ -929,7 +929,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             
             startRecordingImageView  = [startRecordingView viewWithTag:403];
             startRecordingView.backgroundColor=[UIColor CLightBlueColor];
-            startRecordingView.layer.borderColor = [UIColor appNavyBlueColor].CGColor;
+            startRecordingView.layer.borderColor = [UIColor appColor].CGColor;
             startRecordingView.layer.borderWidth = 1;
             
             [startRecordingImageView setHidden:NO];
@@ -1165,7 +1165,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [stopLabel setHidden:YES];
     
     startRecordingView.backgroundColor=[UIColor CLightBlueColor];
-    startRecordingView.layer.borderColor = [UIColor appNavyBlueColor].CGColor;
+    startRecordingView.layer.borderColor = [UIColor appColor].CGColor;
     startRecordingView.layer.borderWidth = 1;
 
     UIImageView* startRecordingImageView= [startRecordingView viewWithTag:403];
@@ -1364,7 +1364,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     
     startRecordingView.backgroundColor=[UIColor CLightBlueColor];
-    startRecordingView.layer.borderColor = [UIColor appNavyBlueColor].CGColor;
+    startRecordingView.layer.borderColor = [UIColor appColor].CGColor;
     startRecordingView.layer.borderWidth = 1;
     UIImageView* startRecordingImageView= [startRecordingView viewWithTag:403];
     
@@ -1807,7 +1807,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UIButton* uploadLaterButton=[[UIButton alloc]initWithFrame:CGRectMake(animatedView.frame.size.width*0.1, uploadAudioButton.frame.origin.y+uploadAudioButton.frame.size.height+10, uploadAudioButton.frame.size.width*0.48, 36)];
 //    uploadLaterButton.backgroundColor=[UIColor colorWithRed:64/255.0 green:64/255.0 blue:64/255.0 alpha:1];
-    uploadLaterButton.backgroundColor=[UIColor CUploadLaterLGaryColor];
+    uploadLaterButton.backgroundColor=[UIColor uploadLaterColor];
 
     [uploadLaterButton setTitle:@"Upload Later" forState:UIControlStateNormal];
     uploadLaterButton.titleLabel.font = [UIFont systemFontOfSize: 15 weight:UIFontWeightSemibold];
@@ -1817,7 +1817,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UIButton* recordNewButton=[[UIButton alloc]initWithFrame:CGRectMake(uploadLaterButton.frame.origin.x+uploadLaterButton.frame.size.width+uploadAudioButton.frame.size.width*0.04, uploadAudioButton.frame.origin.y+uploadAudioButton.frame.size.height+10, uploadAudioButton.frame.size.width*0.48, 36)];
 //    recordNewButton.backgroundColor=[UIColor colorWithRed:64/255.0 green:64/255.0 blue:64/255.0 alpha:1];
-    recordNewButton.backgroundColor=[UIColor CUploadLaterDGaryColor];
+    recordNewButton.backgroundColor=[UIColor lightHomeColor];
     [recordNewButton setTitle:@"Record New" forState:UIControlStateNormal];
     recordNewButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightSemibold];
     [recordNewButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

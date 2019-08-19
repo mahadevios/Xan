@@ -52,7 +52,7 @@
     
     self.navigationTitleLabel.textAlignment = NSTextAlignmentCenter;
     
-    self.navigationTitleLabel.textColor = [UIColor appOrangeColor];
+    self.navigationTitleLabel.textColor = [UIColor whiteColor];
     
     self.navigationTitleLabel.text = @"Text File";
     

@@ -131,8 +131,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
-   
-    
+
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isLoadedFirstTime"];
     
 //    MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];

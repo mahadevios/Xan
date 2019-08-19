@@ -886,6 +886,16 @@ static Database *db;
                 NSString *transferDateString = [dateFormatter stringFromDate:transferDateY];
 //                NSString *deleteDateString = [dateFormatter stringFromDate:deleteDate];
                 
+                if ([deleteStatus isEqualToString:@"Delete"])
+                {
+                    deleteStatus = @"Deleted";
+                }
+                
+                if ([TransferStatus isEqualToString:@"TransferFailed"])
+                {
+                    TransferStatus = @"Transfer Failed";
+                }
+                
                 AudioDetails *audioDetails = [AudioDetails new];
                 
                 

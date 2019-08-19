@@ -244,7 +244,7 @@
     tools.tag=101;
     tools.layer.borderColor = [[UIColor whiteColor] CGColor];
     tools.clipsToBounds = YES;
-    tools.barTintColor = [UIColor appNavyBlueColor];
+    tools.barTintColor = [UIColor appColor];
     tools.translucent = NO;
 
     NSMutableArray *buttons = [[NSMutableArray alloc] initWithCapacity:5];
@@ -270,7 +270,7 @@
     self.navigationItem.leftBarButtonItem=nil;
     UIToolbar *tools1 = [[UIToolbar alloc]
                          initWithFrame:CGRectMake(-70.0f, 0.0f, 80.0f, 44.01f)]; // 44.01 shifts it up 1px for some reason
-    tools1.barTintColor = [UIColor appNavyBlueColor];
+    tools1.barTintColor = [UIColor appColor];
     tools1.translucent = NO;
     tools1.tag=101;
     tools1.layer.borderColor = [[UIColor whiteColor] CGColor];
@@ -529,22 +529,31 @@
         
         NSArray *predicateResultArray = [[NSMutableArray alloc]init];
         
+        NSPredicate *deleteDatePredicate;
+        NSPredicate *transferDatePredicate;
+        
+        NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"fileName CONTAINS [cd] %@", self.searchController.searchBar.text];
+        NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"department CONTAINS [cd] %@", self.searchController.searchBar.text];
+        
+        NSPredicate *mainPredicate;
+        
         if (segment.selectedSegmentIndex==0)
         {
+            
             commonArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Transferred"];
+            transferDatePredicate = [NSPredicate predicateWithFormat:@"transferDate CONTAINS [cd] %@", self.searchController.searchBar.text];
+
+            mainPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicate1, transferDatePredicate, predicate2]];
+
         }
         else
         {
-            commonArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Deleted"];
-            
+           commonArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Deleted"];
+           deleteDatePredicate  = [NSPredicate predicateWithFormat:@"deleteDate CONTAINS [cd] %@", self.searchController.searchBar.text];
+            mainPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicate1, deleteDatePredicate, predicate2]];
+
         }
-        
-        NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"fileName CONTAINS [cd] %@", self.searchController.searchBar.text];
-        NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"recordingDate CONTAINS [cd] %@", self.searchController.searchBar.text];
-        //        NSPredicate *predicate3 = [NSPredicate predicateWithFormat:@"uploadStatus CONTAINS [cd] %@", self.searchController.searchBar.text];
-        //        NSPredicate *predicate4 = [NSPredicate predicateWithFormat:@"department CONTAINS [cd] %@", self.searchController.searchBar.text];
-        
-        NSPredicate *mainPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicate1, predicate2]];
+  
         
         predicateResultArray = [commonArray filteredArrayUsingPredicate:mainPredicate];
         
@@ -866,6 +875,19 @@
             detailVC.listSelected = segment.selectedSegmentIndex;
             //NSLog(@"%ld",vc.listSelected);
             detailVC.selectedRow = indexPath.row;
+            
+            AudioDetails* audioDetails;
+            if (self.segment.selectedSegmentIndex == 0)
+            {
+                audioDetails = [app.transferredListArray objectAtIndex:indexPath.row];
+            }
+            else
+            {
+                audioDetails = [app.deletedListArray objectAtIndex:indexPath.row];
+            }
+            
+            detailVC.audioDetails = audioDetails;
+            
             [self.navigationController presentViewController:detailVC animated:YES completion:nil];
         }
         else
@@ -883,6 +905,17 @@
             //NSLog(@"%ld",vc.listSelected);
             detailVC.selectedRow = indexPath.row;
             
+            AudioDetails* audioDetails;
+            if (self.segment.selectedSegmentIndex == 0)
+            {
+              audioDetails = [app.transferredListArray objectAtIndex:indexPath.row];
+            }
+            else
+            {
+                audioDetails = [app.deletedListArray objectAtIndex:indexPath.row];
+            }
+            
+            detailVC.audioDetails = audioDetails;
             [detailVC setAudioDetails];
             
             [self.splitViewController showDetailViewController:detailVC sender:self];
