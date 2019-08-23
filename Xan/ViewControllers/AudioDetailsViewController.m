@@ -16,6 +16,7 @@
 #import "APIManager.h"
 #import "AppPreferences.h"
 #import "Constants.h"
+#import "UIColor+ApplicationColors.h"
 
 #define IMPEDE_PLAYBACK NO
 
@@ -40,6 +41,9 @@
     
     forTableViewObj=[[PopUpCustomView alloc]init];
     
+//    self.definesPresentationContext = true;
+    
+//    self.extendedLayoutIncludesOpaqueBars = YES;
     
     if (self.splitViewController == nil)
     {
@@ -112,9 +116,9 @@
         
         if ([self.selectedView isEqualToString:@"Awaiting Transfer"])
         {
-            audiorecordDict = [app.awaitingFileTransferNamesArray objectAtIndex:self.selectedRow];
+//            audioDetails = [app.awaitingFileTransferNamesArray objectAtIndex:self.selectedRow];
             
-            if (![[audiorecordDict valueForKey:@"TransferStatus"] isEqualToString:@"TransferFailed"])
+            if (![self.audioDetails.uploadStatus isEqualToString:@"Transfer Failed"])
             {
                 if (isDeleteEditTransferButtonsRemovedAfterTransfer == false)
                 {
@@ -130,15 +134,15 @@
             {
                 [transferDictationButton setTitle:@"Resend" forState:UIControlStateNormal];
                 
-                audiorecordDict= [app.todaysFileTransferNamesArray objectAtIndex:self.selectedRow];
+//                audioDetails = [app.todaysFileTransferNamesArray objectAtIndex:self.selectedRow];
                 
-                NSString* tarnsferStatus = [audiorecordDict valueForKey:@"TransferStatus"];
+                NSString* tarnsferStatus = self.audioDetails.uploadStatus;
                 
-                if ([[audiorecordDict valueForKey:@"DeleteStatus"] isEqualToString:@"Delete"])//to check wether transferred file is deleted
+                if ([self.audioDetails.deleteStatus isEqualToString:@"Deleted"])//to check wether transferred file is deleted
                 {
                     NSString* transferStatusString;
                     
-                    if ([tarnsferStatus isEqualToString:@"TransferFailed"])
+                    if ([tarnsferStatus isEqualToString:@"Transfer Failed"])
                     {
                         transferStatusString = @"Transfer Failed";
                     }
@@ -168,7 +172,7 @@
                 {
                     [transferDictationButton setTitle:@"Resend" forState:UIControlStateNormal];
                     
-                    audiorecordDict= [app.failedTransferNamesArray objectAtIndex:self.selectedRow];
+//                    audioDetails = [app.failedTransferNamesArray objectAtIndex:self.selectedRow];
                     
                     [self setTransferStatus];
                 }
@@ -177,7 +181,7 @@
                     {
                         //[transferDictationButton setTitle:@"Transfer Recording" forState:UIControlStateNormal];
                         
-                        audiorecordDict = [[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray objectAtIndex:self.selectedRow];
+                        self.audioDetails = [[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray objectAtIndex:self.selectedRow];
                         
                         [[self.view viewWithTag:507] setHidden:NO];
                         
@@ -193,7 +197,7 @@
         
         if ([self.selectedView isEqualToString:@"Imported"])
         {
-            filenameLabel.text= [[audiorecordDict valueForKey:@"RecordItemName"] stringByDeletingPathExtension];
+            filenameLabel.text= [self.audioDetails.fileName stringByDeletingPathExtension];
             
             dictatedHeadingLabel.text=@"Imported On";
             
@@ -202,39 +206,39 @@
         }
         else
         {
-            filenameLabel.text=[audiorecordDict valueForKey:@"RecordItemName"];
+            filenameLabel.text = self.audioDetails.fileName;
         }
         
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        NSString* dateStr = [audiorecordDict valueForKey:@"RecordCreatedDate"];
-        NSDate *date = [dateFormatter dateFromString:dateStr];
+//        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//        NSString* dateStr = audioDetails.recordingDate;
+//        NSDate *date = [dateFormatter dateFromString:dateStr];
+//
+//        // Convert date object into desired format
+//        [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+//        NSString *newDateString = [dateFormatter stringFromDate:date];
         
-        // Convert date object into desired format
-        [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
-        NSString *newDateString = [dateFormatter stringFromDate:date];
-        
-        dictatedOnLabel.text = newDateString;
+        dictatedOnLabel.text = self.audioDetails.recordingDate;;
         //    dictatedOnLabel.text=[audiorecordDict valueForKey:@"RecordCreatedDate"];
         
-        NSString* departmentName = [audiorecordDict valueForKey:@"Department"];
+        NSString* departmentName = self.audioDetails.department;
         
         departmentLabel.text=departmentName;
         
-        [audiorecordDict setValue:departmentName forKey:@"DepartmentCopy"];
+        self.audioDetails.departmentCopy = departmentName;
         
         
         //    transferDateLabel.text=[audiorecordDict valueForKey:@"TransferDate"];
         
-        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//        
+//        NSDate *transferDate = [dateFormatter dateFromString:audioDetails.transferDate];
+//        
+//        // Convert date object into desired format
+//        [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+//        NSString *newTransferDateString = [dateFormatter stringFromDate:transferDate];
         
-        NSDate *transferDate = [dateFormatter dateFromString:[audiorecordDict valueForKey:@"TransferDate"]];
-        
-        // Convert date object into desired format
-        [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
-        NSString *newTransferDateString = [dateFormatter stringFromDate:transferDate];
-        
-        transferDateLabel.text = newTransferDateString;
+        transferDateLabel.text = self.audioDetails.transferDate;
         
         if ([self.selectedView isEqualToString:@"Transfer Failed"])
         {
@@ -298,11 +302,11 @@
 
 -(void)setTransferStatus
 {
-    NSString* tarnsferStatus = [audiorecordDict valueForKey:@"TransferStatus"];
+    NSString* tarnsferStatus = self.audioDetails.uploadStatus;
     
     UILabel* transferStatusLabel=[self.view viewWithTag:505];
 
-    if ([tarnsferStatus isEqualToString:@"TransferFailed"])
+    if ([tarnsferStatus isEqualToString:@"Transfer Failed"])
     {
         transferStatusLabel.text = @"Transfer Failed";
     }
@@ -327,7 +331,8 @@
         
         uploadRecordButton.tag = 801;
         
-        uploadRecordButton.backgroundColor=[UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1];
+//        uploadRecordButton.backgroundColor=[UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1];
+        uploadRecordButton.backgroundColor = [UIColor CGreenColor];
         
         [uploadRecordButton setTitle:@"Upload Recording" forState:UIControlStateNormal];
         
@@ -339,15 +344,14 @@
         
         [uploadRecordButton addTarget:self action:@selector(transferDictationButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         
-        
-        
-        
         UIButton* deleteRecordButton = [[UIButton alloc]initWithFrame:CGRectMake(uploadRecordButton.frame.origin.x, uploadRecordButton.frame.origin.y+uploadRecordButton.frame.size.height+12, uploadRecordButton.frame.size.width*0.48, uploadRecordButton.frame.size.height)];
         
         deleteRecordButton.tag = 802;
         
-        deleteRecordButton.backgroundColor=[UIColor colorWithRed:64/255.0 green:64/255.0 blue:64/255.0 alpha:1];
-        
+//        deleteRecordButton.backgroundColor=[UIColor colorWithRed:64/255.0 green:64/255.0 blue:64/255.0 alpha:1];
+
+        deleteRecordButton.backgroundColor=[UIColor CRedColor];
+
         [deleteRecordButton setTitle:@"Delete Recording" forState:UIControlStateNormal];
         
         deleteRecordButton.titleLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightSemibold];
@@ -364,7 +368,9 @@
         
         editRecordButton.tag = 803;
         
-        editRecordButton.backgroundColor=[UIColor colorWithRed:64/255.0 green:64/255.0 blue:64/255.0 alpha:1];
+//        editRecordButton.backgroundColor=[UIColor colorWithRed:64/255.0 green:64/255.0 blue:64/255.0 alpha:1];
+
+        editRecordButton.backgroundColor=[UIColor CBlackColor];
         
         [editRecordButton setTitle:@"Edit Recording" forState:UIControlStateNormal];
         
@@ -404,7 +410,7 @@
     
     
     [transferDictationButton removeFromSuperview];
-    
+
     [deleteDictationButton removeFromSuperview];
     
 }
@@ -534,7 +540,7 @@
                         
                         Database* db=[Database shareddatabase];
                         
-                        NSString* fileName=[audiorecordDict valueForKey:@"RecordItemName"];
+                        NSString* fileName = self.audioDetails.fileName;
                         
                         NSString* dateAndTimeString=[app getDateAndTimeString];
                         
@@ -618,7 +624,7 @@
 
 - (IBAction)playRecordingButtonPressed:(id)sender
 {
-    if ([[audiorecordDict valueForKey:@"DeleteStatus"] isEqualToString:@"Delete"])//to check wether transferred file is deleted
+    if ([self.audioDetails.deleteStatus isEqualToString:@"Deleted"])//to check wether transferred file is deleted
     {
         alertController = [UIAlertController alertControllerWithTitle:@"File does not exist"
                                                               message:@""
@@ -654,7 +660,7 @@
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        NSString* dateStr = [audiorecordDict valueForKey:@"RecordCreatedDate"];
+        NSString* dateStr = self.audioDetails.recordingDate;
         NSDate *date = [dateFormatter dateFromString:dateStr];
         
         // Convert date object into desired format
@@ -668,7 +674,7 @@
         NSString* filName;
         
         
-        filName=[audiorecordDict valueForKey:@"RecordItemName"];
+        filName = self.audioDetails.fileName;
         
         if (!IMPEDE_PLAYBACK)
         {
@@ -820,7 +826,7 @@
 //                                NSString* date = [app getDateAndTimeString];
                                 NSString* date = @"NotApplicable";
                                 
-                                NSString* filName = [audiorecordDict valueForKey:@"RecordItemName"];
+                                NSString* filName = self.audioDetails.fileName;
                                 
                                 isDeleteEditTransferButtonsRemovedAfterTransfer = YES;
                                 
@@ -897,9 +903,9 @@
                                     
                                     APIManager* app = [APIManager sharedManager];
                                     
-                                    NSString* filName = [audiorecordDict valueForKey:@"RecordItemName"];
+                                    NSString* filName = self.audioDetails.fileName;
                                     
-                                    NSString* transferStatus = [audiorecordDict valueForKey:@"TransferStatus"];
+                                    NSString* transferStatus = self.audioDetails.uploadStatus;
                                     
                                     [transferDictationButton setHidden:YES];
                                     
@@ -910,7 +916,7 @@
                                         [AppPreferences sharedAppPreferences].fileUploading=YES;
                                     }
                                     
-                                    if ([transferStatus isEqualToString:@"TransferFailed"])
+                                    if ([transferStatus isEqualToString:@"Transfer Failed"])
                                     {
                                         int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
                                         
@@ -987,7 +993,7 @@
 //                                        NSString* date=[app getDateAndTimeString];
                                         NSString* date = @"NotApplicable";
                                         
-                                        NSString* filName=[audiorecordDict valueForKey:@"RecordItemName"];
+                                        NSString* filName = self.audioDetails.fileName;
                                         
                                         [transferDictationButton setHidden:YES];
                                         
@@ -1042,7 +1048,7 @@
                                     {
                                         APIManager* app=[APIManager sharedManager];
                                         
-                                        NSString* filName=[audiorecordDict valueForKey:@"RecordItemName"];
+                                        NSString* filName = self.audioDetails.fileName;
                                         
 //                                        NSString* date=[app getDateAndTimeString];
                                         NSString* date = @"NotApplicable";
@@ -1056,7 +1062,7 @@
                                         
                                         [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
                                         
-                                        NSString* transferStatus=[audiorecordDict valueForKey:@"TransferStatus"];
+                                        NSString* transferStatus = self.audioDetails.uploadStatus;
                                         
                                         if ([transferStatus isEqualToString:@"Transferred"])
                                         {
@@ -1157,7 +1163,7 @@
     
     radioButton.tag=indexPath.row+100;
     
-    NSString* departmentName = [audiorecordDict valueForKey:@"Department"];
+    NSString* departmentName = self.audioDetails.department;
     
     if ([departmentName isEqualToString:departmentLabel.text])
     {
@@ -1190,7 +1196,7 @@
     
     deptObj.departmentName=departmentNameLanel.text;
     
-    [audiorecordDict setValue:departmentNameLanel.text forKey:@"Department"];
+    self.audioDetails.department = departmentNameLanel.text;
     
     [radioButton setBackgroundImage:[UIImage imageNamed:@"RadioButton"] forState:UIControlStateNormal];
     
@@ -1210,9 +1216,9 @@
     //
     //    [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
     
-    NSString* departmentName = [audiorecordDict valueForKey:@"DepartmentCopy"];
+    NSString* departmentName = self.audioDetails.departmentCopy;
     
-    [audiorecordDict setValue:departmentName forKey:@"Department"];
+    self.audioDetails.department = departmentName;
     
     [popupView removeFromSuperview];
 }
@@ -1224,7 +1230,7 @@
     //
     //    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
     
-    NSString* departmentName = [audiorecordDict valueForKey:@"Department"];
+    NSString* departmentName = self.audioDetails.department;
     
     UILabel* transferredByLabel= [self.view viewWithTag:503];
     
@@ -1236,7 +1242,7 @@
     
     [[Database shareddatabase] updateDepartment:[departmentId longLongValue] fileName:filenameLabel.text];
     
-    [audiorecordDict setValue:departmentName forKey:@"DepartmentCopy"];
+    self.audioDetails.departmentCopy = departmentName;
     
     // set generic object back to orginal dept
     //    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
@@ -1267,9 +1273,9 @@
 -(void)showEditRecordingView
 {
     
-    int audioHour= [[audiorecordDict valueForKey:@"CurrentDuration"] intValue]/(60*60);
+    int audioHour= [self.audioDetails.currentDuration intValue]/(60*60);
     
-    int audioHourByMod= [[audiorecordDict valueForKey:@"CurrentDuration"] intValue]%(60*60);
+    int audioHourByMod= [self.audioDetails.currentDuration intValue]%(60*60);
     
     int audioMinutes = audioHourByMod / 60;
     
@@ -1279,36 +1285,36 @@
     
     InCompleteRecordViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"InCompleteRecordViewController"];
     
-    vc.existingAudioFileName= [audiorecordDict valueForKey:@"RecordItemName"];
+    vc.existingAudioFileName= self.audioDetails.fileName;
     
     vc.audioDuration = audioDuration;
     
-    NSString* dataAndTime = [audiorecordDict valueForKey:@"RecordCreatedDate"];
+    NSString* dataAndTime = self.audioDetails.recordingDate;
     
     NSArray* dateAndTimeArray = [dataAndTime componentsSeparatedByString:@" "];
     
     if (dateAndTimeArray.count>0)
     {
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-        NSString* dateStr = [dateAndTimeArray objectAtIndex:0];
-        NSDate *date = [dateFormatter dateFromString:dateStr];
+//        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+//        NSString* dateStr = [dateAndTimeArray objectAtIndex:0];
+//        NSDate *date = [dateFormatter dateFromString:dateStr];
+//
+//        // Convert date object into desired format
+//        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+//        NSString *newDateString = [dateFormatter stringFromDate:date];
         
-        // Convert date object into desired format
-        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
-        NSString *newDateString = [dateFormatter stringFromDate:date];
-        
-        vc.existingAudioDate = newDateString;
+        vc.existingAudioDate = [dateAndTimeArray objectAtIndex:0];
         
     }
     
-    int audioDurationSeconds = [[audiorecordDict valueForKey:@"CurrentDuration"] intValue];
+    int audioDurationSeconds = [self.audioDetails.currentDuration intValue];
     
     //int roundUpAudioDurationSeconds = ceil(audioDurationSeconds);
     
     vc.audioDurationInSeconds = audioDurationSeconds;
     
-    vc.existingAudioDepartmentName = [audiorecordDict valueForKey:@"Department"];
+    vc.existingAudioDepartmentName = self.audioDetails.department;
     
     vc.isOpenedFromAudioDetails = YES;
     

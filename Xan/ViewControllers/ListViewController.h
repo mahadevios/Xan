@@ -13,7 +13,7 @@
 #import "Constants.h"
 #import "TransferredOrDeletedAudioDetailsViewController.h"
 
-@interface ListViewController : UIViewController<UIGestureRecognizerDelegate,UISplitViewControllerDelegate>
+@interface ListViewController : UIViewController<UIGestureRecognizerDelegate,UISplitViewControllerDelegate,UISearchBarDelegate,UISearchResultsUpdating>
 {
     UIAlertController *alertController;
     UIAlertAction *actionDelete;
@@ -26,6 +26,7 @@
     BOOL collapseDetailViewController;
     TransferredOrDeletedAudioDetailsViewController* detailVC;
     BOOL isShownDetailsView;
+    BOOL searchBecomeResponsderFromUploadAlert;
 }
 - (IBAction)segmentChanged:(id)sender;
 @property (strong, nonatomic) NSMutableArray* checkedIndexPath;
@@ -34,6 +35,11 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segment;
 @property(nonatomic)BOOL longPressAdded;
 @property(nonatomic, strong)NSString* currentViewName;
+@property (strong, nonatomic) UISearchController *searchController;
+
+@property (strong, nonatomic) NSMutableArray* transferredListPredicateArray;
+@property (strong, nonatomic) NSMutableArray* deletedListPredicateArray;
+@property (weak, nonatomic) IBOutlet UIView *serachBarBGView;
 
 
 

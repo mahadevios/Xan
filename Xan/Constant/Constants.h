@@ -30,8 +30,8 @@
 #define  AUTHENTICATE_API                     @"encrdecr_MobileAuthenticate"
 #define  ACCEPT_PIN_API                       @"encrdecr_MobileAcceptPIN"
 #define  VALIDATE_PIN_API                     @"encrdecr_MobileValidatePIN"
-#define  DICTATIONS_INSERT_API                @"encrdecr_MobileDictationsInsert"
-#define  DATA_SYNCHRONISATION_API             @"encrdecr_MobileDataSynchronisation"
+//#define  DICTATIONS_INSERT_API                @"encrdecr_MobileDictationsInsert"
+//#define  DATA_SYNCHRONISATION_API             @"encrdecr_MobileDataSynchronisation"
 //#define  FILE_UPLOAD_API                      @"encrdecr_MobileFileUpload"
 #define  FILE_UPLOAD_API                      @"encrdecr_MobileFileUpload"
 
@@ -77,6 +77,7 @@
 #define NOTIFICATION_SEND_COMMENT_API               @"commentNotification"
 #define NOTIFICATION_FILE_UPLOAD_CLICKED            @"fileUploadClicked"
 #define NOTIFICATION_STOP_VRS                       @"stopVRS"
+#define NOTIFICATION_RECORD_DISMISSED               @"recordDismissed"
 
 //Settimg Constants
 
@@ -99,7 +100,7 @@
 #define MAXIMUM_RECORDING_LIMIT_MESSAGE        @"Recording duration length exceeded,please start new recording for further dictation"
 #define RECORDING_SAVED_MESSAGE                @"Recording duration length exceeded,your recording has been saved in awaiting transfer,please start new recording for further dictation"
 
-#define NO_INTERNET_TITLE_MESSAGE               @"No internet connection!"
+#define NO_INTERNET_TITLE_MESSAGE               @"No Internet Connection!"
 #define NO_INTERNET_DETAIL_MESSAGE              @"Please check your internet connection and try again."
 #define CURRENT_VESRION                        @"currentVersion"
 #define IS_DATE_FORMAT_UPDATED                 @"dateFormatUpdated"
@@ -132,7 +133,7 @@
 
 
 
-#define SHARED_GROUP_IDENTIFIER                @"group.com.coreFlexSolutions.CubeDictate"
+#define SHARED_GROUP_IDENTIFIER                @"group.com.coreflexSolutions.Xan"
 //#define MAC_ID                                 @"e0:2c:b2:eb:5a:8e"
 //#define MAC_ID                                 @"e0:2c:b2:ec:5a:8e"
 

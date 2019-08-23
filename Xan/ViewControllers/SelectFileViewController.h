@@ -10,7 +10,7 @@
 #import "CommonDelegate.h"
 #import "EmptyViewController.h"
 
-@interface SelectFileViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIDocumentInteractionControllerDelegate, UISplitViewControllerDelegate>
+@interface SelectFileViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIDocumentInteractionControllerDelegate, UISplitViewControllerDelegate,UISearchBarDelegate, UISearchResultsUpdating>
 {
     NSTimer* newRequestTimer;
 
@@ -21,5 +21,7 @@
 - (IBAction)backButtonPressed:(id)sender;
 @property(nonatomic, strong)UIAlertController* alertController;
 @property(nonatomic, strong)EmptyViewController* detailVC;
-
+@property (weak, nonatomic) IBOutlet UIView *serachBarBGView;
+@property (strong, nonatomic) UISearchController *searchController;
+@property (strong, nonatomic) NSMutableArray* VRSDocFilesPredicateArray;
 @end

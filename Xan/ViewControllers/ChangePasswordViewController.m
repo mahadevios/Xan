@@ -242,7 +242,7 @@
     {
         if ([pinCode1TextField.text isEqual:@""] || [pinCode2TextField.text isEqual:@""]|| [pinCode3TextField.text isEqual:@""] || [pinCode4TextField.text isEqual:@""])
         {
-            title = @"Please enter valid old PIN code";
+            title = @"Please enter valid old Pin";
             message = @"";
             alertController = [UIAlertController alertControllerWithTitle:title
                                                                   message:message
@@ -261,7 +261,7 @@
         else
         if ([pinCode5TextField.text isEqual:@""] || [pinCode6TextField.text isEqual:@""]|| [pinCode7TextField.text isEqual:@""] || [pinCode8TextField.text isEqual:@""])
         {
-            title = @"Please enter valid new PIN code";
+            title = @"Please enter valid new Pin";
             message = @"";
             alertController = [UIAlertController alertControllerWithTitle:title
                                                                   message:message
@@ -283,8 +283,8 @@
     else
     if ([[AppPreferences sharedAppPreferences].userObj.userPin isEqualToString:oldPin] && [oldPin isEqualToString:newPin])
     {
-        title=@"Old and New PIN Code are same";
-        message=@"Please Enter New PIN Code!";
+        title=@"Old and New Pin are same";
+        message=@"Please Enter New Pin!";
         alertController = [UIAlertController alertControllerWithTitle:title
                                                                                  message:message
                                                                           preferredStyle:UIAlertControllerStyleAlert];
@@ -337,7 +337,7 @@
             hud.minSize = CGSizeMake(150.f, 100.f);
             hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.mode = MBProgressHUDModeIndeterminate;
-            hud.label.text = @"Updating PIN...";
+            hud.label.text = @"Updating Pin...";
             hud.detailsLabel.text = @"Please wait";
             
             NSString*     macId=[Keychain getStringForKey:@"udid"];
@@ -346,7 +346,7 @@
         }
         else
         {
-            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:NO_INTERNET_TITLE_MESSAGE withMessage:NO_INTERNET_DETAIL_MESSAGE withCancelText:nil withOkText:@"OK" withAlertTag:1000];
         }
     
     }
@@ -389,8 +389,8 @@
 //                                                   completion:nil];
         //[self dismissViewControllerAnimated:NO completion:nil];
         
-        alertController = [UIAlertController alertControllerWithTitle:@"PIN code changed successfully"
-                                                              message:@"Please login with new PIN code"
+        alertController = [UIAlertController alertControllerWithTitle:@"Pin changed successfully"
+                                                              message:@"Please login with new Pin"
                                                        preferredStyle:UIAlertControllerStyleAlert];
         actionDelete = [UIAlertAction actionWithTitle:@"Ok"
                                                 style:UIAlertActionStyleDefault
@@ -423,7 +423,7 @@
         if ([responseCodeString intValue]==401 && [oldPin intValue]==0)
         {
             // gotResponse=true;
-            alertController = [UIAlertController alertControllerWithTitle:@"Old PIN is incorrect"
+            alertController = [UIAlertController alertControllerWithTitle:@"Old Pin is incorrect"
                                                                   message:@""
                                                            preferredStyle:UIAlertControllerStyleAlert];
             actionDelete = [UIAlertAction actionWithTitle:@"Ok"
@@ -454,7 +454,7 @@
             if ([responseCodeString intValue]==401 && [pinChangeSuccess intValue]==0 && [oldPin intValue]==1)
             {
                 // gotResponse=true;
-                alertController = [UIAlertController alertControllerWithTitle:@"PIN change failed"
+                alertController = [UIAlertController alertControllerWithTitle:@"Pin change failed"
                                                                       message:@"Please try again!"
                                                                preferredStyle:UIAlertControllerStyleAlert];
                 actionDelete = [UIAlertAction actionWithTitle:@"OK"

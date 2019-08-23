@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AudioDetailsViewController.h"
 
-@interface TransferListViewController : UIViewController<UIGestureRecognizerDelegate,UISplitViewControllerDelegate>
+@interface TransferListViewController : UIViewController<UIGestureRecognizerDelegate,UISplitViewControllerDelegate,UISearchBarDelegate, UISearchResultsUpdating>
 {
 
     UIAlertController *alertController;
@@ -32,6 +32,11 @@
     BOOL suspended;
     
     AudioDetailsViewController* detailVC;
+    
+    BOOL searchBecomeResponsderFromUploadAlert;
+    
+    
+
 }
 @property(nonatomic,strong)NSString* currentViewName;
 
@@ -39,5 +44,14 @@
 
 @property (strong, nonatomic) NSMutableArray* checkedIndexPath;
 
+@property (strong, nonatomic) UISearchController *searchController;
+
+@property (strong, nonatomic) NSMutableArray* genericFilesArray;
+
+@property (strong, nonatomic) NSMutableArray* genericFilesPredicateArray;
+
 @property(nonatomic)BOOL longPressAdded;
+
+@property (weak, nonatomic) IBOutlet UIView *serachBarBGView;
+
 @end

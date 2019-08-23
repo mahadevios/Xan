@@ -30,7 +30,7 @@
     //    [[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
     
    
-   
+
     
 }
 
@@ -84,11 +84,12 @@
     }
     
 
-
 }
+
+
 -(void)checkDeviceRegistration
 {
-    NSString*     macId=[Keychain getStringForKey:@"udid"];
+    NSString*     macId = [Keychain getStringForKey:@"udid"];
     //macId=[NSString stringWithFormat:@"%@1234",macId];
     if ([AppPreferences sharedAppPreferences].isReachable)
     {
@@ -109,6 +110,8 @@
 //        [retryButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 
     }
+    
+    
 }
 
 -(void)addAlertView
@@ -252,8 +255,10 @@
             {
                 
                 RegistrationViewController* regiController=(RegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"RegistrationViewController"];
-                
+
                 [self presentViewController:regiController animated:NO completion:NULL];
+                
+//                 [self performSegueWithIdentifier:@"SPToAcRegi" sender:nil];
                 
             }
             else
@@ -261,8 +266,11 @@
                 {
                     
                     PinRegistrationViewController* regiController=(PinRegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"PinRegistrationViewController"];
-                    
+
                     [self presentViewController:regiController animated:NO completion:NULL];
+                    
+//                    [self performSegueWithIdentifier:@"SPToPINRegi" sender:nil];
+
                     
                 }
                 else
@@ -270,8 +278,11 @@
                     {
                         
                         TandCViewController *viewController = (TandCViewController *)[storyboard instantiateViewControllerWithIdentifier:@"TandCViewController"];
-                        
+
                         [self presentViewController:viewController animated:NO completion:NULL];
+                        
+//                        [self performSegueWithIdentifier:@"SPToTC" sender:nil];
+
                         
                     }
                     else
@@ -280,7 +291,11 @@
                             
                             LoginViewController *viewController = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
                             
+                            LoginViewController *viewController1 = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+
                             [self presentViewController:viewController animated:NO completion:NULL];
+//                            [self performSegueWithIdentifier:@"SPToPINLogin" sender:nil];
+
                             
                         }
                         else

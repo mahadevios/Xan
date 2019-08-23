@@ -61,12 +61,73 @@
     [self.departmentView addGestureRecognizer:departmentViewTapRecogniser];
     [self.practitionerView addGestureRecognizer:practitionerViewTapRecogniser];
     [self.secretaryView addGestureRecognizer:secretaryViewTapRecogniser];
+    
+    _scrollView.alwaysBounceVertical = NO;
+//    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+//    [[NSNotificationCenter defaultCenter]
+//     addObserver:self selector:@selector(orientationChanged:)
+//     name:UIDeviceOrientationDidChangeNotification
+//     object:[UIDevice currentDevice]];
 //    self.navigationController.navigationBar.barTintColor = [UIColor redColor];
 //    self.navigationController.navigationBar.tintColor = [UIColor clearColor];
 
     
 
     // Do any additional setup after loading the view.
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+ 
+//    [self setScrollViewHeight];
+}
+
+- (void) orientationChanged:(NSNotification *)note
+{
+    
+    UIDevice * device = note.object;
+    switch(device.orientation)
+    {
+        case UIDeviceOrientationPortrait:
+            [self.scrollView setContentOffset:
+             CGPointMake(0, -self.scrollView.contentInset.top) animated:YES];
+//             [self setScrollViewHeight];
+            self.scrollView.scrollEnabled = false;
+            /* start special animation */
+            break;
+            
+        case UIDeviceOrientationPortraitUpsideDown:
+            /* start special animation */
+            break;
+        
+            case UIDeviceOrientationLandscapeLeft:
+            self.scrollView.scrollEnabled = true;
+             [self setScrollViewHeight];
+            break;
+            
+            
+        case UIDeviceOrientationLandscapeRight:
+            self.scrollView.scrollEnabled = true;
+             [self setScrollViewHeight];
+            break;
+        default:
+            break;
+    };
+}
+
+-(void)setScrollViewHeight
+{
+    CGRect contentRect = CGRectZero;
+    
+    for (UIView *view in self.contentView.subviews) {
+        contentRect = CGRectUnion(contentRect, view.frame);
+    }
+    
+    double height = contentRect.size.height/2;
+    self.contentViewHeightConstraint.constant = height;
+    
+//    self.scrollView.alwaysBounceVertical = NO;
+//    self.scrollView.contentSize = contentRect.size;
 }
 
 -(void)showHospitalList:(UITapGestureRecognizer*)sender

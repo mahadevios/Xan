@@ -11,13 +11,17 @@
 #import "Constants.h"
 #import "APIManager.h"
 
-@interface SelectDepartmentViewController : UIViewController
+@interface SelectDepartmentViewController : UIViewController<UISearchBarDelegate, UISearchResultsUpdating>
 {
-    NSArray* departmentNameArray;
+    NSMutableArray* departmentNameArray;
+    NSMutableArray* departmentNamesPredicateArray;
+
 //    UIAlertController *alertController;
 //    UIAlertAction *actionDelete;
 //    UIAlertAction *actionCancel;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *serachBarBGView;
+@property (strong, nonatomic) UISearchController *searchController;
 
 @end

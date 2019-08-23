@@ -10,4 +10,6 @@
 
 @interface MainTabBarViewController : UITabBarController
 
+@property(nonatomic, strong) NSString* isSplashScreenPresented;
+
 @end

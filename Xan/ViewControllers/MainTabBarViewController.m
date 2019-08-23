@@ -7,25 +7,45 @@
 //
 
 #import "MainTabBarViewController.h"
-
+#import "AppPreferences.h"
+#import "SplashScreenViewController.h"
 @interface MainTabBarViewController ()
 
 @end
 
 @implementation MainTabBarViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
+    [UITabBarItem.appearance setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]} forState:UIControlStateNormal];
+    [UITabBarItem.appearance setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]} forState:UIControlStateSelected];
+    // [self.view.window.rootViewController dismissViewControllerAnimated:false completion:nil];
+//    [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:true completion:nil];
     // Do any additional setup after loading the view.
     
 }
 
-
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+//-(void)viewWillAppear:(BOOL)animated
+//{
+//   
+//}
+//-(void)viewDidAppear:(BOOL)animated
+//{
+    
+//    if ([self.isSplashScreenPresented isEqualToString:@""] || self.isSplashScreenPresented == nil)
+//    {
+//        [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SplashScreenViewController"] animated:NO completion:nil];
+//        
+//        self.isSplashScreenPresented = @"yes";
+//    }
+//}
 /*
 #pragma mark - Navigation
 

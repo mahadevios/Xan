@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RecordTabViewController : UIViewController
+@interface RecordTabViewController : UIViewController<UINavigationControllerDelegate>
 
 @end

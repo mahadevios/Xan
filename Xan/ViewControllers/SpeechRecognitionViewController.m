@@ -283,14 +283,14 @@
     UIView* keyWindow = [UIApplication sharedApplication].keyWindow;
     
    
-    transcriptionStatusView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.05, -70, self.view.frame.size.width*0.8, 48)];
+    transcriptionStatusView = [[UIView alloc] initWithFrame:CGRectMake(0, -70, self.view.frame.size.width, 55)];
     
     transcriptionStatusView.tag = 3000;
     
    
     transcriptionStatusView.layer.cornerRadius = 4.0;
     
-    transcriptionStatusLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusView.frame.size.width*0.1, 5, transcriptionStatusView.frame.size.width*0.9, 30)];
+    transcriptionStatusLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusView.frame.size.width*0.05, 5, transcriptionStatusView.frame.size.width*0.9, 30)];
     
     transcriptionStatusLabel.font = [UIFont systemFontOfSize:15];
     
@@ -311,7 +311,7 @@
     {
         transcriptionStatusView.frame = CGRectMake(self.view.frame.size.width*0.05, self.view.frame.size.height + 20, self.view.frame.size.width*0.8, 60);  // set animate view at bottom+20 of the view
         
-        timerLabel.frame = CGRectMake(transcriptionStatusLabel.frame.origin.x, 35, transcriptionStatusLabel.frame.size.width, 50);
+        timerLabel.frame = CGRectMake(transcriptionStatusLabel.frame.origin.x, 35, transcriptionStatusLabel.frame.size.width, 55);
         
         transcriptionStatusView.backgroundColor = [UIColor whiteColor];
         
@@ -328,7 +328,7 @@
     }
     else
     {
-        transcriptionStatusView.backgroundColor = [UIColor appOrangeColor];
+        transcriptionStatusView.backgroundColor = [UIColor CGreenColor];
         
     }
     
@@ -357,7 +357,7 @@
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
-                    self.startPauseDocBGView.backgroundColor = [UIColor appOrangeColor];
+                    self.startPauseDocBGView.backgroundColor = [UIColor CGreenColor];
 
                 });
             }
@@ -368,7 +368,7 @@
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-                    self.transcriptionStatusView.frame = CGRectMake(self.view.frame.size.width*0.05, self.view.frame.size.height + moveDownDistance, self.view.frame.size.width*0.9, 48);
+                    self.transcriptionStatusView.frame = CGRectMake(0, self.view.frame.size.height + moveDownDistance, self.view.frame.size.width, 55);
             });
             
         }
@@ -385,7 +385,7 @@
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-                self.transcriptionStatusView.frame = CGRectMake(self.view.frame.size.width*0.05, moveDownDistance, self.view.frame.size.width*0.9, 48);
+                self.transcriptionStatusView.frame = CGRectMake(0, moveDownDistance, self.view.frame.size.width, 55);
             });
             
         }

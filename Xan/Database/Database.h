@@ -126,4 +126,6 @@
 
 -(void)AlterVRSTextFilesTableForDepartmentName;
 
+-(NSMutableArray*)getDepartMentObjList;
+
 @end

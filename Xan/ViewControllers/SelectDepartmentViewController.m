@@ -31,9 +31,67 @@
 {
     self.navigationItem.title = @"Select Department";
     self.navigationItem.hidesBackButton=YES;
-
+    departmentNameArray = [[Database shareddatabase] getDepartMentObjList];
+    [self setSearchController];
+    [self prepareForSearchBar];
 }
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+
+#pragma mark: Serach Controller Methods and Delegates
+-(void)setSearchController
+{
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    [self.serachBarBGView addSubview:self.searchController.searchBar];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.searchBar.delegate = self;
+    self.searchController.obscuresBackgroundDuringPresentation = NO;
+    self.searchController.hidesNavigationBarDuringPresentation=NO;
+    //    self.navigationController.definesPresentationContext = YES;
+}
+-(void)prepareForSearchBar
+{
+    departmentNamesPredicateArray = [[Database shareddatabase] getDepartMentObjList];
+}
+
+-(void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+    [searchController.searchBar setShowsCancelButton:YES animated:NO];
+    
+    if ([self.searchController.searchBar.text isEqual:@""])
+    {
+        
+        departmentNameArray = [[NSMutableArray alloc] initWithArray:departmentNamesPredicateArray];
+        
+        [self.tableView reloadData];
+        
+    }
+    else
+    {
+        NSArray *predicateResultArray = [[NSMutableArray alloc]init];
+
+        NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"departmentName CONTAINS [cd] %@", self.searchController.searchBar.text];
+       
+        //        NSPredicate *predicate3 = [NSPredicate predicateWithFormat:@"uploadStatus CONTAINS [cd] %@", self.searchController.searchBar.text];
+        //        NSPredicate *predicate4 = [NSPredicate predicateWithFormat:@"department CONTAINS [cd] %@", self.searchController.searchBar.text];
+        
+        NSPredicate *mainPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicate1]];
+        
+        predicateResultArray = [departmentNamesPredicateArray filteredArrayUsingPredicate:mainPredicate];
+        
+        departmentNameArray = [NSMutableArray arrayWithArray:predicateResultArray];
+
+        [self.tableView reloadData];
+    }
+}
+
+
+
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    
+    [searchBar resignFirstResponder];
+    
+}- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
@@ -41,8 +99,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    Database* db=[Database shareddatabase];
-    departmentNameArray= [db getDepartMentNames];
     return departmentNameArray.count;
     
 }
@@ -52,41 +108,55 @@
     
     UITableViewCell *cell = [tableview dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     UILabel* departmentNameLabel=[cell viewWithTag:101];
-    departmentNameLabel.text=[departmentNameArray objectAtIndex:indexPath.row];
+    DepartMent* deptObj = [departmentNameArray objectAtIndex:indexPath.row];
+    departmentNameLabel.text = deptObj.departmentName;
     return cell;
 }
 - (void)tableView:(UITableView *)tableview didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.view endEditing:YES];
     
-    UITableViewCell* cell=[tableview cellForRowAtIndexPath:indexPath];
-    UILabel* departmentNameLabel= [cell viewWithTag:101];
+    UITableViewCell* cell = [tableview cellForRowAtIndexPath:indexPath];
+    UILabel* departmentNameLabel = [cell viewWithTag:101];
   
    
     
     DepartMent* deptObj = [[DepartMent alloc] init];
-    deptObj= [[Database shareddatabase] getDepartMentFromDepartmentName:departmentNameLabel.text];
+//    deptObj= [[Database shareddatabase] getDepartMentFromDepartmentName:departmentNameLabel.text];
     
+    deptObj = [departmentNameArray objectAtIndex:indexPath.row];
 //    NSData *dataa = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
 
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:deptObj];
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
-   
-    
+
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isLoadedFirstTime"];
     
     MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
     
+    
     [[Database shareddatabase] setDepartment];//to insert default department for imported files
     
-    [self dismissViewControllerAnimated:true completion:nil];
-    
-    [[self presentingViewController] dismissViewControllerAnimated:true completion:nil];
-    
+//    [[[self presentingViewController] presentingViewController] dismissViewControllerAnimated:true completion:nil];
+//
+//    [[self presentingViewController] dismissViewControllerAnimated:true completion:nil];
+//
+//    [self dismissViewControllerAnimated:true completion:nil];
+
     [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
+
+    UIViewController *presentingVC = self.presentingViewController;
     
+    while (presentingVC.presentingViewController)
+    {
+        presentingVC = presentingVC.presentingViewController;
+    }
+    
+    [presentingVC dismissViewControllerAnimated:YES completion:NULL];
+//    [self.presentingViewController.presentingViewController.presentingViewController dismissViewControllerAnimated:false completion:nil]; 
+    //
 }
 
 - (void) checkAndDismissViewController

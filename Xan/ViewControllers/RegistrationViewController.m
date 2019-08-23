@@ -48,7 +48,23 @@
                                                object:nil];
 
 
+//    [self displayLocalVariable];
 }
+
+//-(void)printWeak
+//{
+//    NSLog(@"My name is = %@", self.dummyName);
+//    NSLog(@"My name is = %ld", (long)self.view.tag);
+//
+//}
+//-(void)displayLocalVariable
+//{
+////    NSString *myName = @"ABC";
+////    NSLog(@"My name is = %@", myName);
+//    self.dummyName = [[UIView alloc] init];
+//
+//
+//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -85,7 +101,7 @@
     if ([responseCodeString intValue]==401)
     {
         
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Authentication failed!" withMessage:@"Account id or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Authentication Failed!" withMessage:@"Account Id or Password is incorrect, please try again" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
         
         IDTextField.text=nil;
         passwordTextfield.text=nil;
@@ -119,7 +135,7 @@
         UIAlertController *alertController;
         UIAlertAction *actionOk;
                    title=@"Incomplete Data";
-            message=@"Id or password cannot be null";
+            message=@"Id or Password cannot be null";
             alertController = [UIAlertController alertControllerWithTitle:title
                                                                   message:message
                                                            preferredStyle:UIAlertControllerStyleAlert];
@@ -136,6 +152,7 @@
     }
     else
     {
+        
         if ([AppPreferences sharedAppPreferences].isReachable)
         {
             hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -156,13 +173,15 @@
         }
         else
         {
-           [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+           [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:NO_INTERNET_TITLE_MESSAGE withMessage:NO_INTERNET_DETAIL_MESSAGE withCancelText:nil withOkText:@"OK" withAlertTag:1000];
         }
         
     }
 }
 - (IBAction)cancelButtonClicked:(id)sender
 {
+//    [self printWeak];
+    
     IDTextField.text=@"";
     passwordTextfield.text=@"";
     [IDTextField becomeFirstResponder];

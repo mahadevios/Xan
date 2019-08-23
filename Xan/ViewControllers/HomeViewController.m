@@ -24,7 +24,7 @@
 
 @implementation HomeViewController
 
-@synthesize transferredView,transferFailedView,awaitingTransferView,failedCountLabel,VRSDOCFilesView,VRSFilesCountLabel,VRSDocFilesArray;
+@synthesize transferredView,transferFailedView,awaitingTransferView,failedCountLabel,VRSDOCFilesView,VRSFilesCountLabel,VRSDocFilesArray, subVRSView,subAwaitingView,subTransferredView;
 
 #pragma mark: View Delegate And Associate methods
 
@@ -34,6 +34,10 @@
     
     [super viewDidLoad];
     
+   
+//    UITabBarItem.appearance set
+    
+
 //    app.awaitingFileTransferNamesArray=[[NSMutableArray alloc]init];
     
 //    [self beginAppearanceTransition:true animated:true];
@@ -42,11 +46,26 @@
 
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
     
+    self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
+    
     transferFailedView.layer.cornerRadius = 4.0f;
+//    transferFailedView.layer.borderColor = [UIColor colorWithRed:75/255.0 green:101/255.0 blue:132/255.0 alpha:1.0].CGColor;
+//    transferFailedView.layer.borderWidth = 1.0;
     
     transferredView.layer.cornerRadius = 4.0f;
+//    transferredView.layer.borderColor = [UIColor colorWithRed:75/255.0 green:101/255.0 blue:132/255.0 alpha:1.0].CGColor;
+//    transferredView.layer.borderWidth = 1.0;
+    subTransferredView.layer.cornerRadius = 4.0f;
     
     awaitingTransferView.layer.cornerRadius = 4.0f;
+//    awaitingTransferView.layer.borderColor = [UIColor colorWithRed:75/255.0 green:101/255.0 blue:132/255.0 alpha:1.0].CGColor;
+//    awaitingTransferView.layer.borderWidth = 1.0;
+    subAwaitingView.layer.cornerRadius = 4.0f;
+    
+    VRSDOCFilesView.layer.cornerRadius = 4.0f;
+//    VRSDOCFilesView.layer.borderColor = [UIColor colorWithRed:75/255.0 green:101/255.0 blue:132/255.0 alpha:1.0].CGColor;
+//    VRSDOCFilesView.layer.borderWidth = 1.0;
+    VRSDOCFilesView.layer.cornerRadius = 4.0f;
     
     // tap gesture recognisers for four title views
     transferredTodayViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
@@ -74,8 +93,12 @@
 -(void)viewWillAppear:(BOOL)animated
 {
 //    NSLog(@"navi height = %@", self.navigationController.navigationBar.bounds);
+    [super viewWillAppear:true];
+    
    
+    
     self.splitViewController.delegate = self;
+    
     [AppPreferences sharedAppPreferences].isRecordView = NO;
 
 //    [UIApplication sharedApplication].idleTimerDisabled = YES;
@@ -100,12 +123,13 @@
     [self checkFilesToBePurge];
     
     
-    [self setSplitViewController];
+//    [self setSplitViewController];
     
 //    [self deleteDictation];
     NSLog(@"%@",NSHomeDirectory());
    
-    
+    NSLog(@"tabBarController = %@ ",self.tabBarController);
+
 }
 
 #pragma mark:Split VC delegate
@@ -215,12 +239,24 @@
         
         if (transferFailedCount > 9)
         {
-            self.transferFailedCountLabel.text = [NSString stringWithFormat:@"9+ Failed"];
+            self.transferFailedCountLabel.text = [NSString stringWithFormat:@"9+"];
+
+            self.transferFailedCountView.alpha = 1;
+            [UIView animateWithDuration:.7 delay:0.5 options:UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse animations:^{
+                self.transferFailedCountView.alpha = 0;
+            } completion:nil];
+            
 
         }
         else
         {
-            self.transferFailedCountLabel.text = [NSString stringWithFormat:@"%d Failed", transferFailedCount];
+            self.transferFailedCountLabel.text = [NSString stringWithFormat:@"%d", transferFailedCount];
+
+            self.transferFailedCountView.alpha = 1;
+            [UIView animateWithDuration:.7 delay:0 options:UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse animations:^{
+                self.transferFailedCountView.alpha = 0;
+            } completion:nil];
+           
 
         }
     }
@@ -556,7 +592,7 @@
 {
     NSArray* subViewArray = [NSArray arrayWithObjects:@"User Settings",@"Logout", nil];
     
-    UIView* pop = [[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+20, 160, 84) andSubViews:subViewArray :self];
+    UIView* pop = [[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, 20, 160, 84) andSubViews:subViewArray :self];
     
     [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
 }
@@ -632,9 +668,10 @@
     }
     else
     {
-        [self.navigationController pushViewController:vc animated:true];
+       
+        [self.navigationController pushViewController:vc animated:false];
     }
- 
+
     
 }
 

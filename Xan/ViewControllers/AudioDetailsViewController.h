@@ -10,6 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "AudioSessionManager.h"
 #import "PopUpCustomView.h"
+#import "AudioDetails.h"
 
 @class AudioDetailsViewController;             //define class, so protocol can see MyClass
 @protocol MyClassDelegate <NSObject>   //define delegate protocol
@@ -24,7 +25,7 @@
     UIAlertAction *actionDelete;
     UIAlertAction *actionCancel;
     BOOL deleted;
-    NSDictionary* audiorecordDict;
+    
     UISlider* audioRecordSlider;
     UIView* sliderPopUpView;
     UIView* popupView;
@@ -39,6 +40,7 @@
 }
 @property(nonatomic)long selectedRow;
 @property(nonatomic,strong)NSString* selectedView;
+@property(nonatomic,strong)AudioDetails* audioDetails;
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *transferDictationButton;
