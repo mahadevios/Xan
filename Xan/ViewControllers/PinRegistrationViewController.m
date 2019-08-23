@@ -111,8 +111,8 @@
     {
         if ([pinCode1TextField.text isEqualToString:@""] || [pinCode2TextField.text isEqualToString:@""] || [pinCode3TextField.text isEqualToString:@""] || [pinCode4TextField.text isEqualToString:@""])
         {
-            title=@"Incomplete PIN!";
-            message=@"Please enter PIN code properly";
+            title=@"Incomplete Pin!";
+            message=@"Please enter Pin properly";
             alertController = [UIAlertController alertControllerWithTitle:title
                                                                   message:message
                                                            preferredStyle:UIAlertControllerStyleAlert];
@@ -151,8 +151,8 @@
     else
     {
         
-        title=@"PIN confirmation failed";
-        message=@"Please cofirm PIN ";
+        title=@"Pin confirmation failed";
+        message=@"Please cofirm Pin";
         alertController = [UIAlertController alertControllerWithTitle:title
                                                               message:message
                                                        preferredStyle:UIAlertControllerStyleAlert];
@@ -189,7 +189,7 @@
     {
         
        
-        title=@"PIN registration failed";
+        title=@"Pin registration failed";
         message=@"Please try again ";
         alertController = [UIAlertController alertControllerWithTitle:title
                                                               message:message
@@ -216,7 +216,7 @@
     {
         
         title=@"Note:";
-        message=@"PIN code is registered successfully. To login you have to re-enter registered PIN code and submit it.";
+        message=@"Pin is registered successfully. To login you have to re-enter registered Pin and submit it.";
         alertController = [UIAlertController alertControllerWithTitle:title
                                                               message:message
                                                        preferredStyle:UIAlertControllerStyleAlert];

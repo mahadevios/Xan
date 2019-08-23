@@ -30,4 +30,5 @@
 
 +(UIColor*)uploadLaterColor;
 
++(UIColor*)lightHomeCopyColor;
 @end

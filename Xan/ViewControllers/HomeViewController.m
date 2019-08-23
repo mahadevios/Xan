@@ -34,6 +34,10 @@
     
     [super viewDidLoad];
     
+   
+//    UITabBarItem.appearance set
+    
+
 //    app.awaitingFileTransferNamesArray=[[NSMutableArray alloc]init];
     
 //    [self beginAppearanceTransition:true animated:true];
@@ -90,6 +94,8 @@
 {
 //    NSLog(@"navi height = %@", self.navigationController.navigationBar.bounds);
     [super viewWillAppear:true];
+    
+   
     
     self.splitViewController.delegate = self;
     

@@ -32,6 +32,10 @@
     
     VRSDocFilesArray = [[Database shareddatabase] getVRSDocFiles];
 
+    self.VRSDocFilesPredicateArray = [NSMutableArray new];
+    
+    self.VRSDocFilesPredicateArray = [[Database shareddatabase] getVRSDocFiles];
+
     self.navigationItem.title = @"VRS Text Files";
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
@@ -50,12 +54,22 @@
         [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
     }
     
+    self.definesPresentationContext = true;
+    
+    self.extendedLayoutIncludesOpaqueBars = YES;
+    [self setSearchController];
     // Do any additional setup after loading the view.
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    VRSDocFilesArray = [[Database shareddatabase] getVRSDocFiles];
     
+    self.searchController.searchBar.text = @"";
+    
+    [self.searchController.searchBar resignFirstResponder];
+    
+    [self.searchController.searchBar setShowsCancelButton:NO animated:NO];
 
 }
 
@@ -108,6 +122,94 @@
         [self dismissViewControllerAnimated:false completion:nil];
     }
     [self.tabBarController.tabBar setHidden:NO];
+    
+}
+
+#pragma mark: Serach Controller Methods and Delegates
+-(void)setSearchController
+{
+    
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    [self.serachBarBGView addSubview:self.searchController.searchBar];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.searchBar.delegate = self;
+    //    self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.navigationController.definesPresentationContext = YES;
+    self.searchController.obscuresBackgroundDuringPresentation = NO;
+    self.searchController.hidesNavigationBarDuringPresentation=NO;
+    //    self.navigationController.definesPresentationContext = YES;
+}
+
+
+//-(void)prepareForSearchBar
+//{
+//    self.inCompleteListPredicateArray = [db getListOfFileTransfersOfStatus:@"RecordingPause"];
+//}
+
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+    [searchController.searchBar setShowsCancelButton:YES animated:NO];
+    
+    if ([self.searchController.searchBar.text isEqual:@""])
+    {
+        
+        VRSDocFilesArray = [[NSMutableArray alloc] initWithArray:self.VRSDocFilesPredicateArray];
+        
+        [self.tableView reloadData];
+        
+    }
+    else
+    {
+        
+        NSArray *predicateResultArray = [[NSMutableArray alloc]init];
+        
+        self.VRSDocFilesPredicateArray =  [[Database shareddatabase] getVRSDocFiles];
+        
+        NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"docFileName CONTAINS [cd] %@", self.searchController.searchBar.text];
+        NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"createdDate CONTAINS [cd] %@", self.searchController.searchBar.text];
+                NSPredicate *predicate3 = [NSPredicate predicateWithFormat:@"departmentName CONTAINS [cd] %@", self.searchController.searchBar.text];
+        //        NSPredicate *predicate4 = [NSPredicate predicateWithFormat:@"department CONTAINS [cd] %@", self.searchController.searchBar.text];
+        
+        NSPredicate *mainPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicate1, predicate2, predicate3]];
+        
+        predicateResultArray = [self.VRSDocFilesPredicateArray filteredArrayUsingPredicate:mainPredicate];
+        
+        VRSDocFilesArray = [NSMutableArray arrayWithArray:predicateResultArray];
+        
+        [self.tableView reloadData];
+    }
+    
+}
+-(void)updateSerachBarManually
+{
+    self.searchController.active = YES;
+    self.searchController.searchBar.text = self.searchController.searchBar.text;
+    
+}
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    searchBar.text = @"";
+    
+    [searchBar resignFirstResponder];
+    
+    [self prepareDataSourceForTableView];
+    
+    [self.tableView reloadData];
+}
+
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    
+    [searchBar resignFirstResponder];
+    
+}
+
+-(void)prepareDataSourceForTableView
+{
+    VRSDocFilesArray =  [[Database shareddatabase] getVRSDocFiles];
     
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

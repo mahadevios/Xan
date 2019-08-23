@@ -18,8 +18,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-   // [self.view.window.rootViewController dismissViewControllerAnimated:false completion:nil];
+    [UITabBarItem.appearance setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]} forState:UIControlStateNormal];
+    [UITabBarItem.appearance setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]} forState:UIControlStateSelected];
+    // [self.view.window.rootViewController dismissViewControllerAnimated:false completion:nil];
 //    [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:true completion:nil];
     // Do any additional setup after loading the view.
     
@@ -35,17 +36,16 @@
 //{
 //   
 //}
--(void)viewDidAppear:(BOOL)animated
-{
+//-(void)viewDidAppear:(BOOL)animated
+//{
     
-    if ([self.isSplashScreenPresented isEqualToString:@""] || self.isSplashScreenPresented == nil)
-    {
-        [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SplashScreenViewController"] animated:NO completion:nil];
-        
-        self.isSplashScreenPresented = @"yes";
-    }
-//    [self performSegueWithIdentifier:@"SP" sender:self];
-}
+//    if ([self.isSplashScreenPresented isEqualToString:@""] || self.isSplashScreenPresented == nil)
+//    {
+//        [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SplashScreenViewController"] animated:NO completion:nil];
+//        
+//        self.isSplashScreenPresented = @"yes";
+//    }
+//}
 /*
 #pragma mark - Navigation
 

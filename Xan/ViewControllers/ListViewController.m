@@ -331,8 +331,8 @@
         [self.checkedIndexPath removeAllObjects];
         [arrayOfMarked removeAllObjects];
         APIManager* app=[APIManager sharedManager];
-        Database* db=[Database shareddatabase];
-        app.transferredListArray=[db getListOfTransferredOrDeletedFiles:@"Transferred"];
+//        Database* db=[Database shareddatabase];
+//        app.transferredListArray=[db getListOfTransferredOrDeletedFiles:@"Transferred"];
         
         for (NSInteger i = 0; i < app.transferredListArray.count; ++i)
         {
@@ -366,12 +366,9 @@
        
         [self clearSelectedArrays];
         [self.tableView reloadData];
-        
-        
+      
     }
-    
-    
-    
+ 
 }
 
 -(void)deleteMutipleFiles
@@ -421,10 +418,13 @@
                             
                             [self prepareDataSourceForTableView];
                             
+                          
+                            
                             self.transferredListPredicateArray = [[NSMutableArray alloc] initWithArray:[APIManager sharedManager].transferredListArray];
                             
                             self.deletedListPredicateArray = [[NSMutableArray alloc] initWithArray:[APIManager sharedManager].deletedListArray];
                             
+                              [self updateSerachBarManually]; // to update the search bar
                             [self.tableView reloadData];
                             
                         });
@@ -445,6 +445,7 @@
                         [self.tableView reloadData];
                         
                     }]; //You can use a block here to handle a press on this button
+    searchBecomeResponsderFromUploadAlert = YES;
     [alertController addAction:actionCancel];
     [self presentViewController:alertController animated:YES completion:nil];
     
@@ -471,6 +472,21 @@
 }
 
 #pragma mark: Serach Controller Methods and Delegates
+
+-(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    // to avoid first responder yes when clicked on file upload yes
+    if (!searchBecomeResponsderFromUploadAlert)
+    {
+        return YES;
+    }
+    else
+    {
+        searchBecomeResponsderFromUploadAlert = NO;
+        return NO;
+    }
+    
+}
 -(void)setSearchController
 {
     
@@ -688,16 +704,20 @@
     audioDetails= [app.deletedListArray objectAtIndex:indexPath.row];
     
     fileNameLabel.text = audioDetails.fileName;
-    NSString* dateAndTimeString = audioDetails.deleteDate;
-    NSArray* dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
+    NSString* dateAndTimeString;
+    NSArray* dateAndTimeArray;
     if (segment.selectedSegmentIndex==0)
     {
+        dateAndTimeString = audioDetails.transferDate;
+        dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
         if (dateAndTimeArray.count>1)
         timeLabel.text=[NSString stringWithFormat:@"Transferred %@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]]];
 
     }
     else
     {
+        dateAndTimeString = audioDetails.deleteDate;
+        dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
         if (dateAndTimeArray.count>1)
             timeLabel.text=[NSString stringWithFormat:@"Deleted %@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]]];
 
@@ -986,8 +1006,7 @@
 
 - (IBAction)segmentChanged:(UISegmentedControl*)sender
 {
-    
-    
+ 
     [self updateUIAfterMultipleFilesDeleteClicked];
     
     [self clearSelectedArrays];
@@ -996,6 +1015,10 @@
    
     [self prepareDataSourceForTableView];
     
+    if (![self.searchController.searchBar.text isEqualToString:@""])
+    {
+        [self updateSerachBarManually];
+    }
     [self.tableView reloadData];
     
     if (self.splitViewController.isCollapsed == false) // if not collapsed that is reguler width hnce ipad

@@ -26,6 +26,7 @@
     BOOL collapseDetailViewController;
     TransferredOrDeletedAudioDetailsViewController* detailVC;
     BOOL isShownDetailsView;
+    BOOL searchBecomeResponsderFromUploadAlert;
 }
 - (IBAction)segmentChanged:(id)sender;
 @property (strong, nonatomic) NSMutableArray* checkedIndexPath;

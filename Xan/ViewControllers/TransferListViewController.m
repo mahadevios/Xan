@@ -540,7 +540,16 @@
         NSArray *predicateResultArray =[[NSMutableArray alloc]init];
         
         NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"fileName CONTAINS [cd] %@", self.searchController.searchBar.text];
-        NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"recordingDate CONTAINS [cd] %@", self.searchController.searchBar.text];
+        NSPredicate *predicate2;
+        if ([self.currentViewName isEqualToString:@"Transferred Today"])
+        {
+           predicate2 = [NSPredicate predicateWithFormat:@"transferDate CONTAINS [cd] %@", self.searchController.searchBar.text];
+        }
+        else
+        {
+            predicate2 = [NSPredicate predicateWithFormat:@"recordingDate CONTAINS [cd] %@", self.searchController.searchBar.text];
+        }
+       
         NSPredicate *predicate4 = [NSPredicate predicateWithFormat:@"department CONTAINS [cd] %@", self.searchController.searchBar.text];
        
        
@@ -1322,6 +1331,7 @@
                         [self.tableView reloadData];
                         
                     }]; //You can use a block here to handle a press on this button
+    searchBecomeResponsderFromUploadAlert = YES;
     [alertController addAction:actionCancel];
     [self presentViewController:alertController animated:YES completion:nil];
     
@@ -1476,7 +1486,7 @@
         sender.title=@"Deselect all";
         [self.checkedIndexPath removeAllObjects];
         [arrayOfMarked removeAllObjects];
-        APIManager* app=[APIManager sharedManager];
+//        APIManager* app=[APIManager sharedManager];
         Database* db=[Database shareddatabase];
         
         if ([self.searchController.searchBar.text isEqualToString:@""])  // to avoid selection of other than search files

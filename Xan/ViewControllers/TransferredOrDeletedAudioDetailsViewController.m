@@ -137,7 +137,7 @@
             
             transferStatusString = self.audioDetails.uploadStatus;
             
-            if ([transferStatusString isEqualToString:@"Transfer Failed"])
+            if ([transferStatusString isEqualToString:@"TransferFailed"])
             {
                 transferStatusString = @"Transfer Failed";
             }
@@ -474,8 +474,8 @@
 //                       NSString* date= [app getDateAndTimeString];
                         NSString* date = @"NotApplicable";
                         
-                        AudioDetails* audioDetails = [app.transferredListArray objectAtIndex:self.selectedRow];
-                        NSString* filName = audioDetails.fileName;
+                        
+                        NSString* filName = self.audioDetails.fileName;
                         [resendButton setHidden:YES];
                         [deleteDictationButton setHidden:YES];
                         

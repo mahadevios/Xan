@@ -28,7 +28,7 @@
     
     storageManagementItemsArray=[[NSMutableArray alloc]initWithObjects:@"Low Storage Threshold",@"Purge Data By", nil];
 
-    PlaybackAutoRewindByArray=[[NSMutableArray alloc]initWithObjects:@"Change Your PIN", nil];
+    PlaybackAutoRewindByArray=[[NSMutableArray alloc]initWithObjects:@"Change Your Pin", nil];
 
     popUpOptionsArray=[[NSMutableArray alloc]init];
     radioButtonArray=[[NSMutableArray alloc]init];

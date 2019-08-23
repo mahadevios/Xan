@@ -86,6 +86,11 @@
     
 }
 
++(UIColor*)lightHomeCopyColor
+{
+    return [UIColor colorWithRed:110/255.0 green:143/255.0 blue:255/255.0 alpha:1];
+    
+}
 +(UIColor*)lightHomeStoppedColor
 {
     return [UIColor colorWithRed:110/255.0 green:144/255.0 blue:252/255.0 alpha:1];

@@ -3132,6 +3132,17 @@ static Database *db;
 
                 docFileDetails.uploadStatus = sqlite3_column_int(statement, 2);
                 docFileDetails.deleteStatus = sqlite3_column_int(statement, 3);
+                
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                NSDate *recordCreatedDate = [dateFormatter dateFromString:docFileDetails.createdDate];
+                //                NSDate *deleteDate = [dateFormatter dateFromString:Date];
+                
+                
+                [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+                NSString *recordCreatedDateString = [dateFormatter stringFromDate:recordCreatedDate];
+                docFileDetails.createdDate = recordCreatedDateString;
+                
                 [VRSDocFilesArray addObject:docFileDetails];
             }
         }
