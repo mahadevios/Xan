@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "pause_player_icon15.png",
+      "filename" : "pause_player_icon35.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "pause_player_icon30.png",
+      "filename" : "pause_player_icon50.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "pause_player_icon45.png",
+      "filename" : "pause_player_icon45 2.png",
       "scale" : "3x"
     }
   ],

@@ -21,9 +21,9 @@
 {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(callViewWillAppear:) name:NOTIFICATION_RECORD_DISMISSED
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(callViewWillAppear:) name:NOTIFICATION_RECORD_DISMISSED
+//                                               object:nil];
     // Do any additional setup after loading the view.
 }
 

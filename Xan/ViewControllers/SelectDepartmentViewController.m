@@ -131,11 +131,10 @@
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
-   
-    
+
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isLoadedFirstTime"];
     
-//    MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
+    MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
     
     
     [[Database shareddatabase] setDepartment];//to insert default department for imported files
@@ -146,7 +145,8 @@
 //
 //    [self dismissViewControllerAnimated:true completion:nil];
 
-    
+    [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
+
     UIViewController *presentingVC = self.presentingViewController;
     
     while (presentingVC.presentingViewController)
@@ -155,11 +155,7 @@
     }
     
     [presentingVC dismissViewControllerAnimated:YES completion:NULL];
-//    [self.presentingViewController.presentingViewController.presentingViewController dismissViewControllerAnimated:false completion:nil];
-
-    //[[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
-    
-    
+//    [self.presentingViewController.presentingViewController.presentingViewController dismissViewControllerAnimated:false completion:nil]; 
     //
 }
 

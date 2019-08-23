@@ -89,7 +89,7 @@
 
 -(void)checkDeviceRegistration
 {
-    NSString*     macId=[Keychain getStringForKey:@"udid"];
+    NSString*     macId = [Keychain getStringForKey:@"udid"];
     //macId=[NSString stringWithFormat:@"%@1234",macId];
     if ([AppPreferences sharedAppPreferences].isReachable)
     {

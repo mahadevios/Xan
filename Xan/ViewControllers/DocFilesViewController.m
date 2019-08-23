@@ -291,7 +291,7 @@
     {
         referenceLabel.text = @"Comment & For Approval";
     }
-    referenceLabel.textColor = [UIColor appOrangeColor];
+    referenceLabel.textColor = [UIColor appColor];
     
     UIImageView* referenceImageView = [[UIImageView alloc] initWithFrame:CGRectMake(insideView.frame.size.width/2 - 60, 14, 17, 23)];
     
@@ -299,7 +299,7 @@
     
     UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(0, referenceLabel.frame.origin.y + referenceLabel.frame.size.height + 10, insideView.frame.size.width, 2)];
     
-    lineView.backgroundColor = [UIColor appOrangeColor];
+    lineView.backgroundColor = [UIColor appColor];
     
     commentTextView = [[UITextView alloc] initWithFrame:CGRectMake(insideView.frame.size.width*0.07, lineView.frame.origin.y + lineView.frame.size.height + 20, insideView.frame.size.width*0.86, 110)];
     
@@ -319,7 +319,7 @@
     
     submitButton.indexPathRow = sender.indexPathRow;
     
-    submitButton.backgroundColor = [UIColor appOrangeColor];
+    submitButton.backgroundColor = [UIColor appColor];
     
     [submitButton setTitle:@"Submit" forState:UIControlStateNormal];
     
@@ -424,7 +424,7 @@
     
     referenceLabel.font = [UIFont systemFontOfSize:18];
     
-    referenceLabel.textColor = [UIColor appOrangeColor];
+    referenceLabel.textColor = [UIColor appColor];
     
     UIImageView* crossImageView = [[UIImageView alloc] initWithFrame:CGRectMake(insideView.frame.size.width - 40, 20, 20, 20)];
     

@@ -218,7 +218,7 @@
     {
         [hud hideAnimated:YES];
         
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Incorrect PIN entered" withMessage:@"Please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Incorrect Pin entered" withMessage:@"Please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
         
         pinCode1TextField.text=@"";pinCode2TextField.text=@"";pinCode3TextField.text=@"";pinCode4TextField.text=@"";
        
@@ -458,8 +458,8 @@
     UIAlertAction *actionOk;
     if ([pinCode1TextField.text isEqual:@""] || [pinCode2TextField.text isEqual:@""]|| [pinCode3TextField.text isEqual:@""] || [pinCode4TextField.text isEqual:@""])
     {
-        title=@"Incomplete PIN code!";
-        message=@"Please enter PIN code properly";
+        title=@"Incomplete Pin!";
+        message=@"Please enter Pin properly";
         alertController = [UIAlertController alertControllerWithTitle:title
                                                               message:message
                                                        preferredStyle:UIAlertControllerStyleAlert];
@@ -498,7 +498,7 @@
             }
             else
             {
-                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Incorrect PIN entered" withMessage:@"Please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Incorrect Pin entered" withMessage:@"Please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
                 
                 pinCode1TextField.text=@"";pinCode2TextField.text=@"";pinCode3TextField.text=@"";pinCode4TextField.text=@"";
                 
@@ -516,7 +516,7 @@
                 hud.minSize = CGSizeMake(150.f, 100.f);
                 hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                 hud.mode = MBProgressHUDModeIndeterminate;
-                hud.label.text = @"Validating PIN...";
+                hud.label.text = @"Validating Pin...";
                 hud.detailsLabel.text = @"Please wait";
                 NSString*     macId=[Keychain getStringForKey:@"udid"];
                 
@@ -529,7 +529,7 @@
             }
             else
             {
-                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:NO_INTERNET_TITLE_MESSAGE withMessage:NO_INTERNET_DETAIL_MESSAGE withCancelText:nil withOkText:@"OK" withAlertTag:1000];
             }
         }
         

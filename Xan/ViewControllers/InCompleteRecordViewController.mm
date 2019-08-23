@@ -775,12 +775,12 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
             startStopPauseImageview.image=[UIImage imageNamed:@"ResumeNew"];
         
-            circleView.layer.borderColor = [UIColor whiteColor].CGColor;
-        
-            circleView.layer.borderWidth = 3.0f;
+//            circleView.layer.borderColor = [UIColor whiteColor].CGColor;
+//
+//            circleView.layer.borderWidth = 3.0f;
         
 //            circleView.backgroundColor=[UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1];
-            circleView.backgroundColor=[UIColor CBlueRecordingOnColor];
+            circleView.backgroundColor=[UIColor lightHomeColor];
 
             audioDurationLAbel= [self.view viewWithTag:104];
 
@@ -843,14 +843,14 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             
             startStopPauseImageview.image=[UIImage imageNamed:@"Play"];
             
-            circleView.layer.borderColor = [UIColor whiteColor].CGColor;
-            
-            circleView.layer.borderWidth = 3.0f;
+//            circleView.layer.borderColor = [UIColor whiteColor].CGColor;
+//
+//            circleView.layer.borderWidth = 3.0f;
             
 //            circleView.backgroundColor=[UIColor blackColor];
-            circleView.backgroundColor = [UIColor CLightBlueColor];
-            circleView.layer.borderColor = [UIColor appNavyBlueColor].CGColor;
-            circleView.layer.borderWidth = 1.0;
+            circleView.backgroundColor = [UIColor lightHomeCopyColor];
+//            circleView.layer.borderColor = [UIColor appColor].CGColor;
+//            circleView.layer.borderWidth = 1.0;
             audioDurationLAbel= [self.view viewWithTag:104];
             
             audioDurationLAbel.textAlignment=NSTextAlignmentCenter;
@@ -954,10 +954,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UIView* startRecordingView= [self.view viewWithTag:303];
     
-    if ([startRecordingView.backgroundColor isEqual:[UIColor CBlueRecordingOnColor]] || [startRecordingView.backgroundColor isEqual:[UIColor CLightBlueColor]])
+    if ([startRecordingView.backgroundColor isEqual:[UIColor lightHomeColor]] || [startRecordingView.backgroundColor isEqual:[UIColor lightHomeCopyColor]])
     {
         
-        if ([startRecordingView.backgroundColor isEqual:[UIColor CBlueRecordingOnColor]])
+        if ([startRecordingView.backgroundColor isEqual:[UIColor lightHomeColor]])
         {
             
             UIImageView* startRecordingImageView;
@@ -1038,13 +1038,13 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         else
         {
-            startRecordingView.backgroundColor=[UIColor CLightBlueColor];
+            startRecordingView.backgroundColor=[UIColor lightHomeCopyColor];
             
             UIImageView* startRecordingImageView= [startRecordingView viewWithTag:403];
             
             [startRecordingImageView setHidden:NO];
             
-            [startRecordingImageView setFrame:CGRectMake((startRecordingView.frame.size.width/2)-9, (startRecordingView.frame.size.height/2)-9, 18, 18)];
+            [startRecordingImageView setFrame:CGRectMake((startRecordingView.frame.size.width/2)-12, (startRecordingView.frame.size.height/2)-12, 24, 24)];
             
             if ([startRecordingImageView.image isEqual:[UIImage imageNamed:@"Play"]] || !player.isPlaying)
             {
@@ -1284,9 +1284,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     
     
-    startRecordingView.backgroundColor=[UIColor CLightBlueColor];
-    startRecordingView.layer.borderColor = [UIColor appNavyBlueColor].CGColor;
-    startRecordingView.layer.borderWidth = 1.0;
+    startRecordingView.backgroundColor=[UIColor lightHomeCopyColor];
+//    startRecordingView.layer.borderColor = [UIColor appColor].CGColor;
+//    startRecordingView.layer.borderWidth = 1.0;
     
     UIImageView* startRecordingImageView= [startRecordingView viewWithTag:403];
     
@@ -1454,15 +1454,15 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [RecordingLabel setHidden:YES];
     
 //    startRecordingView.backgroundColor=[UIColor blackColor];
-    startRecordingView.backgroundColor=[UIColor CLightBlueColor];
-    startRecordingView.layer.borderColor = [UIColor appNavyBlueColor].CGColor;
-    startRecordingView.layer.borderWidth = 1;
+    startRecordingView.backgroundColor=[UIColor lightHomeCopyColor];
+//    startRecordingView.layer.borderColor = [UIColor appColor].CGColor;
+//    startRecordingView.layer.borderWidth = 1;
     
     UIImageView* startRecordingImageView= [startRecordingView viewWithTag:403];
     
     [startRecordingImageView setHidden:NO];
     
-    [startRecordingImageView setFrame:CGRectMake((startRecordingView.frame.size.width/2)-9, (startRecordingView.frame.size.height/2)-9, 18, 18)];
+    [startRecordingImageView setFrame:CGRectMake((startRecordingView.frame.size.width/2)-12, (startRecordingView.frame.size.height/2)-12, 24, 24)];
     
     startRecordingImageView.image=[UIImage imageNamed:@"Play"];
     
@@ -1606,7 +1606,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UIButton* uploadAudioButton=[[UIButton alloc]initWithFrame:CGRectMake(animatedView.frame.size.width*0.1, animatedView.frame.size.height*0.2, animatedView.frame.size.width*0.8, 36)];
     
-    uploadAudioButton.backgroundColor=[UIColor CBlueRecordingOnColor];
+    uploadAudioButton.backgroundColor=[UIColor lightHomeColor];
     
     uploadAudioButton.userInteractionEnabled=YES;
     
@@ -1626,7 +1626,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UIButton* uploadLaterButton=[[UIButton alloc]initWithFrame:CGRectMake(animatedView.frame.size.width*0.1, uploadAudioButton.frame.origin.y+uploadAudioButton.frame.size.height+10, uploadAudioButton.frame.size.width*0.48, 36)];
     
-    uploadLaterButton.backgroundColor=[UIColor CUploadLaterLGaryColor];
+    uploadLaterButton.backgroundColor=[UIColor uploadLaterColor];
     
     [uploadLaterButton setTitle:@"Upload Later" forState:UIControlStateNormal];
     
@@ -1644,7 +1644,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UIButton* recordNewButton=[[UIButton alloc]initWithFrame:CGRectMake(uploadLaterButton.frame.origin.x+uploadLaterButton.frame.size.width+uploadAudioButton.frame.size.width*0.04, uploadAudioButton.frame.origin.y+uploadAudioButton.frame.size.height+10, uploadAudioButton.frame.size.width*0.48, 36)];
     
-    recordNewButton.backgroundColor=[UIColor CUploadLaterDGaryColor];
+    recordNewButton.backgroundColor=[UIColor lightHomeColor];
     
     [recordNewButton setTitle:@"Record New" forState:UIControlStateNormal];
     
@@ -2359,6 +2359,14 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             
         }
         else
+            if ([editType isEqualToString:@"insertAtBeginning"])// if its insert then insert new recording at end of original recording
+            {
+                totalTime = originalAsset.duration;
+                totalTime = CMTimeMake(0.5, 10);
+                //        totalTime =   originalAsset.duration;
+                
+            }
+        else
         {
              totalTime = originalAsset.duration;
 
@@ -2818,6 +2826,59 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                                           message:@"Select an action"
                                                    preferredStyle:UIAlertControllerStyleActionSheet];
     
+  
+    UIAlertAction* actionInsertAtBeginning = [UIAlertAction actionWithTitle:@"Insert at the Beginning"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * action)
+                                   {
+                                       
+                                       if (player.duration > RECORDING_LIMIT)
+                                       {
+                                           [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:MAXIMUM_RECORDING_LIMIT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                                       }
+                                       else
+                                       {
+                                           edited = YES;
+                                           editType = @"insertAtBeginning";
+                                           
+                                           dispatch_async(dispatch_get_main_queue(), ^
+                                                          {
+                                                              //NSLog(@"Reachable");
+                                                              [self.view setUserInteractionEnabled:NO];
+                                                              
+                                                              int seconds = player.duration;
+                                                              int audioHour= seconds/(60*60);
+                                                              int audioHourByMod= seconds%(60*60);
+                                                              
+                                                              int audioMinutes = audioHourByMod / 60;
+                                                              int audioSeconds = audioHourByMod % 60;
+                                                              
+                                                              //int audioSeconds = (seconds) % 60;
+                                                              dictationTimerSeconds = 0; // for save dictation waiting by
+                                                              timerHour = audioHour;
+                                                              timerMinutes = audioMinutes;
+                                                              timerSeconds = audioSeconds;
+                                                              
+                                                              audioDurationLAbel.text = [NSString stringWithFormat:@"%02d:%02d:%02d",audioHour,audioMinutes,audioSeconds];//for circleView timer label;//for circleView timer label
+                                                              
+                                                              [[self.view viewWithTag:701] setHidden:YES];//edit button and image
+                                                              
+                                                              [[self.view viewWithTag:702] setHidden:YES];
+                                                              
+                                                              [[self.view viewWithTag:703] setHidden:YES];//edit button and image
+                                                              
+                                                              [[self.view viewWithTag:704] setHidden:YES];
+                                                              [self startNewRecordingForEdit];
+                                                              
+                                                          });
+                                           
+                                           
+                                           
+                                       }
+                                       
+                                   }]; //You can use a block here to handle a press on this button
+    [alertController addAction:actionInsertAtBeginning];
+    
     UIAlertAction* actionInsert = [UIAlertAction actionWithTitle:@"Insert at the End"
                                                            style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * action)
@@ -3228,7 +3289,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     startLabel.text = @"Pause";
     
-    startLabel.textColor = [UIColor CBlueRecordingOnColor];
+    startLabel.textColor = [UIColor lightHomeColor];
     
     UIImageView* startRecordingImageView;
     
@@ -3279,7 +3340,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [self audioRecord]; // prepare separate recorder for editing with different recording filename(i.e. editedCopy for compose purpose)
     
-    startRecordingView.backgroundColor=[UIColor CBlueRecordingOnColor];
+    startRecordingView.backgroundColor=[UIColor lightHomeColor];
     
     recordingStatusLabel.text=@"Your audio is being recorded";
     

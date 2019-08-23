@@ -244,7 +244,7 @@
     tools.tag=101;
     tools.layer.borderColor = [[UIColor whiteColor] CGColor];
     tools.clipsToBounds = YES;
-    tools.barTintColor = [UIColor appNavyBlueColor];
+    tools.barTintColor = [UIColor appColor];
     tools.translucent = NO;
 
     NSMutableArray *buttons = [[NSMutableArray alloc] initWithCapacity:5];
@@ -270,7 +270,7 @@
     self.navigationItem.leftBarButtonItem=nil;
     UIToolbar *tools1 = [[UIToolbar alloc]
                          initWithFrame:CGRectMake(-70.0f, 0.0f, 80.0f, 44.01f)]; // 44.01 shifts it up 1px for some reason
-    tools1.barTintColor = [UIColor appNavyBlueColor];
+    tools1.barTintColor = [UIColor appColor];
     tools1.translucent = NO;
     tools1.tag=101;
     tools1.layer.borderColor = [[UIColor whiteColor] CGColor];
@@ -331,8 +331,8 @@
         [self.checkedIndexPath removeAllObjects];
         [arrayOfMarked removeAllObjects];
         APIManager* app=[APIManager sharedManager];
-        Database* db=[Database shareddatabase];
-        app.transferredListArray=[db getListOfTransferredOrDeletedFiles:@"Transferred"];
+//        Database* db=[Database shareddatabase];
+//        app.transferredListArray=[db getListOfTransferredOrDeletedFiles:@"Transferred"];
         
         for (NSInteger i = 0; i < app.transferredListArray.count; ++i)
         {
@@ -366,12 +366,9 @@
        
         [self clearSelectedArrays];
         [self.tableView reloadData];
-        
-        
+      
     }
-    
-    
-    
+ 
 }
 
 -(void)deleteMutipleFiles
@@ -421,10 +418,13 @@
                             
                             [self prepareDataSourceForTableView];
                             
+                          
+                            
                             self.transferredListPredicateArray = [[NSMutableArray alloc] initWithArray:[APIManager sharedManager].transferredListArray];
                             
                             self.deletedListPredicateArray = [[NSMutableArray alloc] initWithArray:[APIManager sharedManager].deletedListArray];
                             
+                              [self updateSerachBarManually]; // to update the search bar
                             [self.tableView reloadData];
                             
                         });
@@ -445,6 +445,7 @@
                         [self.tableView reloadData];
                         
                     }]; //You can use a block here to handle a press on this button
+    searchBecomeResponsderFromUploadAlert = YES;
     [alertController addAction:actionCancel];
     [self presentViewController:alertController animated:YES completion:nil];
     
@@ -471,6 +472,21 @@
 }
 
 #pragma mark: Serach Controller Methods and Delegates
+
+-(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    // to avoid first responder yes when clicked on file upload yes
+    if (!searchBecomeResponsderFromUploadAlert)
+    {
+        return YES;
+    }
+    else
+    {
+        searchBecomeResponsderFromUploadAlert = NO;
+        return NO;
+    }
+    
+}
 -(void)setSearchController
 {
     
@@ -529,22 +545,31 @@
         
         NSArray *predicateResultArray = [[NSMutableArray alloc]init];
         
+        NSPredicate *deleteDatePredicate;
+        NSPredicate *transferDatePredicate;
+        
+        NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"fileName CONTAINS [cd] %@", self.searchController.searchBar.text];
+        NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"department CONTAINS [cd] %@", self.searchController.searchBar.text];
+        
+        NSPredicate *mainPredicate;
+        
         if (segment.selectedSegmentIndex==0)
         {
+            
             commonArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Transferred"];
+            transferDatePredicate = [NSPredicate predicateWithFormat:@"transferDate CONTAINS [cd] %@", self.searchController.searchBar.text];
+
+            mainPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicate1, transferDatePredicate, predicate2]];
+
         }
         else
         {
-            commonArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Deleted"];
-            
+           commonArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Deleted"];
+           deleteDatePredicate  = [NSPredicate predicateWithFormat:@"deleteDate CONTAINS [cd] %@", self.searchController.searchBar.text];
+            mainPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicate1, deleteDatePredicate, predicate2]];
+
         }
-        
-        NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"fileName CONTAINS [cd] %@", self.searchController.searchBar.text];
-        NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"recordingDate CONTAINS [cd] %@", self.searchController.searchBar.text];
-        //        NSPredicate *predicate3 = [NSPredicate predicateWithFormat:@"uploadStatus CONTAINS [cd] %@", self.searchController.searchBar.text];
-        //        NSPredicate *predicate4 = [NSPredicate predicateWithFormat:@"department CONTAINS [cd] %@", self.searchController.searchBar.text];
-        
-        NSPredicate *mainPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicate1, predicate2]];
+  
         
         predicateResultArray = [commonArray filteredArrayUsingPredicate:mainPredicate];
         
@@ -679,16 +704,20 @@
     audioDetails= [app.deletedListArray objectAtIndex:indexPath.row];
     
     fileNameLabel.text = audioDetails.fileName;
-    NSString* dateAndTimeString = audioDetails.deleteDate;
-    NSArray* dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
+    NSString* dateAndTimeString;
+    NSArray* dateAndTimeArray;
     if (segment.selectedSegmentIndex==0)
     {
+        dateAndTimeString = audioDetails.transferDate;
+        dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
         if (dateAndTimeArray.count>1)
         timeLabel.text=[NSString stringWithFormat:@"Transferred %@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]]];
 
     }
     else
     {
+        dateAndTimeString = audioDetails.deleteDate;
+        dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
         if (dateAndTimeArray.count>1)
             timeLabel.text=[NSString stringWithFormat:@"Deleted %@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]]];
 
@@ -866,6 +895,19 @@
             detailVC.listSelected = segment.selectedSegmentIndex;
             //NSLog(@"%ld",vc.listSelected);
             detailVC.selectedRow = indexPath.row;
+            
+            AudioDetails* audioDetails;
+            if (self.segment.selectedSegmentIndex == 0)
+            {
+                audioDetails = [app.transferredListArray objectAtIndex:indexPath.row];
+            }
+            else
+            {
+                audioDetails = [app.deletedListArray objectAtIndex:indexPath.row];
+            }
+            
+            detailVC.audioDetails = audioDetails;
+            
             [self.navigationController presentViewController:detailVC animated:YES completion:nil];
         }
         else
@@ -883,6 +925,17 @@
             //NSLog(@"%ld",vc.listSelected);
             detailVC.selectedRow = indexPath.row;
             
+            AudioDetails* audioDetails;
+            if (self.segment.selectedSegmentIndex == 0)
+            {
+              audioDetails = [app.transferredListArray objectAtIndex:indexPath.row];
+            }
+            else
+            {
+                audioDetails = [app.deletedListArray objectAtIndex:indexPath.row];
+            }
+            
+            detailVC.audioDetails = audioDetails;
             [detailVC setAudioDetails];
             
             [self.splitViewController showDetailViewController:detailVC sender:self];
@@ -953,8 +1006,7 @@
 
 - (IBAction)segmentChanged:(UISegmentedControl*)sender
 {
-    
-    
+ 
     [self updateUIAfterMultipleFilesDeleteClicked];
     
     [self clearSelectedArrays];
@@ -963,6 +1015,10 @@
    
     [self prepareDataSourceForTableView];
     
+    if (![self.searchController.searchBar.text isEqualToString:@""])
+    {
+        [self updateSerachBarManually];
+    }
     [self.tableView reloadData];
     
     if (self.splitViewController.isCollapsed == false) // if not collapsed that is reguler width hnce ipad

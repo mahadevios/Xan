@@ -28,7 +28,7 @@
     UIAlertAction *actionCancel;
     BOOL deleted;
 //    NSDictionary* audiorecordDict;
-    AudioDetails* audioDetails;
+    
     UISlider* audioRecordSlider;
     UIView* sliderPopUpView;
     UIView* popupView;
@@ -50,6 +50,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
 -(void)setAudioDetails;
 @property (weak, nonatomic) IBOutlet UIImageView *backImageView;
+@property(nonatomic,strong)AudioDetails* audioDetails;
 
 @property (nonatomic, weak) id <MyClassDelegate> delegate; //define MyClassDelegate as delegate
 

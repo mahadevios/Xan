@@ -355,7 +355,12 @@
 
     [self.tableView reloadData];//to update table agter getting file trnasfer response
     
-    [self updateSerachBarManually];
+    //update search bar after upload
+    if (![self.searchController.searchBar.text isEqualToString:@""])
+    {
+       [self updateSerachBarManually];
+    }
+    
     
     if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
     {
@@ -496,20 +501,11 @@
     
     
 }
--(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
-    NSLog(@"text = %@", searchText);
-     NSLog(@"text = %@", searchText);
-}
 
--(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
-{
-     NSLog(@"text = %@", searchBar);
-    NSLog(@"text = %@", searchBar);
-}
 
 -(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
+    // to avoid first responder yes when clicked on file upload yes
     if (!searchBecomeResponsderFromUploadAlert)
     {
         return YES;
@@ -544,11 +540,37 @@
         NSArray *predicateResultArray =[[NSMutableArray alloc]init];
         
         NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"fileName CONTAINS [cd] %@", self.searchController.searchBar.text];
-        NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"recordingDate CONTAINS [cd] %@", self.searchController.searchBar.text];
-//        NSPredicate *predicate3 = [NSPredicate predicateWithFormat:@"uploadStatus CONTAINS [cd] %@", self.searchController.searchBar.text];
+        NSPredicate *predicate2;
+        if ([self.currentViewName isEqualToString:@"Transferred Today"])
+        {
+           predicate2 = [NSPredicate predicateWithFormat:@"transferDate CONTAINS [cd] %@", self.searchController.searchBar.text];
+        }
+        else
+        {
+            predicate2 = [NSPredicate predicateWithFormat:@"recordingDate CONTAINS [cd] %@", self.searchController.searchBar.text];
+        }
+       
         NSPredicate *predicate4 = [NSPredicate predicateWithFormat:@"department CONTAINS [cd] %@", self.searchController.searchBar.text];
+       
+       
+
+        // dont show search result for not transfer but need to be show for transfer failed, use AND predicate and filter out the result
+        NSPredicate *uploadStatus = [NSPredicate predicateWithFormat:@"uploadStatus CONTAINS [cd] %@", self.searchController.searchBar.text];
+        NSPredicate *skipUploadStatus = [NSPredicate predicateWithFormat:@"NOT (uploadStatus CONTAINS %@)", @"NotTransferred"]; //dont search not transferred status
+        NSPredicate *skipUploadStatus1 = [NSPredicate predicateWithFormat:@"NOT (uploadStatus CONTAINS %@)",@"Transferred"];//dont search transferred status
+
+        NSPredicate *uploadFinalPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[uploadStatus,skipUploadStatus,skipUploadStatus1]];
         
-        NSPredicate *mainPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicate1, predicate2, predicate4]];
+        NSPredicate *deleteStatus = [NSPredicate predicateWithFormat:@"deleteStatus CONTAINS [cd] %@", self.searchController.searchBar.text];
+        NSPredicate *noDeleteStatus = [NSPredicate predicateWithFormat:@"NOT (deleteStatus CONTAINS %@)", @"NoDelete"];
+        
+//        NSPredicate *transferStatus = [NSPredicate predicateWithFormat:@"deleteStatus CONTAINS [cd] %@", self.searchController.searchBar.text];
+//        NSPredicate *noTransferStatus = [NSPredicate predicateWithFormat:@"NOT (deleteStatus CONTAINS %@)", @"NoDelete"];
+        
+        NSPredicate *deleteFinalPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[deleteStatus,noDeleteStatus]];
+        
+        
+        NSPredicate * mainPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicate1, predicate2, uploadFinalPredicate, deleteFinalPredicate, predicate4]];
         
         predicateResultArray = [self.genericFilesPredicateArray filteredArrayUsingPredicate:mainPredicate];
         
@@ -676,8 +698,8 @@
     
     if ([self.currentViewName isEqualToString:@"Transferred Today"])
     {
-        dateAndTimeString = audioDetails.currentDuration;
-        dateAndTimeArray=nil;
+        dateAndTimeString = audioDetails.transferDate;
+//        dateAndTimeArray=nil;
         dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
         
         if (dateAndTimeArray.count>1)
@@ -703,23 +725,23 @@
 
     }
     
-    if ([transferStatusString  isEqualToString: @"TransferFailed"])
+    if ([transferStatusString  isEqualToString: @"Transfer Failed"])
     {
         //        [deleteStatusLabel setHidden:false];
-        deleteStatusLabel.text = @"Transfer Failed";
+        deleteStatusLabel.text = transferStatusString;
     }
     else
         {
             deleteStatusLabel.text=@"";
         }
     
-    if ([deleteStatusString isEqualToString:@"Delete"])
+    if ([deleteStatusString isEqualToString:@"Deleted"])
     {
         deleteStatusLabel.hidden = NO;
         deleteStatusLabel.text=@"Deleted";
     }
     else
-        if (![transferStatusString isEqualToString:@"TransferFailed"])
+        if (![transferStatusString isEqualToString:@"Transfer Failed"])
         {
             deleteStatusLabel.text=@"";
 
@@ -1120,7 +1142,7 @@
     // right bar button tool bar
     UIToolbar *tools = [[UIToolbar alloc]
                         initWithFrame:CGRectMake(-50.0f, 10.0f, 187.0f, 44.01f)]; // 44.01 shifts it up 1px for some reason
-    tools.barTintColor = [UIColor appNavyBlueColor];
+    tools.barTintColor = [UIColor appColor];
     tools.translucent = NO;
     tools.tag=101;
     tools.clipsToBounds = YES;
@@ -1163,7 +1185,7 @@
     tools1.tag=101;
     tools1.layer.borderColor = [[UIColor whiteColor] CGColor];
     tools1.clipsToBounds = YES;
-    tools1.barTintColor = [UIColor appNavyBlueColor];
+    tools1.barTintColor = [UIColor appColor];
     tools1.translucent = NO;
 
     NSMutableArray *buttons1 = [[NSMutableArray alloc] initWithCapacity:4];
@@ -1309,6 +1331,7 @@
                         [self.tableView reloadData];
                         
                     }]; //You can use a block here to handle a press on this button
+    searchBecomeResponsderFromUploadAlert = YES;
     [alertController addAction:actionCancel];
     [self presentViewController:alertController animated:YES completion:nil];
     
@@ -1353,7 +1376,7 @@
                             
                             NSString* transferStatus = audioDetails.uploadStatus;
 
-                            if ([transferStatus isEqualToString:@"TransferFailed"])
+                            if ([transferStatus isEqualToString:@"Transfer Failed"])
                             {
                                 int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:fileName];
                                 
@@ -1463,7 +1486,7 @@
         sender.title=@"Deselect all";
         [self.checkedIndexPath removeAllObjects];
         [arrayOfMarked removeAllObjects];
-        APIManager* app=[APIManager sharedManager];
+//        APIManager* app=[APIManager sharedManager];
         Database* db=[Database shareddatabase];
         
         if ([self.searchController.searchBar.text isEqualToString:@""])  // to avoid selection of other than search files
@@ -1513,7 +1536,7 @@
         selectedCountLabel.text=[NSString stringWithFormat:@"%ld",arrayOfMarked.count];
 
         toolBarAdded=NO;
-        [self prepareDataSourceForTableView];
+//        [self prepareDataSourceForTableView];
         [self.tableView reloadData];
         
         
