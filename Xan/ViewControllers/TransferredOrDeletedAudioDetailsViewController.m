@@ -139,6 +139,7 @@
             
             if ([transferStatusString isEqualToString:@"TransferFailed"])
             {
+                self.transferDateTitleLabel.text = @"Transfer Failed Date";
                 transferStatusString = @"Transfer Failed";
             }
             else if ([transferStatusString isEqualToString:@"NotTransferred"])

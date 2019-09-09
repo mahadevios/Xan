@@ -9,6 +9,7 @@
 #import "ShareViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "Constants.h"
+//#import "UIColor+ApplicationColors.h"
 //#import "ConfigurationViewController.h"
 
 
@@ -47,9 +48,9 @@ SLComposeSheetConfigurationItem *item;
     
     [cpyAudioFileButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-    [cpyAudioFileButton setTitle:@"Import audio file to cube" forState:UIControlStateNormal];
+    [cpyAudioFileButton setTitle:@"Import audio file to ACE" forState:UIControlStateNormal];
     
-    [cpyAudioFileButton setBackgroundColor:[UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1.0]];
+    [cpyAudioFileButton setBackgroundColor:[UIColor colorWithRed:0/255.0 green:44/255.0 blue:184/255.0 alpha:1.0]];
     
     cpyAudioFileButton.layer.cornerRadius=4.0f;
     
@@ -61,13 +62,13 @@ SLComposeSheetConfigurationItem *item;
     
     titleLabel.font=[UIFont boldSystemFontOfSize:18];
     titleLabel.textAlignment=NSTextAlignmentCenter;
-    titleLabel.text=@"Copy to Cube";
+    titleLabel.text=@"Copy to ACE";
     
-    titleLabel.textColor=[UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1.0];
+    titleLabel.textColor=[UIColor whiteColor];
     
     [navigationView addSubview:titleLabel];
     
-    navigationView.backgroundColor=[UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0];
+    navigationView.backgroundColor=[UIColor colorWithRed:0/255.0 green:44/255.0 blue:184/255.0 alpha:1.0];
     
      UIButton* cancelExtensionButton=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
     
@@ -75,7 +76,7 @@ SLComposeSheetConfigurationItem *item;
 
     [cancelExtensionButton setTitle:@"Cancel" forState:UIControlStateNormal];
 
-    [cancelExtensionButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [cancelExtensionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 
     cancelExtensionButton.titleLabel.font=[UIFont boldSystemFontOfSize:16.0];
     
@@ -145,7 +146,7 @@ SLComposeSheetConfigurationItem *item;
     {
         
         
-        self.view .frame=CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, screenHeight, screenWidth);
+        self.view.frame=CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, screenHeight, screenWidth);
         
 //        navigationView=[self.view viewWithTag:100];
 //        

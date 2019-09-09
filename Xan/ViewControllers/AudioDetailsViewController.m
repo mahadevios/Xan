@@ -84,7 +84,7 @@
     if (![AppPreferences sharedAppPreferences].dismissAudioDetails && ![AppPreferences sharedAppPreferences].recordNew)
     {
         
-        APIManager* app=[APIManager sharedManager];
+        
         
         if (isDeleteEditTransferButtonsRemovedAfterTransfer == false)
         {
@@ -122,7 +122,8 @@
             {
                 if (isDeleteEditTransferButtonsRemovedAfterTransfer == false)
                 {
-                    [self addEditDeleteAndUploadButtons];
+                    [self performSelector:@selector(addEditDeleteAndUploadButtons) withObject:nil afterDelay:0.0];
+//                    [self addEditDeleteAndUploadButtons];
                     
                 }
             }
@@ -140,23 +141,25 @@
                 
                 if ([self.audioDetails.deleteStatus isEqualToString:@"Deleted"])//to check wether transferred file is deleted
                 {
-                    NSString* transferStatusString;
+//                    NSString* transferStatusString;
                     
-                    if ([tarnsferStatus isEqualToString:@"Transfer Failed"])
-                    {
-                        transferStatusString = @"Transfer Failed";
-                    }
-                    else if ([tarnsferStatus isEqualToString:@"NotTransferred"])
-                    {
-                        transferStatusString = @"Not Transferred";
-                        
-                    }
-                    else
-                    {
-                        transferStatusString = tarnsferStatus;
-                    }
+//                    if ([tarnsferStatus isEqualToString:@"Transfer Failed"])
+//                    {
+//                        transferStatusString = @"Transfer Failed";
+//                    }
+//                    else
+//                    if ([tarnsferStatus isEqualToString:@"NotTransferred"])
+//                    {
+//                        transferStatusString = @"Not Transferred";
+//
+//                    }
+//                    else
+//                    {
+//                        transferStatusString = tarnsferStatus;
+//                    }
+                    self.transferDateTitleLabel.text = @"Transfer Date";
                     
-                    transferStatusLabel.text=[NSString stringWithFormat:@"%@, Deleted",transferStatusString];
+                    transferStatusLabel.text=[NSString stringWithFormat:@"%@, Deleted",tarnsferStatus];
                     
                     [transferDictationButton setHidden:YES];
                     
@@ -187,7 +190,9 @@
                         
                         if (isDeleteEditTransferButtonsRemovedAfterTransfer == false)
                         {
-                            [self addEditDeleteAndUploadButtons];
+                            [self performSelector:@selector(addEditDeleteAndUploadButtons) withObject:nil afterDelay:0.0];
+
+//                            [self addEditDeleteAndUploadButtons];
                             
                         }
                         
@@ -240,10 +245,11 @@
         
         transferDateLabel.text = self.audioDetails.transferDate;
         
-        if ([self.selectedView isEqualToString:@"Transfer Failed"])
-        {
-            transferDateLabel.text=@"";
-        }
+       
+//        if ([self.selectedView isEqualToString:@"Transfer Failed"])
+//        {
+//            transferDateLabel.text=@"";
+//        }
         
         
         
@@ -308,15 +314,21 @@
 
     if ([tarnsferStatus isEqualToString:@"Transfer Failed"])
     {
+        self.transferDateTitleLabel.text = @"Transfer Failed Date";
+        
         transferStatusLabel.text = @"Transfer Failed";
     }
     else if ([tarnsferStatus isEqualToString:@"NotTransferred"])
     {
+        self.transferDateTitleLabel.text = @"Transfer Date";
+        
         transferStatusLabel.text = @"Not Transferred";
         
     }
     else
     {
+        self.transferDateTitleLabel.text = @"Transfer Date";
+        
         transferStatusLabel.text = tarnsferStatus;
     }
 }
@@ -327,14 +339,16 @@
     {
         UIButton* uploadRecordButton;
         
+        
         uploadRecordButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width*0.095, transferDictationButton.frame.origin.y, self.view.frame.size.width*0.83, transferDictationButton.frame.size.height)];
+        
         
         uploadRecordButton.tag = 801;
         
 //        uploadRecordButton.backgroundColor=[UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1];
-        uploadRecordButton.backgroundColor = [UIColor CGreenColor];
+        uploadRecordButton.backgroundColor = [UIColor darkHomeColor];
         
-        [uploadRecordButton setTitle:@"Upload Recording" forState:UIControlStateNormal];
+        [uploadRecordButton setTitle:@"Transfer Recording" forState:UIControlStateNormal];
         
         uploadRecordButton.titleLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightSemibold];
         
@@ -370,7 +384,7 @@
         
 //        editRecordButton.backgroundColor=[UIColor colorWithRed:64/255.0 green:64/255.0 blue:64/255.0 alpha:1];
 
-        editRecordButton.backgroundColor=[UIColor CBlackColor];
+        editRecordButton.backgroundColor=[UIColor lightHomeColor];
         
         [editRecordButton setTitle:@"Edit Recording" forState:UIControlStateNormal];
         
@@ -1017,9 +1031,11 @@
                                             
                                             [app uploadFileToServer:filName jobName:FILE_UPLOAD_API];
                                             
-                                            [[self.view viewWithTag:507] setHidden:YES];
                                             
                                         });
+                                        
+                                        [[self.view viewWithTag:507] setHidden:YES];
+
                                         
                                     }]; //You can use a block here to handle a press on this button
                     
@@ -1320,11 +1336,16 @@
     
     vc.selectedRowOfAwaitingList = self.selectedRow;
     
+    vc.delegate = self;
+    
     [self presentViewController:vc animated:YES completion:nil];
     
 }
 
-
+-(void)updateData:(NSString *)departmentName
+{
+    self.audioDetails.department = departmentName;
+}
 
 //-(void)uploadFileToServer:(NSString*)str
 //

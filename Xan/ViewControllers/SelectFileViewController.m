@@ -12,6 +12,7 @@
 #import "Constants.h"
 #import "DocFileDetails.h"
 #import "AppPreferences.h"
+//#import "UIColor+ApplicationColors.h"
 
 
 @interface SelectFileViewController ()
@@ -30,10 +31,10 @@
     
     VRSDocFilesArray = [NSMutableArray new];
     
-    VRSDocFilesArray = [[Database shareddatabase] getVRSDocFiles];
-
     self.VRSDocFilesPredicateArray = [NSMutableArray new];
     
+    VRSDocFilesArray = [[Database shareddatabase] getVRSDocFiles];
+
     self.VRSDocFilesPredicateArray = [[Database shareddatabase] getVRSDocFiles];
 
     self.navigationItem.title = @"VRS Text Files";
@@ -58,18 +59,27 @@
     
     self.extendedLayoutIncludesOpaqueBars = YES;
     [self setSearchController];
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
     // Do any additional setup after loading the view.
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+  
+//    [UINavigationBar appearance].opaque = YES;
+
     VRSDocFilesArray = [[Database shareddatabase] getVRSDocFiles];
     
+    self.VRSDocFilesPredicateArray = [[Database shareddatabase] getVRSDocFiles];
+
     self.searchController.searchBar.text = @"";
     
     [self.searchController.searchBar resignFirstResponder];
     
     [self.searchController.searchBar setShowsCancelButton:NO animated:NO];
+    
+    [self.tableView reloadData];
 
 }
 
@@ -84,6 +94,12 @@
         [self showDetailVCForDocxFile];
         
     }
+//    [UINavigationBar appearance].backgroundColor = [UIColor blueColor];
+//    //    [UINavigationBar appearance].tintColor = [UIColor whiteColor];
+//    [[UIBarButtonItem appearance] setTintColor:[UIColor whiteColor]];
+//    
+//    [UINavigationBar appearance].translucent = NO;
+    
 }
 -(void)showDetailVCForDocxFile
 {
@@ -253,7 +269,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     
-    if (dateAndTimeArray.count>1)
+    if (dateAndTimeArray.count>2)
     {
         
         timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
@@ -268,7 +284,7 @@
         
         dateLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
         
-        timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
+        timeLabel.text=[NSString stringWithFormat:@"%@ %@",[dateAndTimeArray objectAtIndex:1],[dateAndTimeArray objectAtIndex:2]];
         
         
     }
@@ -402,6 +418,9 @@
                                                           [VRSDocFilesArray removeObjectAtIndex:sender.indexPathRow];
                                                           
                                                           [self.tableView deleteRowsAtIndexPaths:[[NSArray alloc] initWithObjects:indexPath, nil]  withRowAnimation:UITableViewRowAnimationTop];
+                                                          
+                                                          self.VRSDocFilesPredicateArray = [[Database shareddatabase] getVRSDocFiles];
+
                                                           [self.tableView reloadData];
 //                                                              [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Doc File Created" withMessage:@"Doc file crated successfully, check doc files in alert tab" withCancelText:@"Cancel" withOkText:@"Ok" withAlertTag:1000];
                                                           
@@ -437,23 +456,39 @@
     }
 }
 
-//-(CGRect)documentInteractionControllerRectForPreview:(UIDocumentInteractionController *)controller
-//{
-//    return self.view.frame;
-//
-//}
-//-(UIView *)documentInteractionControllerViewForPreview:(UIDocumentInteractionController *)controller
-//{
-//    return self.view;
-//
-//}
+-(CGRect)documentInteractionControllerRectForPreview:(UIDocumentInteractionController *)controller
+{
+    return self.view.frame;
+
+}
+-(UIView *)documentInteractionControllerViewForPreview:(UIDocumentInteractionController *)controller
+{
+    return self.navigationController.view;
+
+}
 
 -(UIViewController *)documentInteractionControllerViewControllerForPreview:(UIDocumentInteractionController *)controller
 {
-    
-    return self;
+//    [[UINavigationBar appearance] setTintColor:self.navigationController.navigationBar.tintColor];
+//    [[UIBarButtonItem appearance] setTintColor:[UIColor whiteColor]];
+//
+//    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+//
+//    [[UINavigationBar appearance] setBackgroundImage:[self.class imageFromColor:self.navigationController.navigationBar.barTintColor] forBarMetrics:UIBarMetricsDefault];
+//    [[UINavigationBar appearance] setTranslucent:false];
+    return self.navigationController;
 }
 
++ (UIImage *)imageFromColor:(UIColor *)color {
+    CGRect rect = CGRectMake(0, 0, 1, 1);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
 -(void)documentInteractionControllerWillBeginPreview:(UIDocumentInteractionController *)controller
 {
     //dispatch_async(dispatch_get_main_queue(), ^{

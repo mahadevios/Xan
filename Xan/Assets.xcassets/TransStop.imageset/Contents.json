@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "stop.png",
+      "filename" : "ic_stop_text_35.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "stop-(1)-1.png",
+      "filename" : "ic_stop_text_70.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "stop-(1).png",
+      "filename" : "ic_stop_text_100.png",
       "scale" : "3x"
     }
   ],

@@ -23,7 +23,8 @@
 @implementation SplashScreenViewController
 @synthesize hud;
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
@@ -83,6 +84,7 @@
 
     }
     
+     [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"]; // for offline record- user pressed stop - net on - upload later - it comes to this view and not recordtabVC - hence need to set dismiss no for subsequent use
 
 }
 
@@ -159,10 +161,7 @@
        [retryButton setTitleColor:[UIColor colorWithRed:17/255.0 green:146/255.0 blue:(CGFloat)78/255.0 alpha:1] forState:UIControlStateNormal];
         
     }
-   
-   
-        
-    
+
 }
 -(void)refresh:(UIButton*)sender
 {

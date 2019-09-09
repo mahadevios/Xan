@@ -152,11 +152,21 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadNextFile) name:NOTIFICATION_UPLOAD_NEXT_FILE object:nil];
 
+    [self setStatusBarBackgroundColor:[UIColor colorWithRed:0/255.0 green:16/255.0 blue:133/255.0 alpha:1.0]];
+    
        return YES;
 }
 
 
-
+- (void)setStatusBarBackgroundColor:(UIColor *)color
+{
+    
+    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
+    
+    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
+        statusBar.backgroundColor = color;
+    }
+}
 -(void)uploadNextFile
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

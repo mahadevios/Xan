@@ -1584,7 +1584,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     startLabel.text = @"Pause";
     
-    startLabel.textColor = [UIColor lightHomeColor];
+//    startLabel.textColor = [UIColor lightHomeColor];
     
     startRecordingView.backgroundColor = [UIColor lightHomeColor];
 
@@ -1795,9 +1795,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     int seconds=currentTime%60;
    
     UIButton* uploadAudioButton=[[UIButton alloc]initWithFrame:CGRectMake(animatedView.frame.size.width*0.1, animatedView.frame.size.height*0.2, animatedView.frame.size.width*0.8, 36)];
-    uploadAudioButton.backgroundColor=[UIColor CGreenColor];
+    uploadAudioButton.backgroundColor=[UIColor darkHomeColor];
     uploadAudioButton.userInteractionEnabled=YES;
-    [uploadAudioButton setTitle:@"Upload Recording" forState:UIControlStateNormal];
+    [uploadAudioButton setTitle:@"Transfer Recording" forState:UIControlStateNormal];
     uploadAudioButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightSemibold];
     
     [uploadAudioButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -2943,10 +2943,17 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [self prepareAudioPlayer];
     
-    alertController = [UIAlertController alertControllerWithTitle:@""
-                                                          message:@"Select an action"
+    alertController = [UIAlertController alertControllerWithTitle:@"Select an action"
+                                                          message:nil
                                                    preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction* actionInsertAtBeginning = [UIAlertAction actionWithTitle:@"Insert at the Beginning"
+    
+    NSMutableAttributedString *customTitle = [[NSMutableAttributedString alloc] initWithString:@"Select an action"];
+    [customTitle addAttribute:NSFontAttributeName
+                  value:[UIFont systemFontOfSize:18.0]
+                  range:NSMakeRange(0, 16)];
+    [alertController setValue:customTitle forKey:@"attributedTitle"];
+    
+    UIAlertAction* actionInsertAtBeginning = [UIAlertAction actionWithTitle:@"Insert at the Start"
                                                            style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * action)
                                    {
@@ -3526,7 +3533,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             
             if (sliderValue <= 0)
             {
-                totalTime = [self getTotalCMTimeFromMilliSeconds:sliderValue]; // if slider pos. <= 0 then dont subtrat
+                totalTime = [self getTotalCMTimeFromMilliSeconds:0]; // if slider pos. <= 0 then dont subtrat
                 
             }
             else
@@ -3542,7 +3549,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
             if (updatedInsertionTime <= 0)
             {
-                totalTime = [self getTotalCMTimeFromMilliSeconds:updatedInsertionTime];
+                totalTime = [self getTotalCMTimeFromMilliSeconds:0];
 
             }
             else
@@ -3566,7 +3573,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
             if (sliderValue <= 0)
             {
-                totalTime = [self getTotalCMTimeFromMilliSeconds:sliderValue]; // if slider pos. <= 0 then dont subtrat
+                totalTime = [self getTotalCMTimeFromMilliSeconds:0]; // if slider pos. <= 0 then dont subtrat
 
             }
             else
@@ -3583,7 +3590,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             
             if (updatedInsertionTime <= 0)
             {
-                totalTime = [self getTotalCMTimeFromMilliSeconds:updatedInsertionTime];
+                totalTime = [self getTotalCMTimeFromMilliSeconds:0];
                 
             }
             else
@@ -3605,10 +3612,36 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     else
         if ([editType isEqualToString:@"insertAtBeginning"])// if its insert then insert new recording at end of original recording
         {
-            totalTime = originalAsset.duration;
-            totalTime = CMTimeMake(0.5, 10);
-            //        totalTime =   originalAsset.duration;
+//            totalTime = originalAsset.duration;
+//            totalTime = CMTimeMake(0.5, 10);
             
+            
+            if (updatedInsertionTime == 0)
+            {
+                totalTime = CMTimeMake(0.5, 10);
+                
+                updatedInsertionTime = CMTimeGetSeconds(newAsset.duration);
+            }
+            else
+            {
+                NSLog(@"overwrite updatedInsertionTime = %f", updatedInsertionTime);
+                
+                if (updatedInsertionTime <= 0)
+                {
+                    totalTime = [self getTotalCMTimeFromMilliSeconds:0];
+                    
+                }
+                else
+                {
+                    totalTime = [self getTotalCMTimeFromMilliSeconds:updatedInsertionTime - 0.05];
+                    
+                }
+                
+                updatedInsertionTime = updatedInsertionTime + CMTimeGetSeconds(newAsset.duration);
+
+                
+            }
+
         }
         else
         {
@@ -3617,43 +3650,13 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         }
     
     
-//    CMTime time1 = CMTimeMake(1, 1);
-    timeRange = CMTimeRangeMake(kCMTimeZero, newAsset.duration);
-    
-//    if ([editType isEqualToString:@"insertAtBeginning"])
-//    {
-//        CMTimeRange newAssetTimeRange = CMTimeRangeMake(kCMTimeZero, newAsset.duration);
-//
-////        CMTimeRange oldTimeRange = CMTimeRangeMake(kCMTimeZero, originalAsset.duration);
-//        CMTimeRange oldAssetTimeRange = CMTimeRangeMake(kCMTimeZero, originalAsset.duration);
-//
-////        totalTime = newAsset.duration; //  inser at beginning
-//        Float64 newRecordedDuration = CMTimeGetSeconds(newAsset.duration);
-//
-//        totalTime = [self getTotalCMTimeFromMilliSeconds:newRecordedDuration - 0.05];
-//
-//        appendedAudioTrack =
-//        [composition addMutableTrackWithMediaType:AVMediaTypeAudio
-//                                 preferredTrackID:kCMPersistentTrackID_Invalid];
-//
-//        [appendedAudioTrack insertTimeRange:newAssetTimeRange
-//                                    ofTrack:[newTrack objectAtIndex:0]
-//                                     atTime:kCMTimeZero
-//                                      error:&error];
-//
-//        [appendedAudioTrack insertTimeRange:oldAssetTimeRange
-//                                    ofTrack:[originalTrack objectAtIndex:0]
-//                                     atTime:totalTime
-//                                      error:&error];
-//    }
-//    else
-//    {
+        timeRange = CMTimeRangeMake(kCMTimeZero, newAsset.duration);
+        
+        
         [appendedAudioTrack insertTimeRange:timeRange
                                     ofTrack:[newTrack objectAtIndex:0]
                                      atTime:totalTime
                                       error:&error];
-//    }
-   
     
     float_t newTime = CMTimeGetSeconds(newAsset.duration);
     float_t oldTime = CMTimeGetSeconds(totalTime);
@@ -3928,7 +3931,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     startLabel.text = @"Pause";
     
-    startLabel.textColor = [UIColor lightHomeColor];
+//    startLabel.textColor = [UIColor lightHomeColor];
     
     UIImageView* startRecordingImageView;
     

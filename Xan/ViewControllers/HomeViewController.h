@@ -48,5 +48,6 @@
 @property (weak, nonatomic) IBOutlet UIView *subTransferredView;
 @property (weak, nonatomic) IBOutlet UIView *subAwaitingView;
 @property (weak, nonatomic) IBOutlet UIView *subVRSView;
+@property (weak, nonatomic) IBOutlet UILabel *dictatorNameLabel;
 
 @end

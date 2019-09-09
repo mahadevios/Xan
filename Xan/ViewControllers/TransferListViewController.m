@@ -84,7 +84,7 @@
     
     progressIndexPathArray = [[NSMutableArray alloc]init];
     
-    indexPathFileNameDict = [NSMutableDictionary new];
+//    indexPathFileNameDict = [NSMutableDictionary new];
     
     self.splitViewController.delegate = self;
     
@@ -373,6 +373,7 @@
 
 -(void)updateSerachBarManually
 {
+    
     self.searchController.active = YES;
     self.searchController.searchBar.text = self.searchController.searchBar.text;
     
@@ -513,6 +514,7 @@
     else
     {
        searchBecomeResponsderFromUploadAlert = NO;
+//        self.searchController.searchBar.showsCancelButton = false;
        return NO;
     }
     
@@ -637,12 +639,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableview cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    APIManager* app=[APIManager sharedManager];
     AudioDetails* audioDetails;
    
     audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
    
-
     UITableViewCell *cell = [tableview dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
    
     UILabel* departmentNameLabel=[cell viewWithTag:101];
@@ -652,13 +652,12 @@
     NSString* deleteStatusString = audioDetails.deleteStatus;
     NSArray* dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
     
-    
     UILabel* recordingDurationLabel=[cell viewWithTag:102];
     
     UILabel* timeLabel=[cell viewWithTag:106];
 
-    if (dateAndTimeArray.count>1)
-    timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
+    if (dateAndTimeArray.count>2)
+    timeLabel.text=[NSString stringWithFormat:@"%@ %@",[dateAndTimeArray objectAtIndex:1],[dateAndTimeArray objectAtIndex:2]];
     
     UILabel* nameLabel=[cell viewWithTag:103];
     nameLabel.text = audioDetails.department;
@@ -667,26 +666,11 @@
 
     UILabel* dateLabel=[cell viewWithTag:104];
     
-    
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    
-    
-    if (dateAndTimeArray.count>1)
+    if (dateAndTimeArray.count>2)
     {
-//        timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
-//
-//
-//        NSDate *date = [dateFormatter dateFromString:[dateAndTimeArray objectAtIndex:0]];
-//
-//        // Convert date object into desired format
-//        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
-//        NSString *newDateString = [dateFormatter stringFromDate:date];
-        
         dateLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
         
     }
-    
    
     int audioHour= [audioDetails.currentDuration intValue]/(60*60);
     int audioHourByMod= [audioDetails.currentDuration intValue]%(60*60);
@@ -694,58 +678,43 @@
     int audioMinutes = audioHourByMod / 60;
     int audioSeconds = audioHourByMod % 60;
     
-    recordingDurationLabel.text=[NSString stringWithFormat:@"%02d:%02d:%02d",audioHour,audioMinutes,audioSeconds];
+    recordingDurationLabel.text=[NSString stringWithFormat:@"(%02d:%02d:%02d)",audioHour,audioMinutes,audioSeconds];
     
     if ([self.currentViewName isEqualToString:@"Transferred Today"])
     {
         dateAndTimeString = audioDetails.transferDate;
-//        dateAndTimeArray=nil;
+
         dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
         
         if (dateAndTimeArray.count>1)
         {
-            
-                timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
-                
-//                [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-//
-//                NSDate *date = [dateFormatter dateFromString:[dateAndTimeArray objectAtIndex:0]];
-//
-//                // Convert date object into desired format
-//                [dateFormatter setDateFormat:@"dd-MM-yyyy"];
-//                NSString *newDateString = [dateFormatter stringFromDate:date];
-            
-                dateLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
 
-                timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
+            dateLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
 
+            timeLabel.text=[NSString stringWithFormat:@"%@ %@",[dateAndTimeArray objectAtIndex:1],[dateAndTimeArray objectAtIndex:2]];
 
         }
-        
+
+        if ([deleteStatusString isEqualToString:@"Deleted"])
+        {
+            deleteStatusLabel.textColor = [UIColor colorWithRed:255/255.0 green:0 blue:0 alpha:1.0];
+            deleteStatusLabel.hidden = NO;
+            deleteStatusLabel.text=@"Deleted";
+        }
 
     }
     
-    if ([transferStatusString  isEqualToString: @"Transfer Failed"])
-    {
-        //        [deleteStatusLabel setHidden:false];
-        deleteStatusLabel.text = transferStatusString;
-    }
-    else
-        {
-            deleteStatusLabel.text=@"";
-        }
-    
-    if ([deleteStatusString isEqualToString:@"Deleted"])
-    {
-        deleteStatusLabel.hidden = NO;
-        deleteStatusLabel.text=@"Deleted";
-    }
-    else
-        if (![transferStatusString isEqualToString:@"Transfer Failed"])
-        {
-            deleteStatusLabel.text=@"";
-
-        }
+//    if ([transferStatusString  isEqualToString: @"Transfer Failed"] && ![progressIndexPathArray containsObject:indexPath])
+//    {
+//        deleteStatusLabel.textColor = [UIColor colorWithRed:255/255.0 green:0 blue:0 alpha:1.0];
+//        deleteStatusLabel.text = transferStatusString;
+//    }
+//    else
+//        if (![transferStatusString isEqualToString:@"Transfer Failed"])
+//        {
+//            deleteStatusLabel.text=@"";
+//
+//        }
     
  
     
@@ -756,7 +725,7 @@
             [progressIndexPathArray addObject:indexPath];
            // [progressIndexPathArrayCopy addObject:indexPath];
 
-            [indexPathFileNameDict setObject:indexPath forKey:departmentNameLabel.text];
+//            [indexPathFileNameDict setObject:indexPath forKey:departmentNameLabel.text];
         }
         //deleteStatusLabel.text=@"Uploading";
         if ([[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:audioDetails.fileName]== NULL)
@@ -766,13 +735,34 @@
         else
         deleteStatusLabel.text = [NSString stringWithFormat:@"Uploading %@",[[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:audioDetails.fileName]];
 
+        deleteStatusLabel.textColor = [UIColor appOrangeColor];
     }
     else
     {
+        if ([transferStatusString  isEqualToString: @"Transfer Failed"])
+        {
+            //        [deleteStatusLabel setHidden:false];
+            deleteStatusLabel.textColor = [UIColor colorWithRed:255/255.0 green:0 blue:0 alpha:1.0];
+            deleteStatusLabel.text = transferStatusString;
+        }
+        else
+            if ([deleteStatusString isEqualToString:@"Deleted"])
+            {
+                deleteStatusLabel.textColor = [UIColor colorWithRed:255/255.0 green:0 blue:0 alpha:1.0];
+                deleteStatusLabel.hidden = NO;
+                deleteStatusLabel.text=@"Deleted";
+            }
+           
+        else
+        {
+         deleteStatusLabel.text= @"";
+        }
+
+        
         if ([progressIndexPathArray containsObject:indexPath])
         {
             [progressIndexPathArray removeObject:indexPath];
-            [indexPathFileNameDict removeObjectForKey:departmentNameLabel.text];
+//            [indexPathFileNameDict removeObjectForKey:departmentNameLabel.text];
         }
     }
     
@@ -925,7 +915,15 @@
                     //                }
                     AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
                     detailVC.audioDetails = audioDetails;
-                    detailVC.selectedView = self.currentViewName;
+                    if ([audioDetails.uploadStatus isEqualToString:@"Transfer Failed"])
+                    {
+                        detailVC.selectedView = @"Transfer Failed";
+                    }
+                    else
+                    {
+                      detailVC.selectedView = self.currentViewName;
+                    }
+                    
                     [self presentViewController:detailVC animated:YES completion:nil];
                     //                self.tableView.allowsMultipleSelection = NO;
                     
@@ -1271,9 +1269,9 @@
                                             style:UIAlertActionStyleDestructive
                                           handler:^(UIAlertAction * action)
                     {
+                        [progressIndexPathArray removeAllObjects]; // if file keot on uploading using multiple seleection and then multiple delete performed , indexpath of uploading file get changed hence to prevent crash remove progress indexpath array/
                         
                         for (int i=0; i<arrayOfMarked.count; i++)
-                            
                         {
                             Database* db=[Database shareddatabase];
                             APIManager* app=[APIManager sharedManager];
@@ -1300,8 +1298,12 @@
                         
                         self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:self.genericFilesArray];
                         
-                        [self updateSerachBarManually];
+                        if (![self.searchController.searchBar.text isEqualToString:@""])
+                        {
+                            [self updateSerachBarManually];
+                        }
 
+                        
                         [self.tableView reloadData];
 
                     }]; //You can use a block here to handle a press on this button
@@ -1397,12 +1399,16 @@
                         
                         self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:self.genericFilesArray];
                             
-                        [self updateSerachBarManually]; // to update the search bar
-                       
                         [self.tableView reloadData];
               
-                        [self.searchController.searchBar becomeFirstResponder];
-                 
+                        if (![self.searchController.searchBar.text isEqualToString:@""])
+                        {
+                            [self updateSerachBarManually]; // to update the search bar
+                            
+                            [self.searchController.searchBar becomeFirstResponder];
+                            
+                        }
+                      
                             
 //                            [self updateSerachBarManually];
                         for (int i=0; i<aarayOfMarkedCopy.count; i++)
@@ -1550,7 +1556,7 @@
 {
     [self prepareDataSourceForTableView];
     [self.tableView reloadData];
-    
+
     [self addEmptyVCToSplitVC];
 
 }
