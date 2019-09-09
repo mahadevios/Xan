@@ -465,9 +465,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 - (UITableViewCell *)tableView:(UITableView *)tableview cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary* awaitingFileTransferDict;
+    AudioDetails* audioDetails;
     
-    awaitingFileTransferDict=[[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray objectAtIndex:indexPath.row];
+    audioDetails = [[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray objectAtIndex:indexPath.row];
     
     UITableViewCell *cell = [tableview dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
@@ -483,7 +483,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UILabel* statusLabel=[cell viewWithTag:106];
 
-    NSString* dateAndTimeString=[awaitingFileTransferDict valueForKey:@"RecordCreatedDate"];
+    NSString* dateAndTimeString = audioDetails.recordingDate;
     
     NSArray* dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
     
@@ -491,10 +491,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     //int audioSeconds= [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue]%60;
     
-    departmentNameLabel.text=[[awaitingFileTransferDict valueForKey:@"RecordItemName"] stringByDeletingPathExtension];
+    departmentNameLabel.text = [audioDetails.fileName stringByDeletingPathExtension];
     
-    int audioHour= [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue]/(60*60);
-    int audioHourByMod= [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue]%(60*60);
+    int audioHour= [audioDetails.currentDuration intValue]/(60*60);
+    int audioHourByMod= [audioDetails.currentDuration  intValue]%(60*60);
     
     int audioMinutes = audioHourByMod / 60;
     int audioSeconds = audioHourByMod % 60;
@@ -503,30 +503,30 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
     //recordingDurationLabel.text=[NSString stringWithFormat:@"%02d:%02d",audioMinutes,audioSeconds];
     
-    nameLabel.text=[awaitingFileTransferDict valueForKey:@"Department"];
+    nameLabel.text = audioDetails.department;
     
-    if ([[awaitingFileTransferDict valueForKey:@"TransferStatus"] isEqualToString:@"Transferred"] && !([[awaitingFileTransferDict valueForKey:@"DictationStatus"] isEqualToString:@"RecordingFileUpload"]))
-    {
-        statusLabel.textColor=[UIColor colorWithRed:49/255.0 green:85/255.0 blue:25/255.0 alpha:1.0];
-    }
-    else
-    {
-        statusLabel.textColor=[UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1.0];
-    }
+//    if ([audioDetails.uploadStatus isEqualToString:@"Transferred"] && !([audioDetails.dictationStatus  isEqualToString:@"RecordingFileUpload"]))
+//    {
+//        statusLabel.textColor=[UIColor colorWithRed:49/255.0 green:85/255.0 blue:25/255.0 alpha:1.0];
+//    }
+//    else
+//    {
+//        statusLabel.textColor=[UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1.0];
+//    }
     
-    if ([[awaitingFileTransferDict valueForKey:@"DictationStatus"] isEqualToString:@"RecordingFileUpload"])
+    if ([audioDetails.dictationStatus isEqualToString:@"RecordingFileUpload"])
     {
         statusLabel.text=@"Uploading";
     }
     else
     {
-        if ([[awaitingFileTransferDict valueForKey:@"TransferStatus"] isEqualToString:@"NotTransferred"])
+        if ([audioDetails.uploadStatus isEqualToString:@"NotTransferred"])
         {
             statusLabel.text=@"Not Transferred";
 
         }
         else
-        statusLabel.text=[awaitingFileTransferDict valueForKey:@"TransferStatus"];
+            statusLabel.text = audioDetails.uploadStatus;
     }
     
     if (dateAndTimeArray.count>1)

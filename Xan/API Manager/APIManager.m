@@ -746,9 +746,11 @@ static APIManager *singleton = nil;
             dispatch_async(dispatch_get_main_queue(), ^
                            {
                                //NSLog(@"Reachable");
+                               NSString* date= [[APIManager sharedManager] getDateAndTimeString];
+                               
                                NSString* fileName = [[Database shareddatabase] getfileNameFromTaskIdentifier:taskIdentifier];
                                
-                               [[Database shareddatabase] updateAudioFileUploadedStatus:@"TransferFailed" fileName:fileName dateAndTime:@"" mobiledictationidval:0];
+                               [[Database shareddatabase] updateAudioFileUploadedStatus:@"TransferFailed" fileName:fileName dateAndTime:date mobiledictationidval:0];
                                
                                [[Database shareddatabase] updateAudioFileStatus:@"RecordingComplete" fileName:fileName];
                                

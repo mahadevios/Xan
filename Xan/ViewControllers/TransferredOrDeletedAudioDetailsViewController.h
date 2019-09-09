@@ -51,7 +51,8 @@
 -(void)setAudioDetails;
 @property (weak, nonatomic) IBOutlet UIImageView *backImageView;
 @property(nonatomic,strong)AudioDetails* audioDetails;
+@property (weak, nonatomic) IBOutlet UILabel *transferDateTitleLabel;
 
-@property (nonatomic, weak) id <MyClassDelegate> delegate; //define MyClassDelegate as delegate
+@property (nonatomic, weak) id <MyClassDelegate> delegate; //define MyClassDelegate as delegate@property (weak, nonatomic) IBOutlet NSLayoutConstraint *;
 
 @end

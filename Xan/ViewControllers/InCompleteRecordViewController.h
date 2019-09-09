@@ -15,6 +15,14 @@
 #import "APIManager.h"
 #import "Constants.h"
 
+@class InCompleteRecordViewController;
+@protocol UpdateModifiedData <NSObject>
+
+-(void) updateData:(NSString*) departmentName; // we can also pass incompleterecordviewcontrollers object
+
+@end
+
+
 @interface InCompleteRecordViewController : UIViewController<UIGestureRecognizerDelegate,AVAudioPlayerDelegate>
 
 {
@@ -107,6 +115,7 @@
 @property(nonatomic) NSString* audioDuration;
 @property (strong, nonatomic) MBProgressHUD *hud;
 @property (strong, nonatomic) MBProgressHUD *hud1;
+@property (nonatomic, weak) id <UpdateModifiedData> delegate;
 
 - (IBAction)deleteButtonPressed:(id)sender;
 

@@ -230,7 +230,7 @@
     int audioMinutes = audioHourByMod / 60;
     int audioSeconds = audioHourByMod % 60;
     
-    recordingDurationLabel.text=[NSString stringWithFormat:@"%02d:%02d:%02d",audioHour,audioMinutes,audioSeconds];
+    recordingDurationLabel.text=[NSString stringWithFormat:@"(%02d:%02d:%02d)",audioHour,audioMinutes,audioSeconds];
   //  NSLog(@"%@",recordingDurationLabel.text);
     
     UILabel* departmentNameLabel=[cell viewWithTag:103];
@@ -238,7 +238,7 @@
     
     UILabel* dateLabel=[cell viewWithTag:104];
     
-    if (dateAndTimeArray.count>1)
+    if (dateAndTimeArray.count>2)
     {
         
 //        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -254,7 +254,7 @@
 
         
         UILabel* timeLabel=[cell viewWithTag:105];
-        timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
+        timeLabel.text=[NSString stringWithFormat:@"%@ %@",[dateAndTimeArray objectAtIndex:1],[dateAndTimeArray objectAtIndex:2]];
     }
 //    dateLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
     

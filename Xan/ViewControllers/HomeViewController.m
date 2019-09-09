@@ -65,7 +65,7 @@
     VRSDOCFilesView.layer.cornerRadius = 4.0f;
 //    VRSDOCFilesView.layer.borderColor = [UIColor colorWithRed:75/255.0 green:101/255.0 blue:132/255.0 alpha:1.0].CGColor;
 //    VRSDOCFilesView.layer.borderWidth = 1.0;
-    VRSDOCFilesView.layer.cornerRadius = 4.0f;
+    subVRSView.layer.cornerRadius = 4.0f;
     
     // tap gesture recognisers for four title views
     transferredTodayViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
@@ -77,6 +77,10 @@
     [awaitingTransferView addGestureRecognizer:awaitingViewTapRecogniser];
     [transferFailedView addGestureRecognizer:completedDocViewTapRecogniser];
     [VRSDOCFilesView addGestureRecognizer:vrsDocViewTapRecogniser];
+
+    NSString* dictatorName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DictatorName"];
+    
+    _dictatorNameLabel.text = [NSString stringWithFormat:@"Welcome, %@",dictatorName];
 
     // observer for transfer, awiating, failed recording counts change
     [[NSNotificationCenter defaultCenter] addObserver:self

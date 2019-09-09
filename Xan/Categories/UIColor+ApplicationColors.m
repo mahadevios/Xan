@@ -23,7 +23,7 @@
 +(UIColor*)appColor
 {
     //return [UIColor colorWithRed:41/255.0 green:97/255.0 blue:142/255.0 alpha:1];
-    return [UIColor colorWithRed:75/255.0 green:101/255.0 blue:132/255.0 alpha:1];
+    return [UIColor colorWithRed:0/255.0 green:44/255.0 blue:184/255.0 alpha:1];
     // return [UIColor colorWithRed:11/255.0 green:33/255.0 blue:46/255.0 alpha:1];
     
     //return [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1];

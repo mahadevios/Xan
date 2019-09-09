@@ -23,12 +23,12 @@
    
     poUpTableView.layer.cornerRadius=2.0f;
     app = [AppPreferences sharedAppPreferences];
-
-    recordSettingsItemsarray=[[NSMutableArray alloc]initWithObjects:@"Save Dictation Waiting By",@"Confirm Before Saving",@"Alert Before Recording",@"Back To Home After Dictation", nil];
+//
+    recordSettingsItemsarray=[[NSMutableArray alloc]initWithObjects:@"Pause recording after",@"Confirm before saving",@"Alert before recording",@"Back to home after dictation", nil];
     
-    storageManagementItemsArray=[[NSMutableArray alloc]initWithObjects:@"Low Storage Threshold",@"Purge Data By", nil];
+    storageManagementItemsArray=[[NSMutableArray alloc]initWithObjects:@"Low storage threshold",@"Purge deleted and transferred data by", nil];
 
-    PlaybackAutoRewindByArray=[[NSMutableArray alloc]initWithObjects:@"Change Your Pin", nil];
+    PlaybackAutoRewindByArray=[[NSMutableArray alloc]initWithObjects:@"Change your pin", nil];
 
     popUpOptionsArray=[[NSMutableArray alloc]init];
     radioButtonArray=[[NSMutableArray alloc]init];
@@ -83,7 +83,7 @@
     {
         
         UIView* sectionHeaderView=[[UIView alloc]initWithFrame:CGRectMake(tableView.frame.origin.x, tableView.frame.origin.y, tableView.frame.size.width, 60)];
-        sectionHeaderView.backgroundColor=[UIColor colorWithRed:239/255.0 green:239/255.0 blue:244/255.0 alpha:1];
+        sectionHeaderView.backgroundColor=[UIColor colorWithRed:214/255.0 green:214/255.0 blue:226/255.0 alpha:1];
         
         UILabel* sectionTitleLabel=[[UILabel alloc]initWithFrame:CGRectMake(16, 20, tableView.frame.size.width*0.9, 17)];
         [sectionTitleLabel setFont:[UIFont systemFontOfSize:16.0]];

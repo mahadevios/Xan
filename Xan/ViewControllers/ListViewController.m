@@ -710,16 +710,16 @@
     {
         dateAndTimeString = audioDetails.transferDate;
         dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
-        if (dateAndTimeArray.count>1)
-        timeLabel.text=[NSString stringWithFormat:@"Transferred %@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]]];
+        if (dateAndTimeArray.count>2)
+        timeLabel.text=[NSString stringWithFormat:@"Transferred %@ %@",[dateAndTimeArray objectAtIndex:1],[dateAndTimeArray objectAtIndex:2]];
 
     }
     else
     {
         dateAndTimeString = audioDetails.deleteDate;
         dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
-        if (dateAndTimeArray.count>1)
-            timeLabel.text=[NSString stringWithFormat:@"Deleted %@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]]];
+        if (dateAndTimeArray.count>2)
+            timeLabel.text = [NSString stringWithFormat:@"Deleted %@ %@",[dateAndTimeArray objectAtIndex:1],[dateAndTimeArray objectAtIndex:2]];
 
     }
 
@@ -729,7 +729,7 @@
     int audioMinutes = audioHourByMod / 60;
     int audioSeconds = audioHourByMod % 60;
     
-    durationLabel.text=[NSString stringWithFormat:@"%02d:%02d:%02d",audioHour,audioMinutes,audioSeconds];
+    durationLabel.text=[NSString stringWithFormat:@"(%02d:%02d:%02d)",audioHour,audioMinutes,audioSeconds];
     //timeLabel.text=[NSString stringWithFormat:@"%@",@"Transferred 12:18:00 PM"];
 
     transferByLabel.text = audioDetails.department;

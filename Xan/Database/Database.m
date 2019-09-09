@@ -881,7 +881,7 @@ static Database *db;
 //                NSDate *deleteDate = [dateFormatter dateFromString:Date];
                 
                 
-                [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+                [dateFormatter setDateFormat:@"dd-MM-yyyy hh:mm:ss a"];
                 NSString *recordCreatedDateString = [dateFormatter stringFromDate:recordCreatedDate];
                 NSString *transferDateString = [dateFormatter stringFromDate:transferDateY];
 //                NSString *deleteDateString = [dateFormatter stringFromDate:deleteDate];
@@ -1518,7 +1518,7 @@ static Database *db;
                 NSDate *deleteDate = [dateFormatter dateFromString:Date];
 
                 
-                [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+                [dateFormatter setDateFormat:@"dd-MM-yyyy hh:mm:ss a"];
                 NSString *recordCreatedDateString = [dateFormatter stringFromDate:recordCreatedDate];
                 NSString *transferDateString = [dateFormatter stringFromDate:transferDateY];
                 NSString *deleteDateString = [dateFormatter stringFromDate:deleteDate];
@@ -2428,8 +2428,36 @@ static Database *db;
                 else
                     //NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
                 {}
-                dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:recordItemName,@"RecordItemName",recordCreateDate,@"RecordCreatedDate",Department,@"Department",TransferStatus,@"TransferStatus",CurrentDuration,@"CurrentDuration",transferDate,@"TransferDate",deleteStatus,@"DeleteStatus",dictationStatus,@"DictationStatus",nil];
-                [app.importedFilesAudioDetailsArray addObject:dict];
+                
+                
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                NSDate *recordCreatedDate = [dateFormatter dateFromString:recordCreateDate];
+//                NSDate *transferDateY = [dateFormatter dateFromString:transferDate];
+                //                NSDate *deleteDate = [dateFormatter dateFromString:Date];
+                
+                
+                [dateFormatter setDateFormat:@"dd-MM-yyyy hh:mm:ss a"];
+                NSString *recordCreatedDateString = [dateFormatter stringFromDate:recordCreatedDate];
+//                NSString *transferDateString = [dateFormatter stringFromDate:transferDateY];
+                
+                AudioDetails *audioDetails = [AudioDetails new];
+                
+                
+                audioDetails.fileName = recordItemName;
+                audioDetails.recordingDate = recordCreatedDateString;
+                audioDetails.department = Department;
+                audioDetails.uploadStatus = TransferStatus;
+                audioDetails.currentDuration = CurrentDuration;
+//                audioDetails.transferDate = transferDateString;
+                audioDetails.deleteStatus = deleteStatus;
+                audioDetails.dictationStatus = dictationStatus;
+                
+                
+                [app.importedFilesAudioDetailsArray addObject:audioDetails];
+                
+//                dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:recordItemName,@"RecordItemName",recordCreateDate,@"RecordCreatedDate",Department,@"Department",TransferStatus,@"TransferStatus",CurrentDuration,@"CurrentDuration",transferDate,@"TransferDate",deleteStatus,@"DeleteStatus",dictationStatus,@"DictationStatus",nil];
+//                [app.importedFilesAudioDetailsArray addObject:dict];
 
             }
         }
@@ -3139,7 +3167,7 @@ static Database *db;
                 //                NSDate *deleteDate = [dateFormatter dateFromString:Date];
                 
                 
-                [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+                [dateFormatter setDateFormat:@"dd-MM-yyyy hh:mm:ss a"];
                 NSString *recordCreatedDateString = [dateFormatter stringFromDate:recordCreatedDate];
                 docFileDetails.createdDate = recordCreatedDateString;
                 

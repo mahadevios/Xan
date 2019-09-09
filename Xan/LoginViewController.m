@@ -266,6 +266,10 @@
         //get user firstname,lastname and userId for file prefix
         NSString* fileNamePrefix = [responseDict valueForKey:@"FileNamePrefix"];
         
+        NSString* dictatorName = [responseDict valueForKey:@"Dname"];
+
+        [[NSUserDefaults standardUserDefaults] setValue:dictatorName forKey:@"DictatorName"];
+
         [[NSUserDefaults standardUserDefaults] setValue:fileNamePrefix forKey:@"FileNamePrefix"];
         
         dispatch_async(dispatch_get_main_queue(), ^{

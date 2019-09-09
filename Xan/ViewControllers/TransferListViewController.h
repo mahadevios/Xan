@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AudioDetailsViewController.h"
 
-@interface TransferListViewController : UIViewController<UIGestureRecognizerDelegate,UISplitViewControllerDelegate,UISearchBarDelegate, UISearchResultsUpdating>
+@interface TransferListViewController : UIViewController<UIGestureRecognizerDelegate,UISplitViewControllerDelegate,UISearchBarDelegate, UISearchResultsUpdating,MyClassDelegate>
 {
 
     UIAlertController *alertController;

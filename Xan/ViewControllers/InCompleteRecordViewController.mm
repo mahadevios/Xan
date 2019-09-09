@@ -9,8 +9,9 @@
 #import "InCompleteRecordViewController.h"
 #import "DepartMent.h"
 #import "UIColor+ApplicationColors.h"
-
+#import "AudioDetailsViewController.h"
 #define IMPEDE_PLAYBACK NO
+
 
 extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSType outputFormat, Float64 outputSampleRate);
 
@@ -1425,10 +1426,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     UIView* stopRecordingView = [self.view viewWithTag:301];
     
     UIView* pauseRecordingView =  [self.view viewWithTag:302];
-    
-   
 
-    
     UIView* startRecordingView =  [self.view viewWithTag:303];
     
     [stopRecordingView setHidden:YES];
@@ -1510,6 +1508,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 //    [self addAnimatedView];
   
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:BACK_TO_HOME_AFTER_DICTATION])
+    {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 
@@ -1606,11 +1608,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UIButton* uploadAudioButton=[[UIButton alloc]initWithFrame:CGRectMake(animatedView.frame.size.width*0.1, animatedView.frame.size.height*0.2, animatedView.frame.size.width*0.8, 36)];
     
-    uploadAudioButton.backgroundColor=[UIColor lightHomeColor];
+    uploadAudioButton.backgroundColor=[UIColor darkHomeColor];
     
     uploadAudioButton.userInteractionEnabled=YES;
     
-    [uploadAudioButton setTitle:@"Upload Recording" forState:UIControlStateNormal];
+    [uploadAudioButton setTitle:@"Transfer Recording" forState:UIControlStateNormal];
     
     uploadAudioButton.titleLabel.font = [UIFont systemFontOfSize: 15];
     
@@ -2273,13 +2275,13 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         {
             float_t sliderValue;
             
-            sliderValue = playerDurationWithMilliSeconds - 0.03;// to adjust accuracy and file compose failure;
+            sliderValue = playerDurationWithMilliSeconds;// to adjust accuracy and file compose failure;
             
             NSLog(@"overwrite updatedInsertionTime = %f", playerDurationWithMilliSeconds);
             
             if (sliderValue <= 0)
             {
-                totalTime = [self getTotalCMTimeFromMilliSeconds:sliderValue]; // if slider pos. <= 0 then dont subtrat
+                totalTime = [self getTotalCMTimeFromMilliSeconds:0]; // if slider pos. <= 0 then dont subtrat
                 
             }
             else
@@ -2296,7 +2298,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             
             if (updatedInsertionTime <= 0)
             {
-                totalTime = [self getTotalCMTimeFromMilliSeconds:updatedInsertionTime];
+                totalTime = [self getTotalCMTimeFromMilliSeconds:0];
                 
             }
             else
@@ -2318,11 +2320,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         {
             float_t sliderValue;
             
-            sliderValue = playerDurationWithMilliSeconds - 0.03;// to adjust accuracy and file compose failure;
+            sliderValue = playerDurationWithMilliSeconds;// to adjust accuracy and file compose failure;
             
             if (sliderValue <= 0)
             {
-                totalTime = [self getTotalCMTimeFromMilliSeconds:sliderValue]; // if slider pos. <= 0 then dont subtrat
+                totalTime = [self getTotalCMTimeFromMilliSeconds:0]; // if slider pos. <= 0 then dont subtrat
                 
             }
             else
@@ -2339,7 +2341,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             
             if (updatedInsertionTime <= 0)
             {
-                totalTime = [self getTotalCMTimeFromMilliSeconds:updatedInsertionTime];
+                totalTime = [self getTotalCMTimeFromMilliSeconds:0];
                 
             }
             else
@@ -2361,9 +2363,31 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         else
             if ([editType isEqualToString:@"insertAtBeginning"])// if its insert then insert new recording at end of original recording
             {
-                totalTime = originalAsset.duration;
-                totalTime = CMTimeMake(0.5, 10);
-                //        totalTime =   originalAsset.duration;
+                if (updatedInsertionTime == 0)
+                {
+                    totalTime = CMTimeMake(0.5, 10);
+                    
+                    updatedInsertionTime = CMTimeGetSeconds(newAsset.duration);
+                }
+                else
+                {
+                    NSLog(@"overwrite updatedInsertionTime = %f", updatedInsertionTime);
+                    
+                    if (updatedInsertionTime <= 0)
+                    {
+                        totalTime = [self getTotalCMTimeFromMilliSeconds:0];
+                        
+                    }
+                    else
+                    {
+                        totalTime = [self getTotalCMTimeFromMilliSeconds:updatedInsertionTime - 0.05];
+                        
+                    }
+                    
+                    updatedInsertionTime = updatedInsertionTime + CMTimeGetSeconds(newAsset.duration);
+                    
+                    
+                }
                 
             }
         else
@@ -2714,7 +2738,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     radioButton.tag=indexPath.row+100;
     
 
-//    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+//    NSData *data = [[NSUserDefaults standardUser Defaults] objectForKey:SELECTED_DEPARTMENT_NAME];
 //
 //    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     
@@ -2787,7 +2811,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UILabel* transferredByLabel= [self.view viewWithTag:102];
     
-    transferredByLabel.text=deptObj.departmentName;
+    transferredByLabel.text =deptObj.departmentName;
     
     existingAudioDepartmentName = deptObj.departmentName;
     
@@ -2801,6 +2825,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         [audiorecordDict setValue:deptObj.departmentName forKey:@"Department"];
         
         [app.awaitingFileTransferNamesArray replaceObjectAtIndex:self.selectedRowOfAwaitingList withObject:audiorecordDict];
+        
+        [self.delegate updateData:deptObj.departmentName];
     }
     
     [popupView removeFromSuperview];
@@ -2822,12 +2848,17 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [self prepareAudioPlayer];
     
-    alertController = [UIAlertController alertControllerWithTitle:@""
-                                                          message:@"Select an action"
+    alertController = [UIAlertController alertControllerWithTitle:@"Select an action"
+                                                          message:nil
                                                    preferredStyle:UIAlertControllerStyleActionSheet];
     
-  
-    UIAlertAction* actionInsertAtBeginning = [UIAlertAction actionWithTitle:@"Insert at the Beginning"
+    NSMutableAttributedString *customTitle = [[NSMutableAttributedString alloc] initWithString:@"Select an action"];
+    [customTitle addAttribute:NSFontAttributeName
+                        value:[UIFont systemFontOfSize:18.0]
+                        range:NSMakeRange(0, 16)];
+    [alertController setValue:customTitle forKey:@"attributedTitle"];
+    
+    UIAlertAction* actionInsertAtBeginning = [UIAlertAction actionWithTitle:@"Insert at the Start"
                                                            style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * action)
                                    {
@@ -3289,7 +3320,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     startLabel.text = @"Pause";
     
-    startLabel.textColor = [UIColor lightHomeColor];
+//    startLabel.textColor = [UIColor lightHomeColor];
     
     UIImageView* startRecordingImageView;
     

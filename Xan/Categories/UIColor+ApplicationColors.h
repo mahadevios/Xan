@@ -10,8 +10,8 @@
 
 @interface UIColor (ApplicationColors)
 
-//+(UIColor*)appOrangeColor;
-+(UIColor*)appNavyBlueColor;
++(UIColor*)appOrangeColor;
+
 +(UIColor*)appColor;
 
 +(UIColor*)CGreenColor;

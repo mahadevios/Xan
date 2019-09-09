@@ -11,6 +11,7 @@
 #import "AudioSessionManager.h"
 #import "PopUpCustomView.h"
 #import "AudioDetails.h"
+#import "InCompleteRecordViewController.h"
 
 @class AudioDetailsViewController;             //define class, so protocol can see MyClass
 @protocol MyClassDelegate <NSObject>   //define delegate protocol
@@ -18,7 +19,7 @@
 - (void) myClassDelegateMethod: (AudioDetailsViewController *) sender;  //define delegate method to be implemented within another class
 @end //end protocol
 
-@interface AudioDetailsViewController : UIViewController<AVAudioPlayerDelegate,UIGestureRecognizerDelegate>
+@interface AudioDetailsViewController : UIViewController<AVAudioPlayerDelegate,UIGestureRecognizerDelegate,UpdateModifiedData>
 {
     NSDictionary* result;
     UIAlertController *alertController;
@@ -59,5 +60,7 @@
 - (IBAction)backButtonPressed:(id)sender;
 - (IBAction)deleteDictation:(id)sender;
 - (IBAction)playRecordingButtonPressed:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *transferDateTitleLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *transferButtonYConstraint;
 - (IBAction)transferDictationButtonClicked:(id)sender;
 @end
