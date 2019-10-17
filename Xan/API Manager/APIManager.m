@@ -179,128 +179,148 @@ static APIManager *singleton = nil;
         return true;
     }
 }
+///// For ACE
+
 -(void) checkDeviceRegistrationMacID:(NSString*)macID
 {
     
     self.responsesData = [NSMutableDictionary new];
-   
+    
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
         [[[[UIApplication sharedApplication] keyWindow] viewWithTag:222] removeFromSuperview];//to remove no internet message
+      
+        NSData* macIdData = [macID dataUsingEncoding:NSUTF8StringEncoding];
         
-        NSError* error;
-
-        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macID,@"macId", nil];
-
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
-                                                           options:0 // Pass 0 if you don't care about the readability of the generated string
-                                                             error:&error];
-
-        NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
+        NSData *macIdEncData = [macIdData AES256EncryptWithKey:SECRET_KEY];
+      
+        NSString* macIdEncString = [macIdEncData base64EncodedStringWithOptions:0];
+        //oWjUNRS+fxO+JEDlWw5BC6uoRRPWWoynetqTa8cqWfp2o5fPt56pl/cnK4lqgA8g
+        //oWjUNRS+fxO+JEDlWw5BC6uoRRPWWoynetqTa8cqWfp2o5fPt56pl/cnK4lqgA8g
+        macIdEncString =
+        [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         
-        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
-
-        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
+        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"macId", nil];
         
         NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
-//        NSData *jsonData = [NSKeyedArchiver archivedDataWithRootObject:dictionary2];
-
-//        NSJSONSerialization JSONObjectWithData:<#(nonnull NSData *)#> options:<#(NSJSONReadingOptions)#> error:<#(NSError * _Nullable __autoreleasing * _Nullable)#>
+        
         NSString* downloadMethodType = @"urlConnection";
         
-        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:CHECK_DEVICE_REGISTRATION withRequestParameter:array withResourcePath:CHECK_DEVICE_REGISTRATION withHttpMethd:POST downloadMethodType:downloadMethodType];
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:CHECK_DEVICE_REGISTRATION_API withRequestParameter:array withResourcePath:CHECK_DEVICE_REGISTRATION_API withHttpMethd:POST downloadMethodType:downloadMethodType];
+        
+        downloadmetadatajob.contentType = @"json";
+
         [downloadmetadatajob startMetaDataDownLoad];
-
+        
     }
-
-        //
     
-            else
+    //
+    
+    else
     {
-     //UIView* internetMessageView=   [[PopUpCustomView alloc]initWithFrame:CGRectMake(12, 100, 200, 200) senderForInternetMessage:self];
+        //UIView* internetMessageView=   [[PopUpCustomView alloc]initWithFrame:CGRectMake(12, 100, 200, 200) senderForInternetMessage:self];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INTERNET_MESSAGE object:nil];
-
+        
         
     }
     
 }
-//-(void) checkDeviceRegistrationMacIDEncr:(NSData *)macID
+
+
+//-(void) authenticateUserMacID:(NSString*) macID password:(NSString*) password username:(NSString* )username
 //{
-//    
-//    Reachability * reach = [Reachability reachabilityWithHostname:@"www.google.com"];
-//    
-//    
 //    if ([[AppPreferences sharedAppPreferences] isReachable])
 //    {
-//        //NSArray *params = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"macid=%@",macID],nilID
-//        [[[[UIApplication sharedApplication] keyWindow] viewWithTag:222] removeFromSuperview];//to remove no internet message
-//        
-//        
-//        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macID,@"macid", nil];
-//        
-//        // NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:params,REQUEST_PARAMETER, nil];
-//        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary1, nil];
-//        
-//        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:CHECK_DEVICE_REGISTRATION withRequestParameter:array withResourcePath:CHECK_DEVICE_REGISTRATION withHttpMethd:POST];
+//        NSData* macIdData = [macID dataUsingEncoding:NSUTF8StringEncoding];
+//        NSData* usernameData = [username dataUsingEncoding:NSUTF8StringEncoding];
+//        NSData* passwordData = [password dataUsingEncoding:NSUTF8StringEncoding];
+//
+//        NSData *macIdEncData = [macIdData AES256EncryptWithKey:SECRET_KEY];
+//
+//        NSData *usernameEncData = [usernameData AES256EncryptWithKey:SECRET_KEY];
+//
+//        NSData *passwordEncData = [passwordData AES256EncryptWithKey:SECRET_KEY];
+//
+//        NSString* macIdEncString = [macIdEncData base64EncodedStringWithOptions:0];
+//        NSString* usernameEncString = [usernameEncData base64EncodedStringWithOptions:0];
+//        NSString* passwordEncString = [passwordEncData base64EncodedStringWithOptions:0];
+//
+//        macIdEncString =
+//        [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+//
+//        usernameEncString =
+//        [usernameEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+//
+//        passwordEncString =
+//        [passwordEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+//
+//        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"macId",usernameEncString,@"userName",passwordEncString,@"password", nil];
+//
+//        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
+//
+//        NSString* downloadMethodType = @"urlConnection";
+//
+//        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:CHECK_USER_REGISTRATION_API withRequestParameter:array withResourcePath:CHECK_USER_REGISTRATION_API withHttpMethd:POST downloadMethodType:downloadMethodType];
+//
+//        downloadmetadatajob.contentType = @"json";
+//
 //        [downloadmetadatajob startMetaDataDownLoad];
 //    }
 //    else
 //    {
-//        //UIView* internetMessageView=   [[PopUpCustomView alloc]initWithFrame:CGRectMake(12, 100, 200, 200) senderForInternetMessage:self];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INTERNET_MESSAGE object:nil];
-//        
-//        
+//        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
 //    }
-//    
+//
 //}
-
-//-(void) checkDeviceRegistrationMacID:(NSString*) macID
-//{
-//    if ([[AppPreferences sharedAppPreferences] isReachable])
-//    {
-//        NSArray *params = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"macid=%@",macID],nil];
-//        
-//        NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:params,REQUEST_PARAMETER, nil];
-//        
-//        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:CHECK_DEVICE_REGISTRATION withRequestParameter:dictionary withResourcePath:CHECK_DEVICE_REGISTRATION withHttpMethd:POST];
-//        [downloadmetadatajob startMetaDataDownLoad];
-//    }
-//    else
-//    {
-//        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-//    }
-//    
-//}
-
 
 -(void) authenticateUserMacID:(NSString*) macID password:(NSString*) password username:(NSString* )username
 {
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
-//        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macID,@"macid",password,@"pwd",username,@"username", nil];
-//        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary1, nil];
+        NSData* macIdData = [macID dataUsingEncoding:NSUTF8StringEncoding];
+        NSData* usernameData = [username dataUsingEncoding:NSUTF8StringEncoding];
+        NSData* passwordData = [password dataUsingEncoding:NSUTF8StringEncoding];
+        
+        NSData *macIdEncData = [macIdData AES256EncryptWithKey:SECRET_KEY];
+        
+        NSString* macIdEncString = [macIdEncData base64EncodedStringWithOptions:0];
 
-        NSError* error;
-        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macID,@"macid",password,@"pwd",username,@"username", nil];
+        macIdEncString =
+        [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        
+        NSString* initVector = [AppPreferences sharedAppPreferences].iniVector;
+        
+        NSData *usernameEncData = [usernameData AES256EncryptWithKey:SECRET_KEY];
+        
+        NSData *passwordEncData = [passwordData AES256EncryptWithKey:SECRET_KEY];
+        
+        NSString* usernameEncString = [usernameEncData base64EncodedStringWithOptions:0];
+        NSString* passwordEncString = [passwordEncData base64EncodedStringWithOptions:0];
+        
+       
+        
+        usernameEncString =
+        [usernameEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        
+        passwordEncString =
+        [passwordEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         
         
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
-                                                           options:0 // Pass 0 if you don't care about the readability of the generated string
-                                                             error:&error];
+        //__babacd_dcabab__
+        //        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
         
+        macIdEncString = [[macIdEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:initVector];
         
-        NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
-        
-        
-        
-        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
-        
-        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
+        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"macId",usernameEncString,@"userName",passwordEncString,@"password", nil];
         
         NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
+        
         NSString* downloadMethodType = @"urlConnection";
-
-        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:AUTHENTICATE_API withRequestParameter:array withResourcePath:AUTHENTICATE_API withHttpMethd:POST downloadMethodType:downloadMethodType];
+        
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:CHECK_USER_REGISTRATION_API withRequestParameter:array withResourcePath:CHECK_USER_REGISTRATION_API withHttpMethd:POST downloadMethodType:downloadMethodType];
+        
+//        downloadmetadatajob.contentType = @"json";
+        
         [downloadmetadatajob startMetaDataDownLoad];
     }
     else
@@ -310,35 +330,110 @@ static APIManager *singleton = nil;
     
 }
 
+-(void) generateDeviceToken:(NSString*) username password:(NSString*)password
+{
+    if ([[AppPreferences sharedAppPreferences] isReachable])
+    {
+        NSData* usernameData = [username dataUsingEncoding:NSUTF8StringEncoding];
+        NSData* passwordData = [password dataUsingEncoding:NSUTF8StringEncoding];
+        
+        NSData *usernameEncData = [usernameData AES256EncryptWithKey:SECRET_KEY];
+        
+        NSData *passwordEncData = [passwordData AES256EncryptWithKey:SECRET_KEY];
+        
+        
+        //__babacd_dcabab__
+        //        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
+        NSString* usernameEncString = [usernameEncData base64EncodedStringWithOptions:0];
+        NSString* passwordEncString = [passwordEncData base64EncodedStringWithOptions:0];
+        
+        usernameEncString =
+        [usernameEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        
+        passwordEncString =
+        [passwordEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        
+        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:usernameEncString,@"userName",passwordEncString,@"password", nil];
+        //        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
+        
+        //        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
+        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
+        
+        NSString* downloadMethodType = @"urlConnection";
+        
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:GENERATE_DEVICE_TOKEN withRequestParameter:array withResourcePath:GENERATE_DEVICE_TOKEN withHttpMethd:POST downloadMethodType:downloadMethodType];
+        
+        downloadmetadatajob.contentType = @"json";
+
+        [downloadmetadatajob startMetaDataDownLoad];
+    }
+    else
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+    }
+}
+
 -(void) acceptPinMacID:(NSString*) macID Pin:(NSString*)pin
 {
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
-//        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macID,@"macid",pin,@"PIN", nil];
-//        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary1, nil];
+        NSData* macIdData = [macID dataUsingEncoding:NSUTF8StringEncoding];
+        NSData* pinData = [pin dataUsingEncoding:NSUTF8StringEncoding];
         
+        NSData *macIdEncData = [macIdData AES256EncryptWithKey:SECRET_KEY];
         
-        NSError* error;
-        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macID,@"macid",pin,@"PIN", nil];
+        NSData *pinEncData = [pinData AES256EncryptWithKey:SECRET_KEY];
+      
+        NSString* macIdEncString = [macIdEncData base64EncodedStringWithOptions:0];
+        NSString* pinEncString = [pinEncData base64EncodedStringWithOptions:0];
         
+        macIdEncString =
+        [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
-                                                           options:0 // Pass 0 if you don't care about the readability of the generated string
-                                                             error:&error];
+        pinEncString =
+        [pinEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         
-        
-        NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
-        
-        
-        
-        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
-        
-        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
+        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"macId",pinEncString,@"devicePin", nil];
         
         NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
-        NSString* downloadMethodType = @"urlConnection";
-
+        
+        NSString* downloadMethodType = @"Bearer";
+        
         DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:ACCEPT_PIN_API withRequestParameter:array withResourcePath:ACCEPT_PIN_API withHttpMethd:POST downloadMethodType:downloadMethodType];
+        
+        downloadmetadatajob.contentType = @"json";
+
+        [downloadmetadatajob startMetaDataDownLoad];
+    }
+    else
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+    }
+    
+}
+
+-(void) acceptTandC:(NSString*) macID dateAndTIme:(NSString*)dateAndTime acceptFlag:(NSString*)acceptFlag
+{
+    if ([[AppPreferences sharedAppPreferences] isReachable])
+    {
+        NSData* macIdData = [macID dataUsingEncoding:NSUTF8StringEncoding];
+        
+        macIdData = [macIdData AES256EncryptWithKey:SECRET_KEY];
+        
+        NSString* macIdEncString = [macIdData base64EncodedStringWithOptions:0];
+        
+        macIdEncString = [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        
+        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"macId",dateAndTime,@"dateAndTime",acceptFlag,@"acceptanceFl", nil];
+        
+        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
+        
+        NSString* downloadMethodType = @"Bearer";
+        
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:ACCEPY_TandC_API withRequestParameter:array withResourcePath:ACCEPY_TandC_API withHttpMethd:POST downloadMethodType:downloadMethodType] ;
+        
+        downloadmetadatajob.contentType = @"json";
+        
         [downloadmetadatajob startMetaDataDownLoad];
     }
     else
@@ -352,30 +447,32 @@ static APIManager *singleton = nil;
 {
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
-//        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macID,@"macid",pin,@"PIN", nil];
-//        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary1, nil];
-        NSError* error;
-        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macID,@"macid",pin,@"PIN", nil];
+        NSData* macIdData = [macID dataUsingEncoding:NSUTF8StringEncoding];
+        NSData* pinData = [pin dataUsingEncoding:NSUTF8StringEncoding];
         
+        NSData *macIdEncData = [macIdData AES256EncryptWithKey:SECRET_KEY];
         
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
-                                                           options:0 // Pass 0 if you don't care about the readability of the generated string
-                                                             error:&error];
+        NSData *pinEncData = [pinData AES256EncryptWithKey:SECRET_KEY];
         
+        NSString* macIdEncString = [macIdEncData base64EncodedStringWithOptions:0];
+        NSString* pinEncString = [pinEncData base64EncodedStringWithOptions:0];
         
-        NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
+        macIdEncString =
+        [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         
+        pinEncString =
+        [pinEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         
-        
-        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
-        
-        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
+        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"macId",pinEncString,@"devicePin", nil];
         
         NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
-
-        NSString* downloadMethodType = @"urlConnection";
-
+        
+        NSString* downloadMethodType = @"Bearer";
+        
         DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:VALIDATE_PIN_API withRequestParameter:array withResourcePath:VALIDATE_PIN_API withHttpMethd:POST downloadMethodType:downloadMethodType] ;
+        
+        downloadmetadatajob.contentType = @"json";
+
         [downloadmetadatajob startMetaDataDownLoad];
     }
     else
@@ -384,84 +481,6 @@ static APIManager *singleton = nil;
     }
     
 }
-
-
--(void) acceptTandC:(NSString*) macID dateAndTIme:(NSString*)dateAndTIme acceptFlag:(NSString*)acceptFlag
-{
-    if ([[AppPreferences sharedAppPreferences] isReachable])
-    {
-        //        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macID,@"macid",pin,@"PIN", nil];
-        //        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary1, nil];
-        NSError* error;
-        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macID,@"macid",dateAndTIme,@"AcceptDateTime",acceptFlag,@"AcceptFlag", nil];
-        
-        
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
-                                                           options:0 // Pass 0 if you don't care about the readability of the generated string
-                                                             error:&error];
-        
-        
-        NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
-        
-        
-        
-        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
-        
-        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
-        
-        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
-        
-        NSString* downloadMethodType = @"urlConnection";
-        
-        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:ACCEPY_TandC_API withRequestParameter:array withResourcePath:ACCEPY_TandC_API withHttpMethd:POST downloadMethodType:downloadMethodType] ;
-        [downloadmetadatajob startMetaDataDownLoad];
-    }
-    else
-    {
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-    }
-    
-}
-//-(void)mobileDictationsInsertMobileStatus:(NSString* )mobilestatus OriginalFileName:(NSString*)OriginalFileName andMacID:(NSString*)macID
-//{
-//    if ([[AppPreferences sharedAppPreferences] isReachable])
-//    {
-//        NSArray *params = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"mobilestatus=%@",mobilestatus], [NSString stringWithFormat:@"OriginalFileName=%@",OriginalFileName] ,[NSString stringWithFormat:@"macID=%@",macID],nil];
-//
-//        NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:params,REQUEST_PARAMETER, nil];
-//        NSString* downloadMethodType = @"urlConnection";
-//
-//        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:DICTATIONS_INSERT_API withRequestParameter:dictionary withResourcePath:DICTATIONS_INSERT_API withHttpMethd:POST downloadMethodType:downloadMethodType];
-//        [downloadmetadatajob startMetaDataDownLoad];
-//    }
-//    else
-//    {
-//        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-//    }
-//
-//}
-
-//-(void)mobileDataSynchronisationMobileStatus:(NSString*)mobilestatus OriginalFileName:(NSString*)OriginalFileName macID:(NSString*)macid DeleteFlag:(NSString*)DeleteFlag
-//{
-//    if ([[AppPreferences sharedAppPreferences] isReachable])
-//    {
-//        NSArray *params = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"mobilestatus=%@",mobilestatus], [NSString stringWithFormat:@"OriginalFileName=%@",OriginalFileName] ,[NSString stringWithFormat:@"macID=%@",macid],nil];
-//        
-//        NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:params,REQUEST_PARAMETER, nil];
-//        NSString* downloadMethodType = @"urlConnection";
-//
-//        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:DATA_SYNCHRONISATION_API withRequestParameter:dictionary withResourcePath:DATA_SYNCHRONISATION_API withHttpMethd:POST downloadMethodType:downloadMethodType];
-//        [downloadmetadatajob startMetaDataDownLoad];
-//    }
-//    else
-//    {
-//        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-//    }
-//    
-//}
-
-
-
 
 -(void)changePinOldPin:(NSString*)oldpin NewPin:(NSString*)newpin macID:(NSString*)macID
 {

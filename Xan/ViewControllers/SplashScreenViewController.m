@@ -26,13 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    //    [[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
-    
    
-
-    
 }
 
 
@@ -98,7 +92,8 @@
         if (!APIcalled)
         {
             
-            [[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
+//            [[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
+             [[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
             APIcalled=true;
         }
     }
@@ -165,14 +160,12 @@
 }
 -(void)refresh:(UIButton*)sender
 {
-    //sender.userInteractionEnabled=NO;
+    
     [sender setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     
      [sender setEnabled:NO];
-   // NSString*     macId=[Keychain getStringForKey:@"udid"];
 
     [self performSelector:@selector(checkDeviceRegistration) withObject:nil afterDelay:0.1];
-    //[[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
     
 }
 
@@ -193,7 +186,9 @@
         if (!APIcalled)
         {
 
+//            [[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
             [[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
+
             APIcalled=true;
 
         }

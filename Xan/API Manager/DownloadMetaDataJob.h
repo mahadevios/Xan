@@ -19,6 +19,7 @@
     NSString        *downLoadResourcePath;
     NSString        *httpMethod;
     NSString        *downloadMethodType;
+    NSString        *contentType;
 
     NSMutableData   *responseData;
     
@@ -45,6 +46,7 @@
 @property (nonatomic,strong)  NSString              *downLoadEntityJobName;
 @property (nonatomic,strong)  NSString              *downLoadResourcePath;
 @property (nonatomic,strong)  NSString              *downloadMethodType;
+@property (nonatomic,strong)  NSString              *contentType;
 
 @property (nonatomic,strong)  NSDictionary          *requestParameter;
 @property (nonatomic,strong)  NSMutableArray          *dataArray;

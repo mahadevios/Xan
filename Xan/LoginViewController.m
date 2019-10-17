@@ -206,7 +206,7 @@
     
     NSString* responseCodeString=  [responseDict valueForKey:RESPONSE_CODE];
     
-    NSString* responsePinString=  [responseDict valueForKey:@"pinvalidflag"];
+    NSString* responsePinString=  [responseDict valueForKey:@"pinValidateFl"];
     
     if ([responseCodeString intValue] == 2001 || [responseCodeString intValue] == -1001)
     {
@@ -242,7 +242,7 @@
         [[NSUserDefaults standardUserDefaults] setValue:pin forKey:USER_PIN];
 
         
-        NSArray* departmentArray=  [responseDict valueForKey:@"DepartmentList"];
+        NSArray* departmentArray=  [responseDict valueForKey:@"deptList"];
         
         NSMutableArray* deptForDatabaseArray=[[NSMutableArray alloc]init];
         
@@ -252,9 +252,9 @@
             
             NSDictionary* deptDict= [departmentArray objectAtIndex:i];
             
-            deptObj.Id= [[deptDict valueForKey:@"ID"]longLongValue];
+            deptObj.Id= [[deptDict valueForKey:@"departmentCode"]longLongValue];
             
-            deptObj.departmentName=[deptDict valueForKey:@"DeptName"];
+            deptObj.departmentName=[deptDict valueForKey:@"name"];
             
             [deptForDatabaseArray addObject:deptObj];
         }
@@ -264,9 +264,9 @@
         [db insertDepartMentData:deptForDatabaseArray];
        
         //get user firstname,lastname and userId for file prefix
-        NSString* fileNamePrefix = [responseDict valueForKey:@"FileNamePrefix"];
+        NSString* fileNamePrefix = [responseDict valueForKey:@"fileNamePrefix"];
         
-        NSString* dictatorName = [responseDict valueForKey:@"Dname"];
+        NSString* dictatorName = [responseDict valueForKey:@"dictatorName"];
 
         [[NSUserDefaults standardUserDefaults] setValue:dictatorName forKey:@"DictatorName"];
 

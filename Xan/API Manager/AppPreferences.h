@@ -25,6 +25,7 @@
 @property (nonatomic,assign)    BOOL                        isReachable;
 
 @property(nonatomic,strong) NSString* bsackUpAudioFileName;
+@property(nonatomic,strong) NSString* iniVector;
 
 @property (nonatomic,assign)    BOOL                        recordNew;
 @property (nonatomic,assign)    BOOL                        recordingNew;  // may not used anywhere

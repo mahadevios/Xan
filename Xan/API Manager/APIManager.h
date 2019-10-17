@@ -48,9 +48,14 @@
 
 //-(void) validateUser:(NSString *) usernameString Password:(NSString *) passwordString andDeviceId:(NSString*)DeviceId;
 
--(void) checkDeviceRegistrationMacID:(NSString*) macID;
+//-(void) checkDeviceRegistrationMacID:(NSString*) macID;
 
+
+-(void) checkDeviceRegistrationMacID:(NSString*)macID;
 //-(void) checkDeviceRegistrationMacIDEncr:(NSData*) macID;
+
+-(void) generateDeviceToken:(NSString*) username password:(NSString*)password;
+
 
 -(void) authenticateUserMacID:(NSString*) macID password:(NSString*) password username:(NSString* )username;
 

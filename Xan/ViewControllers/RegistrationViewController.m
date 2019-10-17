@@ -44,9 +44,12 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(uIdPwdResponseCheck:) name:NOTIFICATION_AUTHENTICATE_API
+                                             selector:@selector(uIdPwdResponseCheck:) name:NOTIFICATION_CHECK_USER_REGISTRATION
                                                object:nil];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(generateTokenResponseCheck:) name:NOTIFICATION_GENERATE_DEVICE_TOKEN
+                                               object:nil];
 
 //    [self displayLocalVariable];
 }
@@ -76,8 +79,7 @@
 {
     NSDictionary* dict=dictObj.object;
     NSString* responseCodeString=  [dict valueForKey:RESPONSE_CODE];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    [hud hideAnimated:YES];
+//    [hud hideAnimated:YES];
 
     if ([responseCodeString intValue]==-1001 || [responseCodeString intValue]==2001) // net loss and unexpected response, alert has been shown in downloadmetadata
     {
@@ -90,17 +92,18 @@
         [[NSUserDefaults standardUserDefaults] setValue:trimmedIdTextField forKey:USER_ID];
         [[NSUserDefaults standardUserDefaults] setValue:trimmedPasswordTextfield forKey:USER_PASS];
 
-        PinRegistrationViewController* regiController=(PinRegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"PinRegistrationViewController"];
-        
-        [passwordTextfield resignFirstResponder];
-        
-        [self presentViewController:regiController animated:NO completion:nil];
+        [[APIManager sharedManager] generateDeviceToken:trimmedIdTextField password:trimmedPasswordTextfield];
+//        PinRegistrationViewController* regiController=(PinRegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"PinRegistrationViewController"];
+//
+//        [passwordTextfield resignFirstResponder];
+//
+//        [self presentViewController:regiController animated:NO completion:nil];
        
     }
     else
     if ([responseCodeString intValue]==401)
     {
-        
+        [hud hideAnimated:YES];
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Authentication Failed!" withMessage:@"Account Id or Password is incorrect, please try again" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
         
         IDTextField.text=nil;
@@ -111,6 +114,25 @@
 
 
 }
+
+-(void)generateTokenResponseCheck:(NSNotification* )dictObj
+{
+    NSDictionary* dict=dictObj.object;
+    
+    NSString* responseTokenString=  [dict valueForKey:@"token"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:responseTokenString forKey:JWT_TOKEN];
+    
+    [hud hideAnimated:YES];
+    
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    PinRegistrationViewController* regiController=(PinRegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"PinRegistrationViewController"];
+    
+    [passwordTextfield resignFirstResponder];
+    
+    [self presentViewController:regiController animated:NO completion:nil];
+}
+
 /*
 #pragma mark - Navigation
 
