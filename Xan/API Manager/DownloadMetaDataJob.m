@@ -25,6 +25,7 @@
 @synthesize isNewMatchFound;
 @synthesize dataArray;
 @synthesize downloadMethodType;
+@synthesize contentType;
 @synthesize session;
 -(id) initWithdownLoadEntityJobName:(NSString *) jobName withRequestParameter:(id) localRequestParameter withResourcePath:(NSString *) resourcePath withHttpMethd:(NSString *) httpMethodParameter downloadMethodType:(NSString*)downloadMethodType
 {
@@ -76,24 +77,88 @@
     NSURL *url = [[NSURL alloc] initWithString:[webservicePath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:80];
+    
+    
     [request setHTTPMethod:httpMethodParameter];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+//     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+
+
     NSError* error;
     
 
     
-    //NSDictionary* dic=[array objectAtIndex:0];
-    NSData *requestData = [NSJSONSerialization dataWithJSONObject:array options:kNilOptions error:&error];
+    NSDictionary* dic=[array objectAtIndex:0];
     
+//    {
+//        macId = "iRc6o4xbuUA/1sjOZG6oZ9tGpNl9Tm/vM605tV1BqF6Q4WP9LMD%2BT8cGmEJAWm7o__babacd_dcabab__RLAbvqnaANwegwfM";
+//        password = "tTUY3hCiRheyZUyttMQzFA==";
+//        userName = "WQhfm4o7kcgCXfVtEgHLGw==";
+//    }
+    NSMutableString *parameter = [[NSMutableString alloc] init];
     
-    [request setHTTPBody:requestData];
+    if ([contentType isEqualToString:@"json"])
+    {
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        
+        NSData *requestData = [NSJSONSerialization dataWithJSONObject:dic options:kNilOptions error:&error];
+        
+        
+        NSDictionary* encryptedResponse = [NSJSONSerialization JSONObjectWithData:requestData options:NSUTF8StringEncoding
+                                                                        error:&error];
+        
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:encryptedResponse options:kNilOptions error:&error];
+        
+        request.HTTPBody = jsonData;
+    }
+    else
+    {
+        int count = 0;
+        for (NSString* key in dic)
+        {
+            
+            NSString* value = dic[key];
+            
+            if (count==0)
+            {
+                [parameter appendFormat:@"%@=%@", key, value];
+                count = 1;
+            }
+            else
+            {
+                [parameter appendFormat:@"&%@=%@", key, value];
+                
+            }
+            
+        }
+        
+        request.HTTPBody = [parameter dataUsingEncoding:NSUTF8StringEncoding];
+
+    }
+   
+    
+    if ([self.downloadMethodType isEqualToString:@"Bearer"])
+    {
+        NSString* jwtToken = [[NSUserDefaults standardUserDefaults] objectForKey:JWT_TOKEN];
+        [request setValue:[NSString stringWithFormat:@"Bearer %@", jwtToken] forHTTPHeaderField:@"Authorization"];
+//        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    }
+    
+//    NSData *requestData = [NSJSONSerialization dataWithJSONObject:dic options:kNilOptions error:&error];
+    
+//    NSString *post =[NSString stringWithFormat:@"macId=dsdsads"];
+    
+//    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+
+//    NSString* encryptedResponse = [NSJSONSerialization JSONObjectWithData:requestData
+//                                                                  options:NSUTF8StringEncoding
+//                                                                    error:&error];
+    
+
+//    [request setHTTPBody:requestData];
 //    NSError* error;
 //    NSData *requestData = [NSJSONSerialization dataWithJSONObject:array options:kNilOptions error:&error];
 
-
-    
-    
     NSURLConnection *urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     NSLog(@"%@",urlConnection);
 }
@@ -135,8 +200,17 @@
     NSLog(@"Failed %@",error.description);
     NSLog(@"%@ Entity Job -",self.downLoadEntityJobName);
     
-    
-    if ([self.downLoadEntityJobName isEqualToString:CHECK_DEVICE_REGISTRATION])
+    if ([self.downLoadEntityJobName isEqualToString:CHECK_DEVICE_REGISTRATION_API])
+    {
+        
+        
+        NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"-1001",RESPONSE_CODE,error.localizedDescription,RESPONSE_MESSAGE, nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_DEVICE_REGISTRATION object:response];
+        
+    }
+    else
+    if ([self.downLoadEntityJobName isEqualToString:CHECK_USER_REGISTRATION_API])
     {
         
 
@@ -193,44 +267,44 @@
 //                                                                   error:&error];
     
     
-    NSString* encryptedResponse = [NSJSONSerialization JSONObjectWithData:responseData
+    NSDictionary* response = [NSJSONSerialization JSONObjectWithData:responseData
                                                              options:NSUTF8StringEncoding
                                                                error:&error];
     
 //    encryptedResponse = nil;
-    id encryptedResponseDict = encryptedResponse;
-    if ([encryptedResponseDict isKindOfClass:[NSDictionary class]])
-    {
-        if ([encryptedResponseDict objectForKey:@"ExceptionMessage"] || [encryptedResponseDict objectForKey:@"ExceptionType"] || [encryptedResponseDict objectForKey:@"Message"] || [encryptedResponseDict objectForKey:@"StackTrace"] || encryptedResponseDict == nil)
-        {
-            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
-            
-            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error occured!" withMessage:[NSString stringWithFormat:@"%@, please try again",[encryptedResponseDict objectForKey:@"ExceptionMessage"]] withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-            
-            return;
-        }
-    }
-    
-    NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:encryptedResponse options:0];
-    
-    NSData* data=[decodedData AES256DecryptWithKey:SECRET_KEY];
-    
-    NSString* responseString=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    NSDictionary *response;
-    if (responseString!=nil)
-    {
-        responseString=[responseString stringByReplacingOccurrencesOfString:@"True" withString:@"1"];
-        responseString=[responseString stringByReplacingOccurrencesOfString:@"False" withString:@"0"];
-        
-        NSData *responsedData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
-        //NSData *responsedData1 = [responseString dataUsingEncoding:NSDataBase64Encoding64CharacterLineLength];
-
-        response = [NSJSONSerialization JSONObjectWithData:responsedData
-                                                                 options:NSJSONReadingAllowFragments
-                                                                   error:&error];
-
-    }
+//    id encryptedResponseDict = encryptedResponse;
+//    if ([encryptedResponseDict isKindOfClass:[NSDictionary class]])
+//    {
+//        if ([encryptedResponseDict objectForKey:@"ExceptionMessage"] || [encryptedResponseDict objectForKey:@"ExceptionType"] || [encryptedResponseDict objectForKey:@"Message"] || [encryptedResponseDict objectForKey:@"StackTrace"] || encryptedResponseDict == nil)
+//        {
+//            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+//
+//            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error occured!" withMessage:[NSString stringWithFormat:@"%@, please try again",[encryptedResponseDict objectForKey:@"ExceptionMessage"]] withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//
+//            return;
+//        }
+//    }
+//
+//    NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:encryptedResponse options:0];
+//
+//    NSData* data=[decodedData AES256DecryptWithKey:SECRET_KEY];
+//
+//    NSString* responseString=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//
+//    NSDictionary *response;
+//    if (responseString!=nil)
+//    {
+//        responseString=[responseString stringByReplacingOccurrencesOfString:@"True" withString:@"1"];
+//        responseString=[responseString stringByReplacingOccurrencesOfString:@"False" withString:@"0"];
+//
+//        NSData *responsedData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
+//        //NSData *responsedData1 = [responseString dataUsingEncoding:NSDataBase64Encoding64CharacterLineLength];
+//
+//        response = [NSJSONSerialization JSONObjectWithData:responsedData
+//                                                                 options:NSJSONReadingAllowFragments
+//                                                                   error:&error];
+//
+//    }
     
 //    NSString *response1 = [NSJSONSerialization JSONObjectWithData:responseData
 //                                                             options:NSJSONReadingAllowFragments
@@ -261,74 +335,118 @@
 //            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
 //        }
 //    }
- 
-  
-
-
-
-if([self.downLoadEntityJobName isEqualToString:CHECK_DEVICE_REGISTRATION])
-
-{
     
+    
+    
+ // -------------------
+    if([self.downLoadEntityJobName isEqualToString:CHECK_DEVICE_REGISTRATION_API])
+
+    {
+
+        if (response != nil)
+        {
+
+            NSLog(@"%@",error);
+
+            NSString* code=[response objectForKey:RESPONSE_CODE];
+            NSString* pinVerify=[response objectForKey:RESPONSE_PIN_VERIFY];
+
+
+            if ([code intValue]==401 && [pinVerify intValue]==0)
+            {
+
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_DEVICE_REGISTRATION object:response];
+
+
+            }
+            else
+                if ([code intValue]==200 && [pinVerify intValue]==0)
+                {
+
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_DEVICE_REGISTRATION object:response];
+
+
+                }
+                else
+                    if ([code intValue]==200 && [pinVerify intValue]==1)
+                    {
+
+                        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_DEVICE_REGISTRATION object:response];
+
+
+                    }
+                    else
+                    {
+
+                        NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"2001",RESPONSE_CODE,@"2002",RESPONSE_PIN_VERIFY, nil];
+
+                        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_DEVICE_REGISTRATION object:response];// to remove the hud
+
+                        //            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
+                        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Could not connect to the sever, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+                    }
+        }else
+        {
+            //        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
+            NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"2001",RESPONSE_CODE,@"2002",RESPONSE_PIN_VERIFY, nil];
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_DEVICE_REGISTRATION object:response];  // to remove the hud
+
+            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        }
+    }
+
+
+
+if([self.downLoadEntityJobName isEqualToString:CHECK_USER_REGISTRATION_API])
+{
     if (response != nil)
     {
-//        NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:response1 options:0];
-//        NSData* data=[decodedData AES256DecryptWithKey:SECRET_KEY];
-//        NSString* responseString=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//        
-//        responseString=[responseString stringByReplacingOccurrencesOfString:@"True" withString:@"1"];
-//        responseString=[responseString stringByReplacingOccurrencesOfString:@"False" withString:@"0"];
-//
-//        NSData *responsedData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
-//        
-//        NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responsedData
-//                                                                                options:NSJSONReadingAllowFragments
-//                                                                                  error:&error];
         
-        NSLog(@"%@",error);
-
         NSString* code=[response objectForKey:RESPONSE_CODE];
         NSString* pinVerify=[response objectForKey:RESPONSE_PIN_VERIFY];
 
-        
-        if ([code intValue]==401 && [pinVerify intValue]==0)
-        {
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_DEVICE_REGISTRATION object:response];
-            
-            
-        }
-        else
-        if ([code intValue]==200 && [pinVerify intValue]==0)
-        {
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_DEVICE_REGISTRATION object:response];
-            
-            
-        }
-        else
-        if ([code intValue]==200 && [pinVerify intValue]==1)
-        {
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_DEVICE_REGISTRATION object:response];
-            
-            
-        }
-        else
-        {
-            
-            NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"2001",RESPONSE_CODE,@"2002",RESPONSE_PIN_VERIFY, nil];
-
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_DEVICE_REGISTRATION object:response];// to remove the hud
-
-//            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
-        
-            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Could not connect to the sever, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-        }
+    
+            if ([code intValue]==200)
+            {
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_USER_REGISTRATION object:response];
+                
+                
+            }
+            else
+                if ([code intValue]==401)
+                {
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_USER_REGISTRATION object:response];
+                    
+                    
+                }
+                else
+                    if ([code intValue]==500)
+                    {
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_USER_REGISTRATION object:response];
+                        
+                        
+                    }
+                else
+                {
+                    
+                    NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"2001",RESPONSE_CODE,@"2002",RESPONSE_PIN_VERIFY, nil];
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_DEVICE_REGISTRATION object:response];// to remove the hud
+                    
+                    //            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+                    
+                    [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Could not connect to the server, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+                }
     }else
     {
-//        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
-
+        //        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+        
         NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"2001",RESPONSE_CODE,@"2002",RESPONSE_PIN_VERIFY, nil];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_DEVICE_REGISTRATION object:response];  // to remove the hud
@@ -340,7 +458,8 @@ if([self.downLoadEntityJobName isEqualToString:CHECK_DEVICE_REGISTRATION])
 
 
 
-if ([self.downLoadEntityJobName isEqualToString:AUTHENTICATE_API])
+
+if ([self.downLoadEntityJobName isEqualToString:GENERATE_DEVICE_TOKEN])
 {
     
     if (response != nil)
@@ -348,12 +467,12 @@ if ([self.downLoadEntityJobName isEqualToString:AUTHENTICATE_API])
     [response objectForKey:@"code"];
         if ([[response objectForKey:@"code"]intValue]==200)
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AUTHENTICATE_API object:response];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_GENERATE_DEVICE_TOKEN object:response];
             
             
         }else
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AUTHENTICATE_API object:response];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_GENERATE_DEVICE_TOKEN object:response];
 
         }
     }else
@@ -443,7 +562,7 @@ if ([self.downLoadEntityJobName isEqualToString:VALIDATE_PIN_API])
         if (response != nil)
         {
             
-            if ([[response objectForKey:@"code"]intValue]==1)
+            if ([[response objectForKey:@"code"]intValue]==200)
             {
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ACCEPT_TANDC_API object:response];
                 

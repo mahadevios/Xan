@@ -26,12 +26,13 @@
 {
     Database* db;
     APIManager* app;
+    PopUpCustomView* forTableViewObj;
     
     UITapGestureRecognizer* tap;
     
     UIView* popupView;
     UIView* editPopUp;
-    PopUpCustomView* forTableViewObj;
+    
     
     UITableViewCell *cell;
     NSArray* departmentNamesArray;
@@ -77,8 +78,8 @@
     BOOL recordingNew;
     BOOL edited;
     BOOL isViewSetUpWhenFirstAppear;
-    UIBackgroundTaskIdentifier task;
     
+    UIBackgroundTaskIdentifier task;
     
     NSString* recordedAudioFileName;
     
@@ -92,7 +93,7 @@
     
     BOOL recordingRestrictionLimitCrossed;
     
-    long totalSecondsOfAudio;
+//    long totalSecondsOfAudio;
     
     float updatedInsertionTime;
     
@@ -100,7 +101,7 @@
     
     NSString* existingDepartmentName;
     
-    bool recordingSavedToDatabaseFromBG;
+//    bool recordingSavedToDatabaseFromBG;
 
 }
 @property (nonatomic,strong)     AVAudioPlayer       *player;

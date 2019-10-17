@@ -10,21 +10,33 @@
 #import "NSData+AES256.h"
 #import <CommonCrypto/CommonCryptor.h>
 #import <CommonCrypto/CommonKeyDerivation.h>
+#import "Constants.h"
+#import "AppPreferences.h"
 
 @implementation NSData (AES256)
 
 - (NSData *)AES256EncryptWithKey:(NSString *)key {
     // 'key' should be 32 bytes for AES256, will be null-padded otherwise
-    char keyPtr[kCCKeySizeAES128]; // room for terminator (unused)
-    char IVPtr[kCCKeySizeAES128];
+    char keyPtr[17]; // room for terminator (unused)
+        char IVPtr[17];
+//    NSUInteger arbLength = [key lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+
+//    char keyPtr[arbLength]; // room for terminator (unused)
+//    char IVPtr[arbLength];
     bzero(IVPtr, sizeof(IVPtr)); // fill with zeroes (for padding)
 
     bzero(keyPtr, sizeof(keyPtr)); // fill with zeroes (for padding)
     
+    
+    NSString* iv = [self getIV:16];
+    
+    [AppPreferences sharedAppPreferences].iniVector = iv;
     // fetch key data
+//    [key getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];
+//    [key getCString:IVPtr maxLength:sizeof(IVPtr) encoding:NSUTF8StringEncoding];
     [key getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];
-    [key getCString:IVPtr maxLength:sizeof(IVPtr) encoding:NSUTF8StringEncoding];
-
+    [iv getCString:IVPtr maxLength:sizeof(IVPtr) encoding:NSUTF8StringEncoding];
+   
    // [key getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];
 
     NSUInteger dataLength = [self length];
@@ -51,17 +63,50 @@
     return nil;
 }
 
+//-(NSMutableString* )getIV
+//{
+//    uint8_t randomBytes[8];
+//    int result = SecRandomCopyBytes(kSecRandomDefault, 8, randomBytes);
+//    NSMutableString *uuidStringReplacement;
+//    if(result == 0) {
+//        uuidStringReplacement = [[NSMutableString alloc] initWithCapacity:8*1];
+//        for(NSInteger index = 0; index < 9; index++)
+//        {
+//            [uuidStringReplacement appendFormat: @"%x", randomBytes[index]];
+//        }
+//        NSLog(@"uuidStringReplacement is %@", uuidStringReplacement);
+//    } else {
+//        NSLog(@"SecRandomCopyBytes failed for some reason");
+//    }
+//
+//    return uuidStringReplacement;
+//}
+
+-(NSString *) getIV: (int) len
+{
+    
+    NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    NSMutableString *randomString = [NSMutableString stringWithCapacity: len];
+    
+    for (int i=0; i<len; i++)
+    {
+        [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random_uniform([letters length])]];
+    }
+    
+    return randomString;
+}
 - (NSData *)AES256DecryptWithKey:(NSString *)key {
     // 'key' should be 32 bytes for AES256, will be null-padded otherwise
-    char keyPtr[kCCKeySizeAES128]; // room for terminator (unused)
-    char IVPtr[kCCKeySizeAES128];
+    char keyPtr[17]; // room for terminator (unused)
+    char IVPtr[17];
     bzero(IVPtr, sizeof(IVPtr)); // fill with zeroes (for padding)
     
     bzero(keyPtr, sizeof(keyPtr)); // fill with zeroes (for padding)
     
     // fetch key data
     [key getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];
-    [key getCString:IVPtr maxLength:sizeof(IVPtr) encoding:NSUTF8StringEncoding];
+    [IV getCString:IVPtr maxLength:sizeof(IVPtr) encoding:NSUTF8StringEncoding];
 
     NSUInteger dataLength = [self length];
     
@@ -96,7 +141,8 @@ const NSUInteger kAlgorithmKeySize = kCCKeySizeAES128;
 const NSUInteger kAlgorithmBlockSize = kCCBlockSizeAES128;
 const NSUInteger kAlgorithmIVSize = kCCBlockSizeAES128;
 const NSUInteger kPBKDFSaltSize = 8;
-const NSUInteger kPBKDFRounds = 10000;  // ~80ms on an iPhone 4
+//const NSUInteger kPBKDFRounds = 10000;  // ~80ms on an iPhone 4
+const NSUInteger kPBKDFRounds = 1000;  // ~80ms on an iPhone 4
 
 // ===================
 
@@ -109,7 +155,7 @@ const NSUInteger kPBKDFRounds = 10000;  // ~80ms on an iPhone 4
     NSAssert(salt, @"salt must not be NULL");
     
     
-    //*iv = [self randomDataOfLength:kAlgorithmIVSize];
+//    *iv = [self randomDataOfLength:kAlgorithmIVSize];
     //*salt = [self randomDataOfLength:kPBKDFSaltSize];
     
     NSData *key = [self AESKeyForPassword:password salt:*salt];
