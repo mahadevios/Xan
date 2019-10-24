@@ -62,6 +62,7 @@
     [self.searchController.searchBar resignFirstResponder];
     
     [self.searchController.searchBar setShowsCancelButton:NO animated:NO];
+    
 }
 
 -(void)addGestureRecogniser
@@ -102,7 +103,7 @@
         self.navigationItem.title=@"Transferred Today";
     }
     
-    
+
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
     
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];

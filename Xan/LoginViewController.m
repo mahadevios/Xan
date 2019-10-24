@@ -101,7 +101,10 @@
                                              selector:@selector(validatePinResponseCheck:) name:NOTIFICATION_VALIDATE_PIN_API
                                                object:nil];
     
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(generateTokenResponseCheck:) name:NOTIFICATION_GENERATE_DEVICE_TOKEN
+                                               object:nil];
+
     
 }
 
@@ -110,6 +113,34 @@
     [pinCode4TextField resignFirstResponder];
     [pinCode1TextField resignFirstResponder];
 
+}
+
+-(void)generateTokenResponseCheck:(NSNotification* )dictObj
+{
+    NSDictionary* dict=dictObj.object;
+    
+    NSString* responseTokenString=  [dict valueForKey:@"token"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:responseTokenString forKey:JWT_TOKEN];
+    
+    [hud hideAnimated:YES];
+    
+//    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+//    PinRegistrationViewController* regiController = (PinRegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"PinRegistrationViewController"];
+    
+//    [passwordTextfield resignFirstResponder];
+    
+//    [self presentViewController:regiController animated:NO completion:nil];
+    
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"])
+    {
+        [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"] animated:NO completion:nil];
+        
+    }
+    else
+        [self dismissViewControllerAnimated:NO completion:nil];
 }
 //-(void)validatePinResponseCheck:(NSNotification*)dictObj;
 //{
@@ -280,26 +311,16 @@
 
         });
         
-//        [self dismissViewControllerAnimated:NO completion:nil];
-        
-        
-//        MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
-//        
-//        [[UIApplication sharedApplication] keyWindow].rootViewController = nil;
-//        
-//        [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
-        
-        
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"])
-        {
-            [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"] animated:NO completion:nil];
+        NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
+        [[APIManager sharedManager] generateDeviceToken:@"" password:@""];
 //
-//            [self performSegueWithIdentifier:@"PINLoginToDept" sender:nil];
-
-            
-        }
-        else
-            [self dismissViewControllerAnimated:NO completion:nil];
+//        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"])
+//        {
+//            [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"] animated:NO completion:nil];
+//
+//        }
+//        else
+//            [self dismissViewControllerAnimated:NO completion:nil];
         
     }
     

@@ -154,7 +154,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
     [self setStatusBarBackgroundColor:[UIColor colorWithRed:0/255.0 green:16/255.0 blue:133/255.0 alpha:1.0]];
     
-       return YES;
+    
+    
+    return YES;
 }
 
 
