@@ -111,6 +111,9 @@
 
     [self.tabBarController.tabBar setHidden:NO];
     
+    
+//    
+
     // get count of Today's transferred, Awaiting transfer
     [self getCountsOfTransferredAwaitingFiles];
     

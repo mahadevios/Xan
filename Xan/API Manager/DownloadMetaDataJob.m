@@ -97,7 +97,7 @@
 //    }
     NSMutableString *parameter = [[NSMutableString alloc] init];
     
-    if ([contentType isEqualToString:@"json"])
+    if ([contentType isEqualToString:CONTENT_TYPE_JSON])
     {
         [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         
@@ -202,8 +202,7 @@
     
     if ([self.downLoadEntityJobName isEqualToString:CHECK_DEVICE_REGISTRATION_API])
     {
-        
-        
+      
         NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"-1001",RESPONSE_CODE,error.localizedDescription,RESPONSE_MESSAGE, nil];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_DEVICE_REGISTRATION object:response];
@@ -619,8 +618,7 @@ if ([self.downLoadEntityJobName isEqualToString:VALIDATE_PIN_API])
             }
             else
             {
-//                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SEND_DICTATION_IDS_API object:response];
-//                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Message" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+
             }
         }else
         {

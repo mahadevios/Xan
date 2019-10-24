@@ -34,6 +34,12 @@
     departmentNameArray = [[Database shareddatabase] getDepartMentObjList];
     [self setSearchController];
     [self prepareForSearchBar];
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self setRootView];
 }
 
 #pragma mark: Serach Controller Methods and Delegates
@@ -134,19 +140,18 @@
 
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isLoadedFirstTime"];
     
+    [self setRootView];
+}
+
+-(void)setRootView
+{
     MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
     
     
     [[Database shareddatabase] setDepartment];//to insert default department for imported files
     
-//    [[[self presentingViewController] presentingViewController] dismissViewControllerAnimated:true completion:nil];
-//
-//    [[self presentingViewController] dismissViewControllerAnimated:true completion:nil];
-//
-//    [self dismissViewControllerAnimated:true completion:nil];
-
     [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
-
+    
     UIViewController *presentingVC = self.presentingViewController;
     
     while (presentingVC.presentingViewController)
@@ -155,10 +160,8 @@
     }
     
     [presentingVC dismissViewControllerAnimated:YES completion:NULL];
-//    [self.presentingViewController.presentingViewController.presentingViewController dismissViewControllerAnimated:false completion:nil]; 
-    //
-}
 
+}
 - (void) checkAndDismissViewController
 {
     [self.view endEditing:YES];

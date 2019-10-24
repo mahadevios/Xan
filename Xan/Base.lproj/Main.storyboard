@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Dib-B0-efh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="zBB-4H-IUn">
     <device id="retina6_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -402,11 +402,13 @@
             </objects>
             <point key="canvasLocation" x="2434.7826086956525" y="98.4375"/>
         </scene>
-        <!--Alert-->
+        <!--Split View Controller-->
         <scene sceneID="83X-zO-CZ6">
             <objects>
                 <splitViewController id="7wq-TI-GwR" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Alert" image="AlertGray" id="YSN-ql-NPB"/>
+                    <tabBarItem key="tabBarItem" title="" image="AlertGray" selectedImage="AlertActive" id="YSN-ql-NPB">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-9"/>
+                    </tabBarItem>
                     <connections>
                         <segue destination="0Wt-fC-pqH" kind="relationship" relationship="masterViewController" id="zsh-w1-3fg"/>
                     </connections>
@@ -422,9 +424,9 @@
                     <tabBar key="tabBar" userInteractionEnabled="NO" contentMode="scaleToFill" id="q6t-Fo-dvN">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.23529411764705882" green="0.40000000000000002" blue="0.99215686274509807" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.17254901959999999" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="barTintColor" red="0.43129205700000001" green="0.5647541881" blue="0.9998767972" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.0" green="0.17254901959999999" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="selectedImageTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
@@ -1270,7 +1272,6 @@
                                                 <exclude reference="7Hz-jf-NDa"/>
                                                 <exclude reference="LS2-UA-0dh"/>
                                                 <exclude reference="ZEi-3o-Ndj"/>
-                                                <exclude reference="5ON-Tq-jcf"/>
                                                 <exclude reference="7y0-Fk-aWX"/>
                                                 <exclude reference="FRh-Ft-arK"/>
                                                 <exclude reference="Lnz-5q-eXz"/>
@@ -1288,6 +1289,7 @@
                                                 <exclude reference="pUw-yZ-7tD"/>
                                                 <exclude reference="r5I-KF-i6g"/>
                                                 <exclude reference="tZm-bJ-tR5"/>
+                                                <exclude reference="5ON-Tq-jcf"/>
                                                 <exclude reference="6A2-5I-i6h"/>
                                                 <exclude reference="Bkz-ds-l8u"/>
                                                 <exclude reference="Jh8-gG-IaM"/>
@@ -1298,17 +1300,17 @@
                                                 <exclude reference="Roa-TQ-N3v"/>
                                                 <exclude reference="oFS-Yc-xZD"/>
                                                 <exclude reference="tUx-N2-o5X"/>
-                                                <exclude reference="gyl-L5-ngf"/>
                                                 <exclude reference="nhg-s2-KfM"/>
                                                 <exclude reference="s4W-zd-IAu"/>
+                                                <exclude reference="gyl-L5-ngf"/>
                                                 <exclude reference="GEG-lJ-X2e"/>
                                                 <exclude reference="OLL-c5-MUe"/>
                                                 <exclude reference="UgP-3h-0pH"/>
-                                                <exclude reference="rLF-Av-Swu"/>
-                                                <exclude reference="uzu-4R-ABh"/>
                                                 <exclude reference="5gO-uF-Nr7"/>
                                                 <exclude reference="HNW-bX-2dW"/>
                                                 <exclude reference="dfn-vo-Zu9"/>
+                                                <exclude reference="rLF-Av-Swu"/>
+                                                <exclude reference="uzu-4R-ABh"/>
                                                 <exclude reference="Bmh-Ug-a2c"/>
                                                 <exclude reference="zif-nW-beg"/>
                                                 <exclude reference="4NW-xa-cKv"/>
@@ -2230,24 +2232,24 @@
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TransRecord" translatesAutoresizingMaskIntoConstraints="NO" id="3CX-zD-yNn">
-                                        <rect key="frame" x="86" y="18.666666666666671" width="35" height="35"/>
+                                        <rect key="frame" x="83.666666666666671" y="16" width="40" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="35" id="Ywi-JS-lWX"/>
-                                            <constraint firstAttribute="height" constant="35" id="sjR-di-GBM"/>
+                                            <constraint firstAttribute="width" constant="40" id="Ywi-JS-lWX"/>
+                                            <constraint firstAttribute="height" constant="40" id="sjR-di-GBM"/>
                                         </constraints>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TransStop" translatesAutoresizingMaskIntoConstraints="NO" id="WzH-VW-fcx">
-                                        <rect key="frame" x="189.66666666666666" y="18.666666666666671" width="35" height="35"/>
+                                        <rect key="frame" x="187" y="16" width="40" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="35" id="2JN-JH-wTH"/>
-                                            <constraint firstAttribute="width" constant="35" id="x3X-Ik-HWk"/>
+                                            <constraint firstAttribute="height" constant="40" id="2JN-JH-wTH"/>
+                                            <constraint firstAttribute="width" constant="40" id="x3X-Ik-HWk"/>
                                         </constraints>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TransFile" translatesAutoresizingMaskIntoConstraints="NO" id="eAT-k8-IEG">
-                                        <rect key="frame" x="293" y="18.666666666666671" width="35" height="35"/>
+                                        <rect key="frame" x="290.66666666666669" y="16" width="40" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="35" id="kDW-2m-SCs"/>
-                                            <constraint firstAttribute="width" constant="35" id="p9e-3P-ggK"/>
+                                            <constraint firstAttribute="height" constant="40" id="kDW-2m-SCs"/>
+                                            <constraint firstAttribute="width" constant="40" id="p9e-3P-ggK"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gL1-gw-sSx">
@@ -2987,7 +2989,7 @@
             </objects>
             <point key="canvasLocation" x="2636.231884057971" y="2408.7053571428569"/>
         </scene>
-        <!--Record-->
+        <!--Record Tab View Controller-->
         <scene sceneID="MhX-VD-cNu">
             <objects>
                 <viewController id="gra-AV-BZk" customClass="RecordTabViewController" sceneMemberID="viewController">
@@ -3000,7 +3002,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Record" image="RecordTab" selectedImage="RecordTab" id="X1W-JJ-0Ew"/>
+                    <tabBarItem key="tabBarItem" title="" image="RecordTab" selectedImage="RecordTab" id="X1W-JJ-0Ew">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-10"/>
+                    </tabBarItem>
                     <navigationItem key="navigationItem" id="9t3-IX-yXI"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eCY-3S-LB5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3057,10 +3061,10 @@
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="More" translatesAutoresizingMaskIntoConstraints="NO" id="367-hJ-JkQ">
-                                        <rect key="frame" x="388" y="30.666666666666664" width="6" height="19"/>
+                                        <rect key="frame" x="390" y="29.666666666666664" width="6" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="6" id="6wp-MQ-ll1"/>
-                                            <constraint firstAttribute="height" constant="19" id="krs-Kp-r6M"/>
+                                            <constraint firstAttribute="height" constant="21" id="krs-Kp-r6M"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hxF-u8-LmZ">
@@ -3138,7 +3142,7 @@
                                 <color key="backgroundColor" red="0.0" green="0.17254901960784313" blue="0.72156862745098038" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" red="0.43129205700000001" green="0.5647541881" blue="0.9998767972" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="367-hJ-JkQ" secondAttribute="trailing" constant="20" id="0CK-Fn-XjA"/>
+                                    <constraint firstAttribute="trailing" secondItem="367-hJ-JkQ" secondAttribute="trailing" constant="18" id="0CK-Fn-XjA"/>
                                     <constraint firstItem="y6h-s0-Oxc" firstAttribute="leading" secondItem="21b-Hj-bBc" secondAttribute="leading" id="0rV-Re-CpF"/>
                                     <constraint firstItem="hxF-u8-LmZ" firstAttribute="leading" secondItem="63P-Hc-ukf" secondAttribute="trailing" id="1gW-pD-Mf0"/>
                                     <constraint firstAttribute="height" constant="70" id="2JB-uL-0Ny"/>
@@ -3397,11 +3401,11 @@
                                         </variation>
                                     </view>
                                     <button opaque="NO" tag="401" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ejK-Ly-8gA">
-                                        <rect key="frame" x="119.66666666666666" y="-15.333333333333371" width="96" height="96"/>
+                                        <rect key="frame" x="132.66666666666666" y="-2.3333333333333712" width="70" height="70"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="96" id="ZXE-eE-H34"/>
-                                            <constraint firstAttribute="height" constant="96" id="u8b-hd-qxY"/>
+                                            <constraint firstAttribute="width" constant="70" id="ZXE-eE-H34"/>
+                                            <constraint firstAttribute="height" constant="70" id="u8b-hd-qxY"/>
                                         </constraints>
                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <state key="normal" image="SpeechToText">
@@ -3633,14 +3637,14 @@
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="More" translatesAutoresizingMaskIntoConstraints="NO" id="EYC-cb-GFQ">
-                                        <rect key="frame" x="389" y="30.666666666666664" width="5" height="19"/>
+                                        <rect key="frame" x="390" y="29.666666666666664" width="6" height="21"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="5" id="hq0-xT-pjy"/>
-                                            <constraint firstAttribute="height" constant="19" id="nLC-S6-pxr"/>
+                                            <constraint firstAttribute="width" constant="6" id="hq0-xT-pjy"/>
+                                            <constraint firstAttribute="height" constant="21" id="nLC-S6-pxr"/>
                                         </constraints>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" tag="702" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Delete" translatesAutoresizingMaskIntoConstraints="NO" id="ikl-AN-wm1">
-                                        <rect key="frame" x="331" y="28.666666666666664" width="18" height="23"/>
+                                        <rect key="frame" x="332" y="28.666666666666664" width="18" height="23"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="18" id="C0R-CF-0Uo"/>
                                             <constraint firstAttribute="height" constant="23" id="wtW-nx-k88"/>
@@ -3695,7 +3699,7 @@
                                     <constraint firstItem="USX-37-NcC" firstAttribute="leading" secondItem="5pp-RE-QHL" secondAttribute="trailing" id="eQE-Go-XIz"/>
                                     <constraint firstItem="U7o-EP-VXq" firstAttribute="centerY" secondItem="dRS-5L-UCg" secondAttribute="centerY" id="fqh-Ww-Lr3"/>
                                     <constraint firstItem="USX-37-NcC" firstAttribute="centerY" secondItem="Yt5-Wf-woR" secondAttribute="centerY" id="jbs-Ia-eda"/>
-                                    <constraint firstAttribute="trailing" secondItem="EYC-cb-GFQ" secondAttribute="trailing" constant="20" id="nlo-12-tkc"/>
+                                    <constraint firstAttribute="trailing" secondItem="EYC-cb-GFQ" secondAttribute="trailing" constant="18" id="nlo-12-tkc"/>
                                     <constraint firstItem="AEP-rJ-eDw" firstAttribute="centerX" secondItem="Yt5-Wf-woR" secondAttribute="centerX" id="pI5-Oq-5xh"/>
                                     <constraint firstItem="5pp-RE-QHL" firstAttribute="leading" secondItem="dgF-aP-dtO" secondAttribute="trailing" constant="568" id="pjl-NG-Ejy">
                                         <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
@@ -4145,12 +4149,13 @@
             </objects>
             <point key="canvasLocation" x="1254" y="-684"/>
         </scene>
-        <!--Home-->
+        <!--Navigation Controller-->
         <scene sceneID="v60-z9-jOx">
             <objects>
                 <navigationController storyboardIdentifier="navi" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uJQ-k1-0Xp" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" image="HomeGray" selectedImage="HomeActive" id="rgy-lV-cBW">
-                        <inset key="largeContentSizeImageInsets" minX="20" minY="20" maxX="20" maxY="20"/>
+                    <tabBarItem key="tabBarItem" title="" image="HomeGray" selectedImage="HomeActive" id="rgy-lV-cBW">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-9"/>
+                        <inset key="largeContentSizeImageInsets" minX="0.0" minY="20" maxX="0.0" maxY="0.0"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" opaque="NO" contentMode="scaleToFill" translucent="NO" id="sgC-GU-V68">
@@ -4173,11 +4178,13 @@
             </objects>
             <point key="canvasLocation" x="4370" y="98"/>
         </scene>
-        <!--List-->
+        <!--Split View Controller-->
         <scene sceneID="iNC-8r-bAb">
             <objects>
                 <splitViewController id="UX2-Oj-hmD" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="List" image="ListGray" selectedImage="ListActive" id="ywi-DP-6kx"/>
+                    <tabBarItem key="tabBarItem" title="" image="ListGray" selectedImage="ListActive" id="ywi-DP-6kx">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-10"/>
+                    </tabBarItem>
                     <connections>
                         <segue destination="HLu-Yg-P0x" kind="relationship" relationship="masterViewController" id="e7m-R0-SE6"/>
                         <segue destination="gRD-kc-oyM" kind="relationship" relationship="detailViewController" id="Ka6-Pr-DD5"/>
@@ -4286,10 +4293,10 @@
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="More" translatesAutoresizingMaskIntoConstraints="NO" id="oTF-A1-Icd">
-                                        <rect key="frame" x="391" y="27.333333333333329" width="6" height="19"/>
+                                        <rect key="frame" x="391" y="26.333333333333329" width="6" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="6" id="8r8-Vn-7Vs"/>
-                                            <constraint firstAttribute="height" constant="19" id="nFS-2y-Wg6"/>
+                                            <constraint firstAttribute="height" constant="21" id="nFS-2y-Wg6"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
@@ -4593,7 +4600,6 @@
                                                 <exclude reference="53g-Fu-fdR"/>
                                                 <exclude reference="Ydp-3p-nGE"/>
                                                 <exclude reference="fHE-iE-GQ1"/>
-                                                <exclude reference="Epb-lh-168"/>
                                                 <exclude reference="BoT-Sn-JiW"/>
                                                 <exclude reference="LSl-aB-lUv"/>
                                                 <exclude reference="e02-iJ-BBB"/>
@@ -4611,6 +4617,7 @@
                                                 <exclude reference="cY6-Of-BlG"/>
                                                 <exclude reference="jpy-If-5m7"/>
                                                 <exclude reference="sao-wj-PDx"/>
+                                                <exclude reference="Epb-lh-168"/>
                                                 <exclude reference="3OO-m0-9CV"/>
                                                 <exclude reference="DAJ-PI-VbW"/>
                                                 <exclude reference="mrw-Tt-QbT"/>
@@ -4621,17 +4628,17 @@
                                                 <exclude reference="gcF-FT-tAY"/>
                                                 <exclude reference="iLw-M1-WXf"/>
                                                 <exclude reference="qcJ-Vf-Aix"/>
-                                                <exclude reference="81q-Tl-9at"/>
                                                 <exclude reference="BaO-nH-fRZ"/>
                                                 <exclude reference="tMb-VR-Et8"/>
+                                                <exclude reference="81q-Tl-9at"/>
                                                 <exclude reference="5WZ-vS-jim"/>
                                                 <exclude reference="9G8-T8-RM4"/>
                                                 <exclude reference="kb1-JQ-8Hi"/>
-                                                <exclude reference="jTp-lc-n5O"/>
-                                                <exclude reference="w2d-ZN-v2X"/>
                                                 <exclude reference="88Q-uy-JWj"/>
                                                 <exclude reference="9EZ-gZ-JfL"/>
                                                 <exclude reference="kNo-Fa-dTp"/>
+                                                <exclude reference="jTp-lc-n5O"/>
+                                                <exclude reference="w2d-ZN-v2X"/>
                                                 <exclude reference="2ON-fL-3gV"/>
                                                 <exclude reference="A7C-hh-cSw"/>
                                                 <exclude reference="XxQ-zi-0kW"/>
@@ -6134,8 +6141,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AlertActive" width="24.666666030883789" height="22"/>
-        <image name="AlertGray" width="24.666666030883789" height="22"/>
+        <image name="AlertActive" width="49" height="49"/>
+        <image name="AlertGray" width="44" height="44"/>
         <image name="Back" width="12" height="19.333333969116211"/>
         <image name="CheckBoxUnSelected" width="25" height="25"/>
         <image name="Delete" width="15" height="21.333333969116211"/>
@@ -6143,20 +6150,20 @@
         <image name="Department" width="16" height="16"/>
         <image name="Edit" width="18" height="20"/>
         <image name="File" width="20" height="24"/>
-        <image name="HomeActive" width="24.666666030883789" height="24.666666030883789"/>
-        <image name="HomeGray" width="24.666666030883789" height="24.666666030883789"/>
+        <image name="HomeActive" width="49" height="49"/>
+        <image name="HomeGray" width="44" height="44"/>
         <image name="LaunchImage-1" width="66" height="66"/>
-        <image name="ListActive" width="24.333333969116211" height="19"/>
-        <image name="ListGray" width="24.333333969116211" height="19"/>
+        <image name="ListActive" width="49" height="49"/>
+        <image name="ListGray" width="44" height="44"/>
         <image name="Locale" width="23" height="23"/>
         <image name="Menu" width="24.666666030883789" height="24.666666030883789"/>
         <image name="More" width="6" height="21"/>
         <image name="Play" width="36.666667938232422" height="43"/>
         <image name="PlayRecrding" width="65.333335876464844" height="65.666664123535156"/>
         <image name="PractitionerIcon" width="24.666666030883789" height="24.666666030883789"/>
-        <image name="RecordTab" width="22.666666030883789" height="26.666666030883789"/>
+        <image name="RecordTab" width="44" height="44"/>
         <image name="SecretaryIcon" width="24.666666030883789" height="24.666666030883789"/>
-        <image name="SpeechToText" width="32" height="32"/>
+        <image name="SpeechToText" width="64" height="64"/>
         <image name="StopNew" width="78.666664123535156" height="78.666664123535156"/>
         <image name="SuperAdminDepartment" width="24.666666030883789" height="24.666666030883789"/>
         <image name="SuperAdminDepartmentActive" width="24.666666030883789" height="24.666666030883789"/>
@@ -6170,7 +6177,7 @@
         <image name="SuperAdminSecretary" width="24.666666030883789" height="24.666666030883789"/>
         <image name="SuperAdminSecretaryActive" width="24.666666030883789" height="24.666666030883789"/>
         <image name="TransFile" width="35" height="35"/>
-        <image name="TransRecord" width="35" height="35"/>
+        <image name="TransRecord" width="40" height="40"/>
         <image name="TransStop" width="35" height="35"/>
         <image name="department" width="260" height="194"/>
         <image name="deptIcon" width="24.666666030883789" height="24.666666030883789"/>

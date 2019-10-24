@@ -47,10 +47,7 @@
                                              selector:@selector(uIdPwdResponseCheck:) name:NOTIFICATION_CHECK_USER_REGISTRATION
                                                object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(generateTokenResponseCheck:) name:NOTIFICATION_GENERATE_DEVICE_TOKEN
-                                               object:nil];
-
+   
 //    [self displayLocalVariable];
 }
 
@@ -92,12 +89,16 @@
         [[NSUserDefaults standardUserDefaults] setValue:trimmedIdTextField forKey:USER_ID];
         [[NSUserDefaults standardUserDefaults] setValue:trimmedPasswordTextfield forKey:USER_PASS];
 
-        [[APIManager sharedManager] generateDeviceToken:trimmedIdTextField password:trimmedPasswordTextfield];
-//        PinRegistrationViewController* regiController=(PinRegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"PinRegistrationViewController"];
-//
-//        [passwordTextfield resignFirstResponder];
-//
-//        [self presentViewController:regiController animated:NO completion:nil];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+
+        PinRegistrationViewController* regiController=(PinRegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"PinRegistrationViewController"];
+
+        [passwordTextfield resignFirstResponder];
+
+        [self presentViewController:regiController animated:NO completion:nil];
+        
+//        [[APIManager sharedManager] generateDeviceToken:trimmedIdTextField password:trimmedPasswordTextfield];
+
        
     }
     else
@@ -115,23 +116,7 @@
 
 }
 
--(void)generateTokenResponseCheck:(NSNotification* )dictObj
-{
-    NSDictionary* dict=dictObj.object;
-    
-    NSString* responseTokenString=  [dict valueForKey:@"token"];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:responseTokenString forKey:JWT_TOKEN];
-    
-    [hud hideAnimated:YES];
-    
-    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    PinRegistrationViewController* regiController=(PinRegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"PinRegistrationViewController"];
-    
-    [passwordTextfield resignFirstResponder];
-    
-    [self presentViewController:regiController animated:NO completion:nil];
-}
+
 
 /*
 #pragma mark - Navigation

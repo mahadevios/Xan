@@ -23,8 +23,8 @@
 
 //#define  BASE_URL_PATH                        @"http://www.xanadutec.net/cubeagent_webapi/api"
 //#define  BASE_URL_PATH                        @"https://www.cubescribe.com/cubeagent_webapi/api"
-//#define  BASE_URL_PATH                        @"http://192.168.3.81:8089/xan-dictate"
-#define  BASE_URL_PATH                        @"http://192.168.2.9:8089/xan-dictate"
+#define  BASE_URL_PATH                        @"http://192.168.3.81:8089/xan-dictate"
+//#define  BASE_URL_PATH                        @"http://192.168.2.9:8089/xan-dictate"
 
 
 //#define  BASE_URL_PATH                        @"http://192.168.3.156:8081/CubeAPI/api"
@@ -45,10 +45,13 @@
 #define  ACCEPT_PIN_API                       @"devicePinRegistration"
 #define  ACCEPY_TandC_API                     @"acceptTandC"
 #define  VALIDATE_PIN_API                     @"devicePinLogin"
+#define  FORGOT_PIN_API                       @"forgotPin"
 
 
 #define  SECRET_KEY                           @"an@%c*(a&ax/e!*6"
 #define  IV                                   @"t6*a$d)e&1@c*!ex"
+#define  CONTENT_TYPE_JSON                    @"JSON"
+
 //#define  IV                                   @"abcdefghijklmn8p"
 //#define  IV                                   @"90Ji0arv0fkpeCwH"
 

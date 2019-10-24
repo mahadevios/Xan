@@ -200,6 +200,10 @@ static APIManager *singleton = nil;
         macIdEncString =
         [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         
+        NSString* initVector = [AppPreferences sharedAppPreferences].iniVector;
+        
+        macIdEncString = [[macIdEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:initVector];
+        
         NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"macId", nil];
         
         NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
@@ -208,7 +212,7 @@ static APIManager *singleton = nil;
         
         DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:CHECK_DEVICE_REGISTRATION_API withRequestParameter:array withResourcePath:CHECK_DEVICE_REGISTRATION_API withHttpMethd:POST downloadMethodType:downloadMethodType];
         
-        downloadmetadatajob.contentType = @"json";
+        downloadmetadatajob.contentType   = CONTENT_TYPE_JSON;
 
         [downloadmetadatajob startMetaDataDownLoad];
         
@@ -262,7 +266,7 @@ static APIManager *singleton = nil;
 //
 //        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:CHECK_USER_REGISTRATION_API withRequestParameter:array withResourcePath:CHECK_USER_REGISTRATION_API withHttpMethd:POST downloadMethodType:downloadMethodType];
 //
-//        downloadmetadatajob.contentType = @"json";
+//        downloadmetadatajob.contentType  =  = CONTENT_TYPE_JSON;
 //
 //        [downloadmetadatajob startMetaDataDownLoad];
 //    }
@@ -282,34 +286,26 @@ static APIManager *singleton = nil;
         NSData* passwordData = [password dataUsingEncoding:NSUTF8StringEncoding];
         
         NSData *macIdEncData = [macIdData AES256EncryptWithKey:SECRET_KEY];
-        
         NSString* macIdEncString = [macIdEncData base64EncodedStringWithOptions:0];
+        macIdEncString = [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        NSString* macIdIV = [AppPreferences sharedAppPreferences].iniVector;
+        macIdEncString = [[macIdEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:macIdIV];
 
-        macIdEncString =
-        [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
-        
-        NSString* initVector = [AppPreferences sharedAppPreferences].iniVector;
-        
         NSData *usernameEncData = [usernameData AES256EncryptWithKey:SECRET_KEY];
-        
-        NSData *passwordEncData = [passwordData AES256EncryptWithKey:SECRET_KEY];
-        
         NSString* usernameEncString = [usernameEncData base64EncodedStringWithOptions:0];
+        usernameEncString = [usernameEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        NSString* usernameIV = [AppPreferences sharedAppPreferences].iniVector;
+        usernameEncString = [[usernameEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:usernameIV];
+
+        NSData *passwordEncData = [passwordData AES256EncryptWithKey:SECRET_KEY];
         NSString* passwordEncString = [passwordEncData base64EncodedStringWithOptions:0];
-        
-       
-        
-        usernameEncString =
-        [usernameEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
-        
-        passwordEncString =
-        [passwordEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
-        
-        
+        passwordEncString = [passwordEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        NSString* passwordIV = [AppPreferences sharedAppPreferences].iniVector;
+        passwordEncString = [[passwordEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:passwordIV];
+
         //__babacd_dcabab__
         //        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
         
-        macIdEncString = [[macIdEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:initVector];
         
         NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"macId",usernameEncString,@"userName",passwordEncString,@"password", nil];
         
@@ -319,7 +315,7 @@ static APIManager *singleton = nil;
         
         DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:CHECK_USER_REGISTRATION_API withRequestParameter:array withResourcePath:CHECK_USER_REGISTRATION_API withHttpMethd:POST downloadMethodType:downloadMethodType];
         
-//        downloadmetadatajob.contentType = @"json";
+        downloadmetadatajob.contentType = CONTENT_TYPE_JSON;
         
         [downloadmetadatajob startMetaDataDownLoad];
     }
@@ -330,40 +326,34 @@ static APIManager *singleton = nil;
     
 }
 
--(void) generateDeviceToken:(NSString*) username password:(NSString*)password
+-(void) generateDeviceToken:(NSString*)macId
 {
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
-        NSData* usernameData = [username dataUsingEncoding:NSUTF8StringEncoding];
-        NSData* passwordData = [password dataUsingEncoding:NSUTF8StringEncoding];
+        NSData* macIdData = [macId dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *macIdEncData = [macIdData AES256EncryptWithKey:SECRET_KEY];
+        NSString* macIdIV = [AppPreferences sharedAppPreferences].iniVector;
+        NSString* macIdEncString = [macIdEncData base64EncodedStringWithOptions:0];
+        macIdEncString = [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        macIdEncString = [[macIdEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:macIdIV];
+
+//
+//        NSData* passwordData = [password dataUsingEncoding:NSUTF8StringEncoding];
+//        NSData *passwordEncData = [passwordData AES256EncryptWithKey:SECRET_KEY];
+//        NSString* passwordIV = [AppPreferences sharedAppPreferences].iniVector;
+//        NSString* passwordEncString = [passwordEncData base64EncodedStringWithOptions:0];
+//        passwordEncString = [passwordEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+//        passwordEncString = [[passwordEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:passwordIV];
+
+        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"macId", nil];
         
-        NSData *usernameEncData = [usernameData AES256EncryptWithKey:SECRET_KEY];
-        
-        NSData *passwordEncData = [passwordData AES256EncryptWithKey:SECRET_KEY];
-        
-        
-        //__babacd_dcabab__
-        //        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
-        NSString* usernameEncString = [usernameEncData base64EncodedStringWithOptions:0];
-        NSString* passwordEncString = [passwordEncData base64EncodedStringWithOptions:0];
-        
-        usernameEncString =
-        [usernameEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
-        
-        passwordEncString =
-        [passwordEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
-        
-        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:usernameEncString,@"userName",passwordEncString,@"password", nil];
-        //        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
-        
-        //        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
         NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
         
         NSString* downloadMethodType = @"urlConnection";
         
         DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:GENERATE_DEVICE_TOKEN withRequestParameter:array withResourcePath:GENERATE_DEVICE_TOKEN withHttpMethd:POST downloadMethodType:downloadMethodType];
         
-        downloadmetadatajob.contentType = @"json";
+        downloadmetadatajob.contentType = CONTENT_TYPE_JSON;
 
         [downloadmetadatajob startMetaDataDownLoad];
     }
@@ -378,21 +368,19 @@ static APIManager *singleton = nil;
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
         NSData* macIdData = [macID dataUsingEncoding:NSUTF8StringEncoding];
-        NSData* pinData = [pin dataUsingEncoding:NSUTF8StringEncoding];
-        
         NSData *macIdEncData = [macIdData AES256EncryptWithKey:SECRET_KEY];
-        
-        NSData *pinEncData = [pinData AES256EncryptWithKey:SECRET_KEY];
-      
+        NSString* macIdIV = [AppPreferences sharedAppPreferences].iniVector;
         NSString* macIdEncString = [macIdEncData base64EncodedStringWithOptions:0];
+        macIdEncString = [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        macIdEncString = [[macIdEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:macIdIV];
+
+        NSData* pinData = [pin dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *pinEncData = [pinData AES256EncryptWithKey:SECRET_KEY];
+        NSString* pinIV = [AppPreferences sharedAppPreferences].iniVector;
         NSString* pinEncString = [pinEncData base64EncodedStringWithOptions:0];
-        
-        macIdEncString =
-        [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
-        
-        pinEncString =
-        [pinEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
-        
+        pinEncString = [pinEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        pinEncString = [[pinEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:pinIV];
+
         NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"macId",pinEncString,@"devicePin", nil];
         
         NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
@@ -401,7 +389,7 @@ static APIManager *singleton = nil;
         
         DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:ACCEPT_PIN_API withRequestParameter:array withResourcePath:ACCEPT_PIN_API withHttpMethd:POST downloadMethodType:downloadMethodType];
         
-        downloadmetadatajob.contentType = @"json";
+        downloadmetadatajob.contentType = CONTENT_TYPE_JSON;
 
         [downloadmetadatajob startMetaDataDownLoad];
     }
@@ -417,12 +405,11 @@ static APIManager *singleton = nil;
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
         NSData* macIdData = [macID dataUsingEncoding:NSUTF8StringEncoding];
-        
-        macIdData = [macIdData AES256EncryptWithKey:SECRET_KEY];
-        
-        NSString* macIdEncString = [macIdData base64EncodedStringWithOptions:0];
-        
+        NSData *macIdEncData = [macIdData AES256EncryptWithKey:SECRET_KEY];
+        NSString* macIdIV = [AppPreferences sharedAppPreferences].iniVector;
+        NSString* macIdEncString = [macIdEncData base64EncodedStringWithOptions:0];
         macIdEncString = [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        macIdEncString = [[macIdEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:macIdIV];
         
         NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"macId",dateAndTime,@"dateAndTime",acceptFlag,@"acceptanceFl", nil];
         
@@ -432,7 +419,7 @@ static APIManager *singleton = nil;
         
         DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:ACCEPY_TandC_API withRequestParameter:array withResourcePath:ACCEPY_TandC_API withHttpMethd:POST downloadMethodType:downloadMethodType] ;
         
-        downloadmetadatajob.contentType = @"json";
+        downloadmetadatajob.contentType = CONTENT_TYPE_JSON;
         
         [downloadmetadatajob startMetaDataDownLoad];
     }
@@ -448,20 +435,18 @@ static APIManager *singleton = nil;
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
         NSData* macIdData = [macID dataUsingEncoding:NSUTF8StringEncoding];
-        NSData* pinData = [pin dataUsingEncoding:NSUTF8StringEncoding];
-        
         NSData *macIdEncData = [macIdData AES256EncryptWithKey:SECRET_KEY];
-        
-        NSData *pinEncData = [pinData AES256EncryptWithKey:SECRET_KEY];
-        
+        NSString* macIdIV = [AppPreferences sharedAppPreferences].iniVector;
         NSString* macIdEncString = [macIdEncData base64EncodedStringWithOptions:0];
+        macIdEncString = [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        macIdEncString = [[macIdEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:macIdIV];
+        
+        NSData* pinData = [pin dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *pinEncData = [pinData AES256EncryptWithKey:SECRET_KEY];
+        NSString* pinIV = [AppPreferences sharedAppPreferences].iniVector;
         NSString* pinEncString = [pinEncData base64EncodedStringWithOptions:0];
-        
-        macIdEncString =
-        [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
-        
-        pinEncString =
-        [pinEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        pinEncString = [pinEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        pinEncString = [[pinEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:pinIV];
         
         NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"macId",pinEncString,@"devicePin", nil];
         
@@ -471,7 +456,7 @@ static APIManager *singleton = nil;
         
         DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:VALIDATE_PIN_API withRequestParameter:array withResourcePath:VALIDATE_PIN_API withHttpMethd:POST downloadMethodType:downloadMethodType] ;
         
-        downloadmetadatajob.contentType = @"json";
+        downloadmetadatajob.contentType = CONTENT_TYPE_JSON;
 
         [downloadmetadatajob startMetaDataDownLoad];
     }
