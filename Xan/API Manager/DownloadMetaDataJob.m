@@ -603,6 +603,39 @@ if ([self.downLoadEntityJobName isEqualToString:VALIDATE_PIN_API])
 //    }
 //}
     
+    
+    if ([self.downLoadEntityJobName isEqualToString:TEMPLATE_LIST_API])
+    {
+
+        if (response != nil)
+        {
+            NSArray* templateArray = [NSJSONSerialization JSONObjectWithData:responseData
+                                                                     options:NSUTF8StringEncoding
+                                                                       error:&error];
+            
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
+//            NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:templateArray,@"Templates", nil];
+
+//            if (!([response objectForKey:@"name"] == nil))
+//            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_TEMPLATE_LIST_API object:templateArray];
+
+
+//            }
+//            else
+//            {
+//
+//            }
+        }else
+        {
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
+            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        }
+    }
+    
+    
     if ([self.downLoadEntityJobName isEqualToString:SEND_DICTATION_IDS_API])
     {
         
@@ -745,6 +778,8 @@ if ([self.downLoadEntityJobName isEqualToString:VALIDATE_PIN_API])
                 
             }else
             {
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PIN_CANGE_API object:response];
+
                 [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"PIN changed failed, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
             }
         }else

@@ -14,6 +14,7 @@
 #import "SharedSession.h"
 #import "SelectFileViewController.h"
 #import <StoreKit/SKStoreProductViewController.h>
+#import "Template.h"
 
 //#import <iTunesLibrary/ITLibrary.h>
 
@@ -91,6 +92,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(validateSendIdsResponse:) name:NOTIFICATION_SEND_DICTATION_IDS_API
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(validateTemplateListResponse:) name:NOTIFICATION_TEMPLATE_LIST_API
+                                               object:nil];
     // Do any additional setup after loading the view.
 }
 
@@ -99,7 +104,11 @@
 //    NSLog(@"navi height = %@", self.navigationController.navigationBar.bounds);
     [super viewWillAppear:true];
     
-   
+    if ([AppPreferences sharedAppPreferences].tempalateListDict.count == 0)
+    {
+       [[APIManager sharedManager] getTemplateByUserCode:@""];
+    }
+    
     
     self.splitViewController.delegate = self;
     
@@ -277,6 +286,44 @@
 
 }
 
+
+-(void)validateTemplateListResponse:(NSNotification*)responseDictObj
+{
+    NSArray* responseArray= responseDictObj.object;
+    
+
+    [AppPreferences sharedAppPreferences].tempalateListDict = [NSMutableDictionary new];
+    
+    for (NSDictionary* responseDict in responseArray)
+    {
+        NSString* templateCode = [responseDict valueForKey:@"templateCode"];
+        
+        NSString* templateName = [responseDict valueForKey:@"templateName"];
+
+        NSString* deptCode = [responseDict valueForKey:@"departmentCode"];
+
+//        [[AppPreferences sharedAppPreferences].tempalateListDict setValue:templateCode forKey:templateName];
+
+        Template* tempObj = [Template new];
+        
+        tempObj.templateId = templateCode;
+        
+        tempObj.templateName = templateName;
+        
+        tempObj.departmentId = deptCode;
+        
+        [[Database shareddatabase] insertTemplateListData:tempObj];
+    }
+
+    
+   
+    [hud hideAnimated:YES];
+    
+    
+    
+}
+
+
 -(void)validateSendIdsResponse:(NSNotification*)obj
 {
     long completedDocCount = 0;
@@ -352,7 +399,6 @@
 
                                                NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
                                               
-//                                                       if ([appStoreVersion compare:currentVersion options:NSNumericSearch] == NSOrderedDescending)
                                                if (![appStoreVersion isEqualToString:currentVersion])
 
                                                {
@@ -371,7 +417,6 @@
                                                                                              handler:^(UIAlertAction * action)
                                                                        {
                                                                            [self openStoreProductViewControllerWithITunesItemIdentifier:kAppITunesItemIdentifier];
-                                                                           //                                                                               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.com/apps/CubeDictate"]];
                                                                            
                                                                            [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
                                                                            //
@@ -608,7 +653,7 @@
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
     
-    [self.navigationController presentViewController:[self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"] animated:YES completion:nil];
+    [self.tabBarController presentViewController:[self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"] animated:YES completion:nil];
 }
 
 -(void)Logout

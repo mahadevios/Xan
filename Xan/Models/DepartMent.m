@@ -13,7 +13,7 @@
 
 
 - (void)encodeWithCoder:(NSCoder *)aCoder{
-    [aCoder encodeObject:[NSString stringWithFormat:@"%ld",self.Id] forKey:@"Id"];
+    [aCoder encodeObject:self.Id forKey:@"Id"];
         [aCoder encodeObject:self.departmentName forKey:@"departmentName"];
     
 }
@@ -23,7 +23,7 @@
     if(self = [super init])
     {
 //        self=[aDecoder decodeObjectForKey:@"Selected Department"];
-        self.Id = [[aDecoder decodeObjectForKey:@"Id"]intValue];
+        self.Id = [aDecoder decodeObjectForKey:@"Id"];
         self.departmentName=[aDecoder decodeObjectForKey:@"departmentName"];
         
         

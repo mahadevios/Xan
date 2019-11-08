@@ -12,6 +12,7 @@
 #import "AudioDetails.h"
 #import "DocFileDetails.h"
 #import "AppPreferences.h"
+#import "Template.h"
 
 @interface Database : NSObject
 
@@ -80,7 +81,7 @@
 
 -(NSString*)getDefaultDepartMentId;
 
--(void)updateDepartment:(long)deptId fileName:(NSString*)fileName;
+-(void)updateDepartment:(NSString* )deptId fileName:(NSString*)fileName;
 
 -(int)getImportedFileCount;
 
@@ -127,5 +128,11 @@
 -(void)AlterVRSTextFilesTableForDepartmentName;
 
 -(NSMutableArray*)getDepartMentObjList;
+
+-(void)updateTemplateId:(NSString*)templateId fileName:(NSString*)fileName;
+
+-(void)insertTemplateListData:(Template*)templateObj;
+
+-(NSMutableArray*)getTemplateListfromDeptName:(NSString*)deptId;
 
 @end

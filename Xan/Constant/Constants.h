@@ -9,6 +9,34 @@
 #ifndef Header_h
 #define Header_h
 
+
+//#define  BASE_URL_PATH                        @"http://192.168.3.81:8089/xan-dictate"
+//#define  BASE_URL_PATH                        @"http://192.168.3.79:8089/xan-dictate"
+//#define  BASE_URL_PATH_LOCAL                    @"http://192.168.3.79:8089/xan-dictate"
+
+//#define  BASE_URL_PATH                        @"http://192.168.2.9:8089/xan-dictate"
+#define  BASE_URL_PATH                          @"http://192.168.3.81:8089/xan-dictate"
+#define  BASE_URL_PATH_LOCAL                    @"http://192.168.3.81:8089/xan-dictate"
+#define  FILE_UPLOAD_API                        @"mobileUploadAudio"
+
+//#define  BASE_URL_PATH_LOCAL                    @"http://192.168.3.80:8080/payU/fileOps"
+//#define  FILE_UPLOAD_API                        @"uploadAudio"
+
+
+
+
+#define  CHECK_DEVICE_REGISTRATION_API        @"verifyDeviceRegistration"
+#define  CHECK_USER_REGISTRATION_API          @"validateUser"
+#define  GENERATE_DEVICE_TOKEN                @"token/generate-device-token"
+#define  ACCEPT_PIN_API                       @"devicePinRegistration"
+#define  ACCEPY_TandC_API                     @"acceptTandC"
+#define  VALIDATE_PIN_API                     @"devicePinLogin"
+#define  FORGOT_PIN_API                       @"forgotPin"
+#define  PIN_CANGE_API                        @"resetDevicePin"
+#define  TEST_API                             @"check"
+#define  TEMPLATE_LIST_API                    @"getTemplateByDevicePractitioner"
+
+
 //#define  BASE_URL_PATH                        @"http://www.xanadutec.net/cubeagent_webapi/api"
 //
 //#define  BASE_URL_PATH                        @"http://192.168.3.150:8081/CubeAPI/api"
@@ -23,29 +51,20 @@
 
 //#define  BASE_URL_PATH                        @"http://www.xanadutec.net/cubeagent_webapi/api"
 //#define  BASE_URL_PATH                        @"https://www.cubescribe.com/cubeagent_webapi/api"
-#define  BASE_URL_PATH                        @"http://192.168.3.81:8089/xan-dictate"
-//#define  BASE_URL_PATH                        @"http://192.168.2.9:8089/xan-dictate"
-
 
 //#define  BASE_URL_PATH                        @"http://192.168.3.156:8081/CubeAPI/api"
 //#define  CHECK_DEVICE_REGISTRATION            @"encrdecr_MobileCheckDeviceRegistration"
 #define  AUTHENTICATE_API                     @"encrdecr_MobileAuthenticate"
 //#define  ACCEPT_PIN_API                       @"encrdecr_MobileAcceptPIN"
 //#define  VALIDATE_PIN_API                     @"encrdecr_MobileValidatePIN"
-#define  FILE_UPLOAD_API                      @"encrdecr_MobileFileUpload"
-#define  PIN_CANGE_API                        @"encrdecr_MobilePINChange"
+//#define  FILE_UPLOAD_API                      @"encrdecr_MobileFileUpload"
+//#define  PIN_CANGE_API                        @"encrdecr_MobilePINChange"
 #define  FILE_DOWNLOAD_API                    @"encedecr_MobileDownloadDocFile"
 #define  SEND_DICTATION_IDS_API               @"encrdecr_MobileRequestForCompleteFiles"
 #define  SEND_COMMENT_API                     @"encdecr_MobileDocFileComment"
 #define  DOCX_FILE_UPLOAD_API                 @"encedecr_MobileUploadDocFile"
 
-#define  CHECK_DEVICE_REGISTRATION_API        @"verifyDeviceRegistration"
-#define  CHECK_USER_REGISTRATION_API          @"validateUser"
-#define  GENERATE_DEVICE_TOKEN                @"token/generate-device-token"
-#define  ACCEPT_PIN_API                       @"devicePinRegistration"
-#define  ACCEPY_TandC_API                     @"acceptTandC"
-#define  VALIDATE_PIN_API                     @"devicePinLogin"
-#define  FORGOT_PIN_API                       @"forgotPin"
+
 
 
 #define  SECRET_KEY                           @"an@%c*(a&ax/e!*6"
@@ -83,6 +102,7 @@
 #define NOTIFICATION_FILE_DOWNLOAD_API              @"notificationForMobileFileDownload"
 #define NOTIFICATION_SEND_DICTATION_IDS_API         @"notificationSendDictationIds"
 #define NOTIFICATION_ACCEPT_TANDC_API               @"notificationAcceptTandC"
+#define NOTIFICATION_TEMPLATE_LIST_API              @"notificationTemplateList"
 
 #define NOTIFICATION_PIN_CANGE_API                  @"notificationForMobilePINChange"
 #define NOTIFICATION_PAUSE_RECORDING                @"pauseRecording"

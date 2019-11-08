@@ -181,6 +181,40 @@ static APIManager *singleton = nil;
 }
 ///// For ACE
 
+-(void) testFileName:(NSString*)fileName
+{
+    self.responsesData = [NSMutableDictionary new];
+    
+    if ([[AppPreferences sharedAppPreferences] isReachable])
+    {
+        [[[[UIApplication sharedApplication] keyWindow] viewWithTag:222] removeFromSuperview];//to remove no internet message
+        
+       
+        
+        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:fileName,@"fileName", nil];
+        
+        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
+        
+        NSString* downloadMethodType = @"urlConnection";
+        
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:TEST_API withRequestParameter:array withResourcePath:TEST_API withHttpMethd:POST downloadMethodType:downloadMethodType];
+        
+        downloadmetadatajob.contentType   = CONTENT_TYPE_JSON;
+        
+        [downloadmetadatajob startMetaDataDownLoad];
+        
+    }
+    
+    //
+    
+    else
+    {
+        //UIView* internetMessageView=   [[PopUpCustomView alloc]initWithFrame:CGRectMake(12, 100, 200, 200) senderForInternetMessage:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INTERNET_MESSAGE object:nil];
+        
+        
+    }
+}
 -(void) checkDeviceRegistrationMacID:(NSString*)macID
 {
     
@@ -197,8 +231,8 @@ static APIManager *singleton = nil;
         NSString* macIdEncString = [macIdEncData base64EncodedStringWithOptions:0];
         //oWjUNRS+fxO+JEDlWw5BC6uoRRPWWoynetqTa8cqWfp2o5fPt56pl/cnK4lqgA8g
         //oWjUNRS+fxO+JEDlWw5BC6uoRRPWWoynetqTa8cqWfp2o5fPt56pl/cnK4lqgA8g
-        macIdEncString =
-        [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+//        macIdEncString =
+//        [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         
         NSString* initVector = [AppPreferences sharedAppPreferences].iniVector;
         
@@ -287,19 +321,19 @@ static APIManager *singleton = nil;
         
         NSData *macIdEncData = [macIdData AES256EncryptWithKey:SECRET_KEY];
         NSString* macIdEncString = [macIdEncData base64EncodedStringWithOptions:0];
-        macIdEncString = [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+//        macIdEncString = [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         NSString* macIdIV = [AppPreferences sharedAppPreferences].iniVector;
         macIdEncString = [[macIdEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:macIdIV];
 
         NSData *usernameEncData = [usernameData AES256EncryptWithKey:SECRET_KEY];
         NSString* usernameEncString = [usernameEncData base64EncodedStringWithOptions:0];
-        usernameEncString = [usernameEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+//        usernameEncString = [usernameEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         NSString* usernameIV = [AppPreferences sharedAppPreferences].iniVector;
         usernameEncString = [[usernameEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:usernameIV];
 
         NSData *passwordEncData = [passwordData AES256EncryptWithKey:SECRET_KEY];
         NSString* passwordEncString = [passwordEncData base64EncodedStringWithOptions:0];
-        passwordEncString = [passwordEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+//        passwordEncString = [passwordEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         NSString* passwordIV = [AppPreferences sharedAppPreferences].iniVector;
         passwordEncString = [[passwordEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:passwordIV];
 
@@ -334,7 +368,7 @@ static APIManager *singleton = nil;
         NSData *macIdEncData = [macIdData AES256EncryptWithKey:SECRET_KEY];
         NSString* macIdIV = [AppPreferences sharedAppPreferences].iniVector;
         NSString* macIdEncString = [macIdEncData base64EncodedStringWithOptions:0];
-        macIdEncString = [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+//        macIdEncString = [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         macIdEncString = [[macIdEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:macIdIV];
 
 //
@@ -371,23 +405,23 @@ static APIManager *singleton = nil;
         NSData *macIdEncData = [macIdData AES256EncryptWithKey:SECRET_KEY];
         NSString* macIdIV = [AppPreferences sharedAppPreferences].iniVector;
         NSString* macIdEncString = [macIdEncData base64EncodedStringWithOptions:0];
-        macIdEncString = [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+//        macIdEncString = [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         macIdEncString = [[macIdEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:macIdIV];
 
         NSData* pinData = [pin dataUsingEncoding:NSUTF8StringEncoding];
         NSData *pinEncData = [pinData AES256EncryptWithKey:SECRET_KEY];
         NSString* pinIV = [AppPreferences sharedAppPreferences].iniVector;
         NSString* pinEncString = [pinEncData base64EncodedStringWithOptions:0];
-        pinEncString = [pinEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+//        pinEncString = [pinEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         pinEncString = [[pinEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:pinIV];
 
         NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"macId",pinEncString,@"devicePin", nil];
         
         NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
         
-        NSString* downloadMethodType = @"Bearer";
+//        NSString* downloadMethodType = @"Bearer";
         
-        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:ACCEPT_PIN_API withRequestParameter:array withResourcePath:ACCEPT_PIN_API withHttpMethd:POST downloadMethodType:downloadMethodType];
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:ACCEPT_PIN_API withRequestParameter:array withResourcePath:ACCEPT_PIN_API withHttpMethd:POST downloadMethodType:@""];
         
         downloadmetadatajob.contentType = CONTENT_TYPE_JSON;
 
@@ -408,16 +442,16 @@ static APIManager *singleton = nil;
         NSData *macIdEncData = [macIdData AES256EncryptWithKey:SECRET_KEY];
         NSString* macIdIV = [AppPreferences sharedAppPreferences].iniVector;
         NSString* macIdEncString = [macIdEncData base64EncodedStringWithOptions:0];
-        macIdEncString = [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+//        macIdEncString = [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         macIdEncString = [[macIdEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:macIdIV];
         
         NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"macId",dateAndTime,@"dateAndTime",acceptFlag,@"acceptanceFl", nil];
         
         NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
         
-        NSString* downloadMethodType = @"Bearer";
+//        NSString* downloadMethodType = @"Bearer";
         
-        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:ACCEPY_TandC_API withRequestParameter:array withResourcePath:ACCEPY_TandC_API withHttpMethd:POST downloadMethodType:downloadMethodType] ;
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:ACCEPY_TandC_API withRequestParameter:array withResourcePath:ACCEPY_TandC_API withHttpMethd:POST downloadMethodType:@""] ;
         
         downloadmetadatajob.contentType = CONTENT_TYPE_JSON;
         
@@ -438,7 +472,7 @@ static APIManager *singleton = nil;
         NSData *macIdEncData = [macIdData AES256EncryptWithKey:SECRET_KEY];
         NSString* macIdIV = [AppPreferences sharedAppPreferences].iniVector;
         NSString* macIdEncString = [macIdEncData base64EncodedStringWithOptions:0];
-        macIdEncString = [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+//        macIdEncString = [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         macIdEncString = [[macIdEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:macIdIV];
         
         NSData* pinData = [pin dataUsingEncoding:NSUTF8StringEncoding];
@@ -452,9 +486,9 @@ static APIManager *singleton = nil;
         
         NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
         
-        NSString* downloadMethodType = @"Bearer";
+//        NSString* downloadMethodType = @"Bearer";
         
-        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:VALIDATE_PIN_API withRequestParameter:array withResourcePath:VALIDATE_PIN_API withHttpMethd:POST downloadMethodType:downloadMethodType] ;
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:VALIDATE_PIN_API withRequestParameter:array withResourcePath:VALIDATE_PIN_API withHttpMethd:POST downloadMethodType:@""] ;
         
         downloadmetadatajob.contentType = CONTENT_TYPE_JSON;
 
@@ -467,32 +501,103 @@ static APIManager *singleton = nil;
     
 }
 
--(void)changePinOldPin:(NSString*)oldpin NewPin:(NSString*)newpin macID:(NSString*)macID
+-(void)changePinOldPin:(NSString*)oldPin NewPin:(NSString*)newPin macID:(NSString*)macID
 {
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
+
+        NSData* macIdData = [macID dataUsingEncoding:NSUTF8StringEncoding];
+        NSData* oldPinData = [oldPin dataUsingEncoding:NSUTF8StringEncoding];
+        NSData* newPinData = [newPin dataUsingEncoding:NSUTF8StringEncoding];
         
-        NSError* error;
-        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:oldpin,@"oldpin",newpin,@"newpin",macID,@"macid", nil];
+        NSData *macIdEncData = [macIdData AES256EncryptWithKey:SECRET_KEY];
+        NSString* macIdEncString = [macIdEncData base64EncodedStringWithOptions:0];
+        //        macIdEncString = [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        NSString* macIdIV = [AppPreferences sharedAppPreferences].iniVector;
+        macIdEncString = [[macIdEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:macIdIV];
+        
+        NSData *oldPinEncData = [oldPinData AES256EncryptWithKey:SECRET_KEY];
+        NSString* oldPinEncString = [oldPinEncData base64EncodedStringWithOptions:0];
+        //        usernameEncString = [usernameEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        NSString* oldPinIV = [AppPreferences sharedAppPreferences].iniVector;
+        oldPinEncString = [[oldPinEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:oldPinIV];
+        
+        NSData *newPinEncData = [newPinData AES256EncryptWithKey:SECRET_KEY];
+        NSString* newPinEncString = [newPinEncData base64EncodedStringWithOptions:0];
+        //        passwordEncString = [passwordEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        NSString* newPinIV = [AppPreferences sharedAppPreferences].iniVector;
+        newPinEncString = [[newPinEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:newPinIV];
+        
+        //__babacd_dcabab__
+        //        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
         
         
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
-                                                           options:0 // Pass 0 if you don't care about the readability of the generated string
-                                                             error:&error];
+        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"macId",oldPinEncString,@"userName", newPinEncString,@"password", nil];
         
-        
-        NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
-        
-        
-        
-        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
-        
-        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
-        
+        NSString* downloadMethodType = @"Bearer";
+
+
         NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
-        NSString* downloadMethodType = @"urlConnection";
 
         DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:PIN_CANGE_API withRequestParameter:array withResourcePath:PIN_CANGE_API withHttpMethd:POST downloadMethodType:downloadMethodType];
+        
+        downloadmetadatajob.contentType = CONTENT_TYPE_JSON;
+
+        [downloadmetadatajob startMetaDataDownLoad];
+    }
+    else
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+    }
+
+
+
+}
+
+-(void)getTemplateByUserCode:(NSString*)macID
+{
+    if ([[AppPreferences sharedAppPreferences] isReachable])
+    {
+        NSString* oldPin = @"ds";
+        NSString* newPin = @"newPin";
+        
+        NSData* macIdData = [macID dataUsingEncoding:NSUTF8StringEncoding];
+        NSData* oldPinData = [oldPin dataUsingEncoding:NSUTF8StringEncoding];
+        NSData* newPinData = [newPin dataUsingEncoding:NSUTF8StringEncoding];
+        
+        NSData *macIdEncData = [macIdData AES256EncryptWithKey:SECRET_KEY];
+        NSString* macIdEncString = [macIdEncData base64EncodedStringWithOptions:0];
+        //        macIdEncString = [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        NSString* macIdIV = [AppPreferences sharedAppPreferences].iniVector;
+        macIdEncString = [[macIdEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:macIdIV];
+        
+        NSData *oldPinEncData = [oldPinData AES256EncryptWithKey:SECRET_KEY];
+        NSString* oldPinEncString = [oldPinEncData base64EncodedStringWithOptions:0];
+        //        usernameEncString = [usernameEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        NSString* oldPinIV = [AppPreferences sharedAppPreferences].iniVector;
+        oldPinEncString = [[oldPinEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:oldPinIV];
+        
+        NSData *newPinEncData = [newPinData AES256EncryptWithKey:SECRET_KEY];
+        NSString* newPinEncString = [newPinEncData base64EncodedStringWithOptions:0];
+        //        passwordEncString = [passwordEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        NSString* newPinIV = [AppPreferences sharedAppPreferences].iniVector;
+        newPinEncString = [[newPinEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:newPinIV];
+        
+        //__babacd_dcabab__
+        //        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
+        
+        
+        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"macId",oldPinEncString,@"userName", newPinEncString,@"password", nil];
+        
+        NSString* downloadMethodType = @"Bearer";
+        
+        
+        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
+        
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:TEMPLATE_LIST_API withRequestParameter:array withResourcePath:TEMPLATE_LIST_API withHttpMethd:POST downloadMethodType:downloadMethodType];
+        
+        downloadmetadatajob.contentType = CONTENT_TYPE_JSON;
+        
         [downloadmetadatajob startMetaDataDownLoad];
     }
     else
@@ -675,28 +780,30 @@ static APIManager *singleton = nil;
         
         
         NSError* error1;
-        NSString* encryptedString = [NSJSONSerialization JSONObjectWithData:data
+        result = [NSJSONSerialization JSONObjectWithData:data
                                                                     options:NSJSONReadingAllowFragments
                                                                       error:&error1];
+//
+//
+//        NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:encryptedString options:0];
+//        NSData* data1=[decodedData AES256DecryptWithKey:SECRET_KEY];
+//        NSString* responseString=[[NSString alloc] initWithData:data1 encoding:NSUTF8StringEncoding];
+//        responseString=[responseString stringByReplacingOccurrencesOfString:@"True" withString:@"1"];
+//        responseString=[responseString stringByReplacingOccurrencesOfString:@"False" withString:@"0"];
+//
+//        NSData *responsedData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
         
-        
-        NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:encryptedString options:0];
-        NSData* data1=[decodedData AES256DecryptWithKey:SECRET_KEY];
-        NSString* responseString=[[NSString alloc] initWithData:data1 encoding:NSUTF8StringEncoding];
-        responseString=[responseString stringByReplacingOccurrencesOfString:@"True" withString:@"1"];
-        responseString=[responseString stringByReplacingOccurrencesOfString:@"False" withString:@"0"];
-        
-        NSData *responsedData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
-        
-        result = [NSJSONSerialization JSONObjectWithData:responsedData
-                                                 options:NSJSONReadingAllowFragments
-                                                   error:nil];
+//        result = [NSJSONSerialization JSONObjectWithData:responsedData
+//                                                 options:NSJSONReadingAllowFragments
+//                                                   error:nil];
         
         NSString* returnCode= [result valueForKey:@"code"];
         
         if ([returnCode longLongValue]==200)
         {
-            NSString* idvalString= [result valueForKey:@"mobiledictationidval"];
+//            NSString* idvalString= [result valueForKey:@"mobiledictationidval"];
+            NSString* idvalString = @"0";
+
             NSString* date= [[APIManager sharedManager] getDateAndTimeString];
             Database* db=[Database shareddatabase];
             
@@ -991,6 +1098,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
         dispatch_async(dispatch_get_main_queue(), ^{
             AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
             
+            
             appDelegate.backgroundSessionCompletionHandler();
         });
        
@@ -1053,7 +1161,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
 }
 
--(void)uploadFileAfterGettingdatabaseValues:(NSString*)str departmentID:(int)departmentID transferStatus:(int)transferStatus mobileDictationIdVal:(int)mobileDictationIdVal isFileTypeAudio:(BOOL)isFileTypeAudio
+-(void)uploadFileAfterGettingdatabaseValues:(NSString*)filename departmentID:(int)departmentID transferStatus:(int)transferStatus mobileDictationIdVal:(int)mobileDictationIdVal isFileTypeAudio:(BOOL)isFileTypeAudio
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -1064,14 +1172,16 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     });
     
     NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:
-                          [NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,str] ];
+                          [NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,filename] ];
     
-    NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", BASE_URL_PATH, FILE_UPLOAD_API]];
+//    NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", BASE_URL_PATH, FILE_UPLOAD_API]];
     
+    NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", BASE_URL_PATH_LOCAL, FILE_UPLOAD_API]];
+
     if (isFileTypeAudio == NO)
     {
         filePath = [NSHomeDirectory() stringByAppendingPathComponent:
-                    [NSString stringWithFormat:@"Documents/%@/%@.Docx",DOCX_FILES_FOLDER_NAME,str] ];
+                    [NSString stringWithFormat:@"Documents/%@/%@.Docx",DOCX_FILES_FOLDER_NAME,filename] ];
         
         url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", BASE_URL_PATH, DOCX_FILE_UPLOAD_API]];
         
@@ -1080,8 +1190,11 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
     NSString *boundary = [self generateBoundaryString];
     
-    NSDictionary *params = @{@"filename"     : str,
-                             };
+    NSString* filenameForTaskIdentifier = filename;
+    
+    filename = [filename stringByAppendingPathExtension:@"wav"];
+    
+   
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     
     [request setHTTPMethod:@"POST"];
@@ -1113,43 +1226,51 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
     if (departmentId == 0)
     {
-        departmentId= [[Database shareddatabase] getDepartMentIdForFileName:str];
+        departmentId= [[Database shareddatabase] getDepartMentIdForFileName:filename];
         
     }
     
+    NSDictionary *params = @{@"macId"     : macId,
+                             @"fileSize" :[NSString stringWithFormat:@"%d", filesizeint],
+                             @"departmentID" : [NSString stringWithFormat:@"%d", departmentID],
+                             @"transferStatus" : [NSString stringWithFormat:@"%d", transferStatus],
+                             @"mobileDictationIdVal" : [NSString stringWithFormat:@"%d", mobileDictationIdVal],
+                             @"templateCode" : [NSString stringWithFormat:@"%d", 2000],
+                             };
     // NSString* authorisation=[NSString stringWithFormat:@"%@*%d*%ld*%d*%d",macId,filesizeint,deptObj.Id,1,0];
-    NSString* authorisation=[NSString stringWithFormat:@"%@*%d*%d*%d*%d",macId,filesizeint,departmentID,transferStatus,mobileDictationIdVal];
+   
     
-    
+
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
-    [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
     
+    [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
+
     //    NSError* error;
     
+//     NSString* authorisationString = [NSString stringWithFormat:@"%@*%d*%d*%d*%d",macId,filesizeint,departmentID,transferStatus,mobileDictationIdVal];
+//    NSData* authorisationData = [authorisationString dataUsingEncoding:NSUTF8StringEncoding];
+//
+//
+//    NSData *authorisationEncData = [authorisationData AES256EncryptWithKey:SECRET_KEY];
+//
+//    NSString* authorisationEncString = [authorisationEncData base64EncodedStringWithOptions:0];
     
-    NSData* jsonData=[authorisation dataUsingEncoding:NSUTF8StringEncoding];
+//    [request setValue:authorisationEncString forHTTPHeaderField:@"Authorization"];
+
+    NSString* jwtToken = [[NSUserDefaults standardUserDefaults] objectForKey:JWT_TOKEN];
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", jwtToken] forHTTPHeaderField:@"Authorization"];
     
-    
-    NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
-    
-    
-    
-    NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
-    
-    [request setValue:str2 forHTTPHeaderField:@"Authorization"];
     
     // create body
     
-    NSData *httpBody = [self createBodyWithBoundary:boundary parameters:params paths:@[filePath] fieldName:str];
+    NSData *httpBody = [self createBodyWithBoundary:boundary parameters:params paths:@[filePath] fieldName:@"file"];
     
     request.HTTPBody = httpBody;
     
     
     session = [SharedSession getSharedSession:[APIManager sharedManager]];
     
-    //
     [request setHTTPMethod:@"POST"];
-    
     
     NSURLSessionUploadTask* uploadTask = [session uploadTaskWithRequest:request fromData:nil];
 
@@ -1158,9 +1279,8 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
     dispatch_async(dispatch_get_main_queue(), ^
                    {
-                       //NSLog(@"Reachable");
-                       
-                       [[Database shareddatabase] insertTaskIdentifier:[NSString stringWithFormat:@"%@",taskIdentifier] fileName:str];
+                      
+                       [[Database shareddatabase] insertTaskIdentifier:[NSString stringWithFormat:@"%@",taskIdentifier] fileName:filenameForTaskIdentifier];
                    });
   
     [uploadTask resume];
@@ -1240,7 +1360,19 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     [parameters enumerateKeysAndObjectsUsingBlock:^(NSString *parameterKey, NSString *parameterValue, BOOL *stop) {
         [httpBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [httpBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", parameterKey] dataUsingEncoding:NSUTF8StringEncoding]];
-        [httpBody appendData:[[NSString stringWithFormat:@"%@\r\n", parameterValue] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        NSData* encParamData = [parameterValue dataUsingEncoding:NSUTF8StringEncoding];
+        
+        encParamData = [encParamData AES256EncryptWithKey:SECRET_KEY];
+        
+        NSString* paramIV = [AppPreferences sharedAppPreferences].iniVector;
+        NSString* paramEncString = [encParamData base64EncodedStringWithOptions:0];
+        //        pinEncString = [pinEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        paramEncString = [[paramEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:paramIV];
+        
+        [httpBody appendData:[[NSString stringWithFormat:@"%@\r\n", paramEncString] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        NSLog(@"paramEncString = %@", paramEncString);
     }];
     
     // add image data
@@ -1252,6 +1384,10 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
         
         NSData *data = [data1 AES256EncryptWithKey:SECRET_KEY];
         
+        NSString* fileIV = [AppPreferences sharedAppPreferences].iniVector;
+
+        filename = [[filename stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:fileIV]; // append used IV to filename for server side dercyption
+
         NSString *mimetype  = [self mimeTypeForPath:path];
         
         [httpBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];

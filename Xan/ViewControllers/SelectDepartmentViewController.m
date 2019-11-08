@@ -39,7 +39,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    [self setRootView];
+//    [self setRootView];
 }
 
 #pragma mark: Serach Controller Methods and Delegates
@@ -147,19 +147,13 @@
 {
     MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
     
-    
     [[Database shareddatabase] setDepartment];//to insert default department for imported files
     
+    [self dismissViewControllerAnimated:true completion:nil];
+    
+    [[self presentingViewController] dismissViewControllerAnimated:true completion:nil];
+    
     [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
-    
-    UIViewController *presentingVC = self.presentingViewController;
-    
-    while (presentingVC.presentingViewController)
-    {
-        presentingVC = presentingVC.presentingViewController;
-    }
-    
-    [presentingVC dismissViewControllerAnimated:YES completion:NULL];
 
 }
 - (void) checkAndDismissViewController
