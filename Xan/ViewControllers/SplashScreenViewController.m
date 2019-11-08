@@ -91,20 +91,16 @@
     {
         if (!APIcalled)
         {
+//            [[APIManager sharedManager] testFileName:@"sampleFileName"];
             
-//            [[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
-             [[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
+            [[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
             APIcalled=true;
         }
     }
     else
     {
-//        UIView* view=[[[UIApplication sharedApplication] keyWindow] viewWithTag:222];
-//        UIView* popupView= [view viewWithTag:223];
-//        UIButton* retryButton= [popupView viewWithTag:225];
-//        [retryButton setEnabled:YES];
+
         [self addAlertView];
-//        [retryButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 
     }
     
@@ -186,7 +182,8 @@
         if (!APIcalled)
         {
 
-//            [[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
+//            [[APIManager sharedManager] testFileName:@"sampleFileName"];
+
             [[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
 
             APIcalled=true;
@@ -285,7 +282,7 @@
                             
                             LoginViewController *viewController = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
                             
-                            LoginViewController *viewController1 = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+//                            LoginViewController *viewController1 = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
 
                             [self presentViewController:viewController animated:NO completion:NULL];
 //                            [self performSegueWithIdentifier:@"SPToPINLogin" sender:nil];

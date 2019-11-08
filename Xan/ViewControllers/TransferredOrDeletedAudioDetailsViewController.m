@@ -592,7 +592,7 @@ else
     
     NSString* departmentId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentName];
     
-    [[Database shareddatabase] updateDepartment:[departmentId longLongValue] fileName:filenameLabel.text];
+    [[Database shareddatabase] updateDepartment:departmentId fileName:filenameLabel.text];
     
     self.audioDetails.departmentCopy = departmentName;
 
@@ -660,9 +660,9 @@ else
     
     DepartMent *deptObj = [[DepartMent alloc]init];
     
-    long deptId= [[[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text] longLongValue];
+    NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text];
     
-    deptObj.Id=deptId;
+    deptObj.Id = deptId;
     
     deptObj.departmentName=departmentNameLanel.text;
     

@@ -24,7 +24,7 @@
     db=[Database shareddatabase];
 //    self.definesPresentationContext = true;
 //    self.extendedLayoutIncludesOpaqueBars = YES;    // Do any additional setup after loading the view.
-    self.definesPresentationContext = true;
+//    self.definesPresentationContext = true;
     
     self.extendedLayoutIncludesOpaqueBars = YES;
     [self setSearchController];
@@ -115,7 +115,7 @@
     self.searchController.searchResultsUpdater = self;
     self.searchController.searchBar.delegate = self;
     //    self.tableView.tableHeaderView = self.searchController.searchBar;
-    self.navigationController.definesPresentationContext = YES;
+//    self.navigationController.definesPresentationContext = YES;
     self.searchController.obscuresBackgroundDuringPresentation = NO;
     self.searchController.hidesNavigationBarDuringPresentation=NO;
     //    self.navigationController.definesPresentationContext = YES;

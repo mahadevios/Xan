@@ -17,12 +17,14 @@
 #import "APIManager.h"
 #import "AppPreferences.h"
 #import "Constants.h"
+#import "MKDropdownMenu.h"
+
 // helpers
 //#include "CAXException.h"
 //#include "CAStreamBasicDescription.h"
 //#include "ExtAudioFileConvert.mm"
 
-@interface RecordViewController : UIViewController<UIGestureRecognizerDelegate,AVAudioPlayerDelegate>
+@interface RecordViewController : UIViewController<UIGestureRecognizerDelegate,AVAudioPlayerDelegate,MKDropdownMenuDelegate,MKDropdownMenuDataSource>
 {
     Database* db;
     APIManager* app;
@@ -101,6 +103,11 @@
     
     NSString* existingDepartmentName;
     
+    MKDropdownMenu *templateNamesDropdownMenu;
+    
+    NSMutableArray* templateNamesArray;
+    
+    NSString* selectedTemplateName;
 //    bool recordingSavedToDatabaseFromBG;
 
 }

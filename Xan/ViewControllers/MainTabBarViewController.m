@@ -20,22 +20,26 @@
     [super viewDidLoad];
 //    [UITabBarItem.appearance setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]} forState:UIControlStateNormal];
 //    [UITabBarItem.appearance setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]} forState:UIControlStateSelected];
-   [[UITabBar appearance] setItemWidth:100];
     
-    self.tabBar.selectionIndicatorImage = [UIImage imageNamed:@"Info"];
+//    [self setTabBarBackgroundImage];
+//   [[UITabBar appearance] setItemWidth:100];
+//
+//    self.tabBar.selectionIndicatorImage = [UIImage imageNamed:@"Info"];
+    
+      [self setTabBarBackgroundImage];
     
     
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
-    [self setTabBarBackgroundImage];
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-   
-}
+//-(void)viewWillAppear:(BOOL)animated
+//{
+//    [self setTabBarBackgroundImage];
+//}
+//
+//-(void)viewDidAppear:(BOOL)animated
+//{
+//
+//}
 
 -(void)setTabBarBackgroundImage
 {

@@ -59,7 +59,44 @@
             
         }
     
+    templateNamesDropdownMenu = [[MKDropdownMenu alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
+    templateNamesDropdownMenu.dataSource = self;
+    templateNamesDropdownMenu.delegate = self;
+    
+    selectedTemplateName = self.audioDetails.templateName;
+    
+//    templateNamesDropdownMenu.frame = CGRectMake(self.mkDropdwonRefView.frame.origin.x,self.mkDropdwonRefView.frame.origin.y, self.mkDropdwonRefView.frame.size.width, self.mkDropdwonRefView.frame.size.height);
+//    [templateNamesDropdownMenu setCenter:CGPointMake(self.mkDropdwonRefView.frame.size.width/2, templateNamesDropdownMenu.frame.origin.y)];
+    
+//    [templateNamesDropdownMenu setBackgroundColor:[UIColor lightHomeColor]];
+    
+    [self.mkDropdwonRefView addSubview:templateNamesDropdownMenu];
+    
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    [self getTempliatFromDepartMentName:deptObj.Id];
+    
+    [templateNamesDropdownMenu reloadAllComponents];
+    
+    
+    
 }
+
+-(void)getTempliatFromDepartMentName:(NSString*)departmentId
+{
+    NSArray* templateListArray = [[Database shareddatabase] getTemplateListfromDeptName:departmentId];
+    
+    [AppPreferences sharedAppPreferences].tempalateListDict = [NSMutableDictionary new];
+    
+    for (Template* templateObj in templateListArray)
+    {
+        [[AppPreferences sharedAppPreferences].tempalateListDict setObject:templateObj.templateId forKey:templateObj.templateName];
+    }
+    
+    templateNamesArray = [[AppPreferences sharedAppPreferences].tempalateListDict allKeys];
+}
+
 -(void)pausePlayerFromBackGround
 {
     [player stop];
@@ -135,7 +172,7 @@
             {
                 [transferDictationButton setTitle:@"Resend" forState:UIControlStateNormal];
                 
-//                audioDetails = [app.todaysFileTransferNamesArray objectAtIndex:self.selectedRow];
+                [self.mkDropdwonRefView setUserInteractionEnabled:false];
                 
                 NSString* tarnsferStatus = self.audioDetails.uploadStatus;
                 
@@ -1206,7 +1243,7 @@
     
     DepartMent *deptObj = [[DepartMent alloc]init];
     
-    long deptId= [[[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text] longLongValue];
+    NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text] ;
     
     deptObj.Id=deptId;
     
@@ -1214,6 +1251,7 @@
     
     self.audioDetails.department = departmentNameLanel.text;
     
+   
     [radioButton setBackgroundImage:[UIImage imageNamed:@"RadioButton"] forState:UIControlStateNormal];
     
     [tableView reloadData];
@@ -1256,9 +1294,16 @@
     
     NSString* departmentId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentName];
     
-    [[Database shareddatabase] updateDepartment:[departmentId longLongValue] fileName:filenameLabel.text];
+    [[Database shareddatabase] updateDepartment:departmentId fileName:filenameLabel.text];
     
     self.audioDetails.departmentCopy = departmentName;
+    
+    [self getTempliatFromDepartMentName:departmentId];
+    
+    selectedTemplateName = @"Select Template";
+    
+    [templateNamesDropdownMenu reloadAllComponents];
+    
     
     // set generic object back to orginal dept
     //    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
@@ -1347,6 +1392,80 @@
     self.audioDetails.department = departmentName;
 }
 
+
+#pragma Mark: Dropdwon Menu Datasource and Delegate
+
+- (NSInteger)numberOfComponentsInDropdownMenu:(MKDropdownMenu *)dropdownMenu
+{
+    return 1;
+}
+
+- (NSInteger)dropdownMenu:(MKDropdownMenu *)dropdownMenu numberOfRowsInComponent:(NSInteger)component
+{
+    return templateNamesArray.count;
+}
+
+//- (NSString *)dropdownMenu:(MKDropdownMenu *)dropdownMenu titleForComponent:(NSInteger)component
+//{
+//    return @"Select Template";
+//}
+
+- (NSAttributedString *)dropdownMenu:(MKDropdownMenu *)dropdownMenu attributedTitleForComponent:(NSInteger)component
+{
+    
+    return [[NSAttributedString alloc] initWithString:selectedTemplateName
+                                           attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:14 weight:UIFontWeightSemibold],
+                                                        NSForegroundColorAttributeName: [UIColor blackColor]}];
+}
+
+-(NSAttributedString *)dropdownMenu:(MKDropdownMenu *)dropdownMenu attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return [[NSAttributedString alloc] initWithString:[templateNamesArray objectAtIndex:row]
+                                           attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:14 weight:UIFontWeightLight],
+                                                        NSForegroundColorAttributeName: [UIColor blackColor]}];
+}
+
+//- (NSString *)dropdownMenu:(MKDropdownMenu *)dropdownMenu titleForRow:(NSInteger)row forComponent:(NSInteger)component
+//{
+//
+//    return [templateNamesArray objectAtIndex:row];
+//}
+
+-(void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didOpenComponent:(NSInteger)component
+{
+    selectedTemplateName = @"Select Template";
+    
+    //    [self dropdownMenu:dropdownMenu attributedTitleForComponent:0];
+    
+    [dropdownMenu reloadAllComponents];
+}
+-(void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    selectedTemplateName = [templateNamesArray objectAtIndex:row];
+    
+    //    [dropdownMenu setSelectedComponentBackgroundColor:[UIColor lightGrayColor]];
+    
+    [dropdownMenu closeAllComponentsAnimated:YES];
+    
+    [dropdownMenu reloadAllComponents];
+    
+    [self updateTemplateIdForFileName];
+    
+    
+}
+
+
+-(void)updateTemplateIdForFileName
+{
+    NSString* templateId = [[AppPreferences sharedAppPreferences].tempalateListDict objectForKey:selectedTemplateName];
+    
+    if (templateId == nil)
+    {
+        templateId = @"";
+    }
+    
+    [[Database shareddatabase] updateTemplateId:templateId fileName:self.audioDetails.fileName];
+}
 //-(void)uploadFileToServer:(NSString*)str
 //
 //{

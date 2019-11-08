@@ -137,10 +137,10 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"])
     {
         [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"] animated:NO completion:nil];
-        
     }
     else
         [self dismissViewControllerAnimated:NO completion:nil];
+    
 }
 //-(void)validatePinResponseCheck:(NSNotification*)dictObj;
 //{
@@ -283,9 +283,9 @@
             
             NSDictionary* deptDict= [departmentArray objectAtIndex:i];
             
-            deptObj.Id= [[deptDict valueForKey:@"departmentCode"]longLongValue];
+            deptObj.Id = [deptDict valueForKey:@"departmentCode"];
             
-            deptObj.departmentName=[deptDict valueForKey:@"name"];
+            deptObj.departmentName=[deptDict valueForKey:@"departmentName"];
             
             [deptForDatabaseArray addObject:deptObj];
         }
@@ -312,7 +312,7 @@
         });
         
         NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
-        [[APIManager sharedManager] generateDeviceToken:@"" password:@""];
+        [[APIManager sharedManager] generateDeviceToken:macId];
 //
 //        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"])
 //        {

@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface DepartMent : NSObject
-@property(nonatomic)long Id;
+@property(nonatomic, strong)NSString* Id;
 @property(nonatomic,strong)NSString* departmentName;
 @end

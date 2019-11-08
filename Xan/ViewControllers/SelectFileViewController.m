@@ -150,7 +150,7 @@
     self.searchController.searchResultsUpdater = self;
     self.searchController.searchBar.delegate = self;
     //    self.tableView.tableHeaderView = self.searchController.searchBar;
-    self.navigationController.definesPresentationContext = YES;
+//    self.navigationController.definesPresentationContext = YES;
     self.searchController.obscuresBackgroundDuringPresentation = NO;
     self.searchController.hidesNavigationBarDuringPresentation=NO;
     //    self.navigationController.definesPresentationContext = YES;
