@@ -16,7 +16,9 @@
 
 //#define  BASE_URL_PATH                        @"http://192.168.2.9:8089/xan-dictate"
 #define  BASE_URL_PATH                          @"http://192.168.3.81:8089/xan-dictate"
-#define  BASE_URL_PATH_LOCAL                    @"http://192.168.3.81:8089/xan-dictate"
+//#define  BASE_URL_PATH_LOCAL                    @"http://192.168.3.81:8089/xan-dictate"
+
+
 #define  FILE_UPLOAD_API                        @"mobileUploadAudio"
 
 //#define  BASE_URL_PATH_LOCAL                    @"http://192.168.3.80:8080/payU/fileOps"
