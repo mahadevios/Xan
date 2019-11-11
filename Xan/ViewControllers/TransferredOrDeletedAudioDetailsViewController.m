@@ -61,9 +61,25 @@
     {
         self.backImageView.hidden = true;
     }
+
     
     
     // Do any additional setup after loading the view.
+}
+
+
+-(void)getTempliatFromDepartMentName:(NSString*)departmentId
+{
+    NSArray* templateListArray = [[Database shareddatabase] getTemplateListfromDeptName:departmentId];
+    
+    [AppPreferences sharedAppPreferences].tempalateListDict = [NSMutableDictionary new];
+    
+    for (Template* templateObj in templateListArray)
+    {
+        [[AppPreferences sharedAppPreferences].tempalateListDict setObject:templateObj.templateId forKey:templateObj.templateName];
+    }
+    
+    templateNamesArray = [[AppPreferences sharedAppPreferences].tempalateListDict allKeys];
 }
 
 //-(BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation
@@ -92,6 +108,7 @@
     
     [self setAudioDetails];
 
+    [self setDropdownView];
 //    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
 //    {
 //        [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
@@ -108,6 +125,39 @@
     
 }
 
+-(void)setDropdownView
+{
+    
+    NSString* dictatorName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DictatorName"];
+    
+    self.dictatedByLabel.text = dictatorName;
+    
+    templateNamesDropdownMenu = [[MKDropdownMenu alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
+    templateNamesDropdownMenu.dataSource = self;
+    templateNamesDropdownMenu.delegate = self;
+    
+    
+    
+    if ([self.audioDetails.templateName isEqualToString:@"-1"] || self.audioDetails.templateName == nil)
+    {
+        selectedTemplateName = @"Select Template";
+    }
+    else
+        selectedTemplateName = self.audioDetails.templateName;
+    
+    [self.mkDropdwonRefView addSubview:templateNamesDropdownMenu];
+    
+    //    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+    //    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    NSString* deptName = self.audioDetails.department;
+    
+    NSString* deptId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:deptName];
+    
+    [self getTempliatFromDepartMentName:deptId];
+    
+    [templateNamesDropdownMenu reloadAllComponents];
+}
 -(void)setAudioDetails
 {
     UILabel* filenameLabel=[self.view viewWithTag:501];
@@ -674,12 +724,86 @@ else
     
 }
 
-
 -(void)hideTableView
 {
     
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:504] removeFromSuperview];//
 }
 
+#pragma Mark: Dropdwon Menu Datasource and Delegate
 
+- (NSInteger)numberOfComponentsInDropdownMenu:(MKDropdownMenu *)dropdownMenu
+{
+    return 1;
+}
+
+- (NSInteger)dropdownMenu:(MKDropdownMenu *)dropdownMenu numberOfRowsInComponent:(NSInteger)component
+{
+    return templateNamesArray.count;
+}
+
+- (NSAttributedString *)dropdownMenu:(MKDropdownMenu *)dropdownMenu attributedTitleForComponent:(NSInteger)component
+{
+    
+    return [[NSAttributedString alloc] initWithString:selectedTemplateName
+                                           attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:14 weight:UIFontWeightSemibold],
+                                                        NSForegroundColorAttributeName: [UIColor blackColor]}];
+}
+
+-(NSAttributedString *)dropdownMenu:(MKDropdownMenu *)dropdownMenu attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return [[NSAttributedString alloc] initWithString:[templateNamesArray objectAtIndex:row]
+                                           attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:14 weight:UIFontWeightLight],
+                                                        NSForegroundColorAttributeName: [UIColor blackColor]}];
+}
+
+//- (NSString *)dropdownMenu:(MKDropdownMenu *)dropdownMenu titleForRow:(NSInteger)row forComponent:(NSInteger)component
+//{
+//
+//    return [templateNamesArray objectAtIndex:row];
+//}
+
+-(void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didOpenComponent:(NSInteger)component
+{
+    selectedTemplateName = @"Select Template";
+    
+    //    [self dropdownMenu:dropdownMenu attributedTitleForComponent:0];
+    
+    [dropdownMenu reloadAllComponents];
+}
+
+-(void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didCloseComponent:(NSInteger)component
+{
+    if ([selectedTemplateName isEqualToString:@"Select Template"])
+    {
+        [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.audioDetails.fileName];
+    }
+}
+-(void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    selectedTemplateName = [templateNamesArray objectAtIndex:row];
+    
+    //    [dropdownMenu setSelectedComponentBackgroundColor:[UIColor lightGrayColor]];
+    
+    [dropdownMenu closeAllComponentsAnimated:YES];
+    
+    [dropdownMenu reloadAllComponents];
+    
+    [self updateTemplateIdForFileName];
+    
+    
+}
+
+
+-(void)updateTemplateIdForFileName
+{
+    NSString* templateId = [[AppPreferences sharedAppPreferences].tempalateListDict objectForKey:selectedTemplateName];
+    
+    if (templateId == nil)
+    {
+        templateId = @"-1";
+    }
+    
+    [[Database shareddatabase] updateTemplateId:templateId fileName:self.audioDetails.fileName];
+}
 @end

@@ -102,7 +102,7 @@
        
     }
     else
-    if ([responseCodeString intValue]==401)
+    if ([responseCodeString intValue]==401 || [responseCodeString intValue]==500)
     {
         [hud hideAnimated:YES];
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Authentication Failed!" withMessage:@"Account Id or Password is incorrect, please try again" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];

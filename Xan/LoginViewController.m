@@ -47,6 +47,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [pinCode1TextField becomeFirstResponder];
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -71,7 +73,7 @@
     //    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"System-Bold" size:20]}];
     //
     //@{NSForegroundColorAttributeName:[UIColor orangeColor]}
-    [pinCode1TextField becomeFirstResponder];
+//    [pinCode1TextField becomeFirstResponder];
     pinCode1TextField.delegate=self;
     pinCode2TextField.delegate=self;
     pinCode3TextField.delegate=self;
@@ -547,6 +549,9 @@
                 
                 [[NSUserDefaults standardUserDefaults] setValue:macId forKey:@"MacId"];
                 
+                [pinCode1TextField resignFirstResponder];
+                [pinCode2TextField resignFirstResponder];
+                [pinCode3TextField resignFirstResponder];
                 [pinCode4TextField resignFirstResponder];
                 
                 [[APIManager sharedManager] validatePinMacID:macId Pin:pin];

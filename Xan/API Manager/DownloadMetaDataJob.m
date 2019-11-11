@@ -348,10 +348,10 @@
             NSLog(@"%@",error);
 
             NSString* code=[response objectForKey:RESPONSE_CODE];
-            NSString* pinVerify=[response objectForKey:RESPONSE_PIN_VERIFY];
+//            NSString* pinVerify=[response objectForKey:RESPONSE_PIN_VERIFY];
 
 
-            if ([code intValue]==401 && [pinVerify intValue]==0)
+            if ([code intValue]==401 || [code intValue]==200)
             {
 
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_DEVICE_REGISTRATION object:response];
@@ -359,22 +359,6 @@
 
             }
             else
-                if ([code intValue]==200 && [pinVerify intValue]==0)
-                {
-
-                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_DEVICE_REGISTRATION object:response];
-
-
-                }
-                else
-                    if ([code intValue]==200 && [pinVerify intValue]==1)
-                    {
-
-                        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_DEVICE_REGISTRATION object:response];
-
-
-                    }
-                    else
                     {
 
                         NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"2001",RESPONSE_CODE,@"2002",RESPONSE_PIN_VERIFY, nil];
