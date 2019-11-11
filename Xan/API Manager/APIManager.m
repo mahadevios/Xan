@@ -1176,7 +1176,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
 //    NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", BASE_URL_PATH, FILE_UPLOAD_API]];
     
-    NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", BASE_URL_PATH_LOCAL, FILE_UPLOAD_API]];
+    NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", BASE_URL_PATH, FILE_UPLOAD_API]];
 
     if (isFileTypeAudio == NO)
     {
