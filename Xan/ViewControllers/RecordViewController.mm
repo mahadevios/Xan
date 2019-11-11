@@ -1789,20 +1789,24 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 {
     NSArray* templateListArray = [[Database shareddatabase] getTemplateListfromDeptName:departmentId];
     
+    [AppPreferences sharedAppPreferences].tempalateListDict = [NSMutableDictionary new];
+    
     for (Template* templateObj in templateListArray)
     {
         [[AppPreferences sharedAppPreferences].tempalateListDict setObject:templateObj.templateId forKey:templateObj.templateName];
     }
     
-    templateNamesArray = [[AppPreferences sharedAppPreferences].tempalateListDict allKeys];
+    templateNamesArray = [[[AppPreferences sharedAppPreferences].tempalateListDict allKeys] mutableCopy];
 }
 
 -(void)addAnimatedView
 {
-    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+//    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+//    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
 
-    [self getTempliatFromDepartMentName:deptObj.Id];
+    NSString* deptId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:existingDepartmentName];
+    
+    [self getTempliatFromDepartMentName:deptId];
     
     [templateNamesDropdownMenu reloadAllComponents];
     
@@ -2756,14 +2760,14 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         if (templateId == nil || [templateId isEqualToString:@"Select Template"])
         {
-            templateId = @"";
+            templateId = @"-1";
         }
         //deptObj.departmentName=departmentNameLanel.text;
         //DepartMent *deptObj=[[NSUserDefaults standardUserDefaults] valueForKey:SELECTED_DEPARTMENT_NAME];
         //deptObj.departmentName;
-        NSString* departmentName=[db getDepartMentIdFromDepartmentName:deptObj.departmentName];
+        NSString* departmentId=[db getDepartMentIdFromDepartmentName:deptObj.departmentName];
         
-        NSDictionary* audioRecordDetailsDict=[[NSDictionary alloc]initWithObjectsAndKeys:self.recordedAudioFileName,@"recordItemName",recordCreatedDateString,@"recordCreatedDate",recordingDate,@"recordingDate",transferDate,@"transferDate",[NSString stringWithFormat:@"%d",dictationStatus],@"dictationStatus",[NSString stringWithFormat:@"%d",transferStatus],@"transferStatus",[NSString stringWithFormat:@"%d",deleteStatus],@"deleteStatus",deleteDate,@"deleteDate",fileSize,@"fileSize",currentDuration1,@"currentDuration",[NSString stringWithFormat:@"%d",newDataUpdate],@"newDataUpdate",[NSString stringWithFormat:@"%d",newDataSend],@"newDataSend",[NSString stringWithFormat:@"%d",mobileDictationIdVal],@"mobileDictationIdVal",departmentName,@"departmentName",templateId,@"TemplateId",nil];
+        NSDictionary* audioRecordDetailsDict=[[NSDictionary alloc]initWithObjectsAndKeys:self.recordedAudioFileName,@"recordItemName",recordCreatedDateString,@"recordCreatedDate",recordingDate,@"recordingDate",transferDate,@"transferDate",[NSString stringWithFormat:@"%d",dictationStatus],@"dictationStatus",[NSString stringWithFormat:@"%d",transferStatus],@"transferStatus",[NSString stringWithFormat:@"%d",deleteStatus],@"deleteStatus",deleteDate,@"deleteDate",fileSize,@"fileSize",currentDuration1,@"currentDuration",[NSString stringWithFormat:@"%d",newDataUpdate],@"newDataUpdate",[NSString stringWithFormat:@"%d",newDataSend],@"newDataSend",[NSString stringWithFormat:@"%d",mobileDictationIdVal],@"mobileDictationIdVal",departmentId,@"departmentName",templateId,@"templateId",nil];
         
         [db insertRecordingData:audioRecordDetailsDict];
         
@@ -4124,7 +4128,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     }
 }
 
-#pragma Mark: Dropdwon Menu Datasource and Delegate
+#pragma mark: Dropdwon Menu Datasource and Delegate
 
 - (NSInteger)numberOfComponentsInDropdownMenu:(MKDropdownMenu *)dropdownMenu
 {
@@ -4146,7 +4150,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     return [[NSAttributedString alloc] initWithString:selectedTemplateName
                                            attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:14 weight:UIFontWeightSemibold],
-                                                        NSForegroundColorAttributeName: [UIColor blackColor]}];
+                                                        NSForegroundColorAttributeName: [UIColor whiteColor]}];
 }
 
 -(NSAttributedString *)dropdownMenu:(MKDropdownMenu *)dropdownMenu attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
@@ -4170,6 +4174,15 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
      [dropdownMenu reloadAllComponents];
 }
+
+-(void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didCloseComponent:(NSInteger)component
+{
+    if ([selectedTemplateName isEqualToString:@"Select Template"])
+    {
+        [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.recordedAudioFileName];
+    }
+}
+
 -(void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     selectedTemplateName = [templateNamesArray objectAtIndex:row];
@@ -4190,11 +4203,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 {
     NSString* templateId = [[AppPreferences sharedAppPreferences].tempalateListDict objectForKey:selectedTemplateName];
     
-    if (templateId == nil)
-    {
-        templateId = @"";
-    }
-    
+//    if (templateId == nil)
+//    {
+//        templateId = @"";
+//    }
+//
     [[Database shareddatabase] updateTemplateId:templateId fileName:self.recordedAudioFileName];
 }
  @end

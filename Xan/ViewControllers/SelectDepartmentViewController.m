@@ -34,6 +34,9 @@
     departmentNameArray = [[Database shareddatabase] getDepartMentObjList];
     [self setSearchController];
     [self prepareForSearchBar];
+//    self.definesPresentationContext = true;
+//    
+//    self.extendedLayoutIncludesOpaqueBars = YES;
     
 }
 
@@ -120,10 +123,12 @@
 }
 - (void)tableView:(UITableView *)tableview didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.view endEditing:YES];
+//    [self.view endEditing:YES];
+    
+  
     
     UITableViewCell* cell = [tableview cellForRowAtIndexPath:indexPath];
-    UILabel* departmentNameLabel = [cell viewWithTag:101];
+//    UILabel* departmentNameLabel = [cell viewWithTag:101];
   
    
     
@@ -149,11 +154,32 @@
     
     [[Database shareddatabase] setDepartment];//to insert default department for imported files
     
-    [self dismissViewControllerAnimated:true completion:nil];
+//    self.searchController.active = NO;
+//
+//    self.searchController.active = NO;
+//    [self searchBarSearchButtonClicked:self.searchController.searchBar];
+
+//    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+
+   
+//    [self.searchController dismissViewControllerAnimated:true completion:nil];
+//    [self.searchController removeFromParentViewController];
+//    [self.serachBarBGView removeFromSuperview];
     
+//    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//    self.definesPresentationContext = true;
+    
+    [self dismissViewControllerAnimated:true completion:nil];
+
     [[self presentingViewController] dismissViewControllerAnimated:true completion:nil];
     
+// [appDelegate.window makeKeyWindow];
+//    UIWindow* winow = [[UIApplication sharedApplication] keyWindow];
     [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
+    
+    [self.searchController.searchBar resignFirstResponder];
+
+    
 
 }
 - (void) checkAndDismissViewController

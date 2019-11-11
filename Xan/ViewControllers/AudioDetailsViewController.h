@@ -61,6 +61,7 @@
 
 - (IBAction)moreButtonClicked:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UILabel *dictatedByLabel;
 
 - (IBAction)editRecordingButtonPressed:(id)sender;
 

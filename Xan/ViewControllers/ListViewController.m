@@ -86,7 +86,7 @@
 
 -(void)setNavigationBar
 {
-    self.currentViewName = @"List";
+    self.currentViewName = @"File";
 
     [self.checkedIndexPath removeAllObjects];
     

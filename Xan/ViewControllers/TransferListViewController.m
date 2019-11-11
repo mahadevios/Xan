@@ -29,14 +29,15 @@
     
     [super viewDidLoad];
     
-        self.definesPresentationContext = true;
+    self.definesPresentationContext = true;
     
-        self.extendedLayoutIncludesOpaqueBars = YES;
+    self.extendedLayoutIncludesOpaqueBars = YES;
     
     [self addGestureRecogniser];
     
     [self setSearchController];
-        [self beginAppearanceTransition:true animated:true];
+    
+    [self beginAppearanceTransition:true animated:true];
     
     
 }
@@ -1149,6 +1150,7 @@
     NSMutableArray *buttons = [[NSMutableArray alloc] initWithCapacity:5];
     
     UIBarButtonItem *bi = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Delete"] style:UIBarButtonItemStylePlain target:self action:@selector(deleteMutipleFiles)];
+    bi.width = 12.0f;
     [bi setTintColor:[UIColor whiteColor]];
     [buttons addObject:bi];
     

@@ -283,6 +283,7 @@
     vc.existingAudioDepartmentName=nameLabel.text;
     vc.existingAudioDate=dateLabel.text;
     vc.audioDurationInSeconds = audioDurationInSeconds;
+    vc.existingAudioTemplateName = audioDetails.templateName;
     [self presentViewController:vc animated:YES completion:nil];
    
 }
