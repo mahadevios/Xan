@@ -44,10 +44,10 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(uIdPwdResponseCheck:) name:NOTIFICATION_AUTHENTICATE_API
+                                             selector:@selector(uIdPwdResponseCheck:) name:NOTIFICATION_CHECK_USER_REGISTRATION
                                                object:nil];
 
-
+   
 //    [self displayLocalVariable];
 }
 
@@ -76,8 +76,7 @@
 {
     NSDictionary* dict=dictObj.object;
     NSString* responseCodeString=  [dict valueForKey:RESPONSE_CODE];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    [hud hideAnimated:YES];
+//    [hud hideAnimated:YES];
 
     if ([responseCodeString intValue]==-1001 || [responseCodeString intValue]==2001) // net loss and unexpected response, alert has been shown in downloadmetadata
     {
@@ -90,17 +89,22 @@
         [[NSUserDefaults standardUserDefaults] setValue:trimmedIdTextField forKey:USER_ID];
         [[NSUserDefaults standardUserDefaults] setValue:trimmedPasswordTextfield forKey:USER_PASS];
 
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+
         PinRegistrationViewController* regiController=(PinRegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"PinRegistrationViewController"];
-        
+
         [passwordTextfield resignFirstResponder];
-        
+
         [self presentViewController:regiController animated:NO completion:nil];
+        
+//        [[APIManager sharedManager] generateDeviceToken:trimmedIdTextField password:trimmedPasswordTextfield];
+
        
     }
     else
-    if ([responseCodeString intValue]==401)
+    if ([responseCodeString intValue]==401 || [responseCodeString intValue]==500)
     {
-        
+        [hud hideAnimated:YES];
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Authentication Failed!" withMessage:@"Account Id or Password is incorrect, please try again" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
         
         IDTextField.text=nil;
@@ -111,6 +115,9 @@
 
 
 }
+
+
+
 /*
 #pragma mark - Navigation
 

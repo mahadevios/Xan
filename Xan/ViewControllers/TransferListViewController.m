@@ -30,14 +30,15 @@
     [super viewDidLoad];
     
     self.definesPresentationContext = true;
-
+    
     self.extendedLayoutIncludesOpaqueBars = YES;
     
     [self addGestureRecogniser];
     
     [self setSearchController];
-//    [self beginAppearanceTransition:true animated:true];
-
+    
+    [self beginAppearanceTransition:true animated:true];
+    
     
 }
 
@@ -48,20 +49,21 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(validateFileUploadResponse:) name:NOTIFICATION_FILE_UPLOAD_API
                                                object:nil];
-  
+    
     [self setUpNavigationView];
     
     [self setAudioDetailOrEmptyViewController:0];
     
     [self setFirstRowSelected];
-
+    
     [self prepareForSearchBar];
-
+    
     self.searchController.searchBar.text = @"";
     
     [self.searchController.searchBar resignFirstResponder];
     
     [self.searchController.searchBar setShowsCancelButton:NO animated:NO];
+    
 }
 
 -(void)addGestureRecogniser
@@ -84,7 +86,7 @@
     
     progressIndexPathArray = [[NSMutableArray alloc]init];
     
-    indexPathFileNameDict = [NSMutableDictionary new];
+    //    indexPathFileNameDict = [NSMutableDictionary new];
     
     self.splitViewController.delegate = self;
     
@@ -133,17 +135,17 @@
 
 -(void)setTimer
 {
-
+    
     progressTimer =  [NSTimer scheduledTimerWithTimeInterval:0.7 target:self selector:@selector(updateProgresCount) userInfo:nil repeats:YES];
-
+    
 }
 
 
 //-(void)setTimer1
 //{
-//    
+//
 //    progressTimer =  [NSTimer scheduledTimerWithTimeInterval:0.7 target:self selector:@selector(updateProgresCount) userInfo:nil repeats:YES];
-//    
+//
 //}
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -151,7 +153,7 @@
     [self.checkedIndexPath removeAllObjects];
     
     [progressIndexPathArray removeAllObjects];
-
+    
     [arrayOfMarked removeAllObjects];
     
     isMultipleFilesActivated=NO;
@@ -197,41 +199,41 @@
                     {
                         AudioDetails *audioDetails = [self.genericFilesArray objectAtIndex:i];
                         
-//                        NSDictionary* dict  = [AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict;
+                        //                        NSDictionary* dict  = [AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict;
                         if (!(audioDetails.fileName || [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray containsObject:audioDetails.fileName]))
                         {
                             isWithoutUploadingFileAvailable = true;
                             
-//                            selectedIndex = i;
+                            //                            selectedIndex = i;
                             
                             break;
                         }
-//                        if ([[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:[awaitingFileTransferDict valueForKey:@"RecordItemName"]]== NULL)
-//                        {
-//
-//                            isWithoutUploadingFileAvailable = true;
-//
-//                            break;
-//                        }
-//                        if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count < 1 && [AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count < 1)//nothing in upload queue
-//                        {
-//                            
-//                            isWithoutUploadingFileAvailable = true;
-//                            
-//                            break;
-//                        }
+                        //                        if ([[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:[awaitingFileTransferDict valueForKey:@"RecordItemName"]]== NULL)
+                        //                        {
+                        //
+                        //                            isWithoutUploadingFileAvailable = true;
+                        //
+                        //                            break;
+                        //                        }
+                        //                        if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count < 1 && [AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count < 1)//nothing in upload queue
+                        //                        {
+                        //
+                        //                            isWithoutUploadingFileAvailable = true;
+                        //
+                        //                            break;
+                        //                        }
                         
                     }
                     
                     if (isWithoutUploadingFileAvailable)
                     {
-                         [self addAudioDetailsVCToSplitVC:selectedIndex];
+                        [self addAudioDetailsVCToSplitVC:selectedIndex];
                     }
                     else
                     {
                         [self addEmptyVCToSplitVC];
                     }
-                   
+                    
                 }
                 
             }
@@ -279,11 +281,11 @@
 
 -(void)addAudioDetailsVCToSplitVC:(int)selectedIndex
 {
-//    if (detailVC == nil)
-//    {
-        detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
-
-//    }
+    //    if (detailVC == nil)
+    //    {
+    detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
+    
+    //    }
     
     detailVC.delegate = self;
     
@@ -299,7 +301,7 @@
 
 -(void)validateFileUploadResponse:(NSNotification*)obj
 {
-  
+    
     NSString* fileName = obj.object;
     
     [progressTimer invalidate];
@@ -332,33 +334,33 @@
         }
     }
     
-//    BOOL isUploadedFileObjectForGenericFound = false;
-//
-//    for (AudioDetails* audioDetails in self.genericFilesArray)
-//    {
-//        if ([audioDetails.fileName isEqualToString:fileName])
-//        {
-//            [self.genericFilesArray removeObject:audioDetails];
-//
-//            isUploadedFileObjectForGenericFound = true;
-//        }
-//
-//        if (isUploadedFileObjectForGenericFound)
-//        {
-//            break;
-//        }
-//    }
+    //    BOOL isUploadedFileObjectForGenericFound = false;
+    //
+    //    for (AudioDetails* audioDetails in self.genericFilesArray)
+    //    {
+    //        if ([audioDetails.fileName isEqualToString:fileName])
+    //        {
+    //            [self.genericFilesArray removeObject:audioDetails];
+    //
+    //            isUploadedFileObjectForGenericFound = true;
+    //        }
+    //
+    //        if (isUploadedFileObjectForGenericFound)
+    //        {
+    //            break;
+    //        }
+    //    }
     
     [self prepareDataSourceForTableView];
     
     self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:self.genericFilesArray];
-
+    
     [self.tableView reloadData];//to update table agter getting file trnasfer response
     
     //update search bar after upload
     if (![self.searchController.searchBar.text isEqualToString:@""])
     {
-       [self updateSerachBarManually];
+        [self updateSerachBarManually];
     }
     
     
@@ -367,30 +369,31 @@
         //[self performSelector:@selector(setTimer) withObject:nil afterDelay:2.0];
         [self setTimer];
     }
-   
+    
     //[self.tableView endUpdates];
 }
 
 -(void)updateSerachBarManually
 {
+    
     self.searchController.active = YES;
     self.searchController.searchBar.text = self.searchController.searchBar.text;
     
 }
 -(void)updateProgresCount
 {
-
+    
     if (progressIndexPathArray.count>0)
     {
         if ([self.searchController.searchBar.text isEqualToString:@""] || self.searchController.searchBar.text == nil)
         {
-//            self.genericFilesArray = [[Database shareddatabase] getListOfFileTransfersOfStatus:@"RecordingComplete"] ;
+            //            self.genericFilesArray = [[Database shareddatabase] getListOfFileTransfersOfStatus:@"RecordingComplete"] ;
             
             [self.tableView reloadRowsAtIndexPaths:progressIndexPathArray withRowAnimation:UITableViewRowAnimationNone];
-       
+            
         }
         
-
+        
     }
     
     
@@ -399,13 +402,13 @@
 {
     if (self.navigationItem.title==self.currentViewName)//if navigation title=@"somevalue" then only handle longpress
     {
-   
+        
         isMultipleFilesActivated = YES;
         
         [self setAudioDetailOrEmptyViewController:0];
-//        self.tableView.allowsMultipleSelection = YES; //for ipad
-
-//        APIManager* app=[APIManager sharedManager];
+        //        self.tableView.allowsMultipleSelection = YES; //for ipad
+        
+        //        APIManager* app=[APIManager sharedManager];
         
         CGPoint p = [gestureRecognizer locationInView:self.tableView];
         
@@ -414,14 +417,14 @@
         UITableViewCell* cell=[self.tableView cellForRowAtIndexPath:indexPath];
         
         UILabel* deleteStatusLabel=[cell viewWithTag:105];
-    
+        
         
         if (cell.accessoryType == UITableViewCellAccessoryNone && (![deleteStatusLabel.text containsString:@"Uploading"]))
         {
             AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
             
             NSString* fileName = audioDetails.fileName;
-
+            
             [self.checkedIndexPath addObject:fileName];
             
             [arrayOfMarked addObject:indexPath];
@@ -439,7 +442,7 @@
                 //UIButton* button=  [view viewWithTag:102];
                 [button setTitle:@"Deselect all"];
             }
-//            longPressAdded=YES;
+            //            longPressAdded=YES;
         }
         
     }
@@ -450,15 +453,15 @@
     if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
     {
         [self.serachBarBGView removeFromSuperview];
-
-        [self.navigationController popViewControllerAnimated:NO];
+        
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
     else
     {
         [self dismissViewControllerAnimated:false completion:nil];
     }
     [self.tabBarController.tabBar setHidden:NO];
-
+    
 }
 
 #pragma mark: Serach Controller Methods and Delegates
@@ -470,7 +473,7 @@
     self.searchController.searchBar.delegate = self;
     self.searchController.obscuresBackgroundDuringPresentation = NO;
     self.searchController.hidesNavigationBarDuringPresentation=NO;
-    //    self.navigationController.definesPresentationContext = YES;
+//        self.tabBarController.definesPresentationContext = YES;
 }
 
 -(void)prepareForSearchBar
@@ -512,8 +515,9 @@
     }
     else
     {
-       searchBecomeResponsderFromUploadAlert = NO;
-       return NO;
+        searchBecomeResponsderFromUploadAlert = NO;
+        //        self.searchController.searchBar.showsCancelButton = false;
+        return NO;
     }
     
 }
@@ -522,7 +526,7 @@
 {
     
     [searchController.searchBar setShowsCancelButton:YES animated:NO];
-
+    
     [self clearSelectedArrays];
     
     [self updateUIAfterMultipleFilesUploadClicked];
@@ -543,29 +547,29 @@
         NSPredicate *predicate2;
         if ([self.currentViewName isEqualToString:@"Transferred Today"])
         {
-           predicate2 = [NSPredicate predicateWithFormat:@"transferDate CONTAINS [cd] %@", self.searchController.searchBar.text];
+            predicate2 = [NSPredicate predicateWithFormat:@"transferDate CONTAINS [cd] %@", self.searchController.searchBar.text];
         }
         else
         {
             predicate2 = [NSPredicate predicateWithFormat:@"recordingDate CONTAINS [cd] %@", self.searchController.searchBar.text];
         }
-       
+        
         NSPredicate *predicate4 = [NSPredicate predicateWithFormat:@"department CONTAINS [cd] %@", self.searchController.searchBar.text];
-       
-       
-
+        
+        
+        
         // dont show search result for not transfer but need to be show for transfer failed, use AND predicate and filter out the result
         NSPredicate *uploadStatus = [NSPredicate predicateWithFormat:@"uploadStatus CONTAINS [cd] %@", self.searchController.searchBar.text];
         NSPredicate *skipUploadStatus = [NSPredicate predicateWithFormat:@"NOT (uploadStatus CONTAINS %@)", @"NotTransferred"]; //dont search not transferred status
         NSPredicate *skipUploadStatus1 = [NSPredicate predicateWithFormat:@"NOT (uploadStatus CONTAINS %@)",@"Transferred"];//dont search transferred status
-
+        
         NSPredicate *uploadFinalPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[uploadStatus,skipUploadStatus,skipUploadStatus1]];
         
         NSPredicate *deleteStatus = [NSPredicate predicateWithFormat:@"deleteStatus CONTAINS [cd] %@", self.searchController.searchBar.text];
         NSPredicate *noDeleteStatus = [NSPredicate predicateWithFormat:@"NOT (deleteStatus CONTAINS %@)", @"NoDelete"];
         
-//        NSPredicate *transferStatus = [NSPredicate predicateWithFormat:@"deleteStatus CONTAINS [cd] %@", self.searchController.searchBar.text];
-//        NSPredicate *noTransferStatus = [NSPredicate predicateWithFormat:@"NOT (deleteStatus CONTAINS %@)", @"NoDelete"];
+        //        NSPredicate *transferStatus = [NSPredicate predicateWithFormat:@"deleteStatus CONTAINS [cd] %@", self.searchController.searchBar.text];
+        //        NSPredicate *noTransferStatus = [NSPredicate predicateWithFormat:@"NOT (deleteStatus CONTAINS %@)", @"NoDelete"];
         
         NSPredicate *deleteFinalPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[deleteStatus,noDeleteStatus]];
         
@@ -611,16 +615,16 @@
         
     }
     else
-    if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
-    {
-        self.genericFilesArray = [db getListOfFileTransfersOfStatus:@"RecordingComplete"];
-        
-    }
-    else
-    {
-        self.genericFilesArray = [db getListOfFileTransfersOfStatus:@"TransferFailed"];
-        
-    }
+        if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
+        {
+            self.genericFilesArray = [db getListOfFileTransfersOfStatus:@"RecordingComplete"];
+            
+        }
+        else
+        {
+            self.genericFilesArray = [db getListOfFileTransfersOfStatus:@"TransferFailed"];
+            
+        }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -637,14 +641,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableview cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    APIManager* app=[APIManager sharedManager];
     AudioDetails* audioDetails;
-   
+    
     audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
-   
-
+    
     UITableViewCell *cell = [tableview dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-   
+    
     UILabel* departmentNameLabel=[cell viewWithTag:101];
     departmentNameLabel.text = audioDetails.fileName;
     NSString* dateAndTimeString = audioDetails.recordingDate;
@@ -652,111 +654,80 @@
     NSString* deleteStatusString = audioDetails.deleteStatus;
     NSArray* dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
     
-    
     UILabel* recordingDurationLabel=[cell viewWithTag:102];
     
     UILabel* timeLabel=[cell viewWithTag:106];
-
-    if (dateAndTimeArray.count>1)
-    timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
+    
+    if (dateAndTimeArray.count>2)
+        timeLabel.text=[NSString stringWithFormat:@"%@ %@",[dateAndTimeArray objectAtIndex:1],[dateAndTimeArray objectAtIndex:2]];
     
     UILabel* nameLabel=[cell viewWithTag:103];
     nameLabel.text = audioDetails.department;
     
     UILabel* deleteStatusLabel=[cell viewWithTag:105];
-
+    
     UILabel* dateLabel=[cell viewWithTag:104];
     
-    
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    
-    
-    if (dateAndTimeArray.count>1)
+    if (dateAndTimeArray.count>2)
     {
-//        timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
-//
-//
-//        NSDate *date = [dateFormatter dateFromString:[dateAndTimeArray objectAtIndex:0]];
-//
-//        // Convert date object into desired format
-//        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
-//        NSString *newDateString = [dateFormatter stringFromDate:date];
-        
         dateLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
         
     }
     
-   
     int audioHour= [audioDetails.currentDuration intValue]/(60*60);
     int audioHourByMod= [audioDetails.currentDuration intValue]%(60*60);
     
     int audioMinutes = audioHourByMod / 60;
     int audioSeconds = audioHourByMod % 60;
     
-    recordingDurationLabel.text=[NSString stringWithFormat:@"%02d:%02d:%02d",audioHour,audioMinutes,audioSeconds];
+    recordingDurationLabel.text=[NSString stringWithFormat:@"(%02d:%02d:%02d)",audioHour,audioMinutes,audioSeconds];
     
     if ([self.currentViewName isEqualToString:@"Transferred Today"])
     {
         dateAndTimeString = audioDetails.transferDate;
-//        dateAndTimeArray=nil;
+        
         dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
         
         if (dateAndTimeArray.count>1)
         {
             
-                timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
-                
-//                [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-//
-//                NSDate *date = [dateFormatter dateFromString:[dateAndTimeArray objectAtIndex:0]];
-//
-//                // Convert date object into desired format
-//                [dateFormatter setDateFormat:@"dd-MM-yyyy"];
-//                NSString *newDateString = [dateFormatter stringFromDate:date];
+            dateLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
             
-                dateLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
-
-                timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
-
-
+            timeLabel.text=[NSString stringWithFormat:@"%@ %@",[dateAndTimeArray objectAtIndex:1],[dateAndTimeArray objectAtIndex:2]];
+            
         }
         
-
-    }
-    
-    if ([transferStatusString  isEqualToString: @"Transfer Failed"])
-    {
-        //        [deleteStatusLabel setHidden:false];
-        deleteStatusLabel.text = transferStatusString;
-    }
-    else
+        if ([deleteStatusString isEqualToString:@"Deleted"])
         {
-            deleteStatusLabel.text=@"";
+            deleteStatusLabel.textColor = [UIColor colorWithRed:255/255.0 green:0 blue:0 alpha:1.0];
+            deleteStatusLabel.hidden = NO;
+            deleteStatusLabel.text=@"Deleted";
         }
-    
-    if ([deleteStatusString isEqualToString:@"Deleted"])
-    {
-        deleteStatusLabel.hidden = NO;
-        deleteStatusLabel.text=@"Deleted";
+        
     }
-    else
-        if (![transferStatusString isEqualToString:@"Transfer Failed"])
-        {
-            deleteStatusLabel.text=@"";
-
-        }
     
- 
+    //    if ([transferStatusString  isEqualToString: @"Transfer Failed"] && ![progressIndexPathArray containsObject:indexPath])
+    //    {
+    //        deleteStatusLabel.textColor = [UIColor colorWithRed:255/255.0 green:0 blue:0 alpha:1.0];
+    //        deleteStatusLabel.text = transferStatusString;
+    //    }
+    //    else
+    //        if (![transferStatusString isEqualToString:@"Transfer Failed"])
+    //        {
+    //            deleteStatusLabel.text=@"";
+    //
+    //        }
+    
+    
     
     if ([audioDetails.dictationStatus isEqualToString:@"RecordingFileUpload"] && ([audioDetails.uploadStatus isEqualToString:@"NotTransferred"] || [audioDetails.uploadStatus isEqualToString:@"Resend"] || [audioDetails.uploadStatus isEqualToString:@"ResendFailed"]))
     {
         if (![progressIndexPathArray containsObject:indexPath])
         {
             [progressIndexPathArray addObject:indexPath];
-           // [progressIndexPathArrayCopy addObject:indexPath];
-
-            [indexPathFileNameDict setObject:indexPath forKey:departmentNameLabel.text];
+            // [progressIndexPathArrayCopy addObject:indexPath];
+            
+            //            [indexPathFileNameDict setObject:indexPath forKey:departmentNameLabel.text];
         }
         //deleteStatusLabel.text=@"Uploading";
         if ([[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:audioDetails.fileName]== NULL)
@@ -764,15 +735,36 @@
             deleteStatusLabel.text= @"Uploading";
         }
         else
-        deleteStatusLabel.text = [NSString stringWithFormat:@"Uploading %@",[[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:audioDetails.fileName]];
-
+            deleteStatusLabel.text = [NSString stringWithFormat:@"Uploading %@",[[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:audioDetails.fileName]];
+        
+        deleteStatusLabel.textColor = [UIColor appOrangeColor];
     }
     else
     {
+        if ([transferStatusString  isEqualToString: @"Transfer Failed"])
+        {
+            //        [deleteStatusLabel setHidden:false];
+            deleteStatusLabel.textColor = [UIColor colorWithRed:255/255.0 green:0 blue:0 alpha:1.0];
+            deleteStatusLabel.text = transferStatusString;
+        }
+        else
+            if ([deleteStatusString isEqualToString:@"Deleted"])
+            {
+                deleteStatusLabel.textColor = [UIColor colorWithRed:255/255.0 green:0 blue:0 alpha:1.0];
+                deleteStatusLabel.hidden = NO;
+                deleteStatusLabel.text=@"Deleted";
+            }
+        
+            else
+            {
+                deleteStatusLabel.text= @"";
+            }
+        
+        
         if ([progressIndexPathArray containsObject:indexPath])
         {
             [progressIndexPathArray removeObject:indexPath];
-            [indexPathFileNameDict removeObjectForKey:departmentNameLabel.text];
+            //            [indexPathFileNameDict removeObjectForKey:departmentNameLabel.text];
         }
     }
     
@@ -782,17 +774,17 @@
     }
     else
         cell.accessoryType = UITableViewCellAccessoryNone;
- 
+    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //NSDictionary* awaitingFileTransferDict;
     UITableViewCell* cell=[tableView cellForRowAtIndexPath:indexPath];
-//    APIManager* app=[APIManager sharedManager];
-
-   
-
+    //    APIManager* app=[APIManager sharedManager];
+    
+    
+    
     if (isMultipleFilesActivated)
     {
         
@@ -925,8 +917,16 @@
                     //                }
                     AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
                     detailVC.audioDetails = audioDetails;
-                    detailVC.selectedView = self.currentViewName;
-                    [self presentViewController:detailVC animated:YES completion:nil];
+                    if ([audioDetails.uploadStatus isEqualToString:@"Transfer Failed"])
+                    {
+                        detailVC.selectedView = @"Transfer Failed";
+                    }
+                    else
+                    {
+                        detailVC.selectedView = self.currentViewName;
+                    }
+                    
+                    [self.navigationController presentViewController:detailVC animated:YES completion:nil];
                     //                self.tableView.allowsMultipleSelection = NO;
                     
                 }
@@ -969,7 +969,7 @@
                 vc.selectedView=self.currentViewName;
                 [self.navigationController presentViewController:vc animated:YES completion:nil];
             }
-
+    
 }
 
 //- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(nonnull NSIndexPath *)indexPath
@@ -1095,19 +1095,19 @@
         if (!toolBarAdded)
         {
             [self addToolbar];
-
+            
         }
-
+        
     }
     else
     {
         toolBarAdded=NO;
         self.navigationItem.title=self.currentViewName;
-
+        
         self.navigationItem.rightBarButtonItem = nil;
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
         self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-
+        
         
     }
 }
@@ -1120,17 +1120,17 @@
 ////        if (!toolBarAdded)
 ////        {
 //            [self addLeftBarButton];
-//            
+//
 //       // }
-//        
+//
 //    }
 //    else
 //    {
 //        toolBarAdded=NO;
 //        self.navigationItem.title=self.currentViewName;
-//        
+//
 //        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];;
-//        
+//
 //    }
 //}
 
@@ -1146,14 +1146,15 @@
     tools.translucent = NO;
     tools.tag=101;
     tools.clipsToBounds = YES;
-
+    
     NSMutableArray *buttons = [[NSMutableArray alloc] initWithCapacity:5];
     
     UIBarButtonItem *bi = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Delete"] style:UIBarButtonItemStylePlain target:self action:@selector(deleteMutipleFiles)];
+    bi.width = 12.0f;
     [bi setTintColor:[UIColor whiteColor]];
     [buttons addObject:bi];
     
-     //Create a spacer.
+    //Create a spacer.
     bi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     bi.width = 12.0f;
     [bi setTintColor:[UIColor whiteColor]];
@@ -1162,7 +1163,7 @@
     bi = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Upload"] style:UIBarButtonItemStylePlain target:self action:@selector(uploadMultipleFilesToserver)];
     [bi setTintColor:[UIColor whiteColor]];
     [buttons addObject:bi];
-
+    
     bi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     bi.width = 9.0f;
     [bi setTintColor:[UIColor whiteColor]];
@@ -1172,14 +1173,14 @@
     bi.tag=102;
     [bi setTintColor:[UIColor whiteColor]];
     [buttons addObject:bi];
-
+    
     [tools setItems:buttons animated:NO];
     UIBarButtonItem *threeButtons = [[UIBarButtonItem alloc] initWithCustomView:tools];
     self.navigationItem.rightBarButtonItem = threeButtons;
-
+    
     
     self.navigationItem.leftBarButtonItem=nil;
-     // left bar button tool bar
+    // left bar button tool bar
     UIToolbar *tools1 = [[UIToolbar alloc]
                          initWithFrame:CGRectMake(0.0f, 0.0f, 95.0f, 44.01f)]; // 44.01 shifts it up 1px for some reason
     tools1.tag=101;
@@ -1187,7 +1188,7 @@
     tools1.clipsToBounds = YES;
     tools1.barTintColor = [UIColor appColor];
     tools1.translucent = NO;
-
+    
     NSMutableArray *buttons1 = [[NSMutableArray alloc] initWithCapacity:4];
     UIBarButtonItem *bi1 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
     bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
@@ -1199,7 +1200,7 @@
     bi1.width = 8.0f;
     [bi1 setTintColor:[UIColor whiteColor]];
     [buttons1 addObject:bi1];
-
+    
     // Add profile button.
     selectedCountLabel=[[UILabel alloc]initWithFrame:CGRectMake(0, 5, 30, 20)];
     selectedCountLabel.text=[NSString stringWithFormat:@"%ld",arrayOfMarked.count];
@@ -1216,12 +1217,12 @@
     bi1 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Check"] style:UIBarButtonItemStylePlain target:self action:nil];
     [bi1 setTintColor:[UIColor whiteColor]];
     [buttons1 addObject:bi1];
-  
+    
     // Add buttons to toolbar and toolbar to nav bar.
     [tools1 setItems:buttons1 animated:NO];
     UIBarButtonItem *threeButtons1 = [[UIBarButtonItem alloc] initWithCustomView:tools1];
     self.navigationItem.leftBarButtonItem = threeButtons1;
-
+    
     
     int uploadFileCount=0;
     for (NSInteger i = 0; i < self.genericFilesArray.count; ++i)
@@ -1244,10 +1245,10 @@
         
         [button setTitle:@"Deselect all"];
     }
-
     
-
-//    navigationController.navigationBar.tintColor = .white
+    
+    
+    //    navigationController.navigationBar.tintColor = .white
 }
 
 
@@ -1271,9 +1272,9 @@
                                             style:UIAlertActionStyleDestructive
                                           handler:^(UIAlertAction * action)
                     {
+                        [progressIndexPathArray removeAllObjects]; // if file keot on uploading using multiple seleection and then multiple delete performed , indexpath of uploading file get changed hence to prevent crash remove progress indexpath array/
                         
                         for (int i=0; i<arrayOfMarked.count; i++)
-                            
                         {
                             Database* db=[Database shareddatabase];
                             APIManager* app=[APIManager sharedManager];
@@ -1286,12 +1287,12 @@
                             self.navigationItem.rightBarButtonItem = nil;
                             self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
                             self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-
+                            
                             toolBarAdded=NO;
                             [db updateAudioFileStatus:@"RecordingDelete" fileName:fileName dateAndTime:dateAndTimeString];
                             [app deleteFile:fileName];
                             [app deleteFile:[NSString stringWithFormat:@"%@backup",fileName]];
-                          
+                            
                         }
                         [arrayOfMarked removeAllObjects];
                         [self.checkedIndexPath removeAllObjects];
@@ -1300,10 +1301,14 @@
                         
                         self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:self.genericFilesArray];
                         
-                        [self updateSerachBarManually];
-
+                        if (![self.searchController.searchBar.text isEqualToString:@""])
+                        {
+                            [self updateSerachBarManually];
+                        }
+                        
+                        
                         [self.tableView reloadData];
-
+                        
                     }]; //You can use a block here to handle a press on this button
     [alertController addAction:actionDelete];
     
@@ -1314,17 +1319,17 @@
                     {
                         [alertController dismissViewControllerAnimated:YES completion:nil];
                         
-                            
-                            self.navigationItem.title=self.currentViewName;
-                            self.navigationItem.rightBarButtonItem = nil;
+                        
+                        self.navigationItem.title=self.currentViewName;
+                        self.navigationItem.rightBarButtonItem = nil;
                         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
                         self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-
-                            isMultipleFilesActivated=NO;
+                        
+                        isMultipleFilesActivated=NO;
                         self.tableView.allowsMultipleSelection = NO; // for ipad
-
-                            toolBarAdded=NO;
-                            
+                        
+                        toolBarAdded=NO;
+                        
                         [arrayOfMarked removeAllObjects];
                         [self.checkedIndexPath removeAllObjects];
                         [self prepareDataSourceForTableView];
@@ -1351,95 +1356,99 @@
     }
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
-
-    alertController = [UIAlertController alertControllerWithTitle:transferMessage
-                                                          message:@""
-                                                   preferredStyle:UIAlertControllerStyleAlert];
-    actionDelete = [UIAlertAction actionWithTitle:@"Yes"
-                                            style:UIAlertActionStyleDefault
-                                          handler:^(UIAlertAction * action)
-                    {
-                        
-                        dispatch_async(dispatch_get_main_queue(), ^(void) {
-                        
-                        [self updateUIAfterMultipleFilesUploadClicked];
-
-                        NSMutableArray* aarayOfMarkedCopy=[[NSMutableArray alloc]init];
-                        for (int i=0; i<arrayOfMarked.count; i++)
+        
+        alertController = [UIAlertController alertControllerWithTitle:transferMessage
+                                                              message:@""
+                                                       preferredStyle:UIAlertControllerStyleAlert];
+        actionDelete = [UIAlertAction actionWithTitle:@"Yes"
+                                                style:UIAlertActionStyleDefault
+                                              handler:^(UIAlertAction * action)
                         {
-
-                            APIManager* app=[APIManager sharedManager];
-                            NSIndexPath* indexPath=[arrayOfMarked objectAtIndex:i];
-                            //[aarayOfMarkedCopy addObject:[arrayOfMarked objectAtIndex:i]];
-                            AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
-                            NSString* fileName = audioDetails.fileName;
                             
-                            NSString* transferStatus = audioDetails.uploadStatus;
-
-                            if ([transferStatus isEqualToString:@"Transfer Failed"])
-                            {
-                                int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:fileName];
+                            dispatch_async(dispatch_get_main_queue(), ^(void) {
                                 
-                                NSString* date=[app getDateAndTimeString];
+                                [self updateUIAfterMultipleFilesUploadClicked];
                                 
-                                [[Database shareddatabase] updateAudioFileUploadedStatus:@"ResendFailed" fileName:fileName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
-                            }
-                            
-                            [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:fileName];
-                            
-                        }
-                       
-                        [aarayOfMarkedCopy addObjectsFromArray:self.checkedIndexPath];
-                        
-                        [self clearSelectedArrays];
-                       
-                        [self prepareDataSourceForTableView]; // get the updated data(i.e. searched and long press uploaded) and after getting that data update predicate array with the updated data so when serach bar get clear "genericFilesArray" will get appropriate data
-                        
-                        self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:self.genericFilesArray];
-                            
-                        [self updateSerachBarManually]; // to update the search bar
-                       
-                        [self.tableView reloadData];
-              
-                        [self.searchController.searchBar becomeFirstResponder];
-                 
-                            
-//                            [self updateSerachBarManually];
-                        for (int i=0; i<aarayOfMarkedCopy.count; i++)
-                        {
-                             NSString* fileName=[aarayOfMarkedCopy objectAtIndex:i];
-                             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                                 
-                                APIManager* app=[APIManager sharedManager];
+                                NSMutableArray* aarayOfMarkedCopy=[[NSMutableArray alloc]init];
+                                for (int i=0; i<arrayOfMarked.count; i++)
+                                {
+                                    
+                                    APIManager* app=[APIManager sharedManager];
+                                    NSIndexPath* indexPath=[arrayOfMarked objectAtIndex:i];
+                                    //[aarayOfMarkedCopy addObject:[arrayOfMarked objectAtIndex:i]];
+                                    AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
+                                    NSString* fileName = audioDetails.fileName;
+                                    
+                                    NSString* transferStatus = audioDetails.uploadStatus;
+                                    
+                                    if ([transferStatus isEqualToString:@"Transfer Failed"])
+                                    {
+                                        int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:fileName];
+                                        
+                                        NSString* date=[app getDateAndTimeString];
+                                        
+                                        [[Database shareddatabase] updateAudioFileUploadedStatus:@"ResendFailed" fileName:fileName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
+                                    }
+                                    
+                                    [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:fileName];
+                                    
+                                }
                                 
-                                [app uploadFileToServer:fileName jobName:FILE_UPLOAD_API];
+                                [aarayOfMarkedCopy addObjectsFromArray:self.checkedIndexPath];
+                                
+                                [self clearSelectedArrays];
+                                
+                                [self prepareDataSourceForTableView]; // get the updated data(i.e. searched and long press uploaded) and after getting that data update predicate array with the updated data so when serach bar get clear "genericFilesArray" will get appropriate data
+                                
+                                self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:self.genericFilesArray];
+                                
+                                [self.tableView reloadData];
+                                
+                                if (![self.searchController.searchBar.text isEqualToString:@""])
+                                {
+                                    [self updateSerachBarManually]; // to update the search bar
+                                    
+                                    [self.searchController.searchBar becomeFirstResponder];
+                                    
+                                }
+                                
+                                
+                                //                            [self updateSerachBarManually];
+                                for (int i=0; i<aarayOfMarkedCopy.count; i++)
+                                {
+                                    NSString* fileName=[aarayOfMarkedCopy objectAtIndex:i];
+                                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                        
+                                        APIManager* app=[APIManager sharedManager];
+                                        
+                                        [app uploadFileToServer:fileName jobName:FILE_UPLOAD_API];
+                                        
+                                    });
+                                }
                                 
                             });
-                        }
-
-                             });
-                    }]; //You can use a block here to handle a press on this button
-    [alertController addAction:actionDelete];
-    
-    
-    actionCancel = [UIAlertAction actionWithTitle:@"No"
-                                            style:UIAlertActionStyleCancel
-                                          handler:^(UIAlertAction * action)
-                    {
-                        [alertController dismissViewControllerAnimated:YES completion:nil];
-
-                        [self updateUIAfterMultipleFilesUploadClicked];
-
-                        [self clearSelectedArrays];
-                        
-                        [self prepareDataSourceForTableView];
-                        [self.tableView reloadData];
-
-                    }]; //You can use a block here to handle a press on this button
-    [alertController addAction:actionCancel];
-    
-    searchBecomeResponsderFromUploadAlert = YES;
-    [self presentViewController:alertController animated:YES completion:nil];
+                        }]; //You can use a block here to handle a press on this button
+        [alertController addAction:actionDelete];
+        
+        
+        actionCancel = [UIAlertAction actionWithTitle:@"No"
+                                                style:UIAlertActionStyleCancel
+                                              handler:^(UIAlertAction * action)
+                        {
+                            [alertController dismissViewControllerAnimated:YES completion:nil];
+                            
+                            [self updateUIAfterMultipleFilesUploadClicked];
+                            
+                            [self clearSelectedArrays];
+                            
+                            [self prepareDataSourceForTableView];
+                            [self.tableView reloadData];
+                            
+                        }]; //You can use a block here to handle a press on this button
+        [alertController addAction:actionCancel];
+        
+        searchBecomeResponsderFromUploadAlert = YES;
+        [self presentViewController:alertController animated:YES completion:nil];
         
         
     }
@@ -1453,10 +1462,10 @@
         
         [self prepareDataSourceForTableView];
         [self.tableView reloadData];
-
+        
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
     }
-
+    
     
 }
 
@@ -1486,33 +1495,33 @@
         sender.title=@"Deselect all";
         [self.checkedIndexPath removeAllObjects];
         [arrayOfMarked removeAllObjects];
-//        APIManager* app=[APIManager sharedManager];
+        //        APIManager* app=[APIManager sharedManager];
         Database* db=[Database shareddatabase];
         
         if ([self.searchController.searchBar.text isEqualToString:@""])  // to avoid selection of other than search files
         {
             self.genericFilesArray = [db getListOfFileTransfersOfStatus:@"RecordingComplete"];
         }
-
+        
         for (NSInteger i = 0; i < self.genericFilesArray.count; ++i)
         {
-          NSIndexPath* indexPath= [NSIndexPath indexPathForRow:i inSection:0];
+            NSIndexPath* indexPath= [NSIndexPath indexPathForRow:i inSection:0];
             UITableViewCell* cell= [self.tableView cellForRowAtIndexPath:indexPath];
             AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:i];
             NSString* fileName = audioDetails.fileName;
-
-//            NSLog(@"filename = %@, dic status = %@",fileName, [awaitingFileTransferDict valueForKey:@"DictationStatus"]);
             
-           if (![audioDetails.dictationStatus isEqualToString:@"RecordingFileUpload"])
+            //            NSLog(@"filename = %@, dic status = %@",fileName, [awaitingFileTransferDict valueForKey:@"DictationStatus"]);
+            
+            if (![audioDetails.dictationStatus isEqualToString:@"RecordingFileUpload"])
             {
-
+                
                 [arrayOfMarked addObject:indexPath];
                 [cell setSelected:YES];
                 [self.checkedIndexPath addObject:fileName];
-
+                
             }
             selectedCountLabel.text=[NSString stringWithFormat:@"%ld",arrayOfMarked.count];
-
+            
         }
         
         if ([self.searchController.searchBar.text isEqualToString:@""])  // to avoid selection of other than search files
@@ -1534,16 +1543,16 @@
         [self.checkedIndexPath removeAllObjects];
         [arrayOfMarked removeAllObjects];
         selectedCountLabel.text=[NSString stringWithFormat:@"%ld",arrayOfMarked.count];
-
+        
         toolBarAdded=NO;
-//        [self prepareDataSourceForTableView];
+        //        [self prepareDataSourceForTableView];
         [self.tableView reloadData];
         
         
     }
-
     
-
+    
+    
 }
 
 - (void)myClassDelegateMethod:(AudioDetailsViewController *)sender
@@ -1552,7 +1561,7 @@
     [self.tableView reloadData];
     
     [self addEmptyVCToSplitVC];
-
+    
 }
 
 
@@ -1571,5 +1580,49 @@
  // Pass the selected object to the new view controller.
  }
  */
+
+- (void)encodeWithCoder:(nonnull NSCoder *)aCoder {
+    
+}
+
+- (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection {
+    
+}
+
+- (void)preferredContentSizeDidChangeForChildContentContainer:(nonnull id<UIContentContainer>)container {
+    
+}
+
+- (CGSize)sizeForChildContentContainer:(nonnull id<UIContentContainer>)container withParentContainerSize:(CGSize)parentSize {
+    return CGSizeMake(1, 1);
+}
+
+- (void)systemLayoutFittingSizeDidChangeForChildContentContainer:(nonnull id<UIContentContainer>)container {
+    
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(nonnull id<UIViewControllerTransitionCoordinator>)coordinator {
+    
+}
+
+- (void)willTransitionToTraitCollection:(nonnull UITraitCollection *)newCollection withTransitionCoordinator:(nonnull id<UIViewControllerTransitionCoordinator>)coordinator {
+    
+}
+
+- (void)didUpdateFocusInContext:(nonnull UIFocusUpdateContext *)context withAnimationCoordinator:(nonnull UIFocusAnimationCoordinator *)coordinator {
+    
+}
+
+- (void)setNeedsFocusUpdate {
+    
+}
+
+- (BOOL)shouldUpdateFocusInContext:(nonnull UIFocusUpdateContext *)context {
+    return true;
+}
+
+- (void)updateFocusIfNeeded {
+    
+}
 
 @end

@@ -40,9 +40,9 @@
      
     detailVC.delegate = self;
 
-    self.definesPresentationContext = true;
-    
-    self.extendedLayoutIncludesOpaqueBars = YES;
+//    self.definesPresentationContext = true;
+//
+//    self.extendedLayoutIncludesOpaqueBars = YES;
     
     [self setSearchController];
 
@@ -86,7 +86,7 @@
 
 -(void)setNavigationBar
 {
-    self.currentViewName = @"List";
+    self.currentViewName = @"File";
 
     [self.checkedIndexPath removeAllObjects];
     
@@ -495,7 +495,7 @@
     self.searchController.searchResultsUpdater = self;
     self.searchController.searchBar.delegate = self;
     //    self.tableView.tableHeaderView = self.searchController.searchBar;
-        self.navigationController.definesPresentationContext = YES;
+//        self.navigationController.definesPresentationContext = YES;
     self.searchController.obscuresBackgroundDuringPresentation = NO;
     self.searchController.hidesNavigationBarDuringPresentation=NO;
     //    self.navigationController.definesPresentationContext = YES;
@@ -710,16 +710,16 @@
     {
         dateAndTimeString = audioDetails.transferDate;
         dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
-        if (dateAndTimeArray.count>1)
-        timeLabel.text=[NSString stringWithFormat:@"Transferred %@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]]];
+        if (dateAndTimeArray.count>2)
+        timeLabel.text=[NSString stringWithFormat:@"Transferred %@ %@",[dateAndTimeArray objectAtIndex:1],[dateAndTimeArray objectAtIndex:2]];
 
     }
     else
     {
         dateAndTimeString = audioDetails.deleteDate;
         dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
-        if (dateAndTimeArray.count>1)
-            timeLabel.text=[NSString stringWithFormat:@"Deleted %@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]]];
+        if (dateAndTimeArray.count>2)
+            timeLabel.text = [NSString stringWithFormat:@"Deleted %@ %@",[dateAndTimeArray objectAtIndex:1],[dateAndTimeArray objectAtIndex:2]];
 
     }
 
@@ -729,7 +729,7 @@
     int audioMinutes = audioHourByMod / 60;
     int audioSeconds = audioHourByMod % 60;
     
-    durationLabel.text=[NSString stringWithFormat:@"%02d:%02d:%02d",audioHour,audioMinutes,audioSeconds];
+    durationLabel.text=[NSString stringWithFormat:@"(%02d:%02d:%02d)",audioHour,audioMinutes,audioSeconds];
     //timeLabel.text=[NSString stringWithFormat:@"%@",@"Transferred 12:18:00 PM"];
 
     transferByLabel.text = audioDetails.department;

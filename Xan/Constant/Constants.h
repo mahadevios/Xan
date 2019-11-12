@@ -9,6 +9,36 @@
 #ifndef Header_h
 #define Header_h
 
+
+//#define  BASE_URL_PATH                        @"http://192.168.3.81:8089/xan-dictate"
+//#define  BASE_URL_PATH                        @"http://192.168.3.79:8089/xan-dictate"
+//#define  BASE_URL_PATH_LOCAL                    @"http://192.168.3.79:8089/xan-dictate"
+
+//#define  BASE_URL_PATH                        @"http://192.168.2.9:8089/xan-dictate"
+#define  BASE_URL_PATH                          @"http://192.168.3.81:8089/xan-dictate"
+//#define  BASE_URL_PATH_LOCAL                    @"http://192.168.3.81:8089/xan-dictate"
+
+
+#define  FILE_UPLOAD_API                        @"mobileUploadAudio"
+
+//#define  BASE_URL_PATH_LOCAL                    @"http://192.168.3.80:8080/payU/fileOps"
+//#define  FILE_UPLOAD_API                        @"uploadAudio"
+
+
+
+
+#define  CHECK_DEVICE_REGISTRATION_API        @"verifyDeviceRegistration"
+#define  CHECK_USER_REGISTRATION_API          @"validateUser"
+#define  GENERATE_DEVICE_TOKEN                @"token/generate-device-token"
+#define  ACCEPT_PIN_API                       @"devicePinRegistration"
+#define  ACCEPY_TandC_API                     @"acceptTandC"
+#define  VALIDATE_PIN_API                     @"devicePinLogin"
+#define  FORGOT_PIN_API                       @"forgotPin"
+#define  PIN_CANGE_API                        @"resetDevicePin"
+#define  TEST_API                             @"check"
+#define  TEMPLATE_LIST_API                    @"getTemplateByDevicePractitioner"
+
+
 //#define  BASE_URL_PATH                        @"http://www.xanadutec.net/cubeagent_webapi/api"
 //
 //#define  BASE_URL_PATH                        @"http://192.168.3.150:8081/CubeAPI/api"
@@ -22,28 +52,33 @@
 //#define  PIN_CANGE_API                        @"MobilePINChange"
 
 //#define  BASE_URL_PATH                        @"http://www.xanadutec.net/cubeagent_webapi/api"
-#define  BASE_URL_PATH                        @"https://www.cubescribe.com/cubeagent_webapi/api"
-
+//#define  BASE_URL_PATH                        @"https://www.cubescribe.com/cubeagent_webapi/api"
 
 //#define  BASE_URL_PATH                        @"http://192.168.3.156:8081/CubeAPI/api"
-#define  CHECK_DEVICE_REGISTRATION            @"encrdecr_MobileCheckDeviceRegistration"
+//#define  CHECK_DEVICE_REGISTRATION            @"encrdecr_MobileCheckDeviceRegistration"
 #define  AUTHENTICATE_API                     @"encrdecr_MobileAuthenticate"
-#define  ACCEPT_PIN_API                       @"encrdecr_MobileAcceptPIN"
-#define  VALIDATE_PIN_API                     @"encrdecr_MobileValidatePIN"
-//#define  DICTATIONS_INSERT_API                @"encrdecr_MobileDictationsInsert"
-//#define  DATA_SYNCHRONISATION_API             @"encrdecr_MobileDataSynchronisation"
+//#define  ACCEPT_PIN_API                       @"encrdecr_MobileAcceptPIN"
+//#define  VALIDATE_PIN_API                     @"encrdecr_MobileValidatePIN"
 //#define  FILE_UPLOAD_API                      @"encrdecr_MobileFileUpload"
-#define  FILE_UPLOAD_API                      @"encrdecr_MobileFileUpload"
-
-#define  PIN_CANGE_API                        @"encrdecr_MobilePINChange"
+//#define  PIN_CANGE_API                        @"encrdecr_MobilePINChange"
 #define  FILE_DOWNLOAD_API                    @"encedecr_MobileDownloadDocFile"
 #define  SEND_DICTATION_IDS_API               @"encrdecr_MobileRequestForCompleteFiles"
 #define  SEND_COMMENT_API                     @"encdecr_MobileDocFileComment"
-#define  DOCX_FILE_UPLOAD_API                  @"encedecr_MobileUploadDocFile"
-#define  ACCEPY_TandC_API                  @"encedecr_MobileTermsAndConditions"
+#define  DOCX_FILE_UPLOAD_API                 @"encedecr_MobileUploadDocFile"
 
 
-#define  SECRET_KEY                           @"cubemob"
+
+
+#define  SECRET_KEY                           @"an@%c*(a&ax/e!*6"
+#define  IV                                   @"t6*a$d)e&1@c*!ex"
+#define  CONTENT_TYPE_JSON                    @"JSON"
+
+//#define  IV                                   @"abcdefghijklmn8p"
+//#define  IV                                   @"90Ji0arv0fkpeCwH"
+
+
+//#define  SECRET_KEY                           @"d00529f30eb8325a64522b87dd372964"
+
 #define  POST                           @"POST"
 #define  GET                            @"GET"
 #define  PUT                            @"PUT"
@@ -54,6 +89,10 @@
 
 
 //NSNOTIFICATION
+#define NOTIFICATION_CHECK_USER_REGISTRATION            @"notificationCheckUserRegistration"
+#define NOTIFICATION_GENERATE_DEVICE_TOKEN              @"notificationGenerateDeviceToken"
+
+
 
 #define NOTIFICATION_CHECK_DEVICE_REGISTRATION      @"notificationForMobileCheckDeviceRegistration"
 #define NOTIFICATION_AUTHENTICATE_API               @"notificationForMobileAuthenticate"
@@ -65,6 +104,7 @@
 #define NOTIFICATION_FILE_DOWNLOAD_API              @"notificationForMobileFileDownload"
 #define NOTIFICATION_SEND_DICTATION_IDS_API         @"notificationSendDictationIds"
 #define NOTIFICATION_ACCEPT_TANDC_API               @"notificationAcceptTandC"
+#define NOTIFICATION_TEMPLATE_LIST_API              @"notificationTemplateList"
 
 #define NOTIFICATION_PIN_CANGE_API                  @"notificationForMobilePINChange"
 #define NOTIFICATION_PAUSE_RECORDING                @"pauseRecording"
@@ -99,18 +139,15 @@
 #define PAUSE_STOP_MESSAGE                     @"Recording is on.Please pause/stop the recording"
 #define MAXIMUM_RECORDING_LIMIT_MESSAGE        @"Recording duration length exceeded,please start new recording for further dictation"
 #define RECORDING_SAVED_MESSAGE                @"Recording duration length exceeded,your recording has been saved in awaiting transfer,please start new recording for further dictation"
+#define NO_INTERNET_TITLE_MESSAGE              @"No Internet Connection!"
+#define NO_INTERNET_DETAIL_MESSAGE             @"Please check your internet connection and try again."
 
-#define NO_INTERNET_TITLE_MESSAGE               @"No Internet Connection!"
-#define NO_INTERNET_DETAIL_MESSAGE              @"Please check your internet connection and try again."
+
 #define CURRENT_VESRION                        @"currentVersion"
 #define IS_DATE_FORMAT_UPDATED                 @"dateFormatUpdated"
-
 #define RECORDING_LIMIT                        3600
 #define ALERT_TAB_LOCATION                     3
 #define PURGE_DATA_DATE                        @"purgeDataDate"
-//#define APPLICATION_TERMINATE_CALLED           @"applicationTerminate"
-
-
 #define INCOMPLETE_TRANSFER_COUNT_BADGE        @"Incomplete Count"
 #define SELECTED_DEPARTMENT_NAME               @"Selected Department"
 #define SELECTED_DEPARTMENT_NAME_COPY          @"Selected Department Copy"
@@ -118,26 +155,18 @@
 #define DOCX_FILES_FOLDER_NAME                 @"Downloads"
 #define DOC_VRS_FILES_FOLDER_NAME              @"VRSDOC files"
 #define DOC_VRS_TEXT_FILES_FOLDER_NAME         @"VRSAudio files"
-
-#define USER_PIN         @"userPIN"
-#define USER_ID         @"userId"
-#define USER_PASS         @"userPassword"
-
-//#define DATE_TIME_FORMAT                       @"MM-dd-yyyy HH:mm:ss"
+#define USER_PIN                               @"userPIN"
+#define USER_ID                                @"userId"
+#define USER_PASS                              @"userPassword"
 #define DATE_TIME_FORMAT                       @"yyyy-MM-dd HH:mm:ss"
-
 #define RESPONSE_CODE                          @"code"
-#define RESPONSE_PIN_VERIFY                    @"pinverify"
-#define RESPONSE_TC_FLAG                    @"AcceptTermFlag"
-#define RESPONSE_MESSAGE                          @"responseMessage"
-
-
-
+#define RESPONSE_PIN_VERIFY                    @"pinVerify"
+#define RESPONSE_TC_FLAG                       @"tcFl"
+#define RESPONSE_MESSAGE                       @"responseMessage"
 #define SHARED_GROUP_IDENTIFIER                @"group.com.coreflexSolutions.Xan"
-//#define MAC_ID                                 @"e0:2c:b2:eb:5a:8e"
-//#define MAC_ID                                 @"e0:2c:b2:ec:5a:8e"
 
-//#define MAC_ID                                 @"e0:2c:b2:ec:5a:8f"
+
+#define JWT_TOKEN                              @"jwtToken"
 
 typedef enum
 {

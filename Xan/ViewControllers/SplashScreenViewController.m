@@ -23,15 +23,10 @@
 @implementation SplashScreenViewController
 @synthesize hud;
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    //    [[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
-    
    
-
-    
 }
 
 
@@ -83,6 +78,7 @@
 
     }
     
+     [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"]; // for offline record- user pressed stop - net on - upload later - it comes to this view and not recordtabVC - hence need to set dismiss no for subsequent use
 
 }
 
@@ -95,6 +91,7 @@
     {
         if (!APIcalled)
         {
+//            [[APIManager sharedManager] testFileName:@"sampleFileName"];
             
             [[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
             APIcalled=true;
@@ -102,12 +99,8 @@
     }
     else
     {
-//        UIView* view=[[[UIApplication sharedApplication] keyWindow] viewWithTag:222];
-//        UIView* popupView= [view viewWithTag:223];
-//        UIButton* retryButton= [popupView viewWithTag:225];
-//        [retryButton setEnabled:YES];
+
         [self addAlertView];
-//        [retryButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 
     }
     
@@ -159,21 +152,16 @@
        [retryButton setTitleColor:[UIColor colorWithRed:17/255.0 green:146/255.0 blue:(CGFloat)78/255.0 alpha:1] forState:UIControlStateNormal];
         
     }
-   
-   
-        
-    
+
 }
 -(void)refresh:(UIButton*)sender
 {
-    //sender.userInteractionEnabled=NO;
+    
     [sender setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     
      [sender setEnabled:NO];
-   // NSString*     macId=[Keychain getStringForKey:@"udid"];
 
     [self performSelector:@selector(checkDeviceRegistration) withObject:nil afterDelay:0.1];
-    //[[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
     
 }
 
@@ -194,7 +182,10 @@
         if (!APIcalled)
         {
 
+//            [[APIManager sharedManager] testFileName:@"sampleFileName"];
+
             [[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
+
             APIcalled=true;
 
         }
@@ -291,7 +282,7 @@
                             
                             LoginViewController *viewController = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
                             
-                            LoginViewController *viewController1 = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+//                            LoginViewController *viewController1 = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
 
                             [self presentViewController:viewController animated:NO completion:NULL];
 //                            [self performSegueWithIdentifier:@"SPToPINLogin" sender:nil];

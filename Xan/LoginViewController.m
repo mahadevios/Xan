@@ -47,6 +47,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [pinCode1TextField becomeFirstResponder];
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -71,7 +73,7 @@
     //    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"System-Bold" size:20]}];
     //
     //@{NSForegroundColorAttributeName:[UIColor orangeColor]}
-    [pinCode1TextField becomeFirstResponder];
+//    [pinCode1TextField becomeFirstResponder];
     pinCode1TextField.delegate=self;
     pinCode2TextField.delegate=self;
     pinCode3TextField.delegate=self;
@@ -101,7 +103,10 @@
                                              selector:@selector(validatePinResponseCheck:) name:NOTIFICATION_VALIDATE_PIN_API
                                                object:nil];
     
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(generateTokenResponseCheck:) name:NOTIFICATION_GENERATE_DEVICE_TOKEN
+                                               object:nil];
+
     
 }
 
@@ -110,6 +115,34 @@
     [pinCode4TextField resignFirstResponder];
     [pinCode1TextField resignFirstResponder];
 
+}
+
+-(void)generateTokenResponseCheck:(NSNotification* )dictObj
+{
+    NSDictionary* dict=dictObj.object;
+    
+    NSString* responseTokenString=  [dict valueForKey:@"token"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:responseTokenString forKey:JWT_TOKEN];
+    
+    [hud hideAnimated:YES];
+    
+//    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+//    PinRegistrationViewController* regiController = (PinRegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"PinRegistrationViewController"];
+    
+//    [passwordTextfield resignFirstResponder];
+    
+//    [self presentViewController:regiController animated:NO completion:nil];
+    
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"])
+    {
+        [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"] animated:NO completion:nil];
+    }
+    else
+        [self dismissViewControllerAnimated:NO completion:nil];
+    
 }
 //-(void)validatePinResponseCheck:(NSNotification*)dictObj;
 //{
@@ -206,7 +239,7 @@
     
     NSString* responseCodeString=  [responseDict valueForKey:RESPONSE_CODE];
     
-    NSString* responsePinString=  [responseDict valueForKey:@"pinvalidflag"];
+    NSString* responsePinString=  [responseDict valueForKey:@"pinValidateFl"];
     
     if ([responseCodeString intValue] == 2001 || [responseCodeString intValue] == -1001)
     {
@@ -242,7 +275,7 @@
         [[NSUserDefaults standardUserDefaults] setValue:pin forKey:USER_PIN];
 
         
-        NSArray* departmentArray=  [responseDict valueForKey:@"DepartmentList"];
+        NSArray* departmentArray=  [responseDict valueForKey:@"deptList"];
         
         NSMutableArray* deptForDatabaseArray=[[NSMutableArray alloc]init];
         
@@ -252,9 +285,9 @@
             
             NSDictionary* deptDict= [departmentArray objectAtIndex:i];
             
-            deptObj.Id= [[deptDict valueForKey:@"ID"]longLongValue];
+            deptObj.Id = [deptDict valueForKey:@"departmentCode"];
             
-            deptObj.departmentName=[deptDict valueForKey:@"DeptName"];
+            deptObj.departmentName=[deptDict valueForKey:@"departmentName"];
             
             [deptForDatabaseArray addObject:deptObj];
         }
@@ -264,8 +297,12 @@
         [db insertDepartMentData:deptForDatabaseArray];
        
         //get user firstname,lastname and userId for file prefix
-        NSString* fileNamePrefix = [responseDict valueForKey:@"FileNamePrefix"];
+        NSString* fileNamePrefix = [responseDict valueForKey:@"fileNamePrefix"];
         
+        NSString* dictatorName = [responseDict valueForKey:@"dictatorName"];
+
+        [[NSUserDefaults standardUserDefaults] setValue:dictatorName forKey:@"DictatorName"];
+
         [[NSUserDefaults standardUserDefaults] setValue:fileNamePrefix forKey:@"FileNamePrefix"];
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -276,26 +313,16 @@
 
         });
         
-//        [self dismissViewControllerAnimated:NO completion:nil];
-        
-        
-//        MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
-//        
-//        [[UIApplication sharedApplication] keyWindow].rootViewController = nil;
-//        
-//        [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
-        
-        
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"])
-        {
-            [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"] animated:NO completion:nil];
+        NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
+        [[APIManager sharedManager] generateDeviceToken:macId];
 //
-//            [self performSegueWithIdentifier:@"PINLoginToDept" sender:nil];
-
-            
-        }
-        else
-            [self dismissViewControllerAnimated:NO completion:nil];
+//        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"])
+//        {
+//            [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"] animated:NO completion:nil];
+//
+//        }
+//        else
+//            [self dismissViewControllerAnimated:NO completion:nil];
         
     }
     
@@ -522,6 +549,9 @@
                 
                 [[NSUserDefaults standardUserDefaults] setValue:macId forKey:@"MacId"];
                 
+                [pinCode1TextField resignFirstResponder];
+                [pinCode2TextField resignFirstResponder];
+                [pinCode3TextField resignFirstResponder];
                 [pinCode4TextField resignFirstResponder];
                 
                 [[APIManager sharedManager] validatePinMacID:macId Pin:pin];

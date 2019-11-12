@@ -249,6 +249,8 @@
     
     transcriptionStatusLabel.text = @"Go ahead, I'm listening!";
     
+    transcriptionStatusLabel.textColor = [UIColor whiteColor];
+    
     timerLabel.text = @"00:59";
 
     [self.previousTranscriptedArray removeAllObjects]; // remove  prev. trans. text
@@ -298,6 +300,7 @@
     
     transcriptionStatusLabel.textAlignment = NSTextAlignmentCenter;
     
+    transcriptionStatusLabel.textColor = [UIColor whiteColor];
 //    timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusLabel.frame.origin.x, transcriptionStatusLabel.frame.origin.y+transcriptionStatusLabel.frame.size.height, transcriptionStatusLabel.frame.size.width, 50)];
 
     timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusLabel.frame.origin.x, 30, transcriptionStatusLabel.frame.size.width, 20)];
@@ -306,6 +309,8 @@
     timerLabel.font = [UIFont systemFontOfSize:15];
 
     timerLabel.textAlignment = NSTextAlignmentCenter;
+    
+    timerLabel.textColor = [UIColor whiteColor];
     
     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
     {
@@ -317,9 +322,9 @@
         
         self.startPauseDocBGView.layer.cornerRadius = 4.0;
         
-        transcriptionStatusLabel.textColor = [UIColor lightGrayColor];
+        transcriptionStatusLabel.textColor = [UIColor whiteColor];
         
-        timerLabel.textColor = [UIColor darkGrayColor];
+        timerLabel.textColor = [UIColor whiteColor];
         
         transcriptionStatusLabel.font = [UIFont systemFontOfSize:21];
 

@@ -11,6 +11,8 @@
 #import "AudioSessionManager.h"
 #import "PopUpCustomView.h"
 #import "AudioDetails.h"
+#import "InCompleteRecordViewController.h"
+#import "MKDropdownMenu.h"
 
 @class AudioDetailsViewController;             //define class, so protocol can see MyClass
 @protocol MyClassDelegate <NSObject>   //define delegate protocol
@@ -18,7 +20,7 @@
 - (void) myClassDelegateMethod: (AudioDetailsViewController *) sender;  //define delegate method to be implemented within another class
 @end //end protocol
 
-@interface AudioDetailsViewController : UIViewController<AVAudioPlayerDelegate,UIGestureRecognizerDelegate>
+@interface AudioDetailsViewController : UIViewController<AVAudioPlayerDelegate,UIGestureRecognizerDelegate,UpdateModifiedData,MKDropdownMenuDelegate,MKDropdownMenuDataSource>
 {
     NSDictionary* result;
     UIAlertController *alertController;
@@ -37,6 +39,12 @@
     NSArray* departmentNamesArray;
     UITapGestureRecognizer* tap;
     BOOL isDeleteEditTransferButtonsRemovedAfterTransfer;
+    
+    MKDropdownMenu *templateNamesDropdownMenu;
+    
+    NSMutableArray* templateNamesArray;
+    
+    NSString* selectedTemplateName;
 }
 @property(nonatomic)long selectedRow;
 @property(nonatomic,strong)NSString* selectedView;
@@ -53,11 +61,16 @@
 
 - (IBAction)moreButtonClicked:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UILabel *dictatedByLabel;
 
 - (IBAction)editRecordingButtonPressed:(id)sender;
 
 - (IBAction)backButtonPressed:(id)sender;
 - (IBAction)deleteDictation:(id)sender;
 - (IBAction)playRecordingButtonPressed:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *transferDateTitleLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *transferButtonYConstraint;
+@property (weak, nonatomic) IBOutlet UIView *mkDropdwonRefView;
+
 - (IBAction)transferDictationButtonClicked:(id)sender;
 @end

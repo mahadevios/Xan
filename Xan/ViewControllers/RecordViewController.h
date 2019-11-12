@@ -17,21 +17,24 @@
 #import "APIManager.h"
 #import "AppPreferences.h"
 #import "Constants.h"
+#import "MKDropdownMenu.h"
+
 // helpers
 //#include "CAXException.h"
 //#include "CAStreamBasicDescription.h"
 //#include "ExtAudioFileConvert.mm"
 
-@interface RecordViewController : UIViewController<UIGestureRecognizerDelegate,AVAudioPlayerDelegate>
+@interface RecordViewController : UIViewController<UIGestureRecognizerDelegate,AVAudioPlayerDelegate,MKDropdownMenuDelegate,MKDropdownMenuDataSource>
 {
     Database* db;
     APIManager* app;
+    PopUpCustomView* forTableViewObj;
     
     UITapGestureRecognizer* tap;
     
     UIView* popupView;
     UIView* editPopUp;
-    PopUpCustomView* forTableViewObj;
+    
     
     UITableViewCell *cell;
     NSArray* departmentNamesArray;
@@ -77,8 +80,8 @@
     BOOL recordingNew;
     BOOL edited;
     BOOL isViewSetUpWhenFirstAppear;
-    UIBackgroundTaskIdentifier task;
     
+    UIBackgroundTaskIdentifier task;
     
     NSString* recordedAudioFileName;
     
@@ -92,7 +95,7 @@
     
     BOOL recordingRestrictionLimitCrossed;
     
-    long totalSecondsOfAudio;
+//    long totalSecondsOfAudio;
     
     float updatedInsertionTime;
     
@@ -100,7 +103,12 @@
     
     NSString* existingDepartmentName;
     
-    bool recordingSavedToDatabaseFromBG;
+    MKDropdownMenu *templateNamesDropdownMenu;
+    
+    NSMutableArray* templateNamesArray;
+    
+    NSString* selectedTemplateName;
+//    bool recordingSavedToDatabaseFromBG;
 
 }
 @property (nonatomic,strong)     AVAudioPlayer       *player;

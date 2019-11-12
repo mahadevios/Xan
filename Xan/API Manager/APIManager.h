@@ -48,15 +48,23 @@
 
 //-(void) validateUser:(NSString *) usernameString Password:(NSString *) passwordString andDeviceId:(NSString*)DeviceId;
 
--(void) checkDeviceRegistrationMacID:(NSString*) macID;
+//-(void) checkDeviceRegistrationMacID:(NSString*) macID;
 
+-(void) testFileName:(NSString*)fileName;
+
+-(void) checkDeviceRegistrationMacID:(NSString*)macID;
 //-(void) checkDeviceRegistrationMacIDEncr:(NSData*) macID;
+
+-(void) generateDeviceToken:(NSString*)macId;
+
 
 -(void) authenticateUserMacID:(NSString*) macID password:(NSString*) password username:(NSString* )username;
 
 -(void) acceptPinMacID:(NSString*) macID Pin:(NSString*)pin;
 
 -(void) validatePinMacID:(NSString*) macID Pin:(NSString*)pin;
+
+-(void)getTemplateByUserCode:(NSString*)macID;
 
 -(void)mobileDictationsInsertMobileStatus:(NSString* )mobilestatus OriginalFileName:(NSString*)OriginalFileName andMacID:(NSString*)macID;
 

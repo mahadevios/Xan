@@ -14,8 +14,17 @@
 #import "Database.h"
 #import "APIManager.h"
 #import "Constants.h"
+#import "MKDropdownMenu.h"
 
-@interface InCompleteRecordViewController : UIViewController<UIGestureRecognizerDelegate,AVAudioPlayerDelegate>
+@class InCompleteRecordViewController;
+@protocol UpdateModifiedData <NSObject>
+
+-(void) updateData:(NSDictionary*) delegateDict; // we can also pass incompleterecordviewcontrollers object
+
+@end
+
+
+@interface InCompleteRecordViewController : UIViewController<UIGestureRecognizerDelegate,AVAudioPlayerDelegate,MKDropdownMenuDelegate,MKDropdownMenuDataSource>
 
 {
     int i;
@@ -83,6 +92,12 @@
     float_t updatedInsertionTime;
     
     float playerDurationWithMilliSeconds;
+    
+    MKDropdownMenu *templateNamesDropdownMenu;
+    
+    NSMutableArray* templateNamesArray;
+    
+    NSString* selectedTemplateName;
 //    UIButton* uploadLaterButton;
 //    UIButton* recordNewButton;
 //    UIView* animatedView;
@@ -92,6 +107,7 @@
 @property (nonatomic,strong)     NSString            *recordedAudioFileName;
 @property (nonatomic,strong)     NSString            *existingAudioFileName;//for use of prev controller
 @property (nonatomic)     NSString            *existingAudioDepartmentName;//for use of prev controller
+@property (nonatomic)     NSString            *existingAudioTemplateName;//for use of prev controller
 @property (nonatomic)     NSString            *existingAudioDate;//for use of prev controller
 @property (nonatomic)     int            audioDurationInSeconds;
 @property (nonatomic,strong)     NSURL               *recordedAudioURL;
@@ -107,6 +123,7 @@
 @property(nonatomic) NSString* audioDuration;
 @property (strong, nonatomic) MBProgressHUD *hud;
 @property (strong, nonatomic) MBProgressHUD *hud1;
+@property (nonatomic, weak) id <UpdateModifiedData> delegate;
 
 - (IBAction)deleteButtonPressed:(id)sender;
 

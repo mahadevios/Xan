@@ -65,7 +65,7 @@
     
     [hud hideAnimated:YES];
 
-    if ([responseCodeString intValue]==1)
+    if ([responseCodeString intValue]==200)
     {
         
          [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"] animated:NO completion:nil];

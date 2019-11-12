@@ -34,6 +34,15 @@
     departmentNameArray = [[Database shareddatabase] getDepartMentObjList];
     [self setSearchController];
     [self prepareForSearchBar];
+//    self.definesPresentationContext = true;
+//    
+//    self.extendedLayoutIncludesOpaqueBars = YES;
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+//    [self setRootView];
 }
 
 #pragma mark: Serach Controller Methods and Delegates
@@ -114,10 +123,12 @@
 }
 - (void)tableView:(UITableView *)tableview didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.view endEditing:YES];
+//    [self.view endEditing:YES];
+    
+  
     
     UITableViewCell* cell = [tableview cellForRowAtIndexPath:indexPath];
-    UILabel* departmentNameLabel = [cell viewWithTag:101];
+//    UILabel* departmentNameLabel = [cell viewWithTag:101];
   
    
     
@@ -134,31 +145,43 @@
 
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isLoadedFirstTime"];
     
+    [self setRootView];
+}
+
+-(void)setRootView
+{
     MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
-    
     
     [[Database shareddatabase] setDepartment];//to insert default department for imported files
     
-//    [[[self presentingViewController] presentingViewController] dismissViewControllerAnimated:true completion:nil];
+//    self.searchController.active = NO;
 //
-//    [[self presentingViewController] dismissViewControllerAnimated:true completion:nil];
-//
-//    [self dismissViewControllerAnimated:true completion:nil];
+//    self.searchController.active = NO;
+//    [self searchBarSearchButtonClicked:self.searchController.searchBar];
 
+//    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+
+   
+//    [self.searchController dismissViewControllerAnimated:true completion:nil];
+//    [self.searchController removeFromParentViewController];
+//    [self.serachBarBGView removeFromSuperview];
+    
+//    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//    self.definesPresentationContext = true;
+    
+    [self dismissViewControllerAnimated:true completion:nil];
+
+    [[self presentingViewController] dismissViewControllerAnimated:true completion:nil];
+    
+// [appDelegate.window makeKeyWindow];
+//    UIWindow* winow = [[UIApplication sharedApplication] keyWindow];
     [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
+    
+    [self.searchController.searchBar resignFirstResponder];
 
-    UIViewController *presentingVC = self.presentingViewController;
     
-    while (presentingVC.presentingViewController)
-    {
-        presentingVC = presentingVC.presentingViewController;
-    }
-    
-    [presentingVC dismissViewControllerAnimated:YES completion:NULL];
-//    [self.presentingViewController.presentingViewController.presentingViewController dismissViewControllerAnimated:false completion:nil]; 
-    //
+
 }
-
 - (void) checkAndDismissViewController
 {
     [self.view endEditing:YES];

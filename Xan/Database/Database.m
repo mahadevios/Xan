@@ -56,7 +56,7 @@ static Database *db;
         
 //        NSString *query3=[NSString stringWithFormat:@"INSERT INTO DepartMentList values(\"%ld\",\"%@\") Where UserId = %@",deptObj.Id,deptObj.departmentName];
 
-        NSString *query3=[NSString stringWithFormat:@"INSERT INTO DepartMentList values(\"%ld\",\"%@\")",deptObj.Id,deptObj.departmentName];
+        NSString *query3=[NSString stringWithFormat:@"INSERT OR REPLACE INTO DepartMentList values(\"%@\",\"%@\")",deptObj.Id,deptObj.departmentName];
         
         Database *db=[Database shareddatabase];
         NSString *dbPath=[db getDatabasePath];
@@ -76,12 +76,12 @@ static Database *db;
             }
             else
             {
-               // NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+                NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
             }
         }
         else
         {
-            //NSLog(@"errormsg=%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+            NSLog(@"errormsg=%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
         }
         
         if (sqlite3_finalize(statement) == SQLITE_OK)
@@ -107,6 +107,138 @@ static Database *db;
     
     
     }
+
+-(void)insertTemplateListData:(Template*)templateObj
+{
+//    for (int i=0; i<templateArray.count; i++)
+//    {
+//        Template* tempObj= [templateArray objectAtIndex:i];
+    
+        //        NSString *query3=[NSString stringWithFormat:@"INSERT INTO DepartMentList values(\"%ld\",\"%@\") Where UserId = %@",deptObj.Id,deptObj.departmentName];
+        
+        NSString *query3=[NSString stringWithFormat:@"INSERT OR REPLACE INTO TemplateList values(\"%@\",\"%@\",\"%@\")",templateObj.templateId,templateObj.templateName, templateObj.departmentId];
+        
+        Database *db=[Database shareddatabase];
+        NSString *dbPath=[db getDatabasePath];
+        sqlite3_stmt *statement;
+        sqlite3* feedbackAndQueryTypesDB;
+        
+        
+        const char * queryi3=[query3 UTF8String];
+        if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB)==SQLITE_OK)
+        {
+            sqlite3_prepare_v2(feedbackAndQueryTypesDB, queryi3, -1, &statement, NULL);
+            if(sqlite3_step(statement)==SQLITE_DONE)
+            {
+                // NSLog(@"report data inserted");
+                // NSLog(@"%@",NSHomeDirectory());
+                sqlite3_reset(statement);
+            }
+            else
+            {
+                // NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+            }
+        }
+        else
+        {
+            //NSLog(@"errormsg=%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+        }
+        
+        if (sqlite3_finalize(statement) == SQLITE_OK)
+        {
+            //NSLog(@"statement is finalized");
+        }
+        else
+            // NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+            
+            
+            if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
+            {
+                //NSLog(@"db is closed");
+            }
+            else
+            {
+                //NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+            }
+        
+        
+//    }
+    
+    
+    
+}
+
+
+-(NSMutableArray*)getTemplateListfromDeptName:(NSString*)deptId
+{
+    Database *db=[Database shareddatabase];
+    NSString *dbPath=[db getDatabasePath];
+    sqlite3_stmt *statement;
+    sqlite3* feedbackAndQueryTypesDB;
+    NSMutableArray* templateArray=[[NSMutableArray alloc]init];
+    //    NSString *query3=[NSString stringWithFormat:@"Select DepartMentName from DepartMentList Where UserId=%d"];
+    
+//    Template* obj=[[Template alloc]init];
+//
+//    obj.templateId = @"-1";
+//
+//    obj.templateName = @"Select Template";
+//
+//    obj.departmentId = @"-1";
+    
+//    [templateArray addObject:obj];
+    
+    NSString *query3=[NSString stringWithFormat:@"Select * from TemplateList where DepartmentId = '%@'", deptId];
+    
+    if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
+    {
+        if (sqlite3_prepare_v2(feedbackAndQueryTypesDB, [query3 UTF8String], -1, &statement, NULL) == SQLITE_OK)// 2. Prepare the query
+        {
+            while (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                Template* obj=[[Template alloc]init];
+                
+                obj.templateId=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+                
+                obj.templateName=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 1)];
+                
+                obj.departmentId=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
+
+                [templateArray addObject:obj];
+            }
+        }
+        else
+        {
+            NSLog(@"Can't preapre query due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+        }
+    }
+    else
+    {
+//        NSLog(@"can't open db due error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    if (sqlite3_finalize(statement) == SQLITE_OK)
+    {
+        //NSLog(@"statement is finalized");
+    }
+    else
+    {
+    }
+    //NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    
+    
+    if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
+    {
+        //NSLog(@"db is closed");
+    }
+    else
+    {
+        //NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    
+    return templateArray;
+}
 
 -(void)insertTaskIdentifier:(NSString*)taskIdentifier fileName:(NSString*)fileName
 {
@@ -383,8 +515,10 @@ static Database *db;
                 DepartMent* obj=[[DepartMent alloc]init];
 
                 // [app.feedOrQueryDetailMessageArray addObject:[NSString stringWithUTF8String:message]];
-                obj.Id=sqlite3_column_int(statement, 0);
+//                obj.Id=sqlite3_column_int(statement, 0);
                 
+                obj.Id=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+
                 obj.departmentName=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 1)];
                 
                 [departmentNameArray addObject:obj];
@@ -499,7 +633,9 @@ static Database *db;
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
                 // [app.feedOrQueryDetailMessageArray addObject:[NSString stringWithUTF8String:message]];
-                obj.Id=sqlite3_column_int(statement, 0);
+//                obj.Id=sqlite3_column_int(statement, 0);
+
+                obj.Id=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
 
                 obj.departmentName=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 1)];
                 
@@ -723,10 +859,10 @@ static Database *db;
   
     Database *db=[Database shareddatabase];
     NSString *dbPath=[db getDatabasePath];
-    sqlite3_stmt *statement,*statement1,*statement2,*statement3,*statement4;
+    sqlite3_stmt *statement,*statement1,*statement2,*statement3,*statement4,*statement5;
     sqlite3* feedbackAndQueryTypesDB;
     NSMutableArray* listArray=[[NSMutableArray alloc]init];
-    NSString* RecordItemName,*RecordCreatedDate,*Department,*TransferStatus,*CurrentDuration,*transferDate,*deleteStatus,*dictationStatus;
+    NSString* RecordItemName,*RecordCreatedDate,*Department,*TransferStatus,*CurrentDuration,*transferDate,*deleteStatus,*dictationStatus,*templateId;
     NSString *query3;
     NSString* dateAndTimeString= [[APIManager sharedManager] getDateAndTimeString];
     NSArray* dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
@@ -735,7 +871,7 @@ static Database *db;
 
     if ([status isEqualToString:@"Transferred"]) // like is for todays transfer
     {
-               query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where (TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') and TransferDate LIKE '%@%%') order by TransferDate desc",status,dateAndTimeString];
+               query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus,TemplateId from CubeData Where (TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') and TransferDate LIKE '%@%%') order by TransferDate desc",status,dateAndTimeString];
 //         query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where (TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') and TransferDate LIKE '%@%%') order by TransferDate desc",status,dateAndTimeString];
 
     }
@@ -744,20 +880,20 @@ static Database *db;
         if ([status isEqualToString:@"RecordingComplete"])
         {
 
-    query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') or DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') and (TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') or TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@')  or TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@')   or TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@')) order by RecordingDate desc",status,@"RecordingFileUpload",@"NotTransferred",@"Resend",@"ResendFailed",@"TransferFailed"];
+    query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus,TemplateId from CubeData Where DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') or DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') and (TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') or TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@')  or TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@')   or TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@')) order by RecordingDate desc",status,@"RecordingFileUpload",@"NotTransferred",@"Resend",@"ResendFailed",@"TransferFailed"];
         }
     
     else
         if ([status isEqualToString:@"TransferFailed"])
         {
-         query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') and DeleteStatus=(Select Id from DeleteStatus Where DeleteStatus='%@')",status, @"NoDelete"];
+         query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus,TemplateId from CubeData Where TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') and DeleteStatus=(Select Id from DeleteStatus Where DeleteStatus='%@')",status, @"NoDelete"];
     
         }
     else
         if ([status isEqualToString:@"RecordingPause"])
         {
             
-            query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') order by RecordingDate desc",status];
+            query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus,TemplateId from CubeData Where DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') order by RecordingDate desc",status];
         }
 
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
@@ -776,6 +912,7 @@ static Database *db;
                 transferDate=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
                 deleteStatus=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 6)];
                 dictationStatus=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 7)];
+                templateId=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 8)];
 
                 NSString *query4=[NSString stringWithFormat:@"Select DepartMentName from DepartMentList Where Id='%@'",Department];
 
@@ -799,7 +936,6 @@ static Database *db;
                     {}
                      //NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
 
-                
                 
 //                NSString *query5=[NSString stringWithFormat:@"Select TransferStatus from TransferStatus Where Id='%@' and UserId=%d",TransferStatus];
 
@@ -874,6 +1010,26 @@ static Database *db;
                 {}
                 
                 
+                NSString *query8=[NSString stringWithFormat:@"Select TemplateName from TemplateList Where TemplateId='%@'",templateId];
+                
+                if (sqlite3_prepare_v2(feedbackAndQueryTypesDB, [query8 UTF8String], -1, &statement5, NULL) == SQLITE_OK)// 2. Prepare the query
+                {
+                    while (sqlite3_step(statement5) == SQLITE_ROW)
+                    {
+                        templateId=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement5, 0)];
+                    }
+                }
+                else
+                {
+                    // NSLog(@"Can't preapre query due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+                }
+                
+                if (sqlite3_finalize(statement5) == SQLITE_OK)
+                {
+                    //NSLog(@"statement1 is finalized");
+                }
+                else
+                {}
                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                 [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
                 NSDate *recordCreatedDate = [dateFormatter dateFromString:RecordCreatedDate];
@@ -881,7 +1037,7 @@ static Database *db;
 //                NSDate *deleteDate = [dateFormatter dateFromString:Date];
                 
                 
-                [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+                [dateFormatter setDateFormat:@"dd-MM-yyyy hh:mm:ss a"];
                 NSString *recordCreatedDateString = [dateFormatter stringFromDate:recordCreatedDate];
                 NSString *transferDateString = [dateFormatter stringFromDate:transferDateY];
 //                NSString *deleteDateString = [dateFormatter stringFromDate:deleteDate];
@@ -907,7 +1063,7 @@ static Database *db;
                 audioDetails.transferDate = transferDateString;
                 audioDetails.deleteStatus = deleteStatus;
                 audioDetails.dictationStatus = dictationStatus;
-                
+                audioDetails.templateName = templateId;
 //                dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:RecordItemName,@"RecordItemName",RecordCreatedDate,@"RecordCreatedDate",Department,@"Department",TransferStatus,@"TransferStatus",CurrentDuration,@"CurrentDuration",transferDate,@"TransferDate",deleteStatus,@"DeleteStatus",dictationStatus,@"DictationStatus",nil];
                 [listArray addObject:audioDetails];
             }
@@ -1205,7 +1361,7 @@ static Database *db;
 -(void)insertRecordingData:(NSDictionary*)dict;
 {
     
-                NSString *query3=[NSString stringWithFormat:@"INSERT INTO CubeData values(\"%@\",\"%@\",\"%@\",\"%@\",\"%d\",\"%d\",\"%d\",\"%@\",\"%@\",\"%@\",\"%d\",\"%d\",\"%d\",\"%@\")",[dict valueForKey:@"recordItemName"],[dict valueForKey:@"recordCreatedDate"],[dict valueForKey:@"recordingDate"],[dict valueForKey:@"transferDate"],[[dict valueForKey:@"dictationStatus"]intValue],[[dict valueForKey:@"transferStatus"]intValue],[[dict valueForKey:@"deleteStatus"]intValue],[dict valueForKey:@"deleteDate"],[dict valueForKey:@"fileSize"],[dict valueForKey:@"currentDuration"],[[dict valueForKey:@"newDataUpdate"]intValue],[[dict valueForKey:@"newDataSend"]intValue],[[dict valueForKey:@"mobileDictationIdVal"]intValue],[dict valueForKey:@"departmentName"]];
+                NSString *query3=[NSString stringWithFormat:@"INSERT INTO CubeData values(\"%@\",\"%@\",\"%@\",\"%@\",\"%d\",\"%d\",\"%d\",\"%@\",\"%@\",\"%@\",\"%d\",\"%d\",\"%d\",\"%@\",\"%@\")",[dict valueForKey:@"recordItemName"],[dict valueForKey:@"recordCreatedDate"],[dict valueForKey:@"recordingDate"],[dict valueForKey:@"transferDate"],[[dict valueForKey:@"dictationStatus"]intValue],[[dict valueForKey:@"transferStatus"]intValue],[[dict valueForKey:@"deleteStatus"]intValue],[dict valueForKey:@"deleteDate"],[dict valueForKey:@"fileSize"],[dict valueForKey:@"currentDuration"],[[dict valueForKey:@"newDataUpdate"]intValue],[[dict valueForKey:@"newDataSend"]intValue],[[dict valueForKey:@"mobileDictationIdVal"]intValue],[dict valueForKey:@"departmentName"],[dict valueForKey:@"templateId"]];
     
                 Database *db=[Database shareddatabase];
                 NSString *dbPath=[db getDatabasePath];
@@ -1420,20 +1576,20 @@ static Database *db;
 {
     Database *db=[Database shareddatabase];
     NSString *dbPath=[db getDatabasePath];
-    sqlite3_stmt *statement,*statement1,*statement2;
+    sqlite3_stmt *statement,*statement1,*statement2,*statement5;
     sqlite3* feedbackAndQueryTypesDB;
     NSMutableArray* listArray=[[NSMutableArray alloc]init];
-    NSString* RecordItemName,*Date,*Department,*RecordCreateDate,*status,*transferDate,*duration;
+    NSString* RecordItemName,*Date,*Department,*RecordCreateDate,*status,*transferDate,*duration,*templateId;
     NSString* query3,*statusQuery;
     if ([listName isEqual:@"Transferred"])
     {
-        query3=[NSString stringWithFormat:@"Select RecordItemName,TransferDate,Department,RecordCreateDate,DeleteStatus,TransferDate,CurrentDuration from CubeData Where (TransferStatus=(Select Id from TransferStatus Where TransferStatus='Transferred') and DeleteStatus!=%d) order by TransferDate desc",1];
+        query3=[NSString stringWithFormat:@"Select RecordItemName,TransferDate,Department,RecordCreateDate,DeleteStatus,TransferDate,CurrentDuration,TemplateId from CubeData Where (TransferStatus=(Select Id from TransferStatus Where TransferStatus='Transferred') and DeleteStatus!=%d) order by TransferDate desc",1];
         
         statusQuery=[NSString stringWithFormat:@"Select DeleteStatus from DeleteStatus Where Id='%@'",status];
     }
     if ([listName isEqual:@"Deleted"])
     {
-        query3=[NSString stringWithFormat:@"Select RecordItemName,DeleteDate,Department,RecordCreateDate,TransferStatus,TransferDate,CurrentDuration from CubeData Where DeleteStatus=1 order by DeleteDate desc"];
+        query3=[NSString stringWithFormat:@"Select RecordItemName,DeleteDate,Department,RecordCreateDate,TransferStatus,TransferDate,CurrentDuration,TemplateId from CubeData Where DeleteStatus=1 order by DeleteDate desc"];
         statusQuery=[NSString stringWithFormat:@"Select TransferStatus from TransferStatus Where Id='%@'",status];
 
     }
@@ -1456,7 +1612,8 @@ static Database *db;
                 status=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
                 transferDate=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
                 duration=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 6)];
-                
+                templateId=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 7)];
+
                 NSString *query4=[NSString stringWithFormat:@"Select DepartMentName from DepartMentList Where Id='%@'",Department];
                 
                 if (sqlite3_prepare_v2(feedbackAndQueryTypesDB, [query4 UTF8String], -1, &statement1, NULL) == SQLITE_OK)// 2. Prepare the query
@@ -1510,7 +1667,26 @@ static Database *db;
                 {
                 }
                 
-
+                NSString *query8=[NSString stringWithFormat:@"Select TemplateName from TemplateList Where TemplateId='%@'",templateId];
+                
+                if (sqlite3_prepare_v2(feedbackAndQueryTypesDB, [query8 UTF8String], -1, &statement5, NULL) == SQLITE_OK)// 2. Prepare the query
+                {
+                    while (sqlite3_step(statement5) == SQLITE_ROW)
+                    {
+                        templateId=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement5, 0)];
+                    }
+                }
+                else
+                {
+                    // NSLog(@"Can't preapre query due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+                }
+                
+                if (sqlite3_finalize(statement5) == SQLITE_OK)
+                {
+                    //NSLog(@"statement1 is finalized");
+                }
+                else
+                {}
                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                 [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
                 NSDate *recordCreatedDate = [dateFormatter dateFromString:RecordCreateDate];
@@ -1518,7 +1694,7 @@ static Database *db;
                 NSDate *deleteDate = [dateFormatter dateFromString:Date];
 
                 
-                [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+                [dateFormatter setDateFormat:@"dd-MM-yyyy hh:mm:ss a"];
                 NSString *recordCreatedDateString = [dateFormatter stringFromDate:recordCreatedDate];
                 NSString *transferDateString = [dateFormatter stringFromDate:transferDateY];
                 NSString *deleteDateString = [dateFormatter stringFromDate:deleteDate];
@@ -1531,7 +1707,7 @@ static Database *db;
                 audioDetails.currentDuration = duration;
                 audioDetails.uploadStatus = status;
                 audioDetails.deleteDate = deleteDateString;
-                
+                audioDetails.templateName = templateId;
 //                dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:RecordItemName,@"RecordItemName",Date,@"Date",Department,@"Department",RecordCreateDate,@"RecordCreateDate",status,@"status",transferDate,@"TransferDate",duration,@"CurrentDuration", nil];
 //                [listArray addObject:dict];
                 
@@ -1798,7 +1974,7 @@ static Database *db;
         }
         else
         {
-           // NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+            NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
         }
     }
     
@@ -2194,10 +2370,10 @@ static Database *db;
 }
 
 
--(void)updateDepartment:(long)deptId fileName:(NSString*)fileName
+-(void)updateDepartment:(NSString*)deptId fileName:(NSString*)fileName
 {
     
-    NSString *query3=[NSString stringWithFormat:@"Update CubeData set Department=%ld Where RecordItemName='%@'",deptId,fileName];
+    NSString *query3=[NSString stringWithFormat:@"Update CubeData set Department='%@' Where RecordItemName='%@'",deptId,fileName];
     Database *db=[Database shareddatabase];
     NSString *dbPath=[db getDatabasePath];
     sqlite3_stmt *statement;
@@ -2245,7 +2421,55 @@ static Database *db;
     
 }
 
-
+-(void)updateTemplateId:(NSString*)templateId fileName:(NSString*)fileName
+{
+    
+    NSString *query3=[NSString stringWithFormat:@"Update CubeData set TemplateId='%@' Where RecordItemName='%@'",templateId,fileName];
+    Database *db=[Database shareddatabase];
+    NSString *dbPath=[db getDatabasePath];
+    sqlite3_stmt *statement = nil;
+    sqlite3* feedbackAndQueryTypesDB;
+    
+    const char * queryi3=[query3 UTF8String];
+    if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB)==SQLITE_OK)
+    {
+        sqlite3_prepare_v2(feedbackAndQueryTypesDB, queryi3, -1, &statement, NULL);
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            // NSLog(@"report data inserted");
+            // NSLog(@"%@",NSHomeDirectory());
+            sqlite3_reset(statement);
+        }
+        else
+        {
+            // NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+        }
+    }
+    
+    else
+    {
+        // NSLog(@"errormsg=%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    if (sqlite3_finalize(statement) == SQLITE_OK)
+    {
+        // NSLog(@"statement is finalized");
+    }
+    else
+        //NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    {
+    }
+    
+    if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
+    {
+        // NSLog(@"db is closed");
+    }
+    else
+    {
+        // NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+}
 -(int)getImportedFileCount
 {
     Database *db=[Database shareddatabase];
@@ -2428,8 +2652,36 @@ static Database *db;
                 else
                     //NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
                 {}
-                dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:recordItemName,@"RecordItemName",recordCreateDate,@"RecordCreatedDate",Department,@"Department",TransferStatus,@"TransferStatus",CurrentDuration,@"CurrentDuration",transferDate,@"TransferDate",deleteStatus,@"DeleteStatus",dictationStatus,@"DictationStatus",nil];
-                [app.importedFilesAudioDetailsArray addObject:dict];
+                
+                
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                NSDate *recordCreatedDate = [dateFormatter dateFromString:recordCreateDate];
+//                NSDate *transferDateY = [dateFormatter dateFromString:transferDate];
+                //                NSDate *deleteDate = [dateFormatter dateFromString:Date];
+                
+                
+                [dateFormatter setDateFormat:@"dd-MM-yyyy hh:mm:ss a"];
+                NSString *recordCreatedDateString = [dateFormatter stringFromDate:recordCreatedDate];
+//                NSString *transferDateString = [dateFormatter stringFromDate:transferDateY];
+                
+                AudioDetails *audioDetails = [AudioDetails new];
+                
+                
+                audioDetails.fileName = recordItemName;
+                audioDetails.recordingDate = recordCreatedDateString;
+                audioDetails.department = Department;
+                audioDetails.uploadStatus = TransferStatus;
+                audioDetails.currentDuration = CurrentDuration;
+//                audioDetails.transferDate = transferDateString;
+                audioDetails.deleteStatus = deleteStatus;
+                audioDetails.dictationStatus = dictationStatus;
+                
+                
+                [app.importedFilesAudioDetailsArray addObject:audioDetails];
+                
+//                dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:recordItemName,@"RecordItemName",recordCreateDate,@"RecordCreatedDate",Department,@"Department",TransferStatus,@"TransferStatus",CurrentDuration,@"CurrentDuration",transferDate,@"TransferDate",deleteStatus,@"DeleteStatus",dictationStatus,@"DictationStatus",nil];
+//                [app.importedFilesAudioDetailsArray addObject:dict];
 
             }
         }
@@ -3139,7 +3391,7 @@ static Database *db;
                 //                NSDate *deleteDate = [dateFormatter dateFromString:Date];
                 
                 
-                [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+                [dateFormatter setDateFormat:@"dd-MM-yyyy hh:mm:ss a"];
                 NSString *recordCreatedDateString = [dateFormatter stringFromDate:recordCreatedDate];
                 docFileDetails.createdDate = recordCreatedDateString;
                 

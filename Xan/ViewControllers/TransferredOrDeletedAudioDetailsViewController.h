@@ -10,7 +10,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import "AudioSessionManager.h"
 #import "PopUpCustomView.h"
-#import "AudioDetails.h";
+#import "AudioDetails.h"
+#import "MKDropdownMenu.h"
 //#import "ListViewController.h"
 //#import "MyClass.h"
 @class TransferredOrDeletedAudioDetailsViewController;             //define class, so protocol can see MyClass
@@ -19,7 +20,7 @@
 - (void) myClassDelegateMethod: (TransferredOrDeletedAudioDetailsViewController *) sender;  //define delegate method to be implemented within another class
 @end //end protocol
 
-@interface TransferredOrDeletedAudioDetailsViewController : UIViewController<AVAudioPlayerDelegate,UISplitViewControllerDelegate,MyClassDelegate>
+@interface TransferredOrDeletedAudioDetailsViewController : UIViewController<AVAudioPlayerDelegate,UISplitViewControllerDelegate,MyClassDelegate,MKDropdownMenuDelegate,MKDropdownMenuDataSource>
 
 {
     NSDictionary* result;
@@ -36,6 +37,12 @@
     UITableViewCell *cell;
     NSArray* departmentNamesArray;
     UITapGestureRecognizer* tap;
+    
+    MKDropdownMenu *templateNamesDropdownMenu;
+    
+    NSMutableArray* templateNamesArray;
+    
+    NSString* selectedTemplateName;
 }
 
 @property(nonatomic)long listSelected;
@@ -43,6 +50,7 @@
 - (IBAction)backButtonPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *resendButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteDictationButton;
+@property (weak, nonatomic) IBOutlet UILabel *dictatedByLabel;
 - (IBAction)playRecordingButtonPressed:(id)sender;
 - (IBAction)deleteRecordinfButtonPressed:(id)sender;
 - (IBAction)resendButtonClckied:(id)sender;
@@ -51,7 +59,9 @@
 -(void)setAudioDetails;
 @property (weak, nonatomic) IBOutlet UIImageView *backImageView;
 @property(nonatomic,strong)AudioDetails* audioDetails;
+@property (weak, nonatomic) IBOutlet UILabel *transferDateTitleLabel;
+@property (weak, nonatomic) IBOutlet UIView *mkDropdwonRefView;
 
-@property (nonatomic, weak) id <MyClassDelegate> delegate; //define MyClassDelegate as delegate
+@property (nonatomic, weak) id <MyClassDelegate> delegate; //define MyClassDelegate as delegate@property (weak, nonatomic) IBOutlet NSLayoutConstraint *;
 
 @end
