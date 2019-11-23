@@ -45,6 +45,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     templateNamesDropdownMenu.delegate = self;
     
     selectedTemplateName = @"Select Template";
+    
+    UITapGestureRecognizer* tapGestureRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(disMissTemplateDropDown:)];
+    
+//    tapGestureRecogniser.delegate = self;
+    [self.view addGestureRecognizer:tapGestureRecogniser];
   //AVAudioSessionPortBuiltInMic;
 }
 
@@ -265,6 +270,16 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryPlayAndRecord];
     }
 }
+
+-(void)disMissTemplateDropDown:(UITapGestureRecognizer *)gestureRecognizer
+{
+
+    [templateNamesDropdownMenu closeAllComponentsAnimated:true];
+    
+//    CGPoint p = [gestureRecognizer locationInView:self.view];
+ 
+}
+
 
 -(void)pausePlayerFromBackGround
 {
@@ -525,7 +540,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     NSString* originalFilePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]];
     
-   bool isCopied =  [[NSFileManager defaultManager] copyItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] toPath:originalFilePath error:&error];// save file for next time composition(i.e.1st file and 2nd will be editedCopy which we will record);
+   [[NSFileManager defaultManager] copyItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] toPath:originalFilePath error:&error];// save file for next time composition(i.e.1st file and 2nd will be editedCopy which we will record);
     
     [self saveAudioRecordToDatabase];
     
@@ -1823,10 +1838,18 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     currentDuration=[[UILabel alloc]initWithFrame:CGRectMake(audioRecordSlider.frame.origin.x, audioRecordSlider.frame.origin.y +  audioRecordSlider.frame.size.height+10, 80, 20)];
     totalDuration=[[UILabel alloc]initWithFrame:CGRectMake(audioRecordSlider.frame.origin.x+audioRecordSlider.frame.size.width-80, audioRecordSlider.frame.origin.y +  audioRecordSlider.frame.size.height+10, 80, 20)];
     
-    templateNamesDropdownMenu.frame = CGRectMake(animatedView.frame.size.width*0.2,totalDuration.frame.origin.y + totalDuration.frame.size.height+20, animatedView.frame.size.width*0.6, 30);
+    templateNamesDropdownMenu.frame = CGRectMake(animatedView.frame.size.width*0.2,totalDuration.frame.origin.y + totalDuration.frame.size.height+20, animatedView.frame.size.width*0.8, 30);
     [templateNamesDropdownMenu setCenter:CGPointMake(self.view.frame.size.width/2, templateNamesDropdownMenu.frame.origin.y)];
-
-    [templateNamesDropdownMenu setBackgroundColor:[UIColor lightHomeColor]];
+    templateNamesDropdownMenu.layer.cornerRadius = 3.0;
+    [templateNamesDropdownMenu setBackgroundDimmingOpacity:0];
+    [templateNamesDropdownMenu setDropdownShowsBorder:true];
+    [templateNamesDropdownMenu setBackgroundColor:[UIColor whiteColor]];
+    templateNamesDropdownMenu.layer.borderWidth = 1.0;
+    templateNamesDropdownMenu.layer.borderColor = [UIColor darkGrayColor].CGColor;
+//    [templateNamesDropdownMenu setDisclosureIndicatorSelectionRotation:180];
+    //    [templateNamesDropdownMenu setDropdownDropsShadow:true];
+    //    [templateNamesDropdownMenu setDropdownShowsContentAbove:true];
+    
     //float currentTimeFloat=player.duration;
     int currentTime= player.duration;
     int minutes=currentTime/60;
@@ -1983,6 +2006,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                                        sender.userInteractionEnabled=NO;
                                                        deleteButton.userInteractionEnabled=NO;
                                                        recordingNew=NO;
+                                                       
                                                        
                                                        [self dismissViewControllerAnimated:YES completion:nil];
                                                        
@@ -2378,6 +2402,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
      return YES;
     }
     if (![touch.view isEqual:popupView])
+    {
+        return NO;
+    }
+    
+    if (![touch.view isEqual:templateNamesDropdownMenu])
     {
         return NO;
     }
@@ -2918,6 +2947,15 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [[Database shareddatabase] updateDepartment:deptObj.Id fileName:self.recordedAudioFileName];
 
     [popupView removeFromSuperview];
+    
+    [self getTempliatFromDepartMentName:deptObj.Id];
+    
+    selectedTemplateName = @"Select Template";
+    
+    [[Database shareddatabase] updateTemplateId:@"-1" fileName:recordedAudioFileName];
+    
+    [templateNamesDropdownMenu reloadAllComponents];
+    
 }
 
 
@@ -4150,7 +4188,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     return [[NSAttributedString alloc] initWithString:selectedTemplateName
                                            attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:14 weight:UIFontWeightSemibold],
-                                                        NSForegroundColorAttributeName: [UIColor whiteColor]}];
+                                                        NSForegroundColorAttributeName: [UIColor blackColor]}];
 }
 
 -(NSAttributedString *)dropdownMenu:(MKDropdownMenu *)dropdownMenu attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
@@ -4188,14 +4226,12 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     selectedTemplateName = [templateNamesArray objectAtIndex:row];
     
 //    [dropdownMenu setSelectedComponentBackgroundColor:[UIColor lightGrayColor]];
-    
+    [self updateTemplateIdForFileName];
+
      [dropdownMenu closeAllComponentsAnimated:YES];
     
     [dropdownMenu reloadAllComponents];
-    
-    [self updateTemplateIdForFileName];
-    
-    
+   
 }
 
 
@@ -4203,11 +4239,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 {
     NSString* templateId = [[AppPreferences sharedAppPreferences].tempalateListDict objectForKey:selectedTemplateName];
     
-//    if (templateId == nil)
-//    {
-//        templateId = @"";
-//    }
-//
+    if (templateId == nil)
+    {
+        templateId = @"-1";
+    }
+    
     [[Database shareddatabase] updateTemplateId:templateId fileName:self.recordedAudioFileName];
 }
  @end

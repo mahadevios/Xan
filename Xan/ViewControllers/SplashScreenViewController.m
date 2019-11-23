@@ -109,26 +109,12 @@
 
 -(void)addAlertView
 {
-//   NSArray* subviews= [[UIApplication sharedApplication] keyWindow].subviews;
-//    bool alreadyAdded = false;
-//    for (int i=0; i<subviews.count; i++)
-//    {
-//       UIView* view= [subviews objectAtIndex:i];
-//        if (view.tag==222)
-//        {
-//            alreadyAdded=YES;
-//        }
-//    }
-    //[[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
-    
+
     UIView* view=[[[UIApplication sharedApplication] keyWindow] viewWithTag:222];
    
     
     if (view==NULL)
     {
-//        UIView* internetMessageView=   [[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.size.width*0.10, self.view.center.y-50,self.view.frame.size.width*0.80, 100) offlineFrame:CGRectMake(0, self.view.center.y+150,self.view.frame.size.width, 50) senderForInternetMessage:self];
-        
-//  UIView* internetMessageView=   [[PopUpCustomView alloc]initWithFrame:CGRectMake(0, self.view.center.y+100,self.view.frame.size.width, 80) offlineFrame:CGRectMake(0, self.view.center.y+150,self.view.frame.size.width, 50) senderForInternetMessage:self];
         
         UIView* internetMessageView;
         
@@ -149,7 +135,7 @@
         UIButton* retryButton= [popupView viewWithTag:225];
         [retryButton setEnabled:YES];
         
-       [retryButton setTitleColor:[UIColor colorWithRed:17/255.0 green:146/255.0 blue:(CGFloat)78/255.0 alpha:1] forState:UIControlStateNormal];
+       [retryButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
     }
 

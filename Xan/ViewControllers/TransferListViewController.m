@@ -1156,7 +1156,7 @@
     
     //Create a spacer.
     bi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    bi.width = 12.0f;
+    bi.width = 5.0f;
     [bi setTintColor:[UIColor whiteColor]];
     [buttons addObject:bi];
     

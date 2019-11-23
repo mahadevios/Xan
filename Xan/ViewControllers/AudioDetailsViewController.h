@@ -72,5 +72,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *transferButtonYConstraint;
 @property (weak, nonatomic) IBOutlet UIView *mkDropdwonRefView;
 
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIView *insideView;
 - (IBAction)transferDictationButtonClicked:(id)sender;
 @end

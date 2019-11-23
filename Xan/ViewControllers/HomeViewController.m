@@ -32,16 +32,7 @@
 - (void)viewDidLoad
 {
   
-    
     [super viewDidLoad];
-    
-   
-//    UITabBarItem.appearance set
-    
-
-//    app.awaitingFileTransferNamesArray=[[NSMutableArray alloc]init];
-    
-//    [self beginAppearanceTransition:true animated:true];
 
     db = [Database shareddatabase];
 
@@ -85,7 +76,7 @@
 
     // observer for transfer, awiating, failed recording counts change
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(getCountsOfTransferredAwaitingFiles) name:NOTIFICATION_FILE_UPLOAD_API
+                                             selector:@selector(validateFileUploadResponse) name:NOTIFICATION_FILE_UPLOAD_API
                                                object:nil];
     
     // observer for completed doc API response
@@ -98,15 +89,30 @@
                                                object:nil];
     // Do any additional setup after loading the view.
 }
-
+-(void)validateFileUploadResponse
+{
+    [self getCountsOfTransferredAwaitingFiles];
+    
+    [self showTransferFailedCount];
+}
 -(void)viewWillAppear:(BOOL)animated
 {
 //    NSLog(@"navi height = %@", self.navigationController.navigationBar.bounds);
     [super viewWillAppear:true];
     
-    if ([AppPreferences sharedAppPreferences].tempalateListDict.count == 0)
+    if (!isTemplateDataReceived)
     {
-       [[APIManager sharedManager] getTemplateByUserCode:@""];
+        if ([AppPreferences sharedAppPreferences].isReachable)
+        {
+            
+            hud.minSize = CGSizeMake(150.f, 100.f);
+            hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeIndeterminate;
+            hud.label.text = @"Validating Pin...";
+            hud.detailsLabel.text = @"Please wait";
+            [[APIManager sharedManager] getTemplateByUserCode:@""];
+            
+        }
     }
     
     
@@ -119,9 +125,6 @@
     self.tabBarController.tabBar.userInteractionEnabled = true;
 
     [self.tabBarController.tabBar setHidden:NO];
-    
-    
-//    
 
     // get count of Today's transferred, Awaiting transfer
     [self getCountsOfTransferredAwaitingFiles];
@@ -142,9 +145,9 @@
 //    [self setSplitViewController];
     
 //    [self deleteDictation];
-    NSLog(@"%@",NSHomeDirectory());
+//    NSLog(@"%@",NSHomeDirectory());
    
-    NSLog(@"tabBarController = %@ ",self.tabBarController);
+//    NSLog(@"tabBarController = %@ ",self.tabBarController);
 
 }
 
@@ -223,7 +226,7 @@
     
     //Adding spinner to Completed Doc view
     [transferFailedView addSubview:completedDocSpinner];
-    
+
     // starting the spinner.
     [completedDocSpinner startAnimating];
     
@@ -291,11 +294,14 @@
 {
     NSArray* responseArray= responseDictObj.object;
     
-
-    [AppPreferences sharedAppPreferences].tempalateListDict = [NSMutableDictionary new];
+    [hud hideAnimated:true];
+    
+//    [AppPreferences sharedAppPreferences].tempalateListDict = [NSMutableDictionary new];
+    isTemplateDataReceived = true;
     
     for (NSDictionary* responseDict in responseArray)
     {
+        
         NSString* templateCode = [responseDict valueForKey:@"templateCode"];
         
         NSString* templateName = [responseDict valueForKey:@"templateName"];

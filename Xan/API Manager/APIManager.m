@@ -107,6 +107,36 @@ static APIManager *singleton = nil;
     return totalSpace;
 }
 
+-(double)getFileDuration:(NSString*)fileNameString
+{
+    NSString* filePath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@",AUDIO_FILES_FOLDER_NAME,fileNameString]];
+    
+    NSURL* fileURL  = [NSURL fileURLWithPath:filePath];
+    
+    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:fileURL
+                                                options:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                         [NSNumber numberWithBool:YES],
+                                                         AVURLAssetPreferPreciseDurationAndTimingKey,
+                                                         nil]];
+    
+  
+    double durationInSeconds = CMTimeGetSeconds(asset.duration) ;
+    
+    return durationInSeconds;
+    
+}
+
+-(NSString*)getFileDurationInHMSFormat:(int)duration
+{
+    int audioHour= duration / (60*60);
+    int audioHourByMod= duration % (60*60);
+    
+    int audioMinutes = audioHourByMod / 60;
+    int audioSeconds = audioHourByMod % 60;
+    
+    return [NSString stringWithFormat:@"(%02d:%02d:%02d)",audioHour,audioMinutes,audioSeconds];
+    
+}
 -(NSString*)getMacId
 {
    return [[UIDevice currentDevice] identifierForVendor1];
@@ -479,7 +509,7 @@ static APIManager *singleton = nil;
         NSData *pinEncData = [pinData AES256EncryptWithKey:SECRET_KEY];
         NSString* pinIV = [AppPreferences sharedAppPreferences].iniVector;
         NSString* pinEncString = [pinEncData base64EncodedStringWithOptions:0];
-        pinEncString = [pinEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+//        pinEncString = [pinEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         pinEncString = [[pinEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:pinIV];
         
         NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"macId",pinEncString,@"devicePin", nil];
@@ -532,7 +562,7 @@ static APIManager *singleton = nil;
         //        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
         
         
-        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"macId",oldPinEncString,@"userName", newPinEncString,@"password", nil];
+        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"macId",oldPinEncString,@"devicePin", newPinEncString,@"newDevicePin", nil];
         
         NSString* downloadMethodType = @"Bearer";
 
@@ -753,7 +783,7 @@ static APIManager *singleton = nil;
         
         DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:FILE_DOWNLOAD_API withRequestParameter:array withResourcePath:FILE_DOWNLOAD_API withHttpMethd:POST downloadMethodType:downloadMethodType];
        // [downloadmetadatajob startMetaDataDownLoad];
-        [downloadmetadatajob downloadFileUsingNSURLSession:@""];
+//        [downloadmetadatajob downloadFileUsingNSURLSession:@""];
     }
     else
     {
@@ -1161,7 +1191,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
 }
 
--(void)uploadFileAfterGettingdatabaseValues:(NSString*)filename departmentID:(int)departmentID transferStatus:(int)transferStatus mobileDictationIdVal:(int)mobileDictationIdVal isFileTypeAudio:(BOOL)isFileTypeAudio
+-(void)uploadFileAfterGettingdatabaseValues:(NSString*)filename departmentID:(NSString*)departmentID transferStatus:(int)transferStatus mobileDictationIdVal:(int)mobileDictationIdVal isFileTypeAudio:(BOOL)isFileTypeAudio
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -1200,42 +1230,54 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     [request setHTTPMethod:@"POST"];
     
     long filesizelong=[[APIManager sharedManager] getFileSize:filePath];
-    
+        
     int filesizeint=(int)filesizelong;
     
     NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
     
-    if (transferStatus==0)
-        transferStatus=1;
-    else if(transferStatus==1)
+    if (transferStatus==0)//if not transferred
     {
-        transferStatus=5;
+        transferStatus=1;//send 1
+
     }
-    else if(transferStatus==3)
+    else if(transferStatus==1)//if transferred
     {
-        transferStatus=5;
+        transferStatus=5;//send 5
     }
-    else if(transferStatus==2)
+    else if(transferStatus==2)// if failed
     {
-        transferStatus=1;
+        transferStatus=1;//send 1
     }
-    else if(transferStatus==4)
+    else if(transferStatus==3)//if resend
     {
-        transferStatus=5;
+        transferStatus=5;//send 5
     }
+    else if(transferStatus==4) // if resendfailed
+    {
+        transferStatus=5;// send 5
+    }
+   
     
-    if (departmentId == 0)
+    
+    if ([departmentId  isEqual: @"0"])
     {
-        departmentId= [[Database shareddatabase] getDepartMentIdForFileName:filename];
+        departmentId= [[Database shareddatabase] getDepartMentIdForFileName:filenameForTaskIdentifier];
         
     }
     
+    double duration = [self getFileDuration:filename];
+    
+    NSString* fileDuraion = [self getFileDurationInHMSFormat:duration];
+    
+    NSString* templateCode = [[Database shareddatabase] getTemplateNameFromFilename:filenameForTaskIdentifier];
+    
     NSDictionary *params = @{@"macId"     : macId,
                              @"fileSize" :[NSString stringWithFormat:@"%d", filesizeint],
-                             @"departmentID" : [NSString stringWithFormat:@"%d", departmentID],
+                             @"fileDuration" :fileDuraion,
+                             @"departmentID" : [NSString stringWithFormat:@"%@", departmentID],
                              @"transferStatus" : [NSString stringWithFormat:@"%d", transferStatus],
                              @"mobileDictationIdVal" : [NSString stringWithFormat:@"%d", mobileDictationIdVal],
-                             @"templateCode" : [NSString stringWithFormat:@"%d", 2000],
+                             @"templateCode" : templateCode,
                              };
     // NSString* authorisation=[NSString stringWithFormat:@"%@*%d*%ld*%d*%d",macId,filesizeint,deptObj.Id,1,0];
    
@@ -1271,6 +1313,8 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     session = [SharedSession getSharedSession:[APIManager sharedManager]];
     
     [request setHTTPMethod:@"POST"];
+    
+    NSLog(@"URL = %@", url);
     
     NSURLSessionUploadTask* uploadTask = [session uploadTaskWithRequest:request fromData:nil];
 
@@ -1372,7 +1416,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
         
         [httpBody appendData:[[NSString stringWithFormat:@"%@\r\n", paramEncString] dataUsingEncoding:NSUTF8StringEncoding]];
         
-        NSLog(@"paramEncString = %@", paramEncString);
+//        NSLog(@"paramEncString = %@", paramEncString);
     }];
     
     // add image data
@@ -1494,19 +1538,13 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
         
         dispatch_async(dispatch_get_main_queue(), ^
                        {
-                          int departmentId= [[Database shareddatabase] getDepartMentIdForFileName:docxFileName];
+                          NSString* departmentId= [[Database shareddatabase] getDepartMentIdForFileName:docxFileName];
                            
                           int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:docxFileName];
-                          
-//                           long filesizelong=[[APIManager sharedManager] getFileSize:filePath];
-//
-//                           int filesizeint=(int)filesizelong;
-                           
-//                           NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
-                           
+
                            NSString* downloadMethodType = @"urlConnection";
                            
-                           NSArray * requestParamArray = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d",departmentId], [NSString stringWithFormat:@"%d",mobileDictationIdVal], nil];
+                           NSArray * requestParamArray = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%@",departmentId], [NSString stringWithFormat:@"%d",mobileDictationIdVal], nil];
                            
                            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                
@@ -1517,7 +1555,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
                                
                                downloadmetadatajob.requestParameter = params;
                                
-                               [downloadmetadatajob uploadDocxFileAfterGettingdatabaseValues:docxFileName];
+//                               [downloadmetadatajob uploadDocxFileAfterGettingdatabaseValues:docxFileName];
                                
                            });
                            

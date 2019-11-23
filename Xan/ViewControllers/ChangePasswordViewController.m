@@ -374,7 +374,7 @@
     NSDictionary* responseDict=notificationObject.object;
     NSString* responseCodeString=  [responseDict valueForKey:RESPONSE_CODE];
     NSString* pinChangeSuccess=  [responseDict valueForKey:@"pinChangeSuccess"];
-    NSString* oldPin=  [responseDict valueForKey:@"oldpin"];
+    NSString* oldPin=  [responseDict valueForKey:@"oldDevicePin"];
 
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [hud removeFromSuperview];

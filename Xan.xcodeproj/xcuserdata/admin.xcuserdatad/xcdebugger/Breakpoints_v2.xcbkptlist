@@ -2890,7 +2890,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Xan/ViewControllers/ListViewController.m"
-            timestampString = "595148984.105208"
+            timestampString = "595162074.664994"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "399"
@@ -2906,7 +2906,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Xan/ViewControllers/ListViewController.m"
-            timestampString = "595148984.105273"
+            timestampString = "595162074.66506"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "827"
@@ -2922,7 +2922,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Xan/ViewControllers/ListViewController.m"
-            timestampString = "595148984.105319"
+            timestampString = "595162074.665105"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "197"
@@ -2938,7 +2938,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Xan/ViewControllers/ListViewController.m"
-            timestampString = "595148984.105361"
+            timestampString = "595162074.665149"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "795"
@@ -2954,7 +2954,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Xan/ViewControllers/ListViewController.m"
-            timestampString = "595148984.105402"
+            timestampString = "595162074.6651911"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "805"
@@ -2970,7 +2970,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Xan/ViewControllers/ListViewController.m"
-            timestampString = "595148984.10544"
+            timestampString = "595162074.66523"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "862"
@@ -2986,60 +2986,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Xan/ViewControllers/ListViewController.m"
-            timestampString = "595148984.105478"
+            timestampString = "595162074.665269"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "866"
             endingLineNumber = "866"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Copy to Xan/ShareViewController.m"
-            timestampString = "595005766.220544"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "-loadView"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Copy to Xan/ShareViewController.m"
-            timestampString = "595005766.220976"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
-            landmarkName = "-isContentValid"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Copy to Xan/ShareViewController.m"
-            timestampString = "595005766.221216"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
-            landmarkName = "-viewWillLayoutSubviews"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3062,111 +3014,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/ViewControllers/UserSettingsViewController.m"
-            timestampString = "594389642.6013989"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "418"
-            endingLineNumber = "418"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/ViewControllers/UserSettingsViewController.m"
-            timestampString = "594389642.601454"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "275"
-            endingLineNumber = "275"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/ViewControllers/UserSettingsViewController.m"
-            timestampString = "594389642.6015019"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "321"
-            endingLineNumber = "321"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/ViewControllers/UserSettingsViewController.m"
-            timestampString = "594389642.601548"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "502"
-            endingLineNumber = "502"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/ViewControllers/UserSettingsViewController.m"
-            timestampString = "594389642.601591"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "536"
-            endingLineNumber = "536"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/ViewControllers/UserSettingsViewController.m"
-            timestampString = "594389642.601637"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "499"
-            endingLineNumber = "499"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Xan/API Manager/APIManager.m"
-            timestampString = "594997784.537846"
+            timestampString = "596133673.265541"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "907"
-            endingLineNumber = "907"
+            startingLineNumber = "937"
+            endingLineNumber = "937"
             landmarkName = "-URLSession:task:didCompleteWithError:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3178,92 +3034,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Xan/API Manager/APIManager.m"
-            timestampString = "594997784.537945"
+            timestampString = "596133673.265609"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1096"
-            endingLineNumber = "1096"
+            startingLineNumber = "1126"
+            endingLineNumber = "1126"
             landmarkName = "-URLSessionDidFinishEventsForBackgroundURLSession:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/ViewControllers/TransferListViewController.m"
-            timestampString = "595148984.1056859"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "322"
-            endingLineNumber = "322"
-            landmarkName = "-validateFileUploadResponse:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[TransferListViewController validateFileUploadResponse:]"
-                  moduleName = "Xan"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Work/Xan/Xan/ViewControllers/TransferListViewController.m"
-                  timestampString = "595148984.38299"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "322"
-                  endingLineNumber = "322"
-                  offsetFromSymbolStart = "410">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[TransferListViewController validateFileUploadResponse:]"
-                  moduleName = "Xan"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Work/Xan/Xan/ViewControllers/TransferListViewController.m"
-                  timestampString = "595148984.38472"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "322"
-                  endingLineNumber = "322"
-                  offsetFromSymbolStart = "425">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
-            timestampString = "595008477.473796"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1352"
-            endingLineNumber = "1352"
-            landmarkName = "-updateData:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/Database/Database.m"
-            timestampString = "595008477.4738491"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2433"
-            endingLineNumber = "2433"
-            landmarkName = "-updateTemplateId:fileName:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3274,11 +3050,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Xan/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "595008477.473896"
+            timestampString = "596133673.265656"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3626"
-            endingLineNumber = "3626"
+            startingLineNumber = "3650"
+            endingLineNumber = "3650"
             landmarkName = "-dropdownMenu:didSelectRow:inComponent:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3289,13 +3065,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Copy to Xan/ShareViewController.m"
-            timestampString = "595005766.221945"
+            filePath = "Xan/LoginViewController.m"
+            timestampString = "596124051.118202"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "389"
-            endingLineNumber = "389"
-            landmarkName = "-copyAudioFileButtonClicked:"
+            startingLineNumber = "490"
+            endingLineNumber = "490"
+            landmarkName = "-submitButtonCilcked:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3305,13 +3081,157 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Copy to Xan/ShareViewController.m"
-            timestampString = "595005766.222198"
+            filePath = "Xan/ViewControllers/TransferredOrDeletedAudioDetailsViewController.m"
+            timestampString = "595781978.244696"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
-            landmarkName = "-copyAudioFileButtonClicked:"
+            startingLineNumber = "392"
+            endingLineNumber = "392"
+            landmarkName = "-deleteRecordinfButtonPressed:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
+            timestampString = "596124051.118269"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "-setTemplateData"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/API Manager/DownloadMetaDataJob.m"
+            timestampString = "595571828.599153"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "624"
+            endingLineNumber = "624"
+            landmarkName = "-connectionDidFinishLoading:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/ViewControllers/ChangePasswordViewController.m"
+            timestampString = "595573995.188823"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "307"
+            endingLineNumber = "307"
+            landmarkName = "-submitButtonClicked:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/API Manager/APIManager.m"
+            timestampString = "596133673.2660919"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "570"
+            endingLineNumber = "570"
+            landmarkName = "-changePinOldPin:NewPin:macID:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/API Manager/APIManager.m"
+            timestampString = "596133673.266139"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1286"
+            endingLineNumber = "1286"
+            landmarkName = "-uploadFileAfterGettingdatabaseValues:departmentID:transferStatus:mobileDictationIdVal:isFileTypeAudio:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
+            timestampString = "596124051.118426"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "806"
+            endingLineNumber = "806"
+            landmarkName = "-gestureRecognizer:shouldReceiveTouch:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/API Manager/APIManager.m"
+            timestampString = "596133673.266196"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1319"
+            endingLineNumber = "1319"
+            landmarkName = "-uploadFileAfterGettingdatabaseValues:departmentID:transferStatus:mobileDictationIdVal:isFileTypeAudio:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/API Manager/APIManager.m"
+            timestampString = "596133673.266238"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "832"
+            endingLineNumber = "832"
+            landmarkName = "-URLSession:dataTask:didReceiveData:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/API Manager/APIManager.m"
+            timestampString = "596133673.266279"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1435"
+            endingLineNumber = "1435"
+            landmarkName = "-createBodyWithBoundary:parameters:paths:fieldName:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -904,7 +904,7 @@
 				TargetAttributes = {
 					8427DC451E124D9B0071C038 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = Y56BAH343T;
+						DevelopmentTeam = 5STAQWW6Q7;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -920,7 +920,7 @@
 					};
 					8472223D1D47368A00C00F20 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = Y56BAH343T;
+						DevelopmentTeam = 5STAQWW6Q7;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -1186,9 +1186,9 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Copy to Xan/Copy to Xan.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
-				DEVELOPMENT_TEAM = Y56BAH343T;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Chetan Patwardhan (7M2W9WHDQQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chetan Patwardhan (7M2W9WHDQQ)";
+				DEVELOPMENT_TEAM = 5STAQWW6Q7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Copy\\ to\\ Xan",
@@ -1200,10 +1200,10 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Copy to Xan/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.coreflexSolutions.Xan.CopyToXan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xanadutec.ace.copyToAce;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0e8eea66-bdda-4edd-8661-5b7df9f7e67e";
-				PROVISIONING_PROFILE_SPECIFIER = XanAppGroupDevelopment;
+				PROVISIONING_PROFILE_SPECIFIER = AceAppGroupDevelopment;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1218,9 +1218,9 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Copy to Xan/Copy to Xan.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
-				DEVELOPMENT_TEAM = Y56BAH343T;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chetan Patwardhan (5STAQWW6Q7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chetan Patwardhan (5STAQWW6Q7)";
+				DEVELOPMENT_TEAM = 5STAQWW6Q7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Copy\\ to\\ Xan",
@@ -1228,10 +1228,10 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Copy to Xan/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.coreflexSolutions.Xan.CopyToXan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xanadutec.ace.copyToAce;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "9f74969c-d172-411b-b6fa-c0c9399e893e";
-				PROVISIONING_PROFILE_SPECIFIER = XanAppGroupDistribution;
+				PROVISIONING_PROFILE_SPECIFIER = AceAppGroupDistribution;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1348,9 +1348,9 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Xan/Xan.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
-				DEVELOPMENT_TEAM = Y56BAH343T;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Chetan Patwardhan (7M2W9WHDQQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chetan Patwardhan (7M2W9WHDQQ)";
+				DEVELOPMENT_TEAM = 5STAQWW6Q7;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1362,10 +1362,10 @@
 				New_Setting = "";
 				OTHER_LDFLAGS = "";
 				"OTHER_LDFLAGS[arch=*]" = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.coreflexSolutions.Xan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xanadutec.ace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "f49954c7-7a84-46c2-a188-f37f052d8ade";
-				PROVISIONING_PROFILE_SPECIFIER = XanDevelopment;
+				PROVISIONING_PROFILE_SPECIFIER = AceDevelopment;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1379,9 +1379,9 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Xan/Xan.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
-				DEVELOPMENT_TEAM = Y56BAH343T;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chetan Patwardhan (5STAQWW6Q7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chetan Patwardhan (5STAQWW6Q7)";
+				DEVELOPMENT_TEAM = 5STAQWW6Q7;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1392,10 +1392,10 @@
 				LIBRARY_SEARCH_PATHS = "";
 				New_Setting = "";
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.coreflexSolutions.Xan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xanadutec.ace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1053c5ee-d822-4b57-a364-b7526972681b";
-				PROVISIONING_PROFILE_SPECIFIER = XanDistribution;
+				PROVISIONING_PROFILE_SPECIFIER = AceDistribution;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
