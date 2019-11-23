@@ -29,6 +29,7 @@
     UIAlertAction *actionCancel;
     MBProgressHUD* hud;
     NSURLSession* session;
+    BOOL isTemplateDataReceived;
     
 }
 @property (weak, nonatomic) IBOutlet UIView *transferredView;

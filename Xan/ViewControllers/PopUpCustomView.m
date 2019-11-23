@@ -8,77 +8,11 @@
 
 #import "PopUpCustomView.h"
 #import "Constants.h"
+#import "UIColor+ApplicationColors.h"
+
 
 @implementation PopUpCustomView
 
-/*
- // Only override drawRect: if you perform custom drawing.
- // An empty implementation adversely affects performance during animation.
- - (void)drawRect:(CGRect)rect {
- // Drawing code
- }
- */
-//- (UIView*)initWithFrame:(CGRect)frame andSubViews:(NSArray*)subViewNamesArray :(id)sender
-//{
-//    self = [super initWithFrame:frame];
-//    self.tag=561;
-//    self.backgroundColor=[UIColor whiteColor];
-//    overlay= [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//    tap=[[UITapGestureRecognizer alloc]initWithTarget:sender action:@selector(dismissPopView:)];
-//    tap.delegate=sender;
-//
-//    overlay=[[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//
-//    [overlay addGestureRecognizer:tap];
-//    overlay.tag=111;
-//
-//    overlay.backgroundColor=[[UIColor blackColor] colorWithAlphaComponent:0.2];
-//
-//    if (self)
-//    {
-//        // Initialization code
-//        // initilize all your UIView components
-//        UIButton* userSettingsButton=[[UIButton alloc]initWithFrame:CGRectMake(5, 0, 0, 0)];
-//        UIView* seperatorLineView;
-//        for (int i=0; i<subViewNamesArray.count; i++)
-//        {
-//            //userSettingsButton.titleLabel.textAlignment=NSTextAlignmentCenter;
-//
-//            userSettingsButton=[[UIButton alloc]initWithFrame:CGRectMake(0, userSettingsButton.frame.origin.x+userSettingsButton.frame.size.height, 150, 30)];
-//            if (subViewNamesArray.count>1)
-//            {
-//                if (i==0)
-//                {
-//                    seperatorLineView=[[UIView alloc]initWithFrame:CGRectMake(0, frame.size.height/2, frame.size.width, 1)];
-//                    seperatorLineView.backgroundColor=[UIColor lightGrayColor];
-//                }
-//
-//            }
-//            if (i==1)
-//            {
-//                userSettingsButton=[[UIButton alloc]initWithFrame:CGRectMake(0, userSettingsButton.frame.origin.x+userSettingsButton.frame.size.height+14, 160, 30)];
-//
-//            }
-//            [userSettingsButton setTitle:[subViewNamesArray objectAtIndex:i] forState:UIControlStateNormal];
-//            [userSettingsButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//            userSettingsButton.titleLabel.font=[UIFont systemFontOfSize:14];
-//            [userSettingsButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
-//
-//            NSString* selector=[NSString stringWithFormat:@"%@",[subViewNamesArray objectAtIndex:i]];
-//            selector = [selector stringByReplacingOccurrencesOfString:@" " withString:@""];
-//            [userSettingsButton addTarget:sender action:NSSelectorFromString(selector) forControlEvents:UIControlEventTouchUpInside];
-//
-//            //    [userSettingsButton setBackgroundColor:[UIColor colorWithRed:(i*155)/255.0 green:(i*155)/255.0 blue:(i*155)/255.0 alpha:1]];
-//            [self addSubview:userSettingsButton];
-//            self.layer.cornerRadius=2.0f;
-//            //            selectSetting
-//        }
-//        if (subViewNamesArray.count>1)
-//        [self addSubview:seperatorLineView];
-//        [overlay addSubview:self];
-//    }
-//    return overlay;
-//}
 
 - (UIView*)initWithFrame:(CGRect)frame andSubViews:(NSArray*)subViewNamesArray :(id)sender
 {
@@ -308,31 +242,13 @@
 - (UIView*)initWithFrame:(CGRect)frame offlineFrame:(CGRect)offlineFrame senderForInternetMessage :(id)sender
 {
     self = [super initWithFrame:frame];
-//    self.backgroundColor=[UIColor redColor];
-//    self.backgroundColor = [UIColor colorWithRed:47/255.0 green:79/255.0 blue:79/255.0 alpha:1];
-//    self.backgroundColor = [UIColor colorWithRed:242/255.0 green:64/255.0 blue:52/255.0 alpha:1];
-        self.backgroundColor = [UIColor colorWithRed:238/255.0 green:62/255.0 blue:51/255.0 alpha:1];
 
+//    self.backgroundColor = [UIColor colorWithRed:238/255.0 green:62/255.0 blue:51/255.0 alpha:1];
+    self.backgroundColor = [UIColor colorWithRed:110/255.0 green:144/255.0 blue:200/255.0 alpha:1];
 
     self.layer.cornerRadius = 10.0;
     overlay= [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]]; // black ovelrayview
-    
-//    UIView* offlineView = [[UIView alloc] initWithFrame:offlineFrame]; // black ovelrayview
-//
-//    offlineView.backgroundColor = [UIColor redColor];
-//
-//    UIButton* goOfflineButton = [[UIButton alloc]initWithFrame:CGRectMake((offlineView.frame.size.width/2) - 30, offlineView.frame.size.height*0.25, 60, 40)];
-//
-//    [goOfflineButton setFont:[UIFont systemFontOfSize:13]];
-//
-//    [goOfflineButton setTitle:@"Go Offline" forState:UIControlStateNormal];
-//
-//    [goOfflineButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
-//
-//    [goOfflineButton addTarget:sender action:@selector(goOfflineButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-//
-//    [offlineView addSubview:goOfflineButton];
-    
+
     overlay.tag=222;
     
     overlay.backgroundColor=[[UIColor blackColor] colorWithAlphaComponent:0.4];
@@ -343,24 +259,17 @@
 
     if (self)
     {
-        // Initialization code
-        // initilize all your UIView components
+       
         self.tag=223;
-        
-//        UILabel* dateAndTimeLabel=[[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width*0.05, self.frame.size.height*0.2, self.frame.size.width*0.9, 20)];
-        
+       
         UILabel* noInternetConnectionLabel=[[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width*0.05, self.frame.size.height*0.15, self.frame.size.width*0.9, 20)];
-        //audioRecordSlider.maximumValue=player.duration;
+        
         noInternetConnectionLabel.text=@"No Internet Connection";
         [noInternetConnectionLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
         noInternetConnectionLabel.textColor=[UIColor whiteColor];
         noInternetConnectionLabel.tag=224;
         noInternetConnectionLabel.textAlignment = NSTextAlignmentCenter;
-        
-//
-//        UIButton* playAndPauseButton = [[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width*0.25 - 30, self.frame.size.height*0.5, 60, 30)];
-        
-//                UIButton* playAndPauseButton = [[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width*0.25 - 30, self.frame.size.height*0.5, 60, 30)];
+ 
         
         if(alertCount == nil)
         {
@@ -370,8 +279,10 @@
             [retryButton setTitle:@"Retry" forState:UIControlStateNormal];
             [retryButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
             [retryButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16]];
-            [retryButton setBackgroundColor:[UIColor whiteColor]];
-            [retryButton setTitleColor:[UIColor colorWithRed:17/255.0 green:146/255.0 blue:(CGFloat)78/255.0 alpha:1] forState:UIControlStateNormal];
+//            [retryButton setBackgroundColor:[UIColor whiteColor]];
+            [retryButton setBackgroundColor:[UIColor colorWithRed:17/255.0 green:146/255.0 blue:(CGFloat)78/255.0 alpha:1]];
+//            [retryButton setTitleColor:[UIColor colorWithRed:17/255.0 green:146/255.0 blue:(CGFloat)78/255.0 alpha:1] forState:UIControlStateNormal];
+            [retryButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             retryButton.layer.cornerRadius = 5.0;
             [retryButton addTarget:sender action:@selector(refresh:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:noInternetConnectionLabel];
@@ -390,8 +301,10 @@
             [retryButton setTitle:@"Retry" forState:UIControlStateNormal];
             [retryButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
             [retryButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16]];
-            [retryButton setBackgroundColor:[UIColor whiteColor]];
-            [retryButton setTitleColor:[UIColor colorWithRed:17/255.0 green:146/255.0 blue:(CGFloat)78/255.0 alpha:1] forState:UIControlStateNormal];
+//            [retryButton setBackgroundColor:[UIColor whiteColor]];
+            [retryButton setBackgroundColor:[UIColor colorWithRed:17/255.0 green:146/255.0 blue:(CGFloat)78/255.0 alpha:1]];
+//            [retryButton setTitleColor:[UIColor colorWithRed:17/255.0 green:146/255.0 blue:(CGFloat)78/255.0 alpha:1] forState:UIControlStateNormal];
+            [retryButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             retryButton.layer.cornerRadius = 5.0;
             [retryButton addTarget:sender action:@selector(refresh:) forControlEvents:UIControlEventTouchUpInside];
             
@@ -402,8 +315,10 @@
             [goOfflineButton setTitle:@"Go Offline" forState:UIControlStateNormal];
             [goOfflineButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
             [goOfflineButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16]];
-            [goOfflineButton setBackgroundColor:[UIColor whiteColor]];
-            [goOfflineButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+//            [goOfflineButton setBackgroundColor:[UIColor whiteColor]];
+            [goOfflineButton setBackgroundColor:[UIColor colorWithRed:238/255.0 green:62/255.0 blue:51/255.0 alpha:1]];
+//            [goOfflineButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+            [goOfflineButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             goOfflineButton.layer.cornerRadius = 5.0;
             [goOfflineButton addTarget:sender action:@selector(goOfflineButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             

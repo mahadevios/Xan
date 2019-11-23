@@ -15,16 +15,16 @@
 //#define  BASE_URL_PATH_LOCAL                    @"http://192.168.3.79:8089/xan-dictate"
 
 //#define  BASE_URL_PATH                        @"http://192.168.2.9:8089/xan-dictate"
-#define  BASE_URL_PATH                          @"http://192.168.3.81:8089/xan-dictate"
+//#define  BASE_URL_PATH                          @"http://192.168.3.80:8089/xan-dictate"
 //#define  BASE_URL_PATH_LOCAL                    @"http://192.168.3.81:8089/xan-dictate"
+//#define  BASE_URL_PATH                          @"http://192.168.3.76:8089/xan-dictate"  // shruti
 
+#define  BASE_URL_PATH                          @"https://cfscommunicator.com:8443/xan_dictate"
 
 #define  FILE_UPLOAD_API                        @"mobileUploadAudio"
 
 //#define  BASE_URL_PATH_LOCAL                    @"http://192.168.3.80:8080/payU/fileOps"
 //#define  FILE_UPLOAD_API                        @"uploadAudio"
-
-
 
 
 #define  CHECK_DEVICE_REGISTRATION_API        @"verifyDeviceRegistration"
@@ -163,7 +163,7 @@
 #define RESPONSE_PIN_VERIFY                    @"pinVerify"
 #define RESPONSE_TC_FLAG                       @"tcFl"
 #define RESPONSE_MESSAGE                       @"responseMessage"
-#define SHARED_GROUP_IDENTIFIER                @"group.com.coreflexSolutions.Xan"
+#define SHARED_GROUP_IDENTIFIER                @"group.com.xanadutec.ace"
 
 
 #define JWT_TOKEN                              @"jwtToken"

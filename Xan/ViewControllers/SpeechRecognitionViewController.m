@@ -765,44 +765,6 @@
         dispatch_async(dispatch_get_main_queue(), ^
                        {
                            
-//                           if (isStartedNewRequest == true) // if resume
-//                           { // if it is a start of a new request(resume) then get the existing text and allocate that text to label
-//                               if (!isTrancriptFirstTimeFirstWord)
-//                               {
-//                                   isTrancriptFirstTimeFirstWord = true;
-//
-//                                   firstTimeManuallyEnteredText = self.transcriptionTextView.text;
-//
-//                                   NSLog(@"1");
-//                                   NSLog(@"1 firstTimeManuallyEnteredText = %@", firstTimeManuallyEnteredText);
-//                                   NSLog(@"1 transcription.formattedString = %@", transcription.formattedString);
-//
-//                                   self.transcriptionTextView.text = [firstTimeManuallyEnteredText stringByAppendingString:[NSString stringWithFormat:@" %@",transcription.formattedString]];
-//
-//                                   NSLog(@"1 addition = transcription.formattedString = %@", self.transcriptionTextView.text);
-//
-//                                   [self.previousTranscriptedArray replaceObjectAtIndex:0 withObject:self.transcriptionTextView.text];
-//
-//                               }
-//                               else
-//                               {
-//                                   NSString* text = [self.previousTranscriptedArray objectAtIndex:0];
-//
-//                                   NSLog(@"2");
-//                                   NSLog(@"2 text = %@", text);
-//                                   NSLog(@"2 transcription.formattedString = %@", transcription.formattedString);
-//
-//                                   self.transcriptionTextView.text = [text stringByAppendingString:[NSString stringWithFormat:@" %@",transcription.formattedString]];
-//
-//                                   NSLog(@"2 addition = transcription.formattedString = %@", self.transcriptionTextView.text);
-//
-//                               }
-//
-//
-//                           }
-//                           else
-//                           { // for first time when clicked on start and not on resume
-                           
                                if (!isTrancriptFirstTimeFirstWord)
                                {
                                    firstTimeManuallyEnteredText = self.transcriptionTextView.text;
@@ -819,13 +781,7 @@
 
                                    self.transcriptionTextView.text =  [NSString stringWithFormat:@"%@ %@", firstTimeManuallyEnteredText, [self.previousTranscriptedArray objectAtIndex:0]];
                                }
-                            
-                               
-                               
-//                           }
-                           
-                           NSLog(@"text = %@", [self.previousTranscriptedArray objectAtIndex:0]);
-                           
+
                            CGSize maximumLabelSize = CGSizeMake(96, FLT_MAX);
                            
                            CGSize expectedLabelSize = [self.transcriptionTextView.text sizeWithFont:[UIFont systemFontOfSize:10] constrainedToSize:maximumLabelSize lineBreakMode:UILineBreakModeWordWrap];
@@ -849,9 +805,6 @@
 }
 
 
-
-
-
 -(void)authorizeAndTranscribe:(UIButton*)sender
 {
     [SFSpeechRecognizer requestAuthorization:^(SFSpeechRecognizerAuthorizationStatus status) {
@@ -860,28 +813,9 @@
             switch (status)
             {
                 case SFSpeechRecognizerAuthorizationStatusAuthorized:
-                    
-                    
-                    
-//                    if ([[sender titleForState:UIControlStateNormal]  isEqual: @"Start Transcription"] || [[sender titleForState:UIControlStateNormal]  isEqual: @"Resume"])
-//                    {
-                        //[self transcribePreRecordedAudio];
+
                         [self transcribeLiveAudio];
-                        
-//                    }
-//                    else
-//                        if ([[sender titleForState:UIControlStateNormal]  isEqual: @"Transcript File"])
-//                        {
-//                            //                        dispatch_async(dispatch_get_main_queue(), ^{
-//
-//                            [self transcribePreRecordedAudio];
-//
-//                            //                        });
-//                        }
-//
-                    
-                    
-                    //[self transcribePreRecordedAudio];
+ 
                     break;
                     
                 case SFSpeechRecognizerAuthorizationStatusDenied:

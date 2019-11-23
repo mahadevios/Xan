@@ -44,7 +44,9 @@
     
     NSString* selectedTemplateName;
 }
+@property (weak, nonatomic) IBOutlet UIView *insideView;
 
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property(nonatomic)long listSelected;
 @property(nonatomic)long selectedRow;
 - (IBAction)backButtonPressed:(id)sender;

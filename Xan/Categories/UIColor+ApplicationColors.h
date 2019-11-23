@@ -20,8 +20,8 @@
 +(UIColor*)CLightRedColor;
 +(UIColor*)CLightBlueColor;
 +(UIColor*)CBlueRecordingOnColor;
-+(UIColor*)CUploadLaterLGaryColor;
-+(UIColor*)CUploadLaterDGaryColor;
+//+(UIColor*)CUploadLaterLGaryColor;
+//+(UIColor*)CUploadLaterDGaryColor;
 
 
 +(UIColor*)darkHomeColor;

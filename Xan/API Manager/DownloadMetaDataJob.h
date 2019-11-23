@@ -62,9 +62,9 @@
 
 -(id) initWithdownLoadEntityJobName:(NSString *) jobName withRequestParameter:(id) localRequestParameter withResourcePath:(NSString *) resourcePath withHttpMethd:(NSString *) httpMethodParameter downloadMethodType:(NSString*)downloadMethodType;
 
--(void)downloadFileUsingNSURLSession:(NSString*)str;
+//-(void)downloadFileUsingNSURLSession:(NSString*)str;
 
--(void)uploadDocxFileAfterGettingdatabaseValues:(NSString*)fileName;
+//-(void)uploadDocxFileAfterGettingdatabaseValues:(NSString*)fileName;
 
 -(void) startMetaDataDownLoad;
 
