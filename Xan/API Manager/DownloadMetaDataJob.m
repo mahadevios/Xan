@@ -550,6 +550,37 @@
         }
     }
     else
+        if([self.downLoadEntityJobName isEqualToString:AUDIO_DOWNLOAD_API])
+        {
+//            NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:byteCodeString options:0];
+//            NSString* fileName = [response valueForKey:@"fileName"];
+//
+//            NSData* fileData = [response valueForKey:@"fileData"];
+
+            NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads/%@",@"database3"]];
+            
+            NSString* newDestPath = [destpath stringByAppendingPathExtension:@"properties"];
+            
+            NSString* filePath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads"]];
+            
+            
+            if (![[NSFileManager defaultManager] fileExistsAtPath:newDestPath])
+            {
+                NSError* error;
+                if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
+                    [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+                
+                [responseData writeToFile:newDestPath atomically:YES];
+                
+            }
+            else
+            {
+                [responseData writeToFile:destpath atomically:YES];
+                
+            }
+            
+        }
+    else
     if ([self.downLoadEntityJobName isEqualToString:FILE_DOWNLOAD_API])
     {
         

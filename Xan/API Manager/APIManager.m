@@ -259,11 +259,7 @@ static APIManager *singleton = nil;
         NSData *macIdEncData = [macIdData AES256EncryptWithKey:SECRET_KEY];
       
         NSString* macIdEncString = [macIdEncData base64EncodedStringWithOptions:0];
-        //oWjUNRS+fxO+JEDlWw5BC6uoRRPWWoynetqTa8cqWfp2o5fPt56pl/cnK4lqgA8g
-        //oWjUNRS+fxO+JEDlWw5BC6uoRRPWWoynetqTa8cqWfp2o5fPt56pl/cnK4lqgA8g
-//        macIdEncString =
-//        [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
-        
+       
         NSString* initVector = [AppPreferences sharedAppPreferences].iniVector;
         
         macIdEncString = [[macIdEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:initVector];
@@ -676,6 +672,39 @@ static APIManager *singleton = nil;
     
     
 }
+
+-(void) downloadAudioFile
+{
+    if ([[AppPreferences sharedAppPreferences] isReachable])
+    {
+       
+        NSString* macIdEncString = @"fileName";
+      
+        
+       
+        
+        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"fileName", nil];
+        
+        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
+        
+        //        NSString* downloadMethodType = @"Bearer";
+        
+        
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:AUDIO_DOWNLOAD_API withRequestParameter:array withResourcePath:AUDIO_DOWNLOAD_API withHttpMethd:POST downloadMethodType:@""] ;
+        
+        downloadmetadatajob.contentType = @"download";
+        
+        [downloadmetadatajob startMetaDataDownLoad];
+    }
+    else
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+    }
+    
+}
+
+
+
 -(void)downloadFileUsingConnection:(NSString*)mobielDictationIdVal
 {
     if ([[AppPreferences sharedAppPreferences] isReachable])
@@ -1235,29 +1264,33 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
     NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
     
-    if (transferStatus==0)//if not transferred
+    switch (transferStatus)
     {
-        transferStatus=1;//send 1
+        case 0://if not transferred
+            transferStatus=1;
+            break;
+        
+        case 1: //if transferred
+            transferStatus=5;
+            break;
+            
+        case 2: // if failed
+            transferStatus=1;
+            break;
+            
+        case 3: //if resend
+            transferStatus=5;
+            break;
+            
+        case 4: // if resendfailed
+            transferStatus=5;
+            break;
+            
+        default:
+            transferStatus=5;
+            break;
+    }
 
-    }
-    else if(transferStatus==1)//if transferred
-    {
-        transferStatus=5;//send 5
-    }
-    else if(transferStatus==2)// if failed
-    {
-        transferStatus=1;//send 1
-    }
-    else if(transferStatus==3)//if resend
-    {
-        transferStatus=5;//send 5
-    }
-    else if(transferStatus==4) // if resendfailed
-    {
-        transferStatus=5;// send 5
-    }
-   
-    
     
     if ([departmentId  isEqual: @"0"])
     {
@@ -1271,6 +1304,8 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
     NSString* templateCode = [[Database shareddatabase] getTemplateNameFromFilename:filenameForTaskIdentifier];
     
+    NSString* priorityId = [[Database shareddatabase] getPriorityIdFromFilename:filenameForTaskIdentifier];
+
     NSDictionary *params = @{@"macId"     : macId,
                              @"fileSize" :[NSString stringWithFormat:@"%d", filesizeint],
                              @"fileDuration" :fileDuraion,
@@ -1278,6 +1313,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
                              @"transferStatus" : [NSString stringWithFormat:@"%d", transferStatus],
                              @"mobileDictationIdVal" : [NSString stringWithFormat:@"%d", mobileDictationIdVal],
                              @"templateCode" : templateCode,
+                             @"urgentFl" : priorityId,
                              };
     // NSString* authorisation=[NSString stringWithFormat:@"%@*%d*%ld*%d*%d",macId,filesizeint,deptObj.Id,1,0];
    

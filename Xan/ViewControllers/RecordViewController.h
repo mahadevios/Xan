@@ -108,8 +108,13 @@
     NSMutableArray* templateNamesArray;
     
     NSString* selectedTemplateName;
+    
+    NSString* recentlySelectedTemplateName;
 //    bool recordingSavedToDatabaseFromBG;
-
+    UIImageView* urgentImageView;
+    
+    BOOL checkBoxSelected;
+    
 }
 @property (nonatomic,strong)     AVAudioPlayer       *player;
 @property (nonatomic,strong)     AVAudioRecorder     *recorder;

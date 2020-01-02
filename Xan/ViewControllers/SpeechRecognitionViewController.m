@@ -1098,7 +1098,7 @@
         
         docFileDetails.audioFileName = docFileName;
         
-        docFileDetails.uploadStatus = NOUPLOAD;
+        docFileDetails.uploadStatus = VRSDOC_NOUPLOAD;
         
         docFileDetails.deleteStatus = NODELETE;
         

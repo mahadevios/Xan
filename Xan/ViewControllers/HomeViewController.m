@@ -308,8 +308,19 @@
 
         NSString* deptCode = [responseDict valueForKey:@"departmentCode"];
 
-//        [[AppPreferences sharedAppPreferences].tempalateListDict setValue:templateCode forKey:templateName];
+        NSString* defaultFl = [responseDict valueForKey:@"defaultFl"];
 
+//        [[AppPreferences sharedAppPreferences].tempalateListDict setValue:templateCode forKey:templateName];
+        if (!(defaultFl == nil || [defaultFl isEqual:[NSNull null]]))
+        {
+            if ([defaultFl isEqualToString:@"1"])
+            {
+                [[NSUserDefaults standardUserDefaults] setObject:templateName forKey:[NSString stringWithFormat:@"%@",deptCode]];
+                
+            }
+        }
+      
+        
         Template* tempObj = [Template new];
         
         tempObj.templateId = templateCode;
@@ -321,7 +332,16 @@
         [[Database shareddatabase] insertTemplateListData:tempObj];
     }
 
+    // set default template
+     [[NSUserDefaults standardUserDefaults] setObject:@"new template_7052" forKey:[NSString stringWithFormat:@"dept0000002"]];
     
+    [[NSUserDefaults standardUserDefaults] setObject:@"asdasd_5187" forKey:[NSString stringWithFormat:@"dept0000003"]];
+    
+    if (responseArray.count == 0)
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"DefaultTemplate"];
+
+    }
    
     [hud hideAnimated:YES];
     

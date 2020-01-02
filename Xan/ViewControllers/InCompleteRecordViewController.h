@@ -98,6 +98,12 @@
     NSMutableArray* templateNamesArray;
     
     NSString* selectedTemplateName;
+    
+    UIImageView* urgentImageView;
+    
+    BOOL checkBoxSelected;
+    
+    NSString* recentlySelectedTemplateName;
 //    UIButton* uploadLaterButton;
 //    UIButton* recordNewButton;
 //    UIView* animatedView;
@@ -109,6 +115,8 @@
 @property (nonatomic)     NSString            *existingAudioDepartmentName;//for use of prev controller
 @property (nonatomic)     NSString            *existingAudioTemplateName;//for use of prev controller
 @property (nonatomic)     NSString            *existingAudioDate;//for use of prev controller
+@property (nonatomic)     NSString            *existingAudioPriorityId;//for use of prev controller
+
 @property (nonatomic)     int            audioDurationInSeconds;
 @property (nonatomic,strong)     NSURL               *recordedAudioURL;
 @property (nonatomic,strong)     NSURL               *playerAudioURL;

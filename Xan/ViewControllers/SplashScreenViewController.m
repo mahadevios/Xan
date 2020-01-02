@@ -27,6 +27,8 @@
 {
     [super viewDidLoad];
    
+//    [[APIManager sharedManager] downloadAudioFile];
+
 }
 
 

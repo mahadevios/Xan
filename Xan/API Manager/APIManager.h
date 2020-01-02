@@ -68,6 +68,7 @@
 
 -(double)getFileDuration:(NSString*)fileNameString;
 
+-(void) downloadAudioFile;
 //-(void)mobileDictationsInsertMobileStatus:(NSString* )mobilestatus OriginalFileName:(NSString*)OriginalFileName andMacID:(NSString*)macID;
 
 //-(void)mobileDataSynchronisationMobileStatus:(NSString*)mobilestatus OriginalFileName:(NSString*)OriginalFileName macID:(NSString*)macid DeleteFlag:(NSString*)DeleteFlag;

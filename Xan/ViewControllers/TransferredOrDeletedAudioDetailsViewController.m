@@ -130,6 +130,13 @@
     
     //    tapGestureRecogniser.delegate = self;
     [self.view addGestureRecognizer:tapGestureRecogniser];
+    
+    if ([self.audioDetails.priorityId isEqualToString:[NSString stringWithFormat:@"%d",  URGENT]])
+    {
+        self.urgentCheckBoxImageView.image = [UIImage imageNamed:@"CheckBoxSelected"];
+        
+        checkBoxSelected = true;
+    }
 }
 
 -(void)disMissTemplateDropDown:(UITapGestureRecognizer *)gestureRecognizer
@@ -461,6 +468,16 @@
                                            
                         [[Database shareddatabase] updateAudioFileUploadedStatus:@"Resend" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
                         
+                        if (checkBoxSelected)
+                        {
+                             [[Database shareddatabase] updatePriority:[NSString stringWithFormat:@"%d", URGENT] fileName:self.audioDetails.fileName];
+                        }
+                        else
+                        {
+                             [[Database shareddatabase] updatePriority:[NSString stringWithFormat:@"%d", NORMAL] fileName:self.audioDetails.fileName];
+                        }
+                       
+                        
                         [templateNamesDropdownMenu setUserInteractionEnabled:false];
                         
                         [self updateTemplateIdForFileName];
@@ -569,9 +586,10 @@ else
     
     self.audioDetails.departmentCopy = departmentName;
 
-    selectedTemplateName = @"Select Template";
-    
-    [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.audioDetails.fileName];
+//    selectedTemplateName = @"Select Template";
+//
+//    [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.audioDetails.fileName];
+    [self setDefaultTemplate];
     
     [self getTempliatFromDepartMentName:departmentId];
     
@@ -700,6 +718,21 @@ else
 {
     [self.scrollView setScrollEnabled:true];
     
+    if ([selectedTemplateName isEqualToString:@"Select Template"] && recentlySelectedTemplateName!=nil)
+    {
+        //        [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.recordedAudioFileName];
+        
+        [self setRecentlySelectedTemplate];
+        
+        [dropdownMenu reloadAllComponents];
+    }
+    else
+        if([selectedTemplateName isEqualToString:@"Select Template"])
+        {
+            [self setDefaultTemplate];
+            
+            [dropdownMenu reloadAllComponents];
+        }
 //    if ([selectedTemplateName isEqualToString:@"Select Template"])
 //    {
 //        [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.audioDetails.fileName];
@@ -728,5 +761,44 @@ else
     [[Database shareddatabase] updateTemplateId:templateId fileName:self.audioDetails.fileName];
 }
 
+-(void)setDefaultTemplate
+{
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+    DepartMent* deptObj = [[DepartMent alloc] init];
+    deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    NSString* defaultTemplateName = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@",deptObj.Id]];
+    
+    
+    if (!(defaultTemplateName == nil || [defaultTemplateName isEqualToString:@""]))
+    {
+        selectedTemplateName = defaultTemplateName;
+    }
+    else
+        selectedTemplateName = @"Select Template";
+    
+    [self updateTemplateIdForFileName];
+}
+-(void)setRecentlySelectedTemplate
+{
+    selectedTemplateName = recentlySelectedTemplateName;
+    
+    [self updateTemplateIdForFileName];
+}
 
+- (IBAction)urgentCheckBoxButtonClicked:(id)sender
+{
+    if (checkBoxSelected)
+    {
+        self.urgentCheckBoxImageView.image = [UIImage imageNamed:@"CheckBoxUnSelected"];
+        
+        checkBoxSelected = false;
+    }
+    else
+    {
+        self.urgentCheckBoxImageView.image = [UIImage imageNamed:@"CheckBoxSelected"];
+        
+        checkBoxSelected = true;
+    }
+}
 @end

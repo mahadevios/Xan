@@ -22,11 +22,11 @@
 {
     [super viewDidLoad];
     
-    hud.minSize = CGSizeMake(150.f, 100.f);
-    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeIndeterminate;
-    hud.label.text = @"Loading Data...";
-    hud.detailsLabel.text = @"Please wait";
+//    hud.minSize = CGSizeMake(150.f, 100.f);
+//    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    hud.mode = MBProgressHUDModeIndeterminate;
+//    hud.label.text = @"Loading Data...";
+//    hud.detailsLabel.text = @"Please wait";
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(validateTandCResponse:) name:NOTIFICATION_ACCEPT_TANDC_API
@@ -44,6 +44,7 @@
     self.privacyPolicyLinkTextVIew.attributedText = str;
     self.privacyPolicyLinkTextVIew.font = [UIFont systemFontOfSize:14];
     // Do any additional setup after loading the view.
+
 }
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)url inRange:(NSRange)characterRange
@@ -87,121 +88,101 @@
     
 //    [self setTcContent:tc];
     
-    NSString *filePath=[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"TCsFinal.docx"];
-
-    [self.webView setDelegate:self];
-    self.webView.scrollView.delegate = self;
-    NSURL *url = [NSURL fileURLWithPath:filePath];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    [self.webView scalesPageToFit];
-    [self.webView loadRequest:request];
-    self.webView.scrollView.alwaysBounceVertical = false;
-    self.webView.scrollView.alwaysBounceHorizontal = false;
-    self.webView.scrollView.bounces = false;
-    self.webView.hidden = true;
-//    [self.webView sizeToFit];
-}
-
--(void)webViewDidFinishLoad:(UIWebView *)webView{
-//    [self zoomToFit];
-//    [webView scalesPageToFit];
     
-    
-    [webView.scrollView setContentSize: CGSizeMake(webView.frame.size.width, webView.scrollView.contentSize.height)];
-
-    float scale;
-    
-    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    if ([self.view viewWithTag:400] == nil)
     {
-       scale = 70000/webView.scrollView.frame.size.width;
+        CGRect webViewFrame = CGRectMake(self.view.frame.origin.x,self.navigationView.frame.origin.y+self.navigationView.frame.size.height, self.view.frame.size.width, self.view.frame.size.height-180);
+        self.wkWebView = [[WKWebView alloc] initWithFrame:webViewFrame];
+        self.wkWebView.tag = 400;
+        NSString *filePath=[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"TCsFinal.docx"];
+        NSURLRequest *loadDataRequest = [NSURLRequest requestWithURL:[NSURL fileURLWithPath:filePath]];
+        self.wkWebView.navigationDelegate = self;
+        [self.wkWebView loadRequest:loadDataRequest];
+       
+        [self.wkWebView setUserInteractionEnabled:true];
+        [self.view addSubview:self.wkWebView];
     }
-    else
-    {
-       scale = 20000/webView.scrollView.frame.size.width;
-    }
+    
+    
   
-    NSString *jsString = [[NSString alloc] initWithFormat:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '%f%%'", scale];
-    [webView stringByEvaluatingJavaScriptFromString:jsString];
-    
-    NSInteger height = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight;"] intValue];
 
-    NSString* javascript = [NSString stringWithFormat:@"window.scrollBy(0, %ld);", (long)height];
-    [webView stringByEvaluatingJavaScriptFromString:javascript];
-    
-    if (!isScrollViewLoadedOnce)
-    {
-        [hud removeFromSuperview];
-//        [hud hideAnimated:true];
-        NSString* javascript = [NSString stringWithFormat:@"window.scrollBy(67, %ld);", (long)height];
-        [webView stringByEvaluatingJavaScriptFromString:javascript];
-        isScrollViewLoadedOnce = true;
-    }
-    else
-    {
-        self.webView.hidden = false;
-    }
-    
-    
-//    [webView.scrollView setContentOffset:CGPointMake(100, webView.scrollView.contentSize.height)];
-
-   
+//    [self.webView setDelegate:self];
+//    self.webView.scrollView.delegate = self;
+//    NSURL *url = [NSURL fileURLWithPath:filePath];
+//    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+//    [self.webView scalesPageToFit];
+//    [self.webView loadRequest:request];
+//    self.webView.scrollView.alwaysBounceVertical = false;
+//    self.webView.scrollView.alwaysBounceHorizontal = false;
+//    self.webView.scrollView.bounces = false;
+//    self.webView.hidden = true;
 }
 
-
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
+-(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
-    if (scrollView.contentOffset.x < 67)
-        scrollView.contentOffset = CGPointMake(67, scrollView.contentOffset.y);
+//    double h = self.wkWebView.scrollView.contentSize.height;
+//    double hh = webView.frame.size.height;
+//
+//    CGPoint point = CGPointMake(0, self.wkWebView.scrollView.contentSize.height -  webView.frame.size.height);
+//
+//    [webView.scrollView setContentOffset:point animated:true];
 }
-- (void)zoomToFit
-{
-    if ([self.webView respondsToSelector:@selector(scrollView)])
-    {
-        UIScrollView *scrollView = [self.webView scrollView];
-        
-        float zoom = self.webView.bounds.size.width / scrollView.contentSize.width;
-        scrollView.minimumZoomScale = zoom;
-        [scrollView setZoomScale:zoom animated:YES];
-    }
-}
-//-(void)setTcContent:(NSString*) content
+//-(void)webViewDidFinishLoad:(UIWebView *)webView
 //{
-//    UILabel* feedText= self.TCcontentLabel;
 //
-//    NSString* detailMessage = content;
+//    [webView.scrollView setContentSize: CGSizeMake(webView.frame.size.width, webView.scrollView.contentSize.height)];
 //
-//    feedText.text=detailMessage;
+//    float scale;
 //
-//    NSLog(@"text = %@", feedText.text);
+//    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+//    {
+//       scale = 70000/webView.scrollView.frame.size.width;
+//    }
+//    else
+//    {
+//       scale = 20000/webView.scrollView.frame.size.width;
+//    }
 //
-//    CGSize maximumLabelSize = CGSizeMake(96, FLT_MAX);
+//    NSString *jsString = [[NSString alloc] initWithFormat:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '%f%%'", scale];
+//    [webView stringByEvaluatingJavaScriptFromString:jsString];
 //
-//    CGSize expectedLabelSize = [detailMessage sizeWithFont:feedText.font constrainedToSize:maximumLabelSize lineBreakMode:feedText.lineBreakMode];
+//    NSInteger height = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight;"] intValue];
 //
-//    //adjust the label the the new height.
-////    CGRect newFrame = feedText.frame;
-////    newFrame.size.height = expectedLabelSize.height;
-////    feedText.frame = newFrame;
-//    [feedText sizeToFit];
+//    NSString* javascript = [NSString stringWithFormat:@"window.scrollBy(0, %ld);", (long)height];
+//    [webView stringByEvaluatingJavaScriptFromString:javascript];
 //
-////    CGRect newFrame1 = self.insideView.frame;
-////    newFrame1.size.height = expectedLabelSize.height;
-////    self.insideView.frame = newFrame1;
+//    if (!isScrollViewLoadedOnce)
+//    {
+//        [hud removeFromSuperview];
+////        [hud hideAnimated:true];
+//        NSString* javascript = [NSString stringWithFormat:@"window.scrollBy(67, %ld);", (long)height];
+//        [webView stringByEvaluatingJavaScriptFromString:javascript];
+//        isScrollViewLoadedOnce = true;
+//    }
+//    else
+//    {
+//        self.webView.hidden = false;
+//    }
 //
-//    self.insideViewHeight.constant = expectedLabelSize.height;
-//    self.tcLabelHeight.constant = expectedLabelSize.height;
-////    self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width - 10, 64000);
-////    [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width - 10, feedText.frame.size.height)];
 //}
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+
+//-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    if (scrollView.contentOffset.x < 67)
+//        scrollView.contentOffset = CGPointMake(67, scrollView.contentOffset.y);
+//}
+//- (void)zoomToFit
+//{
+//    if ([self.webView respondsToSelector:@selector(scrollView)])
+//    {
+//        UIScrollView *scrollView = [self.webView scrollView];
+//
+//        float zoom = self.webView.bounds.size.width / scrollView.contentSize.width;
+//        scrollView.minimumZoomScale = zoom;
+//        [scrollView setZoomScale:zoom animated:YES];
+//    }
+//}
 
 - (IBAction)checkBoxButtonClicked:(id)sender
 {
@@ -218,6 +199,7 @@
         checkBoxSelected = true;
     }
 }
+
 - (IBAction)tcSubmitButtonClicked:(id)sender
 {
     if (checkBoxSelected == true)
@@ -250,4 +232,6 @@
         
     }
 }
+
+
 @end
