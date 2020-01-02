@@ -284,6 +284,7 @@
     vc.existingAudioDate=dateLabel.text;
     vc.audioDurationInSeconds = audioDurationInSeconds;
     vc.existingAudioTemplateName = audioDetails.templateName;
+    vc.existingAudioPriorityId = audioDetails.priorityId;
     [self presentViewController:vc animated:YES completion:nil];
    
 }

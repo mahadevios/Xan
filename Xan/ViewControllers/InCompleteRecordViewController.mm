@@ -1664,7 +1664,33 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     templateNamesDropdownMenu.layer.borderColor = [UIColor darkGrayColor].CGColor;
     //audioRecordSlider.userInteractionEnabled=NO;
     
-    UIButton* uploadAudioButton=[[UIButton alloc]initWithFrame:CGRectMake(animatedView.frame.size.width*0.1, templateNamesDropdownMenu.frame.origin.y +  templateNamesDropdownMenu.frame.size.height+20, animatedView.frame.size.width*0.8, 36)];
+    
+    urgentImageView=[[UIImageView alloc]initWithFrame:CGRectMake(animatedView.frame.size.width*0.1, templateNamesDropdownMenu.frame.origin.y +  templateNamesDropdownMenu.frame.size.height+5, 25, 25)];
+    
+    if ([self.existingAudioPriorityId isEqualToString:[NSString stringWithFormat:@"%d",URGENT]])
+    {
+        urgentImageView.image = [UIImage imageNamed:@"CheckBoxSelected"];
+        
+        checkBoxSelected = true;
+    }
+    else
+    {
+        [urgentImageView setImage:[UIImage imageNamed:@"CheckBoxUnSelected"]];
+
+        checkBoxSelected = false;
+
+    }
+    //    [urgentImageView setBackgroundColor:[UIColor redColor]];
+    
+    UIButton* urgentButton=[[UIButton alloc]initWithFrame:CGRectMake(urgentImageView.frame.origin.x, urgentImageView.frame.origin.y, 36, 36)];
+    [urgentButton setCenter:urgentImageView.center];
+    [urgentButton addTarget:self action:@selector(urgentButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UILabel* urgentLabel=[[UILabel alloc]initWithFrame:CGRectMake(urgentImageView.frame.origin.x + urgentImageView.frame.size.width + 10, urgentImageView.frame.origin.y, 200, 25)];
+    urgentLabel.textAlignment = NSTextAlignmentLeft;
+    [urgentLabel setText:@"Urgent"];
+    
+    UIButton* uploadAudioButton=[[UIButton alloc]initWithFrame:CGRectMake(animatedView.frame.size.width*0.1, urgentLabel.frame.origin.y +  urgentLabel.frame.size.height+10, animatedView.frame.size.width*0.8, 36)];
     
     uploadAudioButton.backgroundColor=[UIColor darkHomeColor];
     
@@ -1766,6 +1792,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [animatedView addSubview:templateNamesDropdownMenu];
     
+    [animatedView addSubview:urgentImageView];
+    [animatedView addSubview:urgentButton];
+    [animatedView addSubview:urgentLabel];
+    
     animatedView.backgroundColor=[UIColor whiteColor];
     
     [[self.view viewWithTag:701] setHidden:NO];
@@ -1789,6 +1819,35 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 
 
+-(void)urgentButtonClicked:(UIButton*)sender
+{
+    if (checkBoxSelected)
+    {
+        urgentImageView.image = [UIImage imageNamed:@"CheckBoxUnSelected"];
+        
+        checkBoxSelected = false;
+        
+        [[Database shareddatabase] updatePriority:[NSString stringWithFormat:@"%d", NORMAL] fileName:self.existingAudioFileName];
+        
+        NSDictionary* delegateDict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d", NORMAL],@"PriorityId", nil];
+        
+        [self.delegate updateData:delegateDict];
+
+    }
+    else
+    {
+        urgentImageView.image = [UIImage imageNamed:@"CheckBoxSelected"];
+        
+        checkBoxSelected = true;
+        
+        [[Database shareddatabase] updatePriority:[NSString stringWithFormat:@"%d", URGENT] fileName:self.existingAudioFileName];
+        
+        NSDictionary* delegateDict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d", URGENT],@"PriorityId", nil];
+        
+        [self.delegate updateData:delegateDict];
+
+    }
+}
 #pragma mark:AudioSlider actions
 
 -(void)sliderValueChanged
@@ -2897,9 +2956,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [self getTempliatFromDepartMentName:deptObj.Id];
     
-    selectedTemplateName = @"Select Template";
-    
-    [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.existingAudioFileName];
+//    selectedTemplateName = @"Select Template";
+//
+//    [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.existingAudioFileName];
+    [self setDefaultTemplate];
     
     [templateNamesDropdownMenu reloadAllComponents];
     
@@ -3627,19 +3687,44 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 {
    
     
-    if ([selectedTemplateName isEqualToString:@"Select Template"])
+//    if ([selectedTemplateName isEqualToString:@"Select Template"])
+//    {
+//        [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.existingAudioFileName];
+//
+//        NSDictionary* delegateDict = [[NSDictionary alloc] initWithObjectsAndKeys:selectedTemplateName,@"TemplateName", nil];
+//
+//        [self.delegate updateData:delegateDict];
+//    }
+    if ([selectedTemplateName isEqualToString:@"Select Template"] && recentlySelectedTemplateName!=nil)
     {
-        [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.existingAudioFileName];
+        //        [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.recordedAudioFileName];
+        
+        [self setRecentlySelectedTemplate];
+        
+        [dropdownMenu reloadAllComponents];
         
         NSDictionary* delegateDict = [[NSDictionary alloc] initWithObjectsAndKeys:selectedTemplateName,@"TemplateName", nil];
         
         [self.delegate updateData:delegateDict];
     }
+    else
+        if([selectedTemplateName isEqualToString:@"Select Template"])
+        {
+            [self setDefaultTemplate];
+            
+            [dropdownMenu reloadAllComponents];
+            
+            NSDictionary* delegateDict = [[NSDictionary alloc] initWithObjectsAndKeys:selectedTemplateName,@"TemplateName", nil];
+            
+            [self.delegate updateData:delegateDict];
+        }
 }
 
 -(void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     selectedTemplateName = [templateNamesArray objectAtIndex:row];
+    
+    recentlySelectedTemplateName = selectedTemplateName;
     
     [self updateTemplateIdForFileName];
     
@@ -3664,6 +3749,34 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     }
     
     [[Database shareddatabase] updateTemplateId:templateId fileName:self.existingAudioFileName];
+}
+
+-(void)setDefaultTemplate
+{
+//    self.existingAudioDepartmentName
+   NSString* departmentId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:self.existingAudioDepartmentName];
+//    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+//    DepartMent* deptObj = [[DepartMent alloc] init];
+//    deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    NSString* defaultTemplateName = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@",departmentId]];
+    
+    
+    if (!(defaultTemplateName == nil || [defaultTemplateName isEqualToString:@""]))
+    {
+        selectedTemplateName = defaultTemplateName;
+    }
+    else
+        selectedTemplateName = @"Select Template";
+    
+    [self updateTemplateIdForFileName];
+}
+
+-(void)setRecentlySelectedTemplate
+{
+    selectedTemplateName = recentlySelectedTemplateName;
+    
+    [self updateTemplateIdForFileName];
 }
 
 @end

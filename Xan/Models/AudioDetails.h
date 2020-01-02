@@ -24,5 +24,6 @@
 @property(nonatomic, strong) NSString* deleteStatus;
 @property(nonatomic, strong) NSString* deleteDate;
 @property(nonatomic, strong) NSString* templateName;
+@property(nonatomic, strong) NSString* priorityId;
 
 @end

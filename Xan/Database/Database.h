@@ -138,4 +138,8 @@
 
 -(NSString*)getTemplateNameFromFilename:(NSString*)filename;
 
+-(void)updatePriority:(NSString*)prioityId fileName:(NSString*)fileName;
+
+-(NSString*)getPriorityIdFromFilename:(NSString*)filename;
+
 @end
