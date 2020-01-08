@@ -81,4 +81,5 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *insideView;
 - (IBAction)transferDictationButtonClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *urgentCheckboxButton;
 @end

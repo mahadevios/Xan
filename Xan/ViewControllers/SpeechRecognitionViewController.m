@@ -524,6 +524,8 @@
         
         vc.delegate = self;
         
+        vc.modalPresentationStyle = UIModalPresentationFullScreen;
+        
         [self presentViewController:vc animated:YES completion:nil];
     }
         

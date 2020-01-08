@@ -926,6 +926,8 @@
                         detailVC.selectedView = self.currentViewName;
                     }
                     
+                    detailVC.modalPresentationStyle = UIModalPresentationFullScreen;
+                    
                     [self.navigationController presentViewController:detailVC animated:YES completion:nil];
                     //                self.tableView.allowsMultipleSelection = NO;
                     
@@ -949,6 +951,7 @@
                     AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
                     vc.audioDetails = audioDetails;
                     vc.selectedView=self.currentViewName;
+                    vc.modalPresentationStyle = UIModalPresentationFullScreen;
                     [self.navigationController presentViewController:vc animated:YES completion:nil];
                     //                self.tableView.allowsMultipleSelection = NO;
                     
@@ -967,6 +970,7 @@
                 AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
                 vc.audioDetails = audioDetails;
                 vc.selectedView=self.currentViewName;
+                vc.modalPresentationStyle = UIModalPresentationFullScreen;
                 [self.navigationController presentViewController:vc animated:YES completion:nil];
             }
     

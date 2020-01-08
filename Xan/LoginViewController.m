@@ -36,6 +36,7 @@
 #import "MainTabBarViewController.h"
 #import "NSData+AES256.h"
 #import "Keychain.h"
+#import "SelectDepartmentViewController.h"
 
 @interface LoginViewController ()
 
@@ -128,7 +129,11 @@
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"])
     {
-        [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"] animated:NO completion:nil];
+        SelectDepartmentViewController* viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"];
+        
+        viewController.modalPresentationStyle = UIModalPresentationFullScreen;
+        
+        [self presentViewController:viewController animated:NO completion:nil];
     }
     else
         [self dismissViewControllerAnimated:NO completion:nil];
@@ -505,7 +510,11 @@
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"])
                 {
                     [pinCode4TextField resignFirstResponder];
-                    [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"] animated:NO completion:nil];
+                    
+                    SelectDepartmentViewController* viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"];
+                    viewController.modalPresentationStyle = UIModalPresentationFullScreen;
+                    
+                    [self presentViewController:viewController animated:NO completion:nil];
                 }
                 else
                 {
@@ -571,5 +580,7 @@
     [pinCode1TextField becomeFirstResponder];
     
     [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Hit home button to exit" withMessage:@"" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+}
+- (IBAction)urgentCheckboxButton:(id)sender {
 }
 @end

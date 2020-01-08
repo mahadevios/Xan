@@ -69,6 +69,9 @@
     if ([responseCodeString intValue]==200)
     {
         
+        LoginViewController* viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        viewController.modalPresentationStyle = UIModalPresentationFullScreen;
+        
          [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"] animated:NO completion:nil];
        
     }
