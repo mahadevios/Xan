@@ -490,6 +490,8 @@
         }
         if (indexPath.section==2 && indexPath.row==0)
         {
+            UIViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ChangePasswordViewController"];
+            vc.modalPresentationStyle = UIModalPresentationFullScreen;
             [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"ChangePasswordViewController"] animated:YES completion:nil];
         }
     }

@@ -234,6 +234,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         vc.audioDetails = audioDetails;
         
+        vc.modalPresentationStyle = UIModalPresentationFullScreen;
         
         if (self.splitViewController.isCollapsed)
         {

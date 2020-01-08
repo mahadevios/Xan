@@ -403,6 +403,9 @@
                             LoginViewController* regiController=(LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
                             [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:NO completion:nil];
                             
+            
+                            regiController.modalPresentationStyle = UIModalPresentationFullScreen;
+            
                             [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:regiController
                                                                                                          animated:NO
                                                                                                        completion:nil];

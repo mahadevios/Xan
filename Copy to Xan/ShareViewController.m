@@ -100,10 +100,10 @@ SLComposeSheetConfigurationItem *item;
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopRotation:) name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
-- (UIStatusBarStyle) preferredStatusBarStyle
-{
-    return UIStatusBarStyleBlackTranslucent;
-}
+//- (UIStatusBarStyle) preferredStatusBarStyle
+//{
+//    return UIStatusBarStyleBlackTranslucent;
+//}
 - (InterfaceOrientationType)orientation{
     
     CGFloat scale = [UIScreen mainScreen].scale;

@@ -72,5 +72,6 @@
 @property (nonatomic, weak) id <MyClassDelegate> delegate; //define MyClassDelegate as delegate@property (weak, nonatomic) IBOutlet NSLayoutConstraint *;
 - (IBAction)urgentCheckBoxButtonClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIImageView *urgentCheckBoxImageView;
+@property (weak, nonatomic) IBOutlet UIButton *urgentCheckboxButton;
 
 @end

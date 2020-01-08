@@ -2383,6 +2383,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
     [APIManager sharedManager].userSettingsOpened=YES;
     [APIManager sharedManager].userSettingsClosed=NO;
+    
+    UIViewController* vc = [self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"];
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
+    
     [self presentViewController:[self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"] animated:YES completion:nil];
 }
 
@@ -4191,6 +4195,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         {
             SpeechRecognitionViewController* spvc = [self.storyboard instantiateViewControllerWithIdentifier:@"SpeechRecognitionViewController"];
             
+            spvc.modalPresentationStyle = UIModalPresentationFullScreen;
+            
             [self presentViewController:spvc animated:true completion:nil];
         }
         
@@ -4294,7 +4300,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     DepartMent* deptObj = [[DepartMent alloc] init];
     deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     
-    NSString* defaultTemplateName = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@",deptObj.Id]];
+    NSString* defaultTemplateName = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@DefaultTemplate",deptObj.Id]];
     
     
     if (!(defaultTemplateName == nil || [defaultTemplateName isEqualToString:@""]))

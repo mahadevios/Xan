@@ -224,6 +224,10 @@
                     [templateNamesDropdownMenu setUserInteractionEnabled:false];
                     
                     [moreButton setUserInteractionEnabled:false];
+                    
+                    [self.urgentCheckboxButton setUserInteractionEnabled:NO];
+                    
+                    [templateNamesDropdownMenu setUserInteractionEnabled:NO];
                 }
                 else
                 {
@@ -291,13 +295,17 @@
         {
             [AppPreferences sharedAppPreferences].recordNew = false;
             
+            UIViewController* vc= [self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"];
+            
+            vc.modalPresentationStyle = UIModalPresentationFullScreen;
+            
             if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
             {
-                [self.splitViewController presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:YES completion:nil];
+                [self.splitViewController presentViewController:vc animated:YES completion:nil];
             }
             else
             {
-                [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:YES completion:nil];
+                [self presentViewController:vc animated:YES completion:nil];
             }
             
             
@@ -895,6 +903,7 @@
 
                                 [templateNamesDropdownMenu setUserInteractionEnabled:false];
                                 
+                                [self.urgentCheckboxButton setUserInteractionEnabled:false];
                                 
                                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                     
@@ -1400,6 +1409,8 @@
 
     vc.delegate = self;
     
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
+    
     [self presentViewController:vc animated:YES completion:nil];
     
 }
@@ -1545,7 +1556,7 @@
     DepartMent* deptObj = [[DepartMent alloc] init];
     deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     
-    NSString* defaultTemplateName = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@",deptObj.Id]];
+    NSString* defaultTemplateName = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@DefaultTemplate",deptObj.Id]];
     
     
     if (!(defaultTemplateName == nil || [defaultTemplateName isEqualToString:@""]))

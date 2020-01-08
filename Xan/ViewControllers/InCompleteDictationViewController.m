@@ -38,6 +38,7 @@
         RecordViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"];
         [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"];
         [AppPreferences sharedAppPreferences].recordNew=NO;
+        vc.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:vc animated:YES completion:nil];
     }
     else
@@ -285,6 +286,7 @@
     vc.audioDurationInSeconds = audioDurationInSeconds;
     vc.existingAudioTemplateName = audioDetails.templateName;
     vc.existingAudioPriorityId = audioDetails.priorityId;
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:vc animated:YES completion:nil];
    
 }

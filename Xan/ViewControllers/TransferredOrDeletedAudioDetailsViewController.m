@@ -167,6 +167,7 @@
     {
         [moreButton setUserInteractionEnabled:NO];
         [_mkDropdwonRefView setUserInteractionEnabled:NO];
+        [self.urgentCheckboxButton setUserInteractionEnabled:NO];
         [resendButton setHidden:YES];
         [deleteDictationButton setHidden:YES];
         NSString* transferStatusString;
@@ -198,6 +199,7 @@
         }
         else
         transferStatusLabel.text=[NSString stringWithFormat:@"Deleted, %@",transferStatusString];//if selected list is delete then we have status=deleted ,only fetch transfer status append it to transferStatusLabel
+        
         
     }
     
@@ -480,6 +482,8 @@
                         
                         [templateNamesDropdownMenu setUserInteractionEnabled:false];
                         
+                        [self.urgentCheckboxButton setUserInteractionEnabled:false];
+
                         [self updateTemplateIdForFileName];
                         
                         [self.delegate myClassDelegateMethod:nil];
@@ -767,7 +771,7 @@ else
     DepartMent* deptObj = [[DepartMent alloc] init];
     deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     
-    NSString* defaultTemplateName = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@",deptObj.Id]];
+    NSString* defaultTemplateName = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@DefaultTemplate",deptObj.Id]];
     
     
     if (!(defaultTemplateName == nil || [defaultTemplateName isEqualToString:@""]))

@@ -162,11 +162,25 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 - (void)setStatusBarBackgroundColor:(UIColor *)color
 {
     
-    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
+//    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
+//
+//    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
+//        statusBar.backgroundColor = color;
+//    }
     
-    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
+    if (@available(iOS 13.0, *)) {
+        UIView *statusBar = [[UIView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.windowScene.statusBarManager.statusBarFrame] ;
         statusBar.backgroundColor = color;
+        [[UIApplication sharedApplication].keyWindow addSubview:statusBar];
+    } else {
+            UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
+        
+            if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
+                statusBar.backgroundColor = color;
+            }
     }
+    
+    
 }
 -(void)uploadNextFile
 {
@@ -312,6 +326,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                 
                 if (![topRootViewController isKindOfClass: [LoginViewController class]])
                 {
+                    loginViewController.modalPresentationStyle = UIModalPresentationFullScreen;
                     [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
                     
                 }
@@ -348,6 +363,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             
             if (![topRootViewController isKindOfClass: [LoginViewController class]])
             {
+                loginViewController.modalPresentationStyle = UIModalPresentationFullScreen;
                 [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
                 
             }

@@ -72,7 +72,13 @@
         
         [[[[UIApplication sharedApplication] keyWindow] viewWithTag:222] removeFromSuperview];
         
-        [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:YES completion:nil];
+        UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"];
+        
+        vc.modalPresentationStyle = UIModalPresentationFullScreen;
+        
+        [self presentViewController:vc  animated:YES completion:nil];
+        
+        
     }
     else
     {
@@ -157,7 +163,11 @@
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:222] removeFromSuperview];
     
-     [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:NO completion:nil];
+    UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"];
+    
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
+    
+     [self presentViewController:vc animated:NO completion:nil];
 }
 
 -(void)removeAlertView
@@ -235,6 +245,8 @@
                 
                 RegistrationViewController* regiController=(RegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"RegistrationViewController"];
 
+                regiController.modalPresentationStyle = UIModalPresentationFullScreen;
+                
                 [self presentViewController:regiController animated:NO completion:NULL];
                 
 //                 [self performSegueWithIdentifier:@"SPToAcRegi" sender:nil];
@@ -246,6 +258,8 @@
                     
                     PinRegistrationViewController* regiController=(PinRegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"PinRegistrationViewController"];
 
+                    regiController.modalPresentationStyle = UIModalPresentationFullScreen;
+                    
                     [self presentViewController:regiController animated:NO completion:NULL];
                     
 //                    [self performSegueWithIdentifier:@"SPToPINRegi" sender:nil];
@@ -257,6 +271,8 @@
                     {
                         
                         TandCViewController *viewController = (TandCViewController *)[storyboard instantiateViewControllerWithIdentifier:@"TandCViewController"];
+
+                        viewController.modalPresentationStyle = UIModalPresentationFullScreen;
 
                         [self presentViewController:viewController animated:NO completion:NULL];
                         
@@ -270,6 +286,8 @@
                             
                             LoginViewController *viewController = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
                             
+                             viewController.modalPresentationStyle = UIModalPresentationFullScreen;
+
 //                            LoginViewController *viewController1 = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
 
                             [self presentViewController:viewController animated:NO completion:NULL];

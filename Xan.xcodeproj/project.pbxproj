@@ -257,7 +257,7 @@
 		846DE68E1D72BDB10004C886 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		846DE6901D730CC20004C886 /* AudioDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioDetails.h; sourceTree = "<group>"; };
 		846DE6911D730CC20004C886 /* AudioDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioDetails.m; sourceTree = "<group>"; };
-		8472223E1D47368A00C00F20 /* Xan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Xan.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8472223E1D47368A00C00F20 /* ACE Dictate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ACE Dictate.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		847222421D47368A00C00F20 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		847222441D47368A00C00F20 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		847222451D47368A00C00F20 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -561,7 +561,7 @@
 		8472223F1D47368A00C00F20 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8472223E1D47368A00C00F20 /* Xan.app */,
+				8472223E1D47368A00C00F20 /* ACE Dictate.app */,
 				847222571D47368A00C00F20 /* XanTests.xctest */,
 				847222621D47368A00C00F20 /* XanUITests.xctest */,
 				8427DC461E124D9B0071C038 /* Copy to Xan.appex */,
@@ -854,7 +854,7 @@
 			);
 			name = Xan;
 			productName = Cube;
-			productReference = 8472223E1D47368A00C00F20 /* Xan.app */;
+			productReference = 8472223E1D47368A00C00F20 /* ACE Dictate.app */;
 			productType = "com.apple.product-type.application";
 		};
 		847222561D47368A00C00F20 /* XanTests */ = {
@@ -1363,7 +1363,7 @@
 				OTHER_LDFLAGS = "";
 				"OTHER_LDFLAGS[arch=*]" = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xanadutec.ace;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "ACE Dictate";
 				PROVISIONING_PROFILE = "f49954c7-7a84-46c2-a188-f37f052d8ade";
 				PROVISIONING_PROFILE_SPECIFIER = AceDevelopment;
 				SDKROOT = iphoneos;
@@ -1393,7 +1393,7 @@
 				New_Setting = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xanadutec.ace;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "ACE Dictate";
 				PROVISIONING_PROFILE = "1053c5ee-d822-4b57-a364-b7526972681b";
 				PROVISIONING_PROFILE_SPECIFIER = AceDistribution;
 				SDKROOT = iphoneos;
