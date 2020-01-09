@@ -58,7 +58,7 @@
         
         vc.modalPresentationStyle = UIModalPresentationFullScreen;
         
-        [self presentViewController:vc animated:YES completion:nil];
+        [self.tabBarController presentViewController:vc animated:YES completion:nil];
         
     }
 

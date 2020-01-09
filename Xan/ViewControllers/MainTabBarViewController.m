@@ -26,14 +26,19 @@
 //
 //    self.tabBar.selectionIndicatorImage = [UIImage imageNamed:@"Info"];
     
-      [self setTabBarBackgroundImage];
+//      [self setTabBarBackgroundImage];
     
     
 }
 
 //-(void)viewWillAppear:(BOOL)animated
 //{
-//    [self setTabBarBackgroundImage];
+//
+//    [self.bottomTabBar invalidateIntrinsicContentSize];
+//
+//    [self.bottomTabBar.superview setNeedsLayout];
+//
+//    [self.bottomTabBar.superview layoutSubviews];
 //}
 //
 //-(void)viewDidAppear:(BOOL)animated
@@ -41,22 +46,9 @@
 //
 //}
 
--(void)setTabBarBackgroundImage
-{
-    UITabBar *tabBar = self.tabBar;
-    CGSize imgSize = CGSizeMake(tabBar.frame.size.width/tabBar.items.count,tabBar.frame.size.height+0.5);
-    
-    //Create Image
-    UIGraphicsBeginImageContextWithOptions(imgSize, NO, 0);
-    UIBezierPath* p =
-    [UIBezierPath bezierPathWithRect:CGRectMake(0,0,imgSize.width,imgSize.height+0.5)];
-    [[UIColor colorWithRed:225/255.0 green:232/255.0 blue:246/255.0 alpha:1.0] setFill];
-    [p fill];
-    UIImage* finalImg = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    [tabBar setSelectionIndicatorImage:finalImg];
-}
+
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
