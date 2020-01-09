@@ -72,7 +72,7 @@
         LoginViewController* viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
         viewController.modalPresentationStyle = UIModalPresentationFullScreen;
         
-         [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"] animated:NO completion:nil];
+         [self presentViewController:viewController animated:NO completion:nil];
        
     }
     else
