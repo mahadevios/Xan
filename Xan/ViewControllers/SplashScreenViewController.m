@@ -27,6 +27,8 @@
 {
     [super viewDidLoad];
    
+//    [[APIManager sharedManager] downloadAudioFile];
+
 }
 
 
@@ -70,7 +72,13 @@
         
         [[[[UIApplication sharedApplication] keyWindow] viewWithTag:222] removeFromSuperview];
         
-        [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:YES completion:nil];
+        UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"];
+        
+        vc.modalPresentationStyle = UIModalPresentationFullScreen;
+        
+        [self presentViewController:vc  animated:YES completion:nil];
+        
+        
     }
     else
     {
@@ -109,26 +117,12 @@
 
 -(void)addAlertView
 {
-//   NSArray* subviews= [[UIApplication sharedApplication] keyWindow].subviews;
-//    bool alreadyAdded = false;
-//    for (int i=0; i<subviews.count; i++)
-//    {
-//       UIView* view= [subviews objectAtIndex:i];
-//        if (view.tag==222)
-//        {
-//            alreadyAdded=YES;
-//        }
-//    }
-    //[[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
-    
+
     UIView* view=[[[UIApplication sharedApplication] keyWindow] viewWithTag:222];
    
     
     if (view==NULL)
     {
-//        UIView* internetMessageView=   [[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.size.width*0.10, self.view.center.y-50,self.view.frame.size.width*0.80, 100) offlineFrame:CGRectMake(0, self.view.center.y+150,self.view.frame.size.width, 50) senderForInternetMessage:self];
-        
-//  UIView* internetMessageView=   [[PopUpCustomView alloc]initWithFrame:CGRectMake(0, self.view.center.y+100,self.view.frame.size.width, 80) offlineFrame:CGRectMake(0, self.view.center.y+150,self.view.frame.size.width, 50) senderForInternetMessage:self];
         
         UIView* internetMessageView;
         
@@ -149,7 +143,7 @@
         UIButton* retryButton= [popupView viewWithTag:225];
         [retryButton setEnabled:YES];
         
-       [retryButton setTitleColor:[UIColor colorWithRed:17/255.0 green:146/255.0 blue:(CGFloat)78/255.0 alpha:1] forState:UIControlStateNormal];
+       [retryButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
     }
 
@@ -169,7 +163,11 @@
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:222] removeFromSuperview];
     
-     [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:NO completion:nil];
+    UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"];
+    
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
+    
+     [self presentViewController:vc animated:NO completion:nil];
 }
 
 -(void)removeAlertView
@@ -247,6 +245,8 @@
                 
                 RegistrationViewController* regiController=(RegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"RegistrationViewController"];
 
+                regiController.modalPresentationStyle = UIModalPresentationFullScreen;
+                
                 [self presentViewController:regiController animated:NO completion:NULL];
                 
 //                 [self performSegueWithIdentifier:@"SPToAcRegi" sender:nil];
@@ -258,6 +258,8 @@
                     
                     PinRegistrationViewController* regiController=(PinRegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"PinRegistrationViewController"];
 
+                    regiController.modalPresentationStyle = UIModalPresentationFullScreen;
+                    
                     [self presentViewController:regiController animated:NO completion:NULL];
                     
 //                    [self performSegueWithIdentifier:@"SPToPINRegi" sender:nil];
@@ -269,6 +271,8 @@
                     {
                         
                         TandCViewController *viewController = (TandCViewController *)[storyboard instantiateViewControllerWithIdentifier:@"TandCViewController"];
+
+                        viewController.modalPresentationStyle = UIModalPresentationFullScreen;
 
                         [self presentViewController:viewController animated:NO completion:NULL];
                         
@@ -282,6 +286,8 @@
                             
                             LoginViewController *viewController = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
                             
+                             viewController.modalPresentationStyle = UIModalPresentationFullScreen;
+
 //                            LoginViewController *viewController1 = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
 
                             [self presentViewController:viewController animated:NO completion:NULL];

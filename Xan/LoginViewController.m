@@ -36,6 +36,7 @@
 #import "MainTabBarViewController.h"
 #import "NSData+AES256.h"
 #import "Keychain.h"
+#import "SelectDepartmentViewController.h"
 
 @interface LoginViewController ()
 
@@ -56,24 +57,14 @@
 -(void)viewWillAppear:(BOOL)animated
 {
 
-    NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
+//    NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
+    int down = NODOWNLOAD;
     self.boxView.layer.cornerRadius = 10.0;
     self.boxView.layer.shadowColor = [[UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:1] CGColor];
     self.boxView.layer.shadowOffset = CGSizeMake(0.0, 0.0);
     self.boxView.layer.shadowRadius = 12.0;
     self.boxView.layer.shadowOpacity = 1;
-    //self.navigationItem.title=@"Pin Login";
-    //[self.navigationController.navigationBar setTitleTextAttributes:
-    //@{NSForegroundColorAttributeName:[UIColor orangeColor]}];
-    // self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    //[self.navigationController.navigationBar setBarStyle:UIStatusBarStyleLightContent];// to set carrier,time and battery color in white color
-    //    NSDictionary *size = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Arial-Bold" size:30.0],NSFontAttributeName, nil];
-    //
-    //    self.navigationController.navigationBar.titleTextAttributes = size;
-    //    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"System-Bold" size:20]}];
-    //
-    //@{NSForegroundColorAttributeName:[UIColor orangeColor]}
-//    [pinCode1TextField becomeFirstResponder];
+    
     pinCode1TextField.delegate=self;
     pinCode2TextField.delegate=self;
     pinCode3TextField.delegate=self;
@@ -138,7 +129,11 @@
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"])
     {
-        [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"] animated:NO completion:nil];
+        SelectDepartmentViewController* viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"];
+        
+        viewController.modalPresentationStyle = UIModalPresentationFullScreen;
+        
+        [self presentViewController:viewController animated:NO completion:nil];
     }
     else
         [self dismissViewControllerAnimated:NO completion:nil];
@@ -261,7 +256,7 @@
     if ([responseCodeString intValue]==200 && [responsePinString intValue]==1)
     {
         
-        [hud hideAnimated:YES];
+//        [hud hideAnimated:YES];
         
         if([AppPreferences sharedAppPreferences].userObj == nil)
         {
@@ -294,6 +289,8 @@
         
         Database *db=[Database shareddatabase];
         
+        [db truncateTable_TableName:@"DepartmentList"];
+
         [db insertDepartMentData:deptForDatabaseArray];
        
         //get user firstname,lastname and userId for file prefix
@@ -495,6 +492,7 @@
                                           handler:^(UIAlertAction * action)
                     {
                         pinCode1TextField.text=@"";pinCode2TextField.text=@"";pinCode3TextField.text=@"";pinCode4TextField.text=@"";
+                        
                         [pinCode1TextField becomeFirstResponder];
                     }]; //You can use a block here to handle a press on this button
         [alertController addAction:actionOk];
@@ -512,7 +510,11 @@
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"])
                 {
                     [pinCode4TextField resignFirstResponder];
-                    [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"] animated:NO completion:nil];
+                    
+                    SelectDepartmentViewController* viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"];
+                    viewController.modalPresentationStyle = UIModalPresentationFullScreen;
+                    
+                    [self presentViewController:viewController animated:NO completion:nil];
                 }
                 else
                 {
@@ -554,6 +556,8 @@
                 [pinCode3TextField resignFirstResponder];
                 [pinCode4TextField resignFirstResponder];
                 
+                NSLog(@"Entered PIN = %@", pin);
+                
                 [[APIManager sharedManager] validatePinMacID:macId Pin:pin];
                 
             }
@@ -576,5 +580,7 @@
     [pinCode1TextField becomeFirstResponder];
     
     [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Hit home button to exit" withMessage:@"" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+}
+- (IBAction)urgentCheckboxButton:(id)sender {
 }
 @end

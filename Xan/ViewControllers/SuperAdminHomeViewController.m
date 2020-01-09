@@ -149,6 +149,7 @@
     //    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
     UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:vc animated:YES completion:nil];
 }
 

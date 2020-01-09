@@ -32,6 +32,11 @@
     self.navigationItem.title = @"Select Department";
     self.navigationItem.hidesBackButton=YES;
     departmentNameArray = [[Database shareddatabase] getDepartMentObjList];
+    
+    if (departmentNameArray.count == 0)
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No Departments Added" withMessage:@"Please contact ACE Administrator" withCancelText:@"Cancel" withOkText:nil withAlertTag:1000];
+    }
     [self setSearchController];
     [self prepareForSearchBar];
 //    self.definesPresentationContext = true;
@@ -123,11 +128,9 @@
 }
 - (void)tableView:(UITableView *)tableview didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    [self.view endEditing:YES];
+
     
-  
-    
-    UITableViewCell* cell = [tableview cellForRowAtIndexPath:indexPath];
+//    UITableViewCell* cell = [tableview cellForRowAtIndexPath:indexPath];
 //    UILabel* departmentNameLabel = [cell viewWithTag:101];
   
    

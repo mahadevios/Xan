@@ -15,6 +15,7 @@
 #import "SelectFileViewController.h"
 #import <StoreKit/SKStoreProductViewController.h>
 #import "Template.h"
+#import "UserSettingsViewController.h"
 
 //#import <iTunesLibrary/ITLibrary.h>
 
@@ -32,16 +33,7 @@
 - (void)viewDidLoad
 {
   
-    
     [super viewDidLoad];
-    
-   
-//    UITabBarItem.appearance set
-    
-
-//    app.awaitingFileTransferNamesArray=[[NSMutableArray alloc]init];
-    
-//    [self beginAppearanceTransition:true animated:true];
 
     db = [Database shareddatabase];
 
@@ -85,7 +77,7 @@
 
     // observer for transfer, awiating, failed recording counts change
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(getCountsOfTransferredAwaitingFiles) name:NOTIFICATION_FILE_UPLOAD_API
+                                             selector:@selector(validateFileUploadResponse) name:NOTIFICATION_FILE_UPLOAD_API
                                                object:nil];
     
     // observer for completed doc API response
@@ -98,15 +90,30 @@
                                                object:nil];
     // Do any additional setup after loading the view.
 }
-
+-(void)validateFileUploadResponse
+{
+    [self getCountsOfTransferredAwaitingFiles];
+    
+    [self showTransferFailedCount];
+}
 -(void)viewWillAppear:(BOOL)animated
 {
 //    NSLog(@"navi height = %@", self.navigationController.navigationBar.bounds);
     [super viewWillAppear:true];
     
-    if ([AppPreferences sharedAppPreferences].tempalateListDict.count == 0)
+    if (!isTemplateDataReceived)
     {
-       [[APIManager sharedManager] getTemplateByUserCode:@""];
+        if ([AppPreferences sharedAppPreferences].isReachable)
+        {
+            
+            hud.minSize = CGSizeMake(150.f, 100.f);
+            hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeIndeterminate;
+            hud.label.text = @"Validating Pin...";
+            hud.detailsLabel.text = @"Please wait";
+            [[APIManager sharedManager] getTemplateByUserCode:@""];
+            
+        }
     }
     
     
@@ -119,9 +126,6 @@
     self.tabBarController.tabBar.userInteractionEnabled = true;
 
     [self.tabBarController.tabBar setHidden:NO];
-    
-    
-//    
 
     // get count of Today's transferred, Awaiting transfer
     [self getCountsOfTransferredAwaitingFiles];
@@ -142,9 +146,9 @@
 //    [self setSplitViewController];
     
 //    [self deleteDictation];
-    NSLog(@"%@",NSHomeDirectory());
+//    NSLog(@"%@",NSHomeDirectory());
    
-    NSLog(@"tabBarController = %@ ",self.tabBarController);
+//    NSLog(@"tabBarController = %@ ",self.tabBarController);
 
 }
 
@@ -223,7 +227,7 @@
     
     //Adding spinner to Completed Doc view
     [transferFailedView addSubview:completedDocSpinner];
-    
+
     // starting the spinner.
     [completedDocSpinner startAnimating];
     
@@ -291,19 +295,33 @@
 {
     NSArray* responseArray= responseDictObj.object;
     
-
-    [AppPreferences sharedAppPreferences].tempalateListDict = [NSMutableDictionary new];
+    [hud hideAnimated:true];
+    
+//    [AppPreferences sharedAppPreferences].tempalateListDict = [NSMutableDictionary new];
+    isTemplateDataReceived = true;
     
     for (NSDictionary* responseDict in responseArray)
     {
+        
         NSString* templateCode = [responseDict valueForKey:@"templateCode"];
         
         NSString* templateName = [responseDict valueForKey:@"templateName"];
 
         NSString* deptCode = [responseDict valueForKey:@"departmentCode"];
 
-//        [[AppPreferences sharedAppPreferences].tempalateListDict setValue:templateCode forKey:templateName];
+        NSString* defaultFl = [responseDict valueForKey:@"defaultFl"];
 
+//        [[AppPreferences sharedAppPreferences].tempalateListDict setValue:templateCode forKey:templateName];
+        if (!(defaultFl == nil || [defaultFl isEqual:[NSNull null]]))
+        {
+            if ([defaultFl isEqualToString:@"1"])
+            {
+                [[NSUserDefaults standardUserDefaults] setObject:templateName forKey:[NSString stringWithFormat:@"%@DefaultTemplate",deptCode]];
+                
+            }
+        }
+      
+        
         Template* tempObj = [Template new];
         
         tempObj.templateId = templateCode;
@@ -315,7 +333,16 @@
         [[Database shareddatabase] insertTemplateListData:tempObj];
     }
 
+    // set default template
+//     [[NSUserDefaults standardUserDefaults] setObject:@"new template_7052" forKey:[NSString stringWithFormat:@"dept0000002"]];
+//    
+//    [[NSUserDefaults standardUserDefaults] setObject:@"asdasd_5187" forKey:[NSString stringWithFormat:@"dept0000003"]];
     
+    if (responseArray.count == 0)
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"DefaultTemplate"];
+
+    }
    
     [hud hideAnimated:YES];
     
@@ -653,7 +680,11 @@
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
     
-    [self.tabBarController presentViewController:[self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"] animated:YES completion:nil];
+    UserSettingsViewController *vc = [self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"];
+    
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
+    
+    [self.tabBarController presentViewController:vc animated:YES completion:nil];
 }
 
 -(void)Logout
@@ -716,6 +747,8 @@
 
         [splitVC setViewControllers:splitVCArray];
         
+        splitVC.modalPresentationStyle = UIModalPresentationFullScreen;
+        
         [self presentViewController:splitVC animated:NO completion:nil];
     }
     else
@@ -774,6 +807,8 @@
         
         [splitVC setViewControllers:splitVCArray];
         
+        splitVC.modalPresentationStyle = UIModalPresentationFullScreen;
+        
         [self presentViewController:splitVC animated:NO completion:nil];
     }
     else
@@ -807,6 +842,8 @@
         NSArray* splitVCArray = [[NSArray alloc] initWithObjects:navVC, nil];
         
         [splitVC setViewControllers:splitVCArray];
+        
+        splitVC.modalPresentationStyle = UIModalPresentationFullScreen;
         
         [self presentViewController:splitVC animated:NO completion:nil];
     }

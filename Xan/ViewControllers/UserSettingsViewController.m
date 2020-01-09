@@ -318,7 +318,7 @@
         
         if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRowAndSection"] isEqualToString:@"10"])
         {
-            NSString* lowSto =  [[NSUserDefaults standardUserDefaults] valueForKey:LOW_STORAGE_THRESHOLD];
+//            NSString* lowSto =  [[NSUserDefaults standardUserDefaults] valueForKey:LOW_STORAGE_THRESHOLD];
             if ([[[NSUserDefaults standardUserDefaults] valueForKey:LOW_STORAGE_THRESHOLD] isEqualToString:selectOptionLabel.text])
             {
                 UIButton* button=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 19, 19)];
@@ -490,6 +490,8 @@
         }
         if (indexPath.section==2 && indexPath.row==0)
         {
+            UIViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ChangePasswordViewController"];
+            vc.modalPresentationStyle = UIModalPresentationFullScreen;
             [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"ChangePasswordViewController"] animated:YES completion:nil];
         }
     }

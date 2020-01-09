@@ -95,6 +95,8 @@
 
         [passwordTextfield resignFirstResponder];
 
+        regiController.modalPresentationStyle = UIModalPresentationFullScreen;
+
         [self presentViewController:regiController animated:NO completion:nil];
         
 //        [[APIManager sharedManager] generateDeviceToken:trimmedIdTextField password:trimmedPasswordTextfield];

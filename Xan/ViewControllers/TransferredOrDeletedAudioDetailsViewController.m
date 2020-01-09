@@ -38,20 +38,6 @@
 
     [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
 
-//    self.splitViewController.delegate = self;
-
-//    if (self.splitViewController.isCollapsed)
-//    {
-//        UINavigationController* navi = [self.splitViewController.viewControllers objectAtIndex:0];
-//
-//        [navi popViewControllerAnimated:true];
-//    }
-//    else
-//    {
-//        [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
-//
-//
-//    }
     if (self.splitViewController == nil)
     {
         self.backImageView.hidden = false;
@@ -62,9 +48,8 @@
         self.backImageView.hidden = true;
     }
 
-    
-    
-    // Do any additional setup after loading the view.
+    [self setTemplateDropDown];
+
 }
 
 
@@ -79,13 +64,9 @@
         [[AppPreferences sharedAppPreferences].tempalateListDict setObject:templateObj.templateId forKey:templateObj.templateName];
     }
     
-    templateNamesArray = [[AppPreferences sharedAppPreferences].tempalateListDict allKeys];
+    templateNamesArray = [[[AppPreferences sharedAppPreferences].tempalateListDict allKeys] mutableCopy];
 }
 
-//-(BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation
-//{
-//    return NO;
-//}
 -(void)pausePlayerFromBackGround
 {
     [player stop];
@@ -95,9 +76,7 @@
     {
         [[[[UIApplication sharedApplication] keyWindow] viewWithTag:222] removeFromSuperview];
     }
-    
-    
-    
+   
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -108,47 +87,36 @@
     
     [self setAudioDetails];
 
-    [self setDropdownView];
-//    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
-//    {
-//        [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
-//        
-//    }
-//    else
-//    {
-//
-//        UINavigationController* vc = [self.splitViewController.viewControllers objectAtIndex:0];
-//        
-//        [vc popViewControllerAnimated:true];
-//        
-//    }
-    
+
 }
 
--(void)setDropdownView
+-(void)setTemplateDropDown
 {
+    templateNamesDropdownMenu = [[MKDropdownMenu alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
+    templateNamesDropdownMenu.dataSource = self;
+    templateNamesDropdownMenu.delegate = self;
+    templateNamesDropdownMenu.layer.cornerRadius = 3.0;
+    [templateNamesDropdownMenu setBackgroundDimmingOpacity:0];
+    [templateNamesDropdownMenu setDropdownShowsBorder:true];
+    [templateNamesDropdownMenu setBackgroundColor:[UIColor whiteColor]];
+    templateNamesDropdownMenu.layer.borderWidth = 1.0;
+    templateNamesDropdownMenu.layer.borderColor = [UIColor darkGrayColor].CGColor;
     
     NSString* dictatorName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DictatorName"];
     
     self.dictatedByLabel.text = dictatorName;
     
-    templateNamesDropdownMenu = [[MKDropdownMenu alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
-    templateNamesDropdownMenu.dataSource = self;
-    templateNamesDropdownMenu.delegate = self;
-    
-    
-    
-    if ([self.audioDetails.templateName isEqualToString:@"-1"] || self.audioDetails.templateName == nil)
+    if (([self.audioDetails.templateName isEqualToString:@"-1"] || self.audioDetails.templateName == nil) && selectedTemplateName == nil)
     {
         selectedTemplateName = @"Select Template";
     }
     else
-        selectedTemplateName = self.audioDetails.templateName;
+        if (selectedTemplateName == nil)
+        {
+            selectedTemplateName = self.audioDetails.templateName;
+        }
     
     [self.mkDropdwonRefView addSubview:templateNamesDropdownMenu];
-    
-    //    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-    //    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     
     NSString* deptName = self.audioDetails.department;
     
@@ -157,6 +125,24 @@
     [self getTempliatFromDepartMentName:deptId];
     
     [templateNamesDropdownMenu reloadAllComponents];
+    
+    UITapGestureRecognizer* tapGestureRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(disMissTemplateDropDown:)];
+    
+    //    tapGestureRecogniser.delegate = self;
+    [self.view addGestureRecognizer:tapGestureRecogniser];
+    
+    if ([self.audioDetails.priorityId isEqualToString:[NSString stringWithFormat:@"%d",  URGENT]])
+    {
+        self.urgentCheckBoxImageView.image = [UIImage imageNamed:@"CheckBoxSelected"];
+        
+        checkBoxSelected = true;
+    }
+}
+
+-(void)disMissTemplateDropDown:(UITapGestureRecognizer *)gestureRecognizer
+{
+    [templateNamesDropdownMenu closeAllComponentsAnimated:true];
+    
 }
 -(void)setAudioDetails
 {
@@ -179,6 +165,9 @@
     }
     if (self.listSelected==1)
     {
+        [moreButton setUserInteractionEnabled:NO];
+        [_mkDropdwonRefView setUserInteractionEnabled:NO];
+        [self.urgentCheckboxButton setUserInteractionEnabled:NO];
         [resendButton setHidden:YES];
         [deleteDictationButton setHidden:YES];
         NSString* transferStatusString;
@@ -211,6 +200,7 @@
         else
         transferStatusLabel.text=[NSString stringWithFormat:@"Deleted, %@",transferStatusString];//if selected list is delete then we have status=deleted ,only fetch transfer status append it to transferStatusLabel
         
+        
     }
     
     NSString* departmentName = self.audioDetails.department;
@@ -218,60 +208,25 @@
     departmentLabel.text=departmentName;
     
     self.audioDetails.departmentCopy = departmentName;
-    
-//    [audiorecordDict setValue:departmentName forKey:@"DepartmentCopy"];
-    
+  
     filenameLabel.text = self.audioDetails.fileName;
     
     dictatedOnLabel.text = self.audioDetails.recordingDate;
-    
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+ 
     NSString* dateStr = self.audioDetails.recordingDate;
-//    NSDate *date = [dateFormatter dateFromString:dateStr];
-    
-    // Convert date object into desired format
-//    [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
-//    NSString *newDateString = [dateFormatter stringFromDate:date];
-    
+
     dictatedOnLabel.text = dateStr;
     
-//    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString* transferDateString = self.audioDetails.transferDate;
-//    NSDate *transferDate = [dateFormatter dateFromString:transferDateString];
-    
-    // Convert date object into desired format
-//    [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
-//    NSString *newTransferDateString = [dateFormatter stringFromDate:transferDate];
+
     transferDateLabel.text = transferDateString;
-//    transferDateLabel.text=[audiorecordDict valueForKey:@"TransferDate"];
-    
-    //transferStatusLabel.text=[audiorecordDict valueForKey:@"TransferStatus"];
-//    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-//    [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME_COPY];
-//    
-//    DepartMent *deptObj = [[DepartMent alloc]init];
-//    long deptId= [[[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentLabel.text] longLongValue];
-//    
-//    deptObj.Id=deptId;
-//    //deptObj.Id=indexPath.row;
-//    deptObj.departmentName=departmentLabel.text;
-//    NSData *data1 = [NSKeyedArchiver archivedDataWithRootObject:deptObj];
-//    
-//    [[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME];
-}
--(void)viewWillDisappear:(BOOL)animated
-{
-    //    [UIApplication sharedApplication].idleTimerDisabled = NO;
-
-//    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
-//    DepartMent *deptObj1 = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-//    NSLog(@"%ld",deptObj1.Id);
-//    [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
 
 }
+
 - (IBAction)backButtonPressed:(id)sender
 {
+    [templateNamesDropdownMenu closeAllComponentsAnimated:true];
+    
     [player stop];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -280,18 +235,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 - (IBAction)playRecordingButtonPressed:(id)sender
 {
+    
     if (self.listSelected==1)
     {
         
@@ -312,8 +258,10 @@
     }
     else
     {
+        [templateNamesDropdownMenu closeAllComponentsAnimated:true];
+        
         UIView * overlay=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.size.width*0.05, self.view.center.y-40, self.view.frame.size.width*0.9, 80) senderNameForSlider:self player:player];
-        //     UIView* overlay=   [obj initWithFrame:CGRectMake(self.view.frame.size.width*0.05, self.view.center.y, self.view.frame.size.width*0.9, 80) senderNameForSlider:self player:player];
+        
         [[[UIApplication sharedApplication] keyWindow] addSubview:overlay];
         
         sliderPopUpView=  [overlay viewWithTag:223];
@@ -321,14 +269,12 @@
         
         UIImageView* pauseOrPlayImageView= [sliderPopUpView viewWithTag:226];
         UILabel* dateAndTimeLabel=[sliderPopUpView viewWithTag:225];
-//        dateAndTimeLabel.text=[audiorecordDict valueForKey:@"RecordCreateDate"];
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         NSString* dateStr = self.audioDetails.recordingDate;
         NSDate *date = [dateFormatter dateFromString:dateStr];
         
-        // Convert date object into desired format
         [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
         NSString *newDateString = [dateFormatter stringFromDate:date];
         
@@ -371,7 +317,6 @@
     {
         [[[[UIApplication sharedApplication] keyWindow] viewWithTag:222] removeFromSuperview];
     }
- //   [UIApplication sharedApplication].idleTimerDisabled = NO;
 
 }
 -(void)playOrPauseButtonPressed
@@ -381,15 +326,12 @@
     {
         pauseOrImageView.image=[UIImage imageNamed:@"Play"] ;
         [player pause];
-      //  [UIApplication sharedApplication].idleTimerDisabled = NO;
-
     }
     else
         if ([pauseOrImageView.image isEqual:[UIImage imageNamed:@"Play"]])
         {
             pauseOrImageView.image=[UIImage imageNamed:@"Pause"] ;
             [player play];
-//            [UIApplication sharedApplication].idleTimerDisabled = YES;
 
         }
     
@@ -439,23 +381,16 @@
 
 -(void)dismissPlayerView:(id)sender
 {
-    //    if (moreButtonPressed)
-    //    {
-    //        [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
-    //        moreButtonPressed=NO;
-    //    }
-    //else
-    //{
     UIView* popUpView= [[[UIApplication sharedApplication] keyWindow] viewWithTag:222];
     if ([popUpView isKindOfClass:[UIView class]])
     {
         [[[[UIApplication sharedApplication] keyWindow] viewWithTag:222] removeFromSuperview];
     }
-    //}
-    
+   
 }
 -(void)sliderValueChanged
 {
+    [templateNamesDropdownMenu closeAllComponentsAnimated:true];
     player.currentTime = audioRecordSlider.value;
     
 }
@@ -530,29 +465,36 @@
                         [resendButton setHidden:YES];
                         [deleteDictationButton setHidden:YES];
                         
-//                        dispatch_async(dispatch_get_main_queue(), ^
-//                                       {
-                                           //NSLog(@"Reachable");
-                                           [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
+                        [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
                                            int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
                                            
-                                           [[Database shareddatabase] updateAudioFileUploadedStatus:@"Resend" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
-                                       
-                                       //});
+                        [[Database shareddatabase] updateAudioFileUploadedStatus:@"Resend" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
+                        
+                        if (checkBoxSelected)
+                        {
+                             [[Database shareddatabase] updatePriority:[NSString stringWithFormat:@"%d", URGENT] fileName:self.audioDetails.fileName];
+                        }
+                        else
+                        {
+                             [[Database shareddatabase] updatePriority:[NSString stringWithFormat:@"%d", NORMAL] fileName:self.audioDetails.fileName];
+                        }
+                       
+                        
+                        [templateNamesDropdownMenu setUserInteractionEnabled:false];
+                        
+                        [self.urgentCheckboxButton setUserInteractionEnabled:false];
+
+                        [self updateTemplateIdForFileName];
                         
                         [self.delegate myClassDelegateMethod:nil];
 
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                             
-                            
-                            
                             [app uploadFileToServer:filName jobName:FILE_UPLOAD_API];
-                            
-                           // [self dismissViewControllerAnimated:YES completion:nil];
-
+                           
                         });
                         
-                    }]; //You can use a block here to handle a press on this button
+                    }];
     [alertController addAction:actionDelete];
     
     
@@ -562,7 +504,7 @@
                     {
                         [alertController dismissViewControllerAnimated:YES completion:nil];
                         
-                    }]; //You can use a block here to handle a press on this button
+                    }];
     [alertController addAction:actionCancel];
     
     [self presentViewController:alertController animated:YES completion:nil];
@@ -578,6 +520,8 @@ else
 
 - (IBAction)moreButtonClicked:(id)sender
 {
+    [templateNamesDropdownMenu closeAllComponentsAnimated:true];
+    
     NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Department", nil];
     UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+20, 160, 40) andSubViews:subViewArray :self];
     
@@ -646,6 +590,15 @@ else
     
     self.audioDetails.departmentCopy = departmentName;
 
+//    selectedTemplateName = @"Select Template";
+//
+//    [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.audioDetails.fileName];
+    [self setDefaultTemplate];
+    
+    [self getTempliatFromDepartMentName:departmentId];
+    
+    [templateNamesDropdownMenu reloadAllComponents];
+    
     [self.delegate myClassDelegateMethod:nil];
     
     [popupView removeFromSuperview];
@@ -678,8 +631,7 @@ else
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    
-    // Configure the cell...
+   
     UILabel* departmentLabel=[[UILabel alloc]initWithFrame:CGRectMake(40, 10, self.view.frame.size.width - 60.0f, 18)];
     UIButton* radioButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 18, 18)];
     departmentLabel.text = [departmentNamesArray objectAtIndex:indexPath.row];
@@ -757,40 +709,46 @@ else
                                                         NSForegroundColorAttributeName: [UIColor blackColor]}];
 }
 
-//- (NSString *)dropdownMenu:(MKDropdownMenu *)dropdownMenu titleForRow:(NSInteger)row forComponent:(NSInteger)component
-//{
-//
-//    return [templateNamesArray objectAtIndex:row];
-//}
-
 -(void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didOpenComponent:(NSInteger)component
 {
-    selectedTemplateName = @"Select Template";
+    [self.scrollView setScrollEnabled:false];
     
-    //    [self dropdownMenu:dropdownMenu attributedTitleForComponent:0];
+    selectedTemplateName = @"Select Template";
     
     [dropdownMenu reloadAllComponents];
 }
 
 -(void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didCloseComponent:(NSInteger)component
 {
-    if ([selectedTemplateName isEqualToString:@"Select Template"])
+    [self.scrollView setScrollEnabled:true];
+    
+    if ([selectedTemplateName isEqualToString:@"Select Template"] && recentlySelectedTemplateName!=nil)
     {
-        [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.audioDetails.fileName];
+        //        [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.recordedAudioFileName];
+        
+        [self setRecentlySelectedTemplate];
+        
+        [dropdownMenu reloadAllComponents];
     }
+    else
+        if([selectedTemplateName isEqualToString:@"Select Template"])
+        {
+            [self setDefaultTemplate];
+            
+            [dropdownMenu reloadAllComponents];
+        }
+//    if ([selectedTemplateName isEqualToString:@"Select Template"])
+//    {
+//        [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.audioDetails.fileName];
+//    }
 }
 -(void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     selectedTemplateName = [templateNamesArray objectAtIndex:row];
     
-    //    [dropdownMenu setSelectedComponentBackgroundColor:[UIColor lightGrayColor]];
-    
     [dropdownMenu closeAllComponentsAnimated:YES];
     
     [dropdownMenu reloadAllComponents];
-    
-    [self updateTemplateIdForFileName];
-    
     
 }
 
@@ -805,5 +763,46 @@ else
     }
     
     [[Database shareddatabase] updateTemplateId:templateId fileName:self.audioDetails.fileName];
+}
+
+-(void)setDefaultTemplate
+{
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+    DepartMent* deptObj = [[DepartMent alloc] init];
+    deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    NSString* defaultTemplateName = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@DefaultTemplate",deptObj.Id]];
+    
+    
+    if (!(defaultTemplateName == nil || [defaultTemplateName isEqualToString:@""]))
+    {
+        selectedTemplateName = defaultTemplateName;
+    }
+    else
+        selectedTemplateName = @"Select Template";
+    
+    [self updateTemplateIdForFileName];
+}
+-(void)setRecentlySelectedTemplate
+{
+    selectedTemplateName = recentlySelectedTemplateName;
+    
+    [self updateTemplateIdForFileName];
+}
+
+- (IBAction)urgentCheckBoxButtonClicked:(id)sender
+{
+    if (checkBoxSelected)
+    {
+        self.urgentCheckBoxImageView.image = [UIImage imageNamed:@"CheckBoxUnSelected"];
+        
+        checkBoxSelected = false;
+    }
+    else
+    {
+        self.urgentCheckBoxImageView.image = [UIImage imageNamed:@"CheckBoxSelected"];
+        
+        checkBoxSelected = true;
+    }
 }
 @end

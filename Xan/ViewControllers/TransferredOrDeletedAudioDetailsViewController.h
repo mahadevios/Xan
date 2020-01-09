@@ -43,8 +43,15 @@
     NSMutableArray* templateNamesArray;
     
     NSString* selectedTemplateName;
-}
+    
+     BOOL checkBoxSelected;
+    
+    NSString* recentlySelectedTemplateName;
 
+}
+@property (weak, nonatomic) IBOutlet UIView *insideView;
+
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property(nonatomic)long listSelected;
 @property(nonatomic)long selectedRow;
 - (IBAction)backButtonPressed:(id)sender;
@@ -63,5 +70,8 @@
 @property (weak, nonatomic) IBOutlet UIView *mkDropdwonRefView;
 
 @property (nonatomic, weak) id <MyClassDelegate> delegate; //define MyClassDelegate as delegate@property (weak, nonatomic) IBOutlet NSLayoutConstraint *;
+- (IBAction)urgentCheckBoxButtonClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIImageView *urgentCheckBoxImageView;
+@property (weak, nonatomic) IBOutlet UIButton *urgentCheckboxButton;
 
 @end

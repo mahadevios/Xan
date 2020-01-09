@@ -36,8 +36,9 @@
 
 -(NSMutableArray*)getListOfFileTransfersOfStatus:(NSString*)status;
 
--(int)getDepartMentIdForFileName:(NSString*)fileName;
+-(NSString*)getDepartMentIdForFileName:(NSString*)fileName;
 
+-(void)truncateTable_TableName:(NSString*)tableName;
 
 ///--------for home view counts-------------//
 
@@ -134,5 +135,11 @@
 -(void)insertTemplateListData:(Template*)templateObj;
 
 -(NSMutableArray*)getTemplateListfromDeptName:(NSString*)deptId;
+
+-(NSString*)getTemplateNameFromFilename:(NSString*)filename;
+
+-(void)updatePriority:(NSString*)prioityId fileName:(NSString*)fileName;
+
+-(NSString*)getPriorityIdFromFilename:(NSString*)filename;
 
 @end

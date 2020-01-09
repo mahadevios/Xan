@@ -24,7 +24,7 @@
     db=[Database shareddatabase];
 //    self.definesPresentationContext = true;
 //    self.extendedLayoutIncludesOpaqueBars = YES;    // Do any additional setup after loading the view.
-//    self.definesPresentationContext = true;
+    self.definesPresentationContext = true;
     
     self.extendedLayoutIncludesOpaqueBars = YES;
     [self setSearchController];
@@ -38,6 +38,7 @@
         RecordViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"];
         [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"];
         [AppPreferences sharedAppPreferences].recordNew=NO;
+        vc.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:vc animated:YES completion:nil];
     }
     else
@@ -90,9 +91,9 @@
     
     [[Database shareddatabase] getlistOfimportedFilesAudioDetailsArray:5];//get count of imported non transferred files
     
-    int importedFileCount = [AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray.count;
+    long importedFileCount = [AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray.count;
     
-    [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%d",count+importedFileCount] forKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
+    [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%ld",count+importedFileCount] forKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
     
     NSString* alertCount = [[NSUserDefaults standardUserDefaults] valueForKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
     
@@ -284,6 +285,8 @@
     vc.existingAudioDate=dateLabel.text;
     vc.audioDurationInSeconds = audioDurationInSeconds;
     vc.existingAudioTemplateName = audioDetails.templateName;
+    vc.existingAudioPriorityId = audioDetails.priorityId;
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:vc animated:YES completion:nil];
    
 }

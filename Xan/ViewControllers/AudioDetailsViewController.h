@@ -45,7 +45,13 @@
     NSMutableArray* templateNamesArray;
     
     NSString* selectedTemplateName;
+    
+    BOOL checkBoxSelected;
+    
+    NSString* recentlySelectedTemplateName;
 }
+@property (weak, nonatomic) IBOutlet UIImageView *urgentCheckBoxImageView;
+- (IBAction)urgentCheckBoxButtonClicked:(id)sender;
 @property(nonatomic)long selectedRow;
 @property(nonatomic,strong)NSString* selectedView;
 @property(nonatomic,strong)AudioDetails* audioDetails;
@@ -72,5 +78,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *transferButtonYConstraint;
 @property (weak, nonatomic) IBOutlet UIView *mkDropdwonRefView;
 
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIView *insideView;
 - (IBAction)transferDictationButtonClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *urgentCheckboxButton;
 @end

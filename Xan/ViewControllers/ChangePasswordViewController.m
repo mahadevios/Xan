@@ -374,7 +374,7 @@
     NSDictionary* responseDict=notificationObject.object;
     NSString* responseCodeString=  [responseDict valueForKey:RESPONSE_CODE];
     NSString* pinChangeSuccess=  [responseDict valueForKey:@"pinChangeSuccess"];
-    NSString* oldPin=  [responseDict valueForKey:@"oldpin"];
+    NSString* oldPin=  [responseDict valueForKey:@"oldDevicePin"];
 
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [hud removeFromSuperview];
@@ -403,6 +403,9 @@
                             LoginViewController* regiController=(LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
                             [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:NO completion:nil];
                             
+            
+                            regiController.modalPresentationStyle = UIModalPresentationFullScreen;
+            
                             [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:regiController
                                                                                                          animated:NO
                                                                                                        completion:nil];

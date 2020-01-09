@@ -926,6 +926,8 @@
                         detailVC.selectedView = self.currentViewName;
                     }
                     
+                    detailVC.modalPresentationStyle = UIModalPresentationFullScreen;
+                    
                     [self.navigationController presentViewController:detailVC animated:YES completion:nil];
                     //                self.tableView.allowsMultipleSelection = NO;
                     
@@ -949,6 +951,7 @@
                     AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
                     vc.audioDetails = audioDetails;
                     vc.selectedView=self.currentViewName;
+                    vc.modalPresentationStyle = UIModalPresentationFullScreen;
                     [self.navigationController presentViewController:vc animated:YES completion:nil];
                     //                self.tableView.allowsMultipleSelection = NO;
                     
@@ -967,6 +970,7 @@
                 AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
                 vc.audioDetails = audioDetails;
                 vc.selectedView=self.currentViewName;
+                vc.modalPresentationStyle = UIModalPresentationFullScreen;
                 [self.navigationController presentViewController:vc animated:YES completion:nil];
             }
     
@@ -1156,7 +1160,7 @@
     
     //Create a spacer.
     bi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    bi.width = 12.0f;
+    bi.width = 5.0f;
     [bi setTintColor:[UIColor whiteColor]];
     [buttons addObject:bi];
     

@@ -10,21 +10,24 @@
 #define Header_h
 
 
-//#define  BASE_URL_PATH                        @"http://192.168.3.81:8089/xan-dictate"
-//#define  BASE_URL_PATH                        @"http://192.168.3.79:8089/xan-dictate"
-//#define  BASE_URL_PATH_LOCAL                    @"http://192.168.3.79:8089/xan-dictate"
+//#define  BASE_URL_PATH                        @"http://192.168.3.81:8089/xan-dictate" // Vrushali Mam
+//#define  BASE_URL_PATH                        @"http://192.168.3.79:8089/xan-dictate" // KK
+//#define  BASE_URL_PATH                          @"http://192.168.3.76:8089/xan-dictate"  // Shruti
+//#define  BASE_URL_PATH                          @"http://192.168.3.80:8089/xan-dictate"  // Mahadev Mac
+//#define  BASE_URL_PATH                          @"http://192.168.3.82:8089/xan-dictate"  // Mahadev Windows
 
 //#define  BASE_URL_PATH                        @"http://192.168.2.9:8089/xan-dictate"
-#define  BASE_URL_PATH                          @"http://192.168.3.81:8089/xan-dictate"
-//#define  BASE_URL_PATH_LOCAL                    @"http://192.168.3.81:8089/xan-dictate"
 
+#define  BASE_URL_PATH                          @"https://cfscommunicator.com:8443/xan_dictate"
+
+//#define  BASE_URL_PATH                        @"http://192.168.3.80:8080/user"
+
+#define  AUDIO_DOWNLOAD_API                    @"download3"
 
 #define  FILE_UPLOAD_API                        @"mobileUploadAudio"
 
 //#define  BASE_URL_PATH_LOCAL                    @"http://192.168.3.80:8080/payU/fileOps"
 //#define  FILE_UPLOAD_API                        @"uploadAudio"
-
-
 
 
 #define  CHECK_DEVICE_REGISTRATION_API        @"verifyDeviceRegistration"
@@ -163,7 +166,7 @@
 #define RESPONSE_PIN_VERIFY                    @"pinVerify"
 #define RESPONSE_TC_FLAG                       @"tcFl"
 #define RESPONSE_MESSAGE                       @"responseMessage"
-#define SHARED_GROUP_IDENTIFIER                @"group.com.coreflexSolutions.Xan"
+#define SHARED_GROUP_IDENTIFIER                @"group.com.xanadutec.ace"
 
 
 #define JWT_TOKEN                              @"jwtToken"
@@ -184,7 +187,33 @@ typedef enum
 
 typedef enum
 {
-    NOUPLOAD,
-    UPLOADED
-}UploadStatus;
+    VRSDOC_NOUPLOAD,
+    VRSDOC_UPLOADED
+}VrsDoc_UploadStatus;
+
+typedef enum
+{
+    BLANK,
+    COMPLETED,
+    PAUSED,
+    DELETE,
+    FILE_UPLOAD,
+    FILE_UPLOADED,
+}RecordingStatus;
+
+typedef enum
+{
+    NOT_TRANSFERRED,
+    TRANSFERRED,
+    TRANSFERRED_FAILED,
+    RESEND,
+    RESEND_FAILED,
+}Transfer_Status;
+
+typedef enum
+{
+    NORMAL,
+    URGENT
+}Priority;
+
 #endif /* Header_h */

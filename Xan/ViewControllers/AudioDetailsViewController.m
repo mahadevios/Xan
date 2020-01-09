@@ -59,24 +59,45 @@
 
     self.dictatedByLabel.text = dictatorName;
     
+    [self setTemplateDropDown];
+   
+}
+
+-(void)setTemplateDropDown
+{
     templateNamesDropdownMenu = [[MKDropdownMenu alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
     templateNamesDropdownMenu.dataSource = self;
     templateNamesDropdownMenu.delegate = self;
+    templateNamesDropdownMenu.layer.cornerRadius = 3.0;
+    [templateNamesDropdownMenu setBackgroundDimmingOpacity:0];
+    [templateNamesDropdownMenu setDropdownShowsBorder:true];
+    [templateNamesDropdownMenu setBackgroundColor:[UIColor whiteColor]];
+    templateNamesDropdownMenu.layer.borderWidth = 1.0;
+    templateNamesDropdownMenu.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    
+    [self.mkDropdwonRefView addSubview:templateNamesDropdownMenu];
     
    
- 
-    if ([self.audioDetails.templateName isEqualToString:@"-1"])
+    UITapGestureRecognizer* tapGestureRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(disMissTemplateDropDown:)];
+    
+    //    tapGestureRecogniser.delegate = self;
+    [self.view addGestureRecognizer:tapGestureRecogniser];
+    
+}
+
+-(void)setTemplateData
+{
+    if (([self.audioDetails.templateName isEqualToString:@"-1"] || self.audioDetails.templateName == NULL) && selectedTemplateName == nil)
     {
         selectedTemplateName = @"Select Template";
     }
     else
-     selectedTemplateName = self.audioDetails.templateName;
+        if (selectedTemplateName == nil)
+        {
+            selectedTemplateName = self.audioDetails.templateName;
+        }
     
-    [self.mkDropdwonRefView addSubview:templateNamesDropdownMenu];
-    
-//    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-//    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    
+   
     NSString* deptName = self.audioDetails.department;
     
     NSString* deptId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:deptName];
@@ -85,7 +106,11 @@
     
     [templateNamesDropdownMenu reloadAllComponents];
     
-    
+}
+
+-(void)disMissTemplateDropDown:(UITapGestureRecognizer *)gestureRecognizer
+{
+    [templateNamesDropdownMenu closeAllComponentsAnimated:true];
     
 }
 
@@ -100,7 +125,7 @@
         [[AppPreferences sharedAppPreferences].tempalateListDict setObject:templateObj.templateId forKey:templateObj.templateName];
     }
     
-    templateNamesArray = [[AppPreferences sharedAppPreferences].tempalateListDict allKeys];
+    templateNamesArray = [[[AppPreferences sharedAppPreferences].tempalateListDict allKeys] mutableCopy];
 }
 
 -(void)pausePlayerFromBackGround
@@ -124,10 +149,13 @@
     
     [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"];
     
+    [self setTemplateData];
+    
     if (![AppPreferences sharedAppPreferences].dismissAudioDetails && ![AppPreferences sharedAppPreferences].recordNew)
     {
         
-        
+        moreButton.userInteractionEnabled=YES;
+
         
         if (isDeleteEditTransferButtonsRemovedAfterTransfer == false)
         {
@@ -178,7 +206,7 @@
             {
                 [transferDictationButton setTitle:@"Resend" forState:UIControlStateNormal];
                 
-                [self.mkDropdwonRefView setUserInteractionEnabled:false];
+//                [self.mkDropdwonRefView setUserInteractionEnabled:false];
                 
                 NSString* tarnsferStatus = self.audioDetails.uploadStatus;
                 
@@ -192,21 +220,21 @@
                     [transferDictationButton setHidden:YES];
                     
                     [deleteDictationButton setHidden:YES];
+                    
+                    [templateNamesDropdownMenu setUserInteractionEnabled:false];
+                    
+                    [moreButton setUserInteractionEnabled:false];
+                    
+                    [self.urgentCheckboxButton setUserInteractionEnabled:NO];
+                    
+                    [templateNamesDropdownMenu setUserInteractionEnabled:NO];
                 }
                 else
                 {
                     [self setTransferStatus];
                 }
             }
-//            else
-//                if ([self.selectedView isEqualToString:@"Transfer Failed"])
-//                {
-//                    [transferDictationButton setTitle:@"Resend" forState:UIControlStateNormal];
-//
-////                    audioDetails = [app.failedTransferNamesArray objectAtIndex:self.selectedRow];
-//
-//                    [self setTransferStatus];
-//                }
+
                 else
                     if ([self.selectedView isEqualToString:@"Imported"])
                     {
@@ -253,7 +281,12 @@
         
         [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME_COPY];
        
-        moreButton.userInteractionEnabled=YES;
+        if ([self.audioDetails.priorityId isEqualToString:[NSString stringWithFormat:@"%d",  URGENT]])
+        {
+            self.urgentCheckBoxImageView.image = [UIImage imageNamed:@"CheckBoxSelected"];
+            
+            checkBoxSelected = true;
+        }
         
     }
     else
@@ -262,13 +295,17 @@
         {
             [AppPreferences sharedAppPreferences].recordNew = false;
             
+            UIViewController* vc= [self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"];
+            
+            vc.modalPresentationStyle = UIModalPresentationFullScreen;
+            
             if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
             {
-                [self.splitViewController presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:YES completion:nil];
+                [self.splitViewController presentViewController:vc animated:YES completion:nil];
             }
             else
             {
-                [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:YES completion:nil];
+                [self presentViewController:vc animated:YES completion:nil];
             }
             
             
@@ -779,6 +816,11 @@
         }
     }
     
+//    if (![touch.view isEqual:templateNamesDropdownMenu])
+//    {
+//        return NO;
+//    }
+    
     return YES; // handle the touch
 }
 -(void)updateSliderTime:(id)sender
@@ -814,7 +856,7 @@
 {
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
-        moreButton.userInteractionEnabled=NO;
+        
         
         
         if ([self.selectedView isEqualToString:@"Transferred Today"])
@@ -840,15 +882,28 @@
                                 
                                 [deleteDictationButton setHidden:YES];
                                 
+                                moreButton.userInteractionEnabled=NO;
+                                
                                 [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
                                 int mobileDictationIdVal = [[Database shareddatabase] getMobileDictationIdFromFileName:filName];
                                 
                                 [[Database shareddatabase] updateAudioFileUploadedStatus:@"Resend" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
                                 
                                 //                            NSLog(@"Today's Transferred after DB");
+                                if (checkBoxSelected)
+                                {
+                                     [[Database shareddatabase] updatePriority:[NSString stringWithFormat:@"%d", URGENT] fileName:self.audioDetails.fileName];
+                                }
+                                else
+                                {
+                                     [[Database shareddatabase] updatePriority:[NSString stringWithFormat:@"%d", NORMAL] fileName:self.audioDetails.fileName];
+                                }
                                 
+                                [self updateTemplateIdForFileName];
+
+                                [templateNamesDropdownMenu setUserInteractionEnabled:false];
                                 
-                                
+                                [self.urgentCheckboxButton setUserInteractionEnabled:false];
                                 
                                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                     
@@ -865,6 +920,8 @@
                                     dispatch_async(dispatch_get_main_queue(), ^
                                                    {
                                                        [[self.view viewWithTag:507] setHidden:YES];
+                                                       
+                                                       
                                                        
                                                        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
                                                        {
@@ -917,10 +974,16 @@
                                     
                                     [deleteDictationButton setHidden:YES];
                                     
+                                    moreButton.userInteractionEnabled=NO;
+                                    
+                                    [templateNamesDropdownMenu setUserInteractionEnabled:false];
+
                                     if ([AppPreferences sharedAppPreferences].isReachable)
                                     {
                                         [AppPreferences sharedAppPreferences].fileUploading=YES;
                                     }
+                                    
+                                     [self updateTemplateIdForFileName];
                                     
                                     if ([transferStatus isEqualToString:@"Transfer Failed"])
                                     {
@@ -936,6 +999,8 @@
                                     
                                     isDeleteEditTransferButtonsRemovedAfterTransfer = YES;
                                     
+                                    [templateNamesDropdownMenu setUserInteractionEnabled:false];
+
                                     
                                     [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:801] removeFromSuperview];//remove uploading buuton
                                     
@@ -1005,6 +1070,8 @@
                                         
                                         [deleteDictationButton setHidden:YES];
                                         
+                                        moreButton.userInteractionEnabled=NO;
+                                        
                                         isDeleteEditTransferButtonsRemovedAfterTransfer = YES;
                                         
                                         [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
@@ -1065,6 +1132,8 @@
                                         [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:802] removeFromSuperview];//remove delete button
                                         
                                         [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:803] removeFromSuperview];//remove edit button
+                                        
+                                        moreButton.userInteractionEnabled=NO;
                                         
                                         isDeleteEditTransferButtonsRemovedAfterTransfer = YES;
                                         
@@ -1234,11 +1303,7 @@
 
 -(void)save:(id)sender
 {
-    
-    //    NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-    //
-    //    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
-    
+   
     NSString* departmentName = self.audioDetails.department;
     
     UILabel* transferredByLabel= [self.view viewWithTag:503];
@@ -1253,19 +1318,19 @@
     
     self.audioDetails.departmentCopy = departmentName;
     
+//    self.audioDetails.department = departmentName;
+    
+    self.audioDetails.templateName = @"Select Template";
+    
     [self getTempliatFromDepartMentName:departmentId];
     
-    selectedTemplateName = @"Select Template";
+//    selectedTemplateName = @"Select Template";
+//
+//    [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.audioDetails.fileName];
+    [self setDefaultTemplate];
     
     [templateNamesDropdownMenu reloadAllComponents];
-    
-    
-    // set generic object back to orginal dept
-    //    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
-    //
-    //    [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
-    //
-    //    [[NSUserDefaults standardUserDefaults] synchronize];
+  
     [self.delegate myClassDelegateMethod:nil];
     
     [popupView removeFromSuperview];
@@ -1312,15 +1377,7 @@
     
     if (dateAndTimeArray.count>0)
     {
-//        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-//        NSString* dateStr = [dateAndTimeArray objectAtIndex:0];
-//        NSDate *date = [dateFormatter dateFromString:dateStr];
-//
-//        // Convert date object into desired format
-//        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
-//        NSString *newDateString = [dateFormatter stringFromDate:date];
-        
+
         vc.existingAudioDate = [dateAndTimeArray objectAtIndex:0];
         
     }
@@ -1333,12 +1390,26 @@
     
     vc.existingAudioDepartmentName = self.audioDetails.department;
     vc.existingAudioTemplateName = selectedTemplateName;
+    self.audioDetails.templateName = selectedTemplateName;
+    [self updateTemplateIdForFileName];
 
     vc.isOpenedFromAudioDetails = YES;
     
     vc.selectedRowOfAwaitingList = self.selectedRow;
     
+    if (checkBoxSelected)
+    {
+        vc.existingAudioPriorityId = [NSString stringWithFormat:@"%d", URGENT];
+    }
+    else
+    {
+        vc.existingAudioPriorityId = [NSString stringWithFormat:@"%d", NORMAL];
+    }
+    
+
     vc.delegate = self;
+    
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
     
     [self presentViewController:vc animated:YES completion:nil];
     
@@ -1348,19 +1419,36 @@
 {
     NSString* departmentName = [delegateDict objectForKey:@"DepartmentName"];
     NSString* tempName = [delegateDict objectForKey:@"TemplateName"];
+    NSString* priorityId = [delegateDict objectForKey:@"PriorityId"];
 
     if (!(departmentName == nil))
     {
        self.audioDetails.department = departmentName;
     }
-    else
+    
     if (!(tempName == nil))
     {
         self.audioDetails.templateName = tempName;
         selectedTemplateName = tempName;
     }
     
-    
+    if (!(priorityId == nil))
+    {
+        self.audioDetails.priorityId = priorityId;
+        
+        if ([priorityId isEqualToString:[NSString stringWithFormat:@"%d", URGENT]])
+        {
+            self.urgentCheckBoxImageView.image = [UIImage imageNamed:@"CheckBoxSelected"];
+            
+            checkBoxSelected = true;
+        }
+        else
+        {
+            self.urgentCheckBoxImageView.image = [UIImage imageNamed:@"CheckBoxUnSelected"];
+            
+            checkBoxSelected = false;
+        }
+    }
     
 }
 
@@ -1405,6 +1493,7 @@
 {
     selectedTemplateName = @"Select Template";
     
+    [self.scrollView setScrollEnabled:false];
     //    [self dropdownMenu:dropdownMenu attributedTitleForComponent:0];
     
     [dropdownMenu reloadAllComponents];
@@ -1412,24 +1501,40 @@
 
 -(void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didCloseComponent:(NSInteger)component
 {
-    if ([selectedTemplateName isEqualToString:@"Select Template"])
+    [self.scrollView setScrollEnabled:true];
+    
+    if ([selectedTemplateName isEqualToString:@"Select Template"] && recentlySelectedTemplateName!=nil)
     {
-        [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.audioDetails.fileName];
+        //        [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.recordedAudioFileName];
+        
+        [self setRecentlySelectedTemplate];
+        
+        [dropdownMenu reloadAllComponents];
     }
+    else
+        if([selectedTemplateName isEqualToString:@"Select Template"])
+        {
+            [self setDefaultTemplate];
+            
+            [dropdownMenu reloadAllComponents];
+        }
+    
+//    if ([selectedTemplateName isEqualToString:@"Select Template"])
+//    {
+//        [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.audioDetails.fileName];
+//    }
 }
 -(void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     selectedTemplateName = [templateNamesArray objectAtIndex:row];
     
     //    [dropdownMenu setSelectedComponentBackgroundColor:[UIColor lightGrayColor]];
-    
+    recentlySelectedTemplateName = selectedTemplateName;
+
     [dropdownMenu closeAllComponentsAnimated:YES];
     
     [dropdownMenu reloadAllComponents];
-    
-    [self updateTemplateIdForFileName];
-    
-    
+  
 }
 
 
@@ -1444,160 +1549,57 @@
     
     [[Database shareddatabase] updateTemplateId:templateId fileName:self.audioDetails.fileName];
 }
-//-(void)uploadFileToServer:(NSString*)str
-//
-//{
-//    
-//    NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:
-//                          [NSString stringWithFormat:@"Documents/%@/%@.m4a",AUDIO_FILES_FOLDER_NAME,str] ];
-//
-//    
-//        NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", BASE_URL_PATH, FILE_UPLOAD_API]];
-//        
-//        NSString *boundary = [self generateBoundaryString];
-//        
-//        NSDictionary *params = @{@"filename"     : str,
-//                                 };
-//        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-//        [request setHTTPMethod:@"POST"];
-//
-//        long filesizelong=[[APIManager sharedManager] getFileSize:filePath];
-//        int filesizeint=(int)filesizelong;
-//    
-//        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-//        DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];//    if ([[[NSUserDefaults standardUserDefaults]
-//    
-//        NSString* authorisation=[NSString stringWithFormat:@"%@*%d*%ld*%d*%d",MAC_ID,filesizeint,deptObj.Id,1,0];
-//        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
-//        [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
-//   
-//        [request setValue:authorisation forHTTPHeaderField:@"Authorization"];
-//
-//        // create body
-//        
-//        NSData *httpBody = [self createBodyWithBoundary:boundary parameters:params paths:@[filePath] fieldName:str];
-//        
-//        request.HTTPBody = httpBody;
-//
-//        
-//        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-//            if (connectionError)
-//            {
-//                NSLog(@"error = %@", connectionError);
-//                return;
-//            }
-//            
-//            NSError* error;
-//            result = [NSJSONSerialization JSONObjectWithData:data
-//                                                     options:NSJSONReadingAllowFragments
-//                                                       error:&error];
-//            
-//            NSString* returnCode= [result valueForKey:@"code"];
-//            
-//            if ([returnCode longLongValue]==200)
-//            {
-//                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:@"File uploaded successfully" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
-//                
-//                
-//            }
-//            
-//        }];
-//        
-//        
-//      
-//    
-//    
-//}
-//
-//
-//
-//- (NSData *)createBodyWithBoundary:(NSString *)boundary
-//                        parameters:(NSDictionary *)parameters
-//                             paths:(NSArray *)paths
-//                         fieldName:(NSString *)fieldName
-//{
-//    NSMutableData *httpBody = [NSMutableData data];
-//    
-//    // add params (all params are strings)
-//    
-//    [parameters enumerateKeysAndObjectsUsingBlock:^(NSString *parameterKey, NSString *parameterValue, BOOL *stop) {
-//        [httpBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-//        [httpBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", parameterKey] dataUsingEncoding:NSUTF8StringEncoding]];
-//        [httpBody appendData:[[NSString stringWithFormat:@"%@\r\n", parameterValue] dataUsingEncoding:NSUTF8StringEncoding]];
-//    }];
-//    
-//    // add image data
-//    
-//    for (NSString *path in paths)
-//    {
-//        NSString *filename  = [path lastPathComponent];
-//        NSData   *data      = [NSData dataWithContentsOfFile:path];
-//        NSString *mimetype  = [self mimeTypeForPath:path];
-//        
-//        [httpBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-//        [httpBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n", fieldName, filename] dataUsingEncoding:NSUTF8StringEncoding]];
-//        [httpBody appendData:[[NSString stringWithFormat:@"Content-Type: %@\r\n\r\n", mimetype] dataUsingEncoding:NSUTF8StringEncoding]];
-//        [httpBody appendData:data];
-//        [httpBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-//    }
-//    
-//    [httpBody appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-//    
-//    return httpBody;
-//}
-//
-//
-//- (NSString *)mimeTypeForPath:(NSString *)path
-//{
-//    // get a mime type for an extension using MobileCoreServices.framework
-//    
-//    CFStringRef extension = (__bridge CFStringRef)[path pathExtension];
-//    CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, extension, NULL);
-//    assert(UTI != NULL);
-//    
-//    NSString *mimetype = CFBridgingRelease(UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType));
-//    
-//    assert(mimetype != NULL);
-//    
-//    CFRelease(UTI);
-//    
-//    return mimetype;
-//}
-//
-//
-//- (NSString *)generateBoundaryString
-//{
-//    return [NSString stringWithFormat:@"*%@", [[NSUUID UUID] UUIDString]];
-//    //return [NSString stringWithFormat:@"*"];
-//
-//}
-//
 
+-(void)setDefaultTemplate
+{
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+    DepartMent* deptObj = [[DepartMent alloc] init];
+    deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    NSString* defaultTemplateName = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@DefaultTemplate",deptObj.Id]];
+    
+    
+    if (!(defaultTemplateName == nil || [defaultTemplateName isEqualToString:@""]))
+    {
+        selectedTemplateName = defaultTemplateName;
+    }
+    else
+        selectedTemplateName = @"Select Template";
+    
+    [self updateTemplateIdForFileName];
+}
+-(void)setRecentlySelectedTemplate
+{
+    selectedTemplateName = recentlySelectedTemplateName;
+    
+    [self updateTemplateIdForFileName];
+}
 
-//-(void)prepareAudioPlayer
-//{
-//    if (!IMPEDE_PLAYBACK)
-//    {
-//        [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryPlayback];
-//    }
-//    [recorder stop];
-//    NSError *audioError;
-//    
-//    NSArray* pathComponents = [NSArray arrayWithObjects:
-//                               [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
-//                               AUDIO_FILES_FOLDER_NAME,
-//                               [NSString stringWithFormat:@"%@.m4a", existingAudioFileName],
-//                               nil];
-//    
-//    recordedAudioURL = [NSURL fileURLWithPathComponents:pathComponents];
-//    
-//    player = [[AVAudioPlayer alloc] initWithContentsOfURL:recordedAudioURL error:&audioError];
-//    audioRecordSlider.maximumValue = player.duration;
-//    player.currentTime = audioRecordSlider.value;
-//    
-//    player.delegate = self;
-//    [player prepareToPlay];
-//    
-//}
+- (IBAction)urgentCheckBoxButtonClicked:(id)sender
+{
+    if (checkBoxSelected)
+    {
+        self.urgentCheckBoxImageView.image = [UIImage imageNamed:@"CheckBoxUnSelected"];
+        
+        checkBoxSelected = false;
+        
+        if (![self.selectedView isEqualToString:@"Transferred Today"]) // should not get updated for transferred today
+        {
+            [[Database shareddatabase] updatePriority:[NSString stringWithFormat:@"%d", NORMAL] fileName:self.audioDetails.fileName];
 
+        }
+    }
+    else
+    {
+        self.urgentCheckBoxImageView.image = [UIImage imageNamed:@"CheckBoxSelected"];
+        
+        checkBoxSelected = true;
+        
+        if (![self.selectedView isEqualToString:@"Transferred Today"])
+        {
+            [[Database shareddatabase] updatePriority:[NSString stringWithFormat:@"%d", URGENT] fileName:self.audioDetails.fileName];
+
+        }
+    }
+}
 @end

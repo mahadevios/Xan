@@ -1089,6 +1089,9 @@
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
     
+    UIViewController* vc= [self.storyboard  instantiateViewControllerWithIdentifier:@"EditDocxViewController"];
+    
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
     
     [self.navigationController presentViewController:[self.storyboard  instantiateViewControllerWithIdentifier:@"EditDocxViewController"] animated:YES completion:nil];
 }

@@ -27,6 +27,7 @@
 - (IBAction)submitButtonCilcked:(id)sender;
 - (IBAction)cancelButtonClicked:(id)sender;
 @property (weak, nonatomic) MBProgressHUD *hud;
+- (IBAction)urgentCheckboxButton:(id)sender;
 
 @end
 

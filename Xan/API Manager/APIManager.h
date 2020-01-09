@@ -16,7 +16,7 @@
 {
     NSDictionary* result;
     NSString* filnameString;
-    int departmentId;
+    NSString* departmentId;
     int transferStatus;
     int mobileDictationIdVal;
 }
@@ -66,9 +66,12 @@
 
 -(void)getTemplateByUserCode:(NSString*)macID;
 
--(void)mobileDictationsInsertMobileStatus:(NSString* )mobilestatus OriginalFileName:(NSString*)OriginalFileName andMacID:(NSString*)macID;
+-(double)getFileDuration:(NSString*)fileNameString;
 
--(void)mobileDataSynchronisationMobileStatus:(NSString*)mobilestatus OriginalFileName:(NSString*)OriginalFileName macID:(NSString*)macid DeleteFlag:(NSString*)DeleteFlag;
+-(void) downloadAudioFile;
+//-(void)mobileDictationsInsertMobileStatus:(NSString* )mobilestatus OriginalFileName:(NSString*)OriginalFileName andMacID:(NSString*)macID;
+
+//-(void)mobileDataSynchronisationMobileStatus:(NSString*)mobilestatus OriginalFileName:(NSString*)OriginalFileName macID:(NSString*)macid DeleteFlag:(NSString*)DeleteFlag;
 
 //-(void)uploadFileFilename:(NSString*)filename macID:(NSString*)macID fileSize:(NSString*)filesize;
 

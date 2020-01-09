@@ -636,6 +636,11 @@
 -(void)UserSettings
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+    
+    UIViewController* vc = [self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"];
+    
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
+    
     [self.navigationController presentViewController:[self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"] animated:YES completion:nil];
 }
 -(void)dismissPopView:(id)sender
@@ -907,6 +912,8 @@
             }
             
             detailVC.audioDetails = audioDetails;
+            
+            detailVC.modalPresentationStyle = UIModalPresentationFullScreen;
             
             [self.navigationController presentViewController:detailVC animated:YES completion:nil];
         }
