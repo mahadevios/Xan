@@ -33,9 +33,9 @@
 //    {
     [self beginAppearanceTransition:true animated:true];
 
-        self.splitViewController.delegate = self;
+    self.splitViewController.delegate = self;
     
-        [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
+    [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
 //    }
      
     detailVC.delegate = self;
@@ -46,7 +46,16 @@
     
     [self setSearchController];
 
-  
+  [self.segment setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"Arial" size:16.0],
+   NSForegroundColorAttributeName:[UIColor lightHomeColor]}
+  forState:UIControlStateNormal];
+    
+    [self.segment setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"Arial" size:16.0],
+      NSForegroundColorAttributeName:[UIColor whiteColor]}
+     forState:UIControlStateSelected];
+    
+    
+   
 }
 
 

@@ -11,5 +11,6 @@
 @interface MainTabBarViewController : UITabBarController
 
 @property(nonatomic, strong) NSString* isSplashScreenPresented;
+@property (weak, nonatomic) IBOutlet UITabBar *bottomTabBar;
 
 @end
