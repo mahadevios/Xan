@@ -94,7 +94,7 @@
     
     if ([self.view viewWithTag:400] == nil)
     {
-        CGRect webViewFrame = CGRectMake(self.view.frame.origin.x,self.navigationView.frame.origin.y+self.navigationView.frame.size.height, self.view.frame.size.width, self.view.frame.size.height-180);
+        CGRect webViewFrame = CGRectMake(self.view.frame.origin.x,self.navigationView.frame.origin.y+self.navigationView.frame.size.height, self.view.frame.size.width, self.view.frame.size.height-200);
         self.wkWebView = [[WKWebView alloc] initWithFrame:webViewFrame];
         self.wkWebView.tag = 400;
         NSString *filePath=[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"TCsFinal.docx"];
@@ -104,7 +104,10 @@
        
         [self.wkWebView setUserInteractionEnabled:true];
         [self.view addSubview:self.wkWebView];
+        
+        
     }
+    
     
     
   
