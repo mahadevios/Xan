@@ -236,6 +236,7 @@
     
     NSString* responsePinString=  [responseDict valueForKey:@"pinValidateFl"];
     
+
     if ([responseCodeString intValue] == 2001 || [responseCodeString intValue] == -1001)
     {
         // received unexpected response, just remove the hud
@@ -295,6 +296,10 @@
        
         //get user firstname,lastname and userId for file prefix
         NSString* fileNamePrefix = [responseDict valueForKey:@"fileNamePrefix"];
+        
+        NSString* devicePrefix =  [responseDict valueForKey:@"devicePrefix"];
+
+        fileNamePrefix = [fileNamePrefix stringByAppendingString:devicePrefix];
         
         NSString* dictatorName = [responseDict valueForKey:@"dictatorName"];
 
