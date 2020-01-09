@@ -2034,7 +2034,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vZd-y4-Bab">
-                                <rect key="frame" x="0.0" y="752" width="414" height="110"/>
+                                <rect key="frame" x="0.0" y="786" width="414" height="110"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CheckBoxUnSelected" translatesAutoresizingMaskIntoConstraints="NO" id="ns2-Jh-TWf">
                                         <rect key="frame" x="10" y="10" width="22" height="22"/>
@@ -2112,7 +2112,7 @@
                             <constraint firstItem="7kf-Zb-k8t" firstAttribute="width" secondItem="BEU-ns-1tr" secondAttribute="width" id="6BY-5a-R7G"/>
                             <constraint firstItem="7kf-Zb-k8t" firstAttribute="centerX" secondItem="BEU-ns-1tr" secondAttribute="centerX" id="LqQ-2G-5od"/>
                             <constraint firstItem="r4Q-O9-ytD" firstAttribute="leading" secondItem="BEU-ns-1tr" secondAttribute="leading" constant="10" id="Zko-CW-gP7"/>
-                            <constraint firstItem="2Em-yY-d2E" firstAttribute="top" secondItem="vZd-y4-Bab" secondAttribute="bottom" id="fmF-Da-tYO"/>
+                            <constraint firstAttribute="bottom" secondItem="vZd-y4-Bab" secondAttribute="bottom" id="dy0-Ef-tqm"/>
                             <constraint firstItem="7kf-Zb-k8t" firstAttribute="top" secondItem="BEU-ns-1tr" secondAttribute="top" id="s4y-q7-rln"/>
                         </constraints>
                     </view>
