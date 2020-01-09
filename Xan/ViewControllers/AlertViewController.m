@@ -270,7 +270,8 @@
     
     vc.modalPresentationStyle = UIModalPresentationFullScreen;
     
-    [self.navigationController presentViewController:[self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"] animated:YES completion:nil];
+    
+    [self.navigationController presentViewController:vc animated:YES completion:nil];
 }
 
 -(void)dismissPopView:(id)sender
