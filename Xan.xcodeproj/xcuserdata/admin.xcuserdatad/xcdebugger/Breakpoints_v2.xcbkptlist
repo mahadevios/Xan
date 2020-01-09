@@ -3262,8 +3262,8 @@
             timestampString = "600076969.443637"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "490"
-            endingLineNumber = "490"
+            startingLineNumber = "491"
+            endingLineNumber = "491"
             landmarkName = "-submitButtonCilcked:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3502,6 +3502,22 @@
             startingLineNumber = "327"
             endingLineNumber = "327"
             landmarkName = "-validateTemplateListResponse:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4E782637-C505-4B97-82A4-D3293FCB86B5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/LoginViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "240"
+            endingLineNumber = "240"
+            landmarkName = "-validatePinResponseCheck:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
