@@ -88,8 +88,31 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(validateTemplateListResponse:) name:NOTIFICATION_TEMPLATE_LIST_API
                                                object:nil];
+    
+     [self setTabBarBackgroundImage];
     // Do any additional setup after loading the view.
 }
+
+-(void)setTabBarBackgroundImage
+{
+    UITabBar *tabBar = self.tabBarController.tabBar;
+   
+    NSLog(@"navi height = %f", tabBar.frame.size.height);
+
+    CGSize imgSize = CGSizeMake(tabBar.frame.size.width/tabBar.items.count,tabBar.frame.size.height+0.5);
+    
+    //Create Image
+    UIGraphicsBeginImageContextWithOptions(imgSize, NO, 0);
+    UIBezierPath* p =
+    [UIBezierPath bezierPathWithRect:CGRectMake(0,0,imgSize.width,imgSize.height+0.5)];
+    [[UIColor colorWithRed:225/255.0 green:232/255.0 blue:246/255.0 alpha:1.0] setFill];
+    [p fill];
+    UIImage* finalImg = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    [tabBar setSelectionIndicatorImage:finalImg];
+}
+
 -(void)validateFileUploadResponse
 {
     [self getCountsOfTransferredAwaitingFiles];
@@ -98,7 +121,8 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-//    NSLog(@"navi height = %@", self.navigationController.navigationBar.bounds);
+   
+    
     [super viewWillAppear:true];
     
     if (!isTemplateDataReceived)
