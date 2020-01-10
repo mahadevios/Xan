@@ -257,7 +257,7 @@
 {
     
     NSArray* subViewArray=[NSArray arrayWithObjects:@"User Settings", nil];
-    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, 20, 160, 40) andSubViews:subViewArray :self];
+    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, 40, 160, 40) andSubViews:subViewArray :self];
     [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
     
 }

@@ -324,6 +324,10 @@
 //    [AppPreferences sharedAppPreferences].tempalateListDict = [NSMutableDictionary new];
     isTemplateDataReceived = true;
     
+    [self removePrevTemplateList];
+    
+    NSMutableDictionary* defaultDeptCount = [NSMutableDictionary new];
+    
     for (NSDictionary* responseDict in responseArray)
     {
         
@@ -338,15 +342,28 @@
 //        [[AppPreferences sharedAppPreferences].tempalateListDict setValue:templateCode forKey:templateName];
         if (!(defaultFl == nil || [defaultFl isEqual:[NSNull null]]))
         {
-            if (responseArray.count == 1)
-            {
-                [[NSUserDefaults standardUserDefaults] setObject:templateName forKey:[NSString stringWithFormat:@"%@DefaultTemplate",deptCode]];
-            }
-            else
+           
             if ([defaultFl isEqualToString:@"1"])
             {
                 [[NSUserDefaults standardUserDefaults] setObject:templateName forKey:[NSString stringWithFormat:@"%@DefaultTemplate",deptCode]];
+                            
+            }
+            
+            NSString* defaultSet = [defaultDeptCount valueForKey:deptCode];
+            if (defaultSet == nil) // if default falg not set yet
+            {
+                [defaultDeptCount setObject:@"1" forKey:[NSString stringWithFormat:@"%@",deptCode]];
+            }
+            else
+            {
+               NSString* count =  [defaultDeptCount valueForKey:deptCode];
                 
+                int deptCount = [count intValue];
+                
+                ++deptCount;
+                
+                [defaultDeptCount setObject:[NSString stringWithFormat:@"%d",deptCount] forKey:[NSString stringWithFormat:@"%@",deptCode]];
+
             }
         }
       
@@ -362,16 +379,23 @@
         [[Database shareddatabase] insertTemplateListData:tempObj];
     }
 
-    // set default template
-//     [[NSUserDefaults standardUserDefaults] setObject:@"new template_7052" forKey:[NSString stringWithFormat:@"dept0000002"]];
-//    
-//    [[NSUserDefaults standardUserDefaults] setObject:@"asdasd_5187" forKey:[NSString stringWithFormat:@"dept0000003"]];
     
-    if (responseArray.count == 0)
-    {
-        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"DefaultTemplate"];
+    for (NSDictionary* responseDict in responseArray)
+        {
+                        
+            NSString* templateName = [responseDict valueForKey:@"templateName"];
 
-    }
+            NSString* deptCode = [responseDict valueForKey:@"departmentCode"];
+
+            NSString* deptCount = [defaultDeptCount valueForKey:deptCode];
+
+            if ([deptCount isEqualToString:@"1"])
+            {
+                [[NSUserDefaults standardUserDefaults] setObject:templateName forKey:[NSString stringWithFormat:@"%@DefaultTemplate",deptCode]];
+            }
+         
+        }
+    
    
     [hud hideAnimated:YES];
     
@@ -424,6 +448,20 @@
         
     }
     
+}
+
+-(void)removePrevTemplateList
+{
+    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
+
+     for (NSString *key in [userDef dictionaryRepresentation].allKeys) {
+         if ([key hasSuffix:@"DefaultTemplate"]) {
+             [userDef removeObjectForKey:key];
+         }
+     }
+     
+       [[Database shareddatabase] deleteTemplateListData];
+     
 }
 
 -(BOOL) needsUpdate
@@ -700,7 +738,7 @@
 {
     NSArray* subViewArray = [NSArray arrayWithObjects:@"User Settings",@"Logout", nil];
     
-    UIView* pop = [[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, 20, 160, 84) andSubViews:subViewArray :self];
+    UIView* pop = [[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, 40, 160, 84) andSubViews:subViewArray :self];
     
     [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
 }

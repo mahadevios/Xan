@@ -142,4 +142,6 @@
 
 -(NSString*)getPriorityIdFromFilename:(NSString*)filename;
 
+-(void)deleteTemplateListData;
+
 @end
