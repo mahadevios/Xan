@@ -523,7 +523,7 @@ else
     [templateNamesDropdownMenu closeAllComponentsAnimated:true];
     
     NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Department", nil];
-    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+20, 160, 40) andSubViews:subViewArray :self];
+    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+40, 160, 40) andSubViews:subViewArray :self];
     
     [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
 }
@@ -593,10 +593,10 @@ else
 //    selectedTemplateName = @"Select Template";
 //
 //    [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.audioDetails.fileName];
-    [self setDefaultTemplate];
-    
     [self getTempliatFromDepartMentName:departmentId];
-    
+
+    [self setDefaultTemplate];
+        
     [templateNamesDropdownMenu reloadAllComponents];
     
     [self.delegate myClassDelegateMethod:nil];
@@ -767,11 +767,12 @@ else
 
 -(void)setDefaultTemplate
 {
-    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-    DepartMent* deptObj = [[DepartMent alloc] init];
-    deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    
-    NSString* defaultTemplateName = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@DefaultTemplate",deptObj.Id]];
+//    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+//    DepartMent* deptObj = [[DepartMent alloc] init];
+//    deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    NSString* departmentId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:self.audioDetails.department];
+
+    NSString* defaultTemplateName = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@DefaultTemplate",departmentId]];
     
     
     if (!(defaultTemplateName == nil || [defaultTemplateName isEqualToString:@""]))

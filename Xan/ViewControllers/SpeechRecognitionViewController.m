@@ -1161,7 +1161,7 @@
 
     double navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
     double popUpViewXPosition = self.view.frame.size.width - popViewWidth;
-    double popUpViewYPosition = navigationBarHeight + 20;
+    double popUpViewYPosition = navigationBarHeight + 40;
     
     UIView* overlayView = [[PopUpCustomView alloc]initWithFrame:CGRectMake(popUpViewXPosition, popUpViewYPosition, popViewWidth, popViewHeight) andSubViews:subViewArray :self];
     

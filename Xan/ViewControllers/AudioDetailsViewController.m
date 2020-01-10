@@ -478,7 +478,7 @@
     
     NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Department", nil];
     
-    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+20, 160, 40) andSubViews:subViewArray :self];
+    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+40, 160, 40) andSubViews:subViewArray :self];
     
     [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
 }
@@ -1313,24 +1313,26 @@
     UILabel* filenameLabel=[self.view viewWithTag:501];
     
     NSString* departmentId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentName];
+
+//    if (![self.selectedView isEqualToString:@"Transferred Today"])
+//    {
+        [[Database shareddatabase] updateDepartment:departmentId fileName:filenameLabel.text];
+//    }
     
-    [[Database shareddatabase] updateDepartment:departmentId fileName:filenameLabel.text];
+   
     
     self.audioDetails.departmentCopy = departmentName;
-    
-//    self.audioDetails.department = departmentName;
-    
+        
     self.audioDetails.templateName = @"Select Template";
     
     [self getTempliatFromDepartMentName:departmentId];
     
-//    selectedTemplateName = @"Select Template";
-//
-//    [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.audioDetails.fileName];
+    
     [self setDefaultTemplate];
     
     [templateNamesDropdownMenu reloadAllComponents];
   
+    
     [self.delegate myClassDelegateMethod:nil];
     
     [popupView removeFromSuperview];
@@ -1552,11 +1554,10 @@
 
 -(void)setDefaultTemplate
 {
-    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-    DepartMent* deptObj = [[DepartMent alloc] init];
-    deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    NSString* departmentId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:self.audioDetails.department];
     
-    NSString* defaultTemplateName = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@DefaultTemplate",deptObj.Id]];
+    
+    NSString* defaultTemplateName = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@DefaultTemplate",departmentId]];
     
     
     if (!(defaultTemplateName == nil || [defaultTemplateName isEqualToString:@""]))
@@ -1566,7 +1567,12 @@
     else
         selectedTemplateName = @"Select Template";
     
-    [self updateTemplateIdForFileName];
+//       if (![self.selectedView isEqualToString:@"Transferred Today"])
+//       {
+           [self updateTemplateIdForFileName];
+//       }
+    
+    
 }
 -(void)setRecentlySelectedTemplate
 {
@@ -1583,11 +1589,11 @@
         
         checkBoxSelected = false;
         
-        if (![self.selectedView isEqualToString:@"Transferred Today"]) // should not get updated for transferred today
-        {
-            [[Database shareddatabase] updatePriority:[NSString stringWithFormat:@"%d", NORMAL] fileName:self.audioDetails.fileName];
-
-        }
+//        if (![self.selectedView isEqualToString:@"Transferred Today"]) // should not get updated for transferred today
+//        {
+//            [[Database shareddatabase] updatePriority:[NSString stringWithFormat:@"%d", NORMAL] fileName:self.audioDetails.fileName];
+//
+//        }
     }
     else
     {
@@ -1595,11 +1601,11 @@
         
         checkBoxSelected = true;
         
-        if (![self.selectedView isEqualToString:@"Transferred Today"])
-        {
-            [[Database shareddatabase] updatePriority:[NSString stringWithFormat:@"%d", URGENT] fileName:self.audioDetails.fileName];
-
-        }
+//        if (![self.selectedView isEqualToString:@"Transferred Today"])
+//        {
+//            [[Database shareddatabase] updatePriority:[NSString stringWithFormat:@"%d", URGENT] fileName:self.audioDetails.fileName];
+//
+//        }
     }
 }
 @end
