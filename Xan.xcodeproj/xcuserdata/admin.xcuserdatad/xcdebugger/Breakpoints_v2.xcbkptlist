@@ -3245,8 +3245,8 @@
             timestampString = "600076969.443552"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3742"
-            endingLineNumber = "3742"
+            startingLineNumber = "3741"
+            endingLineNumber = "3741"
             landmarkName = "-dropdownMenu:didSelectRow:inComponent:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3449,9 +3449,9 @@
             timestampString = "600076969.444237"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1827"
-            endingLineNumber = "1827"
-            landmarkName = "-urgentButtonClicked:"
+            startingLineNumber = "1826"
+            endingLineNumber = "1826"
+            landmarkName = "-addAnimatedView"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3466,8 +3466,8 @@
             timestampString = "600076969.4443409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3768"
-            endingLineNumber = "3768"
+            startingLineNumber = "3767"
+            endingLineNumber = "3767"
             landmarkName = "-setDefaultTemplate"
             landmarkType = "7">
          </BreakpointContent>
@@ -3502,22 +3502,6 @@
             startingLineNumber = "327"
             endingLineNumber = "327"
             landmarkName = "-validateTemplateListResponse:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "4E782637-C505-4B97-82A4-D3293FCB86B5"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/LoginViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "240"
-            endingLineNumber = "240"
-            landmarkName = "-validatePinResponseCheck:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

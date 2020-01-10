@@ -129,17 +129,10 @@
 - (void)tableView:(UITableView *)tableview didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    
-//    UITableViewCell* cell = [tableview cellForRowAtIndexPath:indexPath];
-//    UILabel* departmentNameLabel = [cell viewWithTag:101];
-  
    
-    
     DepartMent* deptObj = [[DepartMent alloc] init];
-//    deptObj= [[Database shareddatabase] getDepartMentFromDepartmentName:departmentNameLabel.text];
     
     deptObj = [departmentNameArray objectAtIndex:indexPath.row];
-//    NSData *dataa = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
 
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:deptObj];
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
@@ -147,7 +140,7 @@
 
 
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isLoadedFirstTime"];
-        
+    
     [self setRootView];
 }
 
@@ -172,16 +165,36 @@
 //    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 //    self.definesPresentationContext = true;
     
-    [self dismissViewControllerAnimated:true completion:nil];
-
-    [[self presentingViewController] dismissViewControllerAnimated:true completion:nil];
+        
+    // [appDelegate.window makeKeyWindow];
+    //    UIWindow* winow = [[UIApplication sharedApplication] keyWindow];
     
-// [appDelegate.window makeKeyWindow];
-//    UIWindow* winow = [[UIApplication sharedApplication] keyWindow];
+    
+//    self.searchController.active = NO; // Add this !
+    
+   
+    
+    
+
+//    [[self presentingViewController] dismissViewControllerAnimated:true completion:nil];
+
+   
+//    [self.searchController.searchBar resignFirstResponder];
+
+    
+    
+//    [self dismissViewControllerAnimated:true completion:nil];
+//
+//      [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
+//    id vc1 = [self presentingViewController];
+    
+    [[self presentingViewController] dismissViewControllerAnimated:true completion:nil];
+
+    [self checkAndDismissViewController];
+    
+    
     [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
     
-    [self.searchController.searchBar resignFirstResponder];
-
     
 
 }
@@ -189,11 +202,12 @@
 {
     [self.view endEditing:YES];
     id viewController = [self topViewController];
-    if([viewController isKindOfClass:[LoginViewController class]])
-    {
-        //do something
+//    if([viewController isKindOfClass:[LoginViewController class]])
+//    {
+//        //do something
         [viewController dismissViewControllerAnimated:NO completion:nil];
-    }
+//    }
+//    NSLog(@"");
 }
 
 - (UIViewController *)topViewController
