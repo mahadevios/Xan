@@ -492,7 +492,8 @@
         {
             UIViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ChangePasswordViewController"];
             vc.modalPresentationStyle = UIModalPresentationFullScreen;
-            [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"ChangePasswordViewController"] animated:YES completion:nil];
+
+            [self presentViewController:vc animated:YES completion:nil];
         }
     }
     

@@ -2387,7 +2387,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     UIViewController* vc = [self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"];
     vc.modalPresentationStyle = UIModalPresentationFullScreen;
     
-    [self presentViewController:[self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"] animated:YES completion:nil];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 

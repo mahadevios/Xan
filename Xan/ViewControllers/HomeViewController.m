@@ -338,6 +338,11 @@
 //        [[AppPreferences sharedAppPreferences].tempalateListDict setValue:templateCode forKey:templateName];
         if (!(defaultFl == nil || [defaultFl isEqual:[NSNull null]]))
         {
+            if (responseArray.count == 1)
+            {
+                [[NSUserDefaults standardUserDefaults] setObject:templateName forKey:[NSString stringWithFormat:@"%@DefaultTemplate",deptCode]];
+            }
+            else
             if ([defaultFl isEqualToString:@"1"])
             {
                 [[NSUserDefaults standardUserDefaults] setObject:templateName forKey:[NSString stringWithFormat:@"%@DefaultTemplate",deptCode]];
