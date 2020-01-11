@@ -390,7 +390,7 @@
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-                self.transcriptionStatusView.frame = CGRectMake(0, moveDownDistance, self.view.frame.size.width, 55);
+                self.transcriptionStatusView.frame = CGRectMake(0, moveDownDistance, self.view.frame.size.width, 65);
             });
             
         }
