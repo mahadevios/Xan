@@ -762,6 +762,8 @@
     
     UIViewController* vc= [self.storyboard  instantiateViewControllerWithIdentifier:@"LoginViewController"];
     
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
+    
     [self presentViewController:vc animated:true completion:nil];
 
 //    [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];

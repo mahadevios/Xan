@@ -3364,8 +3364,8 @@
             timestampString = "600161282.876673"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "814"
-            endingLineNumber = "814"
+            startingLineNumber = "820"
+            endingLineNumber = "820"
             landmarkName = "-gestureRecognizer:shouldReceiveTouch:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3483,8 +3483,8 @@
             timestampString = "600076969.4443851"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4225"
-            endingLineNumber = "4225"
+            startingLineNumber = "4231"
+            endingLineNumber = "4231"
             landmarkName = "RecordViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -3547,9 +3547,9 @@
             filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1563"
-            endingLineNumber = "1563"
-            landmarkName = "-setDefaultTemplate"
+            startingLineNumber = "1549"
+            endingLineNumber = "1549"
+            landmarkName = "-updateTemplateIdForFileName"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3563,8 +3563,8 @@
             filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1333"
-            endingLineNumber = "1333"
+            startingLineNumber = "1316"
+            endingLineNumber = "1316"
             landmarkName = "-save:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3573,16 +3573,16 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "209C0A4F-5760-447E-915A-A24BCD0ACE25"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1476"
-            endingLineNumber = "1476"
-            landmarkName = "-dropdownMenu:attributedTitleForComponent:"
-            landmarkType = "7">
+            startingLineNumber = "1462"
+            endingLineNumber = "1462"
+            landmarkName = "AudioDetailsViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3595,9 +3595,9 @@
             filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1309"
-            endingLineNumber = "1309"
-            landmarkName = "-save:"
+            startingLineNumber = "1292"
+            endingLineNumber = "1292"
+            landmarkName = "-cancel:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3605,7 +3605,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "A2CF2223-F5F5-4610-B35A-B0DF8FB21FFD"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
@@ -3627,8 +3627,8 @@
             filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1331"
-            endingLineNumber = "1331"
+            startingLineNumber = "1314"
+            endingLineNumber = "1314"
             landmarkName = "-save:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3637,7 +3637,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "027D6B1C-07B5-4472-920F-1DABD51975A3"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
@@ -3653,7 +3653,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "3D14C7CE-5F69-4034-879A-7D2E0625B565"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
@@ -3668,31 +3668,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "490FF01B-EAB5-4D59-94DA-47C8AF19132C"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/ViewControllers/TransferListViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "952"
-            endingLineNumber = "952"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "78ECFDBA-273C-4ECC-B0D9-0E6D8E8A281F"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1824"
-            endingLineNumber = "1824"
+            startingLineNumber = "1830"
+            endingLineNumber = "1830"
             landmarkName = "-addAnimatedView"
             landmarkType = "7">
          </BreakpointContent>
@@ -3701,14 +3685,94 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "671FB7AF-766C-49C5-962A-7BD6D5F15EEB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/ViewControllers/RecordViewController.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2836"
+            endingLineNumber = "2836"
+            landmarkName = "-saveAudioRecordToDatabase"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7B03DC84-D0EC-4324-9482-E22365557625"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "284"
+            endingLineNumber = "284"
+            landmarkName = "-viewWillAppear:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A035A21A-3D52-469C-9684-DFD7E2523595"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1587"
+            endingLineNumber = "1587"
+            landmarkName = "-urgentCheckBoxButtonClicked:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "65E30327-C28B-4AFC-98C3-0172ABF8349B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/Database/Database.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2605"
+            endingLineNumber = "2605"
+            landmarkName = "-updatePriority:fileName:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C6B6C983-A4AA-4DDE-A8F8-F6DBDE09C05C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2830"
-            endingLineNumber = "2830"
+            startingLineNumber = "4312"
+            endingLineNumber = "4312"
+            landmarkName = "-setDefaultTemplate"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DAF6532E-104F-4613-BC75-B49120D939F2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/ViewControllers/RecordViewController.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2845"
+            endingLineNumber = "2845"
             landmarkName = "-saveAudioRecordToDatabase"
             landmarkType = "7">
          </BreakpointContent>

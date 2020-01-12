@@ -44,6 +44,12 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     templateNamesDropdownMenu.dataSource = self;
     templateNamesDropdownMenu.delegate = self;
     
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+       DepartMent* deptObj = [[DepartMent alloc] init];
+       deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    [self getTempliatFromDepartMentName:deptObj.Id];
+    
     [self setDefaultTemplate];
     
     UITapGestureRecognizer* tapGestureRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(disMissTemplateDropDown:)];
