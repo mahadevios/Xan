@@ -1160,7 +1160,7 @@
     
     //Create a spacer.
     bi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    bi.width = 5.0f;
+    bi.width = 0.0f;
     [bi setTintColor:[UIColor whiteColor]];
     [buttons addObject:bi];
     
@@ -1169,7 +1169,7 @@
     [buttons addObject:bi];
     
     bi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    bi.width = 9.0f;
+    bi.width = 5.0f;
     [bi setTintColor:[UIColor whiteColor]];
     [buttons addObject:bi];
     
@@ -1194,16 +1194,17 @@
     tools1.translucent = NO;
     
     NSMutableArray *buttons1 = [[NSMutableArray alloc] initWithCapacity:4];
-    UIBarButtonItem *bi1 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
-    bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
-    [bi1 setTintColor:[UIColor whiteColor]];
-    [buttons1 addObject:bi1];
-    
-    //Create a spacer.
-    bi1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    bi1.width = 8.0f;
-    [bi1 setTintColor:[UIColor whiteColor]];
-    [buttons1 addObject:bi1];
+    UIBarButtonItem *bi1;
+//    = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+//    bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
+//    [bi1 setTintColor:[UIColor whiteColor]];
+//    [buttons1 addObject:bi1];
+//
+//    //Create a spacer.
+//    bi1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+//    bi1.width = 2.0f;
+//    [bi1 setTintColor:[UIColor whiteColor]];
+//    [buttons1 addObject:bi1];
     
     // Add profile button.
     selectedCountLabel=[[UILabel alloc]initWithFrame:CGRectMake(0, 5, 30, 20)];
@@ -1214,7 +1215,7 @@
     [buttons1 addObject:bi1];
     
     bi1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    bi1.width = -15.0f;
+    bi1.width = 0.0f;
     [bi1 setTintColor:[UIColor whiteColor]];
     [buttons1 addObject:bi1];
     

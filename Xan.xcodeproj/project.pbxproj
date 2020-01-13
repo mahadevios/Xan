@@ -53,6 +53,7 @@
 		844C4A731D4B393800CF3DB4 /* UserSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 844C4A721D4B393800CF3DB4 /* UserSettingsViewController.m */; };
 		844C4A791D4B736700CF3DB4 /* SwitchCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 844C4A781D4B736700CF3DB4 /* SwitchCreation.m */; };
 		845A96781DDDEF9A007F460C /* NSData+AES256.m in Sources */ = {isa = PBXBuildFile; fileRef = 845A96771DDDEF9A007F460C /* NSData+AES256.m */; };
+		8461600923CC3901000F4CFB /* TCsFinal.docx in Resources */ = {isa = PBXBuildFile; fileRef = 8461600823CC3901000F4CFB /* TCsFinal.docx */; };
 		846A561F219AA51400EC0B3C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 846A561E219AA51400EC0B3C /* StoreKit.framework */; };
 		846B5A5220B43EAB0012F6D9 /* EmptyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846B5A5120B43EAB0012F6D9 /* EmptyViewController.m */; };
 		846DE6861D7288420004C886 /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 846DE6841D7288420004C886 /* Database.m */; };
@@ -87,7 +88,6 @@
 		84AB68591D536961006F962D /* InCompleteDictationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AB68581D536961006F962D /* InCompleteDictationViewController.m */; };
 		84B87BCE1D76859A002B91FB /* UIDevice+Identifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B87BCD1D76859A002B91FB /* UIDevice+Identifier.m */; };
 		84B87BD11D770D1D002B91FB /* SplashScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B87BD01D770D1D002B91FB /* SplashScreenViewController.m */; };
-		84BA563321B00A6200765A65 /* TCsFinal.docx in Resources */ = {isa = PBXBuildFile; fileRef = 84BA563221B00A6200765A65 /* TCsFinal.docx */; };
 		84BD03061FC2DD7C006C45A6 /* DocFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BD03051FC2DD7C006C45A6 /* DocFilesViewController.m */; };
 		84BFFB4B21ABDD8500DD8E04 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BFFB4921ABDD8500DD8E04 /* Reachability.m */; };
 		84CC5F731D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CC5F721D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.m */; };
@@ -244,6 +244,7 @@
 		8453544D22E6DBE3009EF382 /* Copy to Xan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Copy to Xan.entitlements"; sourceTree = "<group>"; };
 		845A96761DDDEF9A007F460C /* NSData+AES256.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+AES256.h"; sourceTree = "<group>"; };
 		845A96771DDDEF9A007F460C /* NSData+AES256.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+AES256.m"; sourceTree = "<group>"; };
+		8461600823CC3901000F4CFB /* TCsFinal.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = TCsFinal.docx; sourceTree = "<group>"; };
 		846A561E219AA51400EC0B3C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		846B5A5020B43EAB0012F6D9 /* EmptyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmptyViewController.h; sourceTree = "<group>"; };
 		846B5A5120B43EAB0012F6D9 /* EmptyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmptyViewController.m; sourceTree = "<group>"; };
@@ -314,7 +315,6 @@
 		84B87BCD1D76859A002B91FB /* UIDevice+Identifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+Identifier.m"; sourceTree = "<group>"; };
 		84B87BCF1D770D1D002B91FB /* SplashScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplashScreenViewController.h; sourceTree = "<group>"; };
 		84B87BD01D770D1D002B91FB /* SplashScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplashScreenViewController.m; sourceTree = "<group>"; };
-		84BA563221B00A6200765A65 /* TCsFinal.docx */ = {isa = PBXFileReference; lastKnownFileType = file; name = TCsFinal.docx; path = Xan/TCsFinal.docx; sourceTree = "<group>"; };
 		84BD03041FC2DD7C006C45A6 /* DocFilesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DocFilesViewController.h; sourceTree = "<group>"; };
 		84BD03051FC2DD7C006C45A6 /* DocFilesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DocFilesViewController.m; sourceTree = "<group>"; };
 		84BFFB4921ABDD8500DD8E04 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Xan/Libraries/Rechability/Reachability.m; sourceTree = SOURCE_ROOT; };
@@ -547,8 +547,8 @@
 		847222351D47368A00C00F20 = {
 			isa = PBXGroup;
 			children = (
+				8461600823CC3901000F4CFB /* TCsFinal.docx */,
 				847D95CA1D5F325600145C32 /* libsqlite3.0.tbd */,
-				84BA563221B00A6200765A65 /* TCsFinal.docx */,
 				847222401D47368A00C00F20 /* Xan */,
 				8472225A1D47368A00C00F20 /* XanTests */,
 				847222651D47368A00C00F20 /* XanUITests */,
@@ -993,7 +993,7 @@
 				8472224E1D47368A00C00F20 /* Assets.xcassets in Resources */,
 				8472224C1D47368A00C00F20 /* Main.storyboard in Resources */,
 				843B340E20452BD20080F355 /* Info.plist in Resources */,
-				84BA563321B00A6200765A65 /* TCsFinal.docx in Resources */,
+				8461600923CC3901000F4CFB /* TCsFinal.docx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

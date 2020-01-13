@@ -292,7 +292,7 @@
    
     transcriptionStatusView.layer.cornerRadius = 4.0;
     
-    transcriptionStatusLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusView.frame.size.width*0.05, 5, transcriptionStatusView.frame.size.width*0.9, 30)];
+    transcriptionStatusLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusView.frame.size.width*0.05, 10, transcriptionStatusView.frame.size.width*0.9, 30)];
     
     transcriptionStatusLabel.font = [UIFont systemFontOfSize:15];
     
@@ -303,7 +303,7 @@
     transcriptionStatusLabel.textColor = [UIColor whiteColor];
 //    timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusLabel.frame.origin.x, transcriptionStatusLabel.frame.origin.y+transcriptionStatusLabel.frame.size.height, transcriptionStatusLabel.frame.size.width, 50)];
 
-    timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusLabel.frame.origin.x, 30, transcriptionStatusLabel.frame.size.width, 20)];
+    timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusLabel.frame.origin.x, 35, transcriptionStatusLabel.frame.size.width, 20)];
     timerLabel.text = @"00:59";
     
     timerLabel.font = [UIFont systemFontOfSize:15];
@@ -385,7 +385,7 @@
             }
             else
             {
-                moveDownDistance = -60;
+                moveDownDistance = -70;
                 
             }
             dispatch_async(dispatch_get_main_queue(), ^{
