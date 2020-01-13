@@ -597,6 +597,7 @@
         
         [app deleteFile:[NSString stringWithFormat:@"%@editedCopy",fileName]];
         
+         [self updateTempUrgentAndUIAfterUpload];
         
         BOOL delete= [app deleteFile:fileName];
         
@@ -616,8 +617,6 @@
             
             for (int i=0; i<sharedAudioNamesArray.count; i++)
             {
-                
-                NSString* fileNameWithoutExtension=[[sharedAudioNamesArray objectAtIndex:i] stringByDeletingPathExtension];
                 
                 NSString* pathExtension= [[sharedAudioNamesArray objectAtIndex:i] pathExtension];
                 
