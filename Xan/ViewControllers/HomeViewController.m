@@ -133,7 +133,7 @@
             hud.minSize = CGSizeMake(150.f, 100.f);
             hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.mode = MBProgressHUDModeIndeterminate;
-            hud.label.text = @"Validating Pin...";
+            hud.label.text = @"Loading Templates...";
             hud.detailsLabel.text = @"Please wait";
             [[APIManager sharedManager] getTemplateByUserCode:@""];
             
