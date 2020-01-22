@@ -234,7 +234,15 @@
                     [self setTransferStatus];
                 }
             }
-        
+        else
+            if ([self.selectedView isEqualToString:@"Transfer Failed"])
+                   {
+                       //            audioDetails = [app.awaitingFileTransferNamesArray objectAtIndex:self.selectedRow];
+                       
+                       
+                       
+                       [self setTransferStatus];
+                   }
             else
                 if ([self.selectedView isEqualToString:@"Imported"])
                 {

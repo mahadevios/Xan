@@ -842,19 +842,6 @@ static APIManager *singleton = nil;
         result = [NSJSONSerialization JSONObjectWithData:data
                                                                     options:NSJSONReadingAllowFragments
                                                                       error:&error1];
-//
-//
-//        NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:encryptedString options:0];
-//        NSData* data1=[decodedData AES256DecryptWithKey:SECRET_KEY];
-//        NSString* responseString=[[NSString alloc] initWithData:data1 encoding:NSUTF8StringEncoding];
-//        responseString=[responseString stringByReplacingOccurrencesOfString:@"True" withString:@"1"];
-//        responseString=[responseString stringByReplacingOccurrencesOfString:@"False" withString:@"0"];
-//
-//        NSData *responsedData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
-        
-//        result = [NSJSONSerialization JSONObjectWithData:responsedData
-//                                                 options:NSJSONReadingAllowFragments
-//                                                   error:nil];
         
         NSString* returnCode= [result valueForKey:@"code"];
         
@@ -1020,44 +1007,7 @@ static APIManager *singleton = nil;
     }
     else
     {
-        //[dataTask cancel];
-        
-//        dispatch_async(dispatch_get_main_queue(), ^
-//                       {
-//                           //NSLog(@"Reachable");
-//                           NSString* fileName = [[Database shareddatabase] getfileNameFromTaskIdentifier:taskIdentifier];
-//                           
-//                           [[Database shareddatabase] deleteIdentifierFromDatabase:taskIdentifier];
-//
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//            
-//            if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>0)
-//            {
-//                [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
-//                
-////                NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
-////                
-////                [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
-////                
-////                [self uploadFileToServer:nextFileToBeUpload];
-//                
-//                
-//                
-//                NSLog(@"%ld",[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count);
-//                
-//            }
-//            else
-//            {
-//                [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
-//            }
-//            
-//            
-//            
-//        });
-//                           
-//                       });
-
-        //[dataTask cancel];
+       
     }
     
 }
@@ -1067,24 +1017,7 @@ static APIManager *singleton = nil;
     totalBytesSent:(int64_t)totalBytesSent
 totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 {
-    
-//    int64_t totalBytesSent1=0;
-//
-//    if (totalBytesSent>(totalBytesExpectedToSend*0.1))
-//    {
-//        totalBytesSent1 = totalBytesSent-totalBytesExpectedToSend*0.02;
-//
-//    }
-//    if (totalBytesSent1<=0)
-//    {
-//        totalBytesSent1 = 0;
-//    }
-    
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
-//                   {
-//
-//                   });
-    
+
     
     dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -1136,14 +1069,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
     });
     
-  //  NSString* progressAndFileName = [[progressShow stringByAppendingString:@"%@$"] stringByAppendingString:fileName];
-   
-  //  [self performSelectorInBackground:@selector(updateProgressDataAndforFileName:) withObject:progressAndFileName];
-   // [self performSelector:@selector(updateProgressDataAndforFileName:) withObject:progressAndFileName afterDelay:0.5];
-    
-    
-  
-   // NSDictionary* dict = [NSDictionary new];
+ 
 
 }
 
@@ -1166,27 +1092,27 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     }
 }
 
--(void)uploadNextFile
-{
-    if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>0)
-    {
-        // [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
-        
-        NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
-        
-        [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
-        
-        [self uploadFileToServer:nextFileToBeUpload jobName:FILE_UPLOAD_API];
-        
-        NSLog(@"%ld",[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count);
-        
-    }
-    else
-    {
-        // [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
-    }
-    
-}
+//-(void)uploadNextFile
+//{
+//    if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>0)
+//    {
+//        // [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
+//        
+//        NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
+//        
+//        [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
+//        
+//        [self uploadFileToServer:nextFileToBeUpload jobName:FILE_UPLOAD_API];
+//        
+//        NSLog(@"%ld",[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count);
+//        
+//    }
+//    else
+//    {
+//        // [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
+//    }
+//    
+//}
 
 -(void)uploadFileToServerUsingNSURLSession:(NSString*)str
 {
@@ -1264,6 +1190,34 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
     NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
     
+//    switch (transferStatus)
+//    {
+//        case 0://if not transferred
+//            transferStatus=1;
+//            break;
+//
+//        case 1: //if transferred
+//            transferStatus=5;
+//            break;
+//
+//        case 2: // if failed
+//            transferStatus=1;
+//            break;
+//            
+//        case 3: //if resend
+//            transferStatus=5;
+//            break;
+//
+//        case 4: // if resendfailed
+//            transferStatus=5;
+//            break;
+//
+//        default:
+//            transferStatus=5;
+//            break;
+//    }
+
+    
     switch (transferStatus)
     {
         case 0://if not transferred
@@ -1271,11 +1225,11 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
             break;
         
         case 1: //if transferred
-            transferStatus=5;
+            transferStatus=2;
             break;
             
         case 2: // if failed
-            transferStatus=1;
+            transferStatus=4;
             break;
             
         case 3: //if resend
@@ -1283,11 +1237,11 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
             break;
             
         case 4: // if resendfailed
-            transferStatus=5;
+            transferStatus=4;
             break;
             
         default:
-            transferStatus=5;
+            transferStatus=1;
             break;
     }
 
