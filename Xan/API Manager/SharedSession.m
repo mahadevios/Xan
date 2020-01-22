@@ -21,7 +21,7 @@ static NSURLSession * sharedSession =nil;
        
         sharedSession = [[SharedSession alloc] init];
         
-        NSURLSessionConfiguration * backgroundConfig = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"Xanadutec"];
+        NSURLSessionConfiguration * backgroundConfig = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"com.xanadutec.ace"];
 
 //        backgroundConfig.sessionSendsLaunchEvents = false;
         

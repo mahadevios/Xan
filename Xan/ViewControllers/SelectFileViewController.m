@@ -336,54 +336,11 @@
         
         
         [interactionController presentPreviewAnimated:true];
-        
-//        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[url] applicationActivities:nil];
-//        UIActivityViewController *activityController = [[UIActivityViewController alloc]initWithActivityItems: applicationActivities:nil];
-        
 
-//        activityController.excludedActivityTypes = @[
-//
-//                                                     UIActivityTypePostToFacebook,
-//                                                     UIActivityTypePostToTwitter,
-//                                                     UIActivityTypePostToWeibo,
-//                                                     UIActivityTypeMessage,
-//
-//                                                     UIActivityTypePrint,
-//                                                     UIActivityTypeCopyToPasteboard,
-//                                                     UIActivityTypeAssignToContact,
-//                                                     UIActivityTypeSaveToCameraRoll,
-//                                                     UIActivityTypeAddToReadingList,
-//                                                     UIActivityTypePostToFlickr,
-//                                                     UIActivityTypePostToVimeo,
-//                                                     UIActivityTypePostToTencentWeibo,
-//                                                     UIActivityTypeAirDrop,
-//                                                     @"com.linkedin.LinkedIn.ShareExtension",
-//                                                     @"com.apple.mobilenotes.SharingExtension",
-//                                                     @"com.apple.reminders.RemindersEditorExtension",
-//                                                     @"com.apple.mobileslideshow.StreamShareService"
-//                                                     ];
-
-
-//        [self presentViewController:activityController animated:YES completion:nil];
-        
     }
     else
     {
-//        NSString* path;
-//
-//        if (indexPath.row == 0)
-//        {
-//            path = [[NSBundle mainBundle]
-//                              pathForResource:@"sample" ofType:@"docx"];
-//        }
-//        else
-//        {
-//            path = [[NSBundle mainBundle]
-//                    pathForResource:@"Docx2" ofType:@"docx"];
-//        }
-//
-//
-//        [self.detailVC showDocxFile:path];
+
         
         [self.detailVC showDocxFile:newDestPath];
     }
