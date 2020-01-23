@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TandCViewController : UIViewController<UIWebViewDelegate,UIScrollViewDelegate, UITextViewDelegate, WKNavigationDelegate>
+@interface TandCViewController : UIViewController<UIScrollViewDelegate, UITextViewDelegate, WKNavigationDelegate>
 {
     bool checkBoxSelected ;
     BOOL isScrollViewLoadedOnce;

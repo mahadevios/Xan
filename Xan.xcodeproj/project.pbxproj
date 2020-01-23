@@ -17,7 +17,7 @@
 		840AC7581D82816000EF6AF7 /* ExtAudioFileConvert.mm in Sources */ = {isa = PBXBuildFile; fileRef = 840AC7571D82816000EF6AF7 /* ExtAudioFileConvert.mm */; };
 		8427DC4A1E124D9B0071C038 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8427DC491E124D9B0071C038 /* ShareViewController.m */; };
 		8427DC4D1E124D9B0071C038 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8427DC4B1E124D9B0071C038 /* MainInterface.storyboard */; };
-		8427DC511E124D9B0071C038 /* Copy to Xan.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8427DC461E124D9B0071C038 /* Copy to Xan.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8427DC511E124D9B0071C038 /* Copy to Ace Dictate.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8427DC461E124D9B0071C038 /* Copy to Ace Dictate.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8427DC591E12633A0071C038 /* ImportedAudioViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8427DC581E12633A0071C038 /* ImportedAudioViewController.mm */; };
 		8429BDD61D5DD839004CED76 /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8429BDD51D5DD839004CED76 /* RegistrationViewController.m */; };
 		842D535C1D55EA0300ECCDE7 /* PopUpCustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 842D535B1D55EA0300ECCDE7 /* PopUpCustomView.m */; };
@@ -141,7 +141,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				8427DC511E124D9B0071C038 /* Copy to Xan.appex in Embed App Extensions */,
+				8427DC511E124D9B0071C038 /* Copy to Ace Dictate.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -163,7 +163,7 @@
 		840AC7531D8280F200EF6AF7 /* CAXException.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAXException.mm; sourceTree = "<group>"; };
 		840AC7541D8280F200EF6AF7 /* CAXException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAXException.h; sourceTree = "<group>"; };
 		840AC7571D82816000EF6AF7 /* ExtAudioFileConvert.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ExtAudioFileConvert.mm; sourceTree = "<group>"; };
-		8427DC461E124D9B0071C038 /* Copy to Xan.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Copy to Xan.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8427DC461E124D9B0071C038 /* Copy to Ace Dictate.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Copy to Ace Dictate.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8427DC481E124D9B0071C038 /* ShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareViewController.h; sourceTree = "<group>"; };
 		8427DC491E124D9B0071C038 /* ShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
 		8427DC4C1E124D9B0071C038 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -258,7 +258,7 @@
 		846DE68E1D72BDB10004C886 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		846DE6901D730CC20004C886 /* AudioDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioDetails.h; sourceTree = "<group>"; };
 		846DE6911D730CC20004C886 /* AudioDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioDetails.m; sourceTree = "<group>"; };
-		8472223E1D47368A00C00F20 /* ACE Dictate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ACE Dictate.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8472223E1D47368A00C00F20 /* Ace Dictate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ace Dictate.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		847222421D47368A00C00F20 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		847222441D47368A00C00F20 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		847222451D47368A00C00F20 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -561,10 +561,10 @@
 		8472223F1D47368A00C00F20 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8472223E1D47368A00C00F20 /* ACE Dictate.app */,
+				8472223E1D47368A00C00F20 /* Ace Dictate.app */,
 				847222571D47368A00C00F20 /* XanTests.xctest */,
 				847222621D47368A00C00F20 /* XanUITests.xctest */,
-				8427DC461E124D9B0071C038 /* Copy to Xan.appex */,
+				8427DC461E124D9B0071C038 /* Copy to Ace Dictate.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -835,7 +835,7 @@
 			);
 			name = "Copy to Xan";
 			productName = "Copy to Cube";
-			productReference = 8427DC461E124D9B0071C038 /* Copy to Xan.appex */;
+			productReference = 8427DC461E124D9B0071C038 /* Copy to Ace Dictate.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		8472223D1D47368A00C00F20 /* Xan */ = {
@@ -854,7 +854,7 @@
 			);
 			name = Xan;
 			productName = Cube;
-			productReference = 8472223E1D47368A00C00F20 /* ACE Dictate.app */;
+			productReference = 8472223E1D47368A00C00F20 /* Ace Dictate.app */;
 			productType = "com.apple.product-type.application";
 		};
 		847222561D47368A00C00F20 /* XanTests */ = {
@@ -1188,6 +1188,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Copy to Xan/Copy to Xan.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Chetan Patwardhan (7M2W9WHDQQ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chetan Patwardhan (7M2W9WHDQQ)";
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 5STAQWW6Q7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1200,8 +1201,9 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Copy to Xan/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xanadutec.ace.copyToAce;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Copy to Ace Dictate";
 				PROVISIONING_PROFILE = "0e8eea66-bdda-4edd-8661-5b7df9f7e67e";
 				PROVISIONING_PROFILE_SPECIFIER = AceAppGroupDevelopment;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
@@ -1220,6 +1222,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Copy to Xan/Copy to Xan.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Chetan Patwardhan (5STAQWW6Q7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chetan Patwardhan (5STAQWW6Q7)";
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 5STAQWW6Q7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1228,8 +1231,9 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Copy to Xan/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xanadutec.ace.copyToAce;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Copy to Ace Dictate";
 				PROVISIONING_PROFILE = "9f74969c-d172-411b-b6fa-c0c9399e893e";
 				PROVISIONING_PROFILE_SPECIFIER = AceAppGroupDistribution;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
@@ -1256,7 +1260,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1286,7 +1290,7 @@
 				OTHER_LDFLAGS = "-lxml2";
 				PROVISIONING_PROFILE = "30dc0fac-6d41-44e4-9fa6-b0475c826720";
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1335,7 +1339,7 @@
 				OTHER_LDFLAGS = "-lxml2";
 				PROVISIONING_PROFILE = "30dc0fac-6d41-44e4-9fa6-b0475c826720";
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1350,6 +1354,7 @@
 				CODE_SIGN_ENTITLEMENTS = Xan/Xan.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Chetan Patwardhan (7M2W9WHDQQ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chetan Patwardhan (7M2W9WHDQQ)";
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 5STAQWW6Q7;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_INPUT_FILETYPE = automatic;
@@ -1359,11 +1364,12 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
+				MARKETING_VERSION = 1.0.1;
 				New_Setting = "";
 				OTHER_LDFLAGS = "";
 				"OTHER_LDFLAGS[arch=*]" = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xanadutec.ace;
-				PRODUCT_NAME = "ACE Dictate";
+				PRODUCT_NAME = "Ace Dictate";
 				PROVISIONING_PROFILE = "f49954c7-7a84-46c2-a188-f37f052d8ade";
 				PROVISIONING_PROFILE_SPECIFIER = AceDevelopment;
 				SDKROOT = iphoneos;
@@ -1381,6 +1387,7 @@
 				CODE_SIGN_ENTITLEMENTS = Xan/Xan.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Chetan Patwardhan (5STAQWW6Q7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chetan Patwardhan (5STAQWW6Q7)";
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 5STAQWW6Q7;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_INPUT_FILETYPE = automatic;
@@ -1390,10 +1397,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
+				MARKETING_VERSION = 1.0.1;
 				New_Setting = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xanadutec.ace;
-				PRODUCT_NAME = "ACE Dictate";
+				PRODUCT_NAME = "Ace Dictate";
 				PROVISIONING_PROFILE = "1053c5ee-d822-4b57-a364-b7526972681b";
 				PROVISIONING_PROFILE_SPECIFIER = AceDistribution;
 				SDKROOT = iphoneos;

@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface EmptyViewController : UIViewController<UIDocumentInteractionControllerDelegate,UIWebViewDelegate>
+#import <WebKit/WebKit.h>
+@interface EmptyViewController : UIViewController<UIDocumentInteractionControllerDelegate,WKNavigationDelegate>
 
 
 @property(nonatomic, strong) NSString* usedByVCName;
 @property(nonatomic, strong) NSString* docxFileToShowPath;
 @property(nonatomic) long dataToShowCount;
-@property(nonatomic, strong) UIWebView* webView;
+@property(nonatomic, strong) WKWebView* webView;
 @property(nonatomic, strong) UITextView* textFileContentTextView;
 @property(nonatomic, strong) UIView* navigationView;
 @property(nonatomic, strong) UILabel* navigationTitleLabel;

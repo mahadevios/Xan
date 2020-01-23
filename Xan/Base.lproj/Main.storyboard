@@ -1302,10 +1302,10 @@
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="5ON-Tq-jcf"/>
                                                 <exclude reference="7Hz-jf-NDa"/>
                                                 <exclude reference="LS2-UA-0dh"/>
                                                 <exclude reference="ZEi-3o-Ndj"/>
+                                                <exclude reference="5ON-Tq-jcf"/>
                                                 <exclude reference="7y0-Fk-aWX"/>
                                                 <exclude reference="FRh-Ft-arK"/>
                                                 <exclude reference="Lnz-5q-eXz"/>
@@ -1313,10 +1313,10 @@
                                                 <exclude reference="g4b-M9-mtp"/>
                                                 <exclude reference="o3Y-he-5tn"/>
                                                 <exclude reference="s9L-i9-Qoq"/>
-                                                <exclude reference="gyl-L5-ngf"/>
                                                 <exclude reference="S7K-q2-RNt"/>
                                                 <exclude reference="a8k-Fz-KJO"/>
                                                 <exclude reference="s1d-y7-ezo"/>
+                                                <exclude reference="gyl-L5-ngf"/>
                                                 <exclude reference="LoI-FS-6TJ"/>
                                                 <exclude reference="PZv-HY-KeX"/>
                                                 <exclude reference="RMM-eJ-x2X"/>
@@ -1341,12 +1341,12 @@
                                                 <exclude reference="dfn-vo-Zu9"/>
                                                 <exclude reference="nhg-s2-KfM"/>
                                                 <exclude reference="s4W-zd-IAu"/>
-                                                <exclude reference="4NW-xa-cKv"/>
-                                                <exclude reference="Ya5-U8-cbL"/>
-                                                <exclude reference="c7k-PB-YXu"/>
                                                 <exclude reference="GEG-lJ-X2e"/>
                                                 <exclude reference="OLL-c5-MUe"/>
                                                 <exclude reference="UgP-3h-0pH"/>
+                                                <exclude reference="4NW-xa-cKv"/>
+                                                <exclude reference="Ya5-U8-cbL"/>
+                                                <exclude reference="c7k-PB-YXu"/>
                                                 <exclude reference="NSP-BG-hie"/>
                                                 <exclude reference="zWz-Sd-lOC"/>
                                                 <exclude reference="Bmh-Ug-a2c"/>
@@ -1773,21 +1773,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="fUy-N6-dz8"/>
                     <connections>
-                        <outlet property="searchDisplayController" destination="eqb-8m-ZSH" id="G1r-nm-7Jw"/>
                         <outlet property="segment" destination="rKL-JA-OfD" id="IQV-2S-cQ7"/>
                         <outlet property="serachBarBGView" destination="JXR-Xg-AfP" id="BEC-tr-d8y"/>
                         <outlet property="tableView" destination="lp9-Nu-LFI" id="i0n-39-OLp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6s6-pc-XqK" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="eqb-8m-ZSH">
-                    <connections>
-                        <outlet property="delegate" destination="7S6-gI-PkF" id="YGf-gF-qFb"/>
-                        <outlet property="searchContentsController" destination="7S6-gI-PkF" id="hsV-y6-fPT"/>
-                        <outlet property="searchResultsDataSource" destination="7S6-gI-PkF" id="b6v-Jv-Qgl"/>
-                        <outlet property="searchResultsDelegate" destination="7S6-gI-PkF" id="dOW-dr-BQX"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="177" y="2409"/>
         </scene>
@@ -4593,10 +4584,10 @@
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="Epb-lh-168"/>
                                                 <exclude reference="53g-Fu-fdR"/>
                                                 <exclude reference="Ydp-3p-nGE"/>
                                                 <exclude reference="fHE-iE-GQ1"/>
+                                                <exclude reference="Epb-lh-168"/>
                                                 <exclude reference="BoT-Sn-JiW"/>
                                                 <exclude reference="LSl-aB-lUv"/>
                                                 <exclude reference="e02-iJ-BBB"/>
@@ -4604,10 +4595,10 @@
                                                 <exclude reference="nKX-Dt-rgd"/>
                                                 <exclude reference="xT2-Rb-AZ0"/>
                                                 <exclude reference="yhx-R6-gKb"/>
-                                                <exclude reference="81q-Tl-9at"/>
                                                 <exclude reference="FtW-8i-tit"/>
                                                 <exclude reference="ZDm-dS-yGK"/>
                                                 <exclude reference="gU2-yK-HnU"/>
+                                                <exclude reference="81q-Tl-9at"/>
                                                 <exclude reference="4NS-5R-Tgu"/>
                                                 <exclude reference="AO1-Fl-JFY"/>
                                                 <exclude reference="MjA-6c-IIJ"/>
@@ -4632,12 +4623,12 @@
                                                 <exclude reference="kNo-Fa-dTp"/>
                                                 <exclude reference="BaO-nH-fRZ"/>
                                                 <exclude reference="tMb-VR-Et8"/>
-                                                <exclude reference="Ei8-6j-RIZ"/>
-                                                <exclude reference="aKB-VN-htj"/>
-                                                <exclude reference="qPw-Ec-66v"/>
                                                 <exclude reference="5WZ-vS-jim"/>
                                                 <exclude reference="9G8-T8-RM4"/>
                                                 <exclude reference="kb1-JQ-8Hi"/>
+                                                <exclude reference="Ei8-6j-RIZ"/>
+                                                <exclude reference="aKB-VN-htj"/>
+                                                <exclude reference="qPw-Ec-66v"/>
                                                 <exclude reference="2ON-fL-3gV"/>
                                                 <exclude reference="A7C-hh-cSw"/>
                                                 <exclude reference="XxQ-zi-0kW"/>

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8472223D1D47368A00C00F20"
-               BuildableName = "ACE Dictate.app"
+               BuildableName = "Ace Dictate.app"
                BlueprintName = "Xan"
                ReferencedContainer = "container:Xan.xcodeproj">
             </BuildableReference>
@@ -31,7 +31,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8472223D1D47368A00C00F20"
-            BuildableName = "ACE Dictate.app"
+            BuildableName = "Ace Dictate.app"
             BlueprintName = "Xan"
             ReferencedContainer = "container:Xan.xcodeproj">
          </BuildableReference>
@@ -74,7 +74,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8472223D1D47368A00C00F20"
-            BuildableName = "ACE Dictate.app"
+            BuildableName = "Ace Dictate.app"
             BlueprintName = "Xan"
             ReferencedContainer = "container:Xan.xcodeproj">
          </BuildableReference>
@@ -91,7 +91,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8472223D1D47368A00C00F20"
-            BuildableName = "ACE Dictate.app"
+            BuildableName = "Ace Dictate.app"
             BlueprintName = "Xan"
             ReferencedContainer = "container:Xan.xcodeproj">
          </BuildableReference>
