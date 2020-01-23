@@ -782,46 +782,46 @@ static APIManager *singleton = nil;
 }
 
 
--(void)downloafFileUsingSession:(NSString*)mobielDictationIdVal
-{
-    if ([[AppPreferences sharedAppPreferences] isReachable])
-    {
-        
-        NSError* error;
-        
-        NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
-
-        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macId,@"macid",mobielDictationIdVal,@"DictationID", nil];
-        
-        
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
-                                                           options:0 // Pass 0 if you don't care about the readability of the generated string
-                                                             error:&error];
-        
-        
-        NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
-        
-        
-        
-        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
-        
-        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
-        
-        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
-        NSString* downloadMethodType = @"urlSession";
-        
-        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:FILE_DOWNLOAD_API withRequestParameter:array withResourcePath:FILE_DOWNLOAD_API withHttpMethd:POST downloadMethodType:downloadMethodType];
-       // [downloadmetadatajob startMetaDataDownLoad];
-//        [downloadmetadatajob downloadFileUsingNSURLSession:@""];
-    }
-    else
-    {
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-    }
-    
-    
-    
-}
+//-(void)downloafFileUsingSession:(NSString*)mobielDictationIdVal
+//{
+//    if ([[AppPreferences sharedAppPreferences] isReachable])
+//    {
+//
+//        NSError* error;
+//
+//        NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
+//
+//        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macId,@"macid",mobielDictationIdVal,@"DictationID", nil];
+//
+//
+//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
+//                                                           options:0 // Pass 0 if you don't care about the readability of the generated string
+//                                                             error:&error];
+//
+//
+//        NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
+//
+//
+//
+//        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
+//
+//        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
+//
+//        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
+//        NSString* downloadMethodType = @"urlSession";
+//
+//        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:FILE_DOWNLOAD_API withRequestParameter:array withResourcePath:FILE_DOWNLOAD_API withHttpMethd:POST downloadMethodType:downloadMethodType];
+//       // [downloadmetadatajob startMetaDataDownLoad];
+////        [downloadmetadatajob downloadFileUsingNSURLSession:@""];
+//    }
+//    else
+//    {
+//        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//    }
+//
+//
+//
+//}
 
 
 
@@ -848,6 +848,8 @@ static APIManager *singleton = nil;
         if ([returnCode longLongValue]==200)
         {
 //            NSString* idvalString= [result valueForKey:@"mobiledictationidval"];
+            
+            
             NSString* idvalString = @"0";
 
             NSString* date= [[APIManager sharedManager] getDateAndTimeString];
@@ -860,6 +862,8 @@ static APIManager *singleton = nil;
                                //NSLog(@"Reachable");
                                NSString* fileName = [[Database shareddatabase] getfileNameFromTaskIdentifier:taskIdentifier];
                                
+                                NSLog(@"Received Data filename = %@", fileName);
+                
                                [db updateAudioFileUploadedStatus:@"Transferred" fileName:fileName dateAndTime:date mobiledictationidval:[idvalString longLongValue]];
                                
                                [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUploaded" fileName:fileName];
@@ -868,24 +872,32 @@ static APIManager *singleton = nil;
                                [[Database shareddatabase] deleteIdentifierFromDatabase:taskIdentifier];
                                
                                
-                               if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>0)
+                               if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count>0)
                                {
+                                   NSLog(@"End Receiving Data filename 1 = %@", fileName);
+                                   
                                    [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
                                    
+                                   NSLog(@"End Receiving Data filename 2 = %@", fileName);
+                                   NSLog(@"Filename Removed from uploading queue = %@",fileName);
                                }
-                               else
-                               {
-                                   [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
-                               }
+//                               else
+//                               {
+//                                   [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
+//                               }
                                
                                if (fileName != nil)
                                {
+                                 
                                    [[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict removeObjectForKey:fileName];
+                                 
                                    // NSLog(@"%@",[NSString stringWithFormat:@"%@ uploaded successfully",str]);
                                    
                                    [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:[NSString stringWithFormat:@"%@ uploaded successfully",fileName] withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
                                }
                                
+                
+                
                                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_API object:fileName];
                                
                                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_UPLOAD_NEXT_FILE object:fileName];
@@ -1332,53 +1344,78 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 
 -(void)uploadFileToServer:(NSString*)str jobName:(NSString*)jobName
 {
-    if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count<2)
+    NSLog(@"uploadFileToServer function API Manager");
+    if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count<1)
     {
-        if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count == 1)
-        {
-            NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:
-                                  [NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,[[AppPreferences sharedAppPreferences].filesInUploadingQueueArray objectAtIndex:0]] ];
-            
-            long firstFileSize = [self getFileSize:filePath];
-
-            if (firstFileSize>30000000)
-            {
-                [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray addObject:str];
-            }
-            
-            else
-            {
-                filePath = [NSHomeDirectory() stringByAppendingPathComponent:
-                            [NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,str]];
-                long secondFileSize = [self getFileSize:filePath];
-
-                if (secondFileSize>30000000)
-                {
-                    [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray addObject:str];
-                }
-                
-                else
-                {
-                    [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray addObject:str];
-                    [self uploadFileToServerUsingNSURLSession:str];
-                }
-            }
-        }
+        NSLog(@"loop1");
+        [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray addObject:str];
+        [self uploadFileToServerUsingNSURLSession:str];
         
-        else
-        {
-            [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray addObject:str];
-            [self uploadFileToServerUsingNSURLSession:str];
-        }
-
     }
     else
     {
+        NSLog(@"loop2");
         [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray addObject:str];
     }
-    //[self uploadFileToServerUsingNSURLConnection:str];
+   
 
 }
+
+// for two files at a time
+//-(void)uploadFileToServer:(NSString*)str jobName:(NSString*)jobName
+//{
+//    NSLog(@"uploadFileToServer function API Manager");
+//    if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count<2)
+//    {
+//        NSLog(@"loop1");
+//        if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count == 1)
+//        {
+//            NSLog(@"loop11");
+//            NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:
+//                                  [NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,[[AppPreferences sharedAppPreferences].filesInUploadingQueueArray objectAtIndex:0]] ];
+//
+//            long firstFileSize = [self getFileSize:filePath];
+//
+//            if (firstFileSize>30000000)
+//            {
+//                [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray addObject:str];
+//            }
+//
+//            else
+//            {
+//                filePath = [NSHomeDirectory() stringByAppendingPathComponent:
+//                            [NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,str]];
+//                long secondFileSize = [self getFileSize:filePath];
+//
+//                if (secondFileSize>30000000)
+//                {
+//                    [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray addObject:str];
+//                }
+//
+//                else
+//                {
+//                    [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray addObject:str];
+//                    [self uploadFileToServerUsingNSURLSession:str];
+//                }
+//            }
+//        }
+//
+//        else
+//        {
+//            NSLog(@"loop12");
+//            [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray addObject:str];
+//            [self uploadFileToServerUsingNSURLSession:str];
+//        }
+//
+//    }
+//    else
+//    {
+//        NSLog(@"loop2");
+//        [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray addObject:str];
+//    }
+//    //[self uploadFileToServerUsingNSURLConnection:str];
+//
+//}
 
 
 
