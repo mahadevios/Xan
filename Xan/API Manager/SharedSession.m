@@ -24,6 +24,9 @@ static NSURLSession * sharedSession =nil;
         NSURLSessionConfiguration * backgroundConfig = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"com.xanadutec.ace"];
 
 //        backgroundConfig.sessionSendsLaunchEvents = false;
+        backgroundConfig.timeoutIntervalForRequest = 120;
+        
+        backgroundConfig.timeoutIntervalForResource = 120;
         
         sharedSession = [NSURLSession sessionWithConfiguration:backgroundConfig delegate:sender delegateQueue:[NSOperationQueue mainQueue]];
         

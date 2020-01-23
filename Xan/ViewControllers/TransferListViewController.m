@@ -388,8 +388,9 @@
         if ([self.searchController.searchBar.text isEqualToString:@""] || self.searchController.searchBar.text == nil)
         {
             //            self.genericFilesArray = [[Database shareddatabase] getListOfFileTransfersOfStatus:@"RecordingComplete"] ;
-            
+         
             [self.tableView reloadRowsAtIndexPaths:progressIndexPathArray withRowAnimation:UITableViewRowAnimationNone];
+     
             
         }
         
@@ -473,7 +474,7 @@
     self.searchController.searchBar.delegate = self;
     self.searchController.obscuresBackgroundDuringPresentation = NO;
     self.searchController.hidesNavigationBarDuringPresentation=NO;
-//        self.tabBarController.definesPresentationContext = YES;
+    //        self.tabBarController.definesPresentationContext = YES;
 }
 
 -(void)prepareForSearchBar
@@ -895,8 +896,8 @@
                                                         style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction * action)
                                 {
-                                    [alertController dismissViewControllerAnimated:YES completion:nil];
-                                }]; //You can use a block here to handle a press on this button
+                    [alertController dismissViewControllerAnimated:YES completion:nil];
+                }]; //You can use a block here to handle a press on this button
                 [alertController addAction:actionDelete];
                 
                 
@@ -1195,16 +1196,16 @@
     
     NSMutableArray *buttons1 = [[NSMutableArray alloc] initWithCapacity:4];
     UIBarButtonItem *bi1;
-//    = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
-//    bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
-//    [bi1 setTintColor:[UIColor whiteColor]];
-//    [buttons1 addObject:bi1];
-//
-//    //Create a spacer.
-//    bi1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-//    bi1.width = 2.0f;
-//    [bi1 setTintColor:[UIColor whiteColor]];
-//    [buttons1 addObject:bi1];
+    //    = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+    //    bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
+    //    [bi1 setTintColor:[UIColor whiteColor]];
+    //    [buttons1 addObject:bi1];
+    //
+    //    //Create a spacer.
+    //    bi1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    //    bi1.width = 2.0f;
+    //    [bi1 setTintColor:[UIColor whiteColor]];
+    //    [buttons1 addObject:bi1];
     
     // Add profile button.
     selectedCountLabel=[[UILabel alloc]initWithFrame:CGRectMake(0, 5, 30, 20)];
@@ -1277,44 +1278,44 @@
                                             style:UIAlertActionStyleDestructive
                                           handler:^(UIAlertAction * action)
                     {
-                        [progressIndexPathArray removeAllObjects]; // if file keot on uploading using multiple seleection and then multiple delete performed , indexpath of uploading file get changed hence to prevent crash remove progress indexpath array/
-                        
-                        for (int i=0; i<arrayOfMarked.count; i++)
-                        {
-                            Database* db=[Database shareddatabase];
-                            APIManager* app=[APIManager sharedManager];
-                            NSString* dateAndTimeString=[app getDateAndTimeString];
-                            NSIndexPath* indexPath=[arrayOfMarked objectAtIndex:i];
-                            
-                            AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
-                            NSString* fileName = audioDetails.fileName;
-                            self.navigationItem.title=self.currentViewName;
-                            self.navigationItem.rightBarButtonItem = nil;
-                            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
-                            self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-                            
-                            toolBarAdded=NO;
-                            [db updateAudioFileStatus:@"RecordingDelete" fileName:fileName dateAndTime:dateAndTimeString];
-                            [app deleteFile:fileName];
-                            [app deleteFile:[NSString stringWithFormat:@"%@backup",fileName]];
-                            
-                        }
-                        [arrayOfMarked removeAllObjects];
-                        [self.checkedIndexPath removeAllObjects];
-                        
-                        [self prepareDataSourceForTableView];
-                        
-                        self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:self.genericFilesArray];
-                        
-                        if (![self.searchController.searchBar.text isEqualToString:@""])
-                        {
-                            [self updateSerachBarManually];
-                        }
-                        
-                        
-                        [self.tableView reloadData];
-                        
-                    }]; //You can use a block here to handle a press on this button
+        [progressIndexPathArray removeAllObjects]; // if file keot on uploading using multiple seleection and then multiple delete performed , indexpath of uploading file get changed hence to prevent crash remove progress indexpath array/
+        
+        for (int i=0; i<arrayOfMarked.count; i++)
+        {
+            Database* db=[Database shareddatabase];
+            APIManager* app=[APIManager sharedManager];
+            NSString* dateAndTimeString=[app getDateAndTimeString];
+            NSIndexPath* indexPath=[arrayOfMarked objectAtIndex:i];
+            
+            AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
+            NSString* fileName = audioDetails.fileName;
+            self.navigationItem.title=self.currentViewName;
+            self.navigationItem.rightBarButtonItem = nil;
+            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+            self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+            
+            toolBarAdded=NO;
+            [db updateAudioFileStatus:@"RecordingDelete" fileName:fileName dateAndTime:dateAndTimeString];
+            [app deleteFile:fileName];
+            [app deleteFile:[NSString stringWithFormat:@"%@backup",fileName]];
+            
+        }
+        [arrayOfMarked removeAllObjects];
+        [self.checkedIndexPath removeAllObjects];
+        
+        [self prepareDataSourceForTableView];
+        
+        self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:self.genericFilesArray];
+        
+        if (![self.searchController.searchBar.text isEqualToString:@""])
+        {
+            [self updateSerachBarManually];
+        }
+        
+        
+        [self.tableView reloadData];
+        
+    }]; //You can use a block here to handle a press on this button
     [alertController addAction:actionDelete];
     
     
@@ -1322,25 +1323,25 @@
                                             style:UIAlertActionStyleCancel
                                           handler:^(UIAlertAction * action)
                     {
-                        [alertController dismissViewControllerAnimated:YES completion:nil];
-                        
-                        
-                        self.navigationItem.title=self.currentViewName;
-                        self.navigationItem.rightBarButtonItem = nil;
-                        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
-                        self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-                        
-                        isMultipleFilesActivated=NO;
-                        self.tableView.allowsMultipleSelection = NO; // for ipad
-                        
-                        toolBarAdded=NO;
-                        
-                        [arrayOfMarked removeAllObjects];
-                        [self.checkedIndexPath removeAllObjects];
-                        [self prepareDataSourceForTableView];
-                        [self.tableView reloadData];
-                        
-                    }]; //You can use a block here to handle a press on this button
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+        
+        
+        self.navigationItem.title=self.currentViewName;
+        self.navigationItem.rightBarButtonItem = nil;
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+        self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+        
+        isMultipleFilesActivated=NO;
+        self.tableView.allowsMultipleSelection = NO; // for ipad
+        
+        toolBarAdded=NO;
+        
+        [arrayOfMarked removeAllObjects];
+        [self.checkedIndexPath removeAllObjects];
+        [self prepareDataSourceForTableView];
+        [self.tableView reloadData];
+        
+    }]; //You can use a block here to handle a press on this button
     searchBecomeResponsderFromUploadAlert = YES;
     [alertController addAction:actionCancel];
     [self presentViewController:alertController animated:YES completion:nil];
@@ -1369,70 +1370,96 @@
                                                 style:UIAlertActionStyleDefault
                                               handler:^(UIAlertAction * action)
                         {
-                            
-                            dispatch_async(dispatch_get_main_queue(), ^(void) {
-                                
-                                [self updateUIAfterMultipleFilesUploadClicked];
-                                
-                                NSMutableArray* aarayOfMarkedCopy=[[NSMutableArray alloc]init];
-                                for (int i=0; i<arrayOfMarked.count; i++)
-                                {
-                                    
-                                    APIManager* app=[APIManager sharedManager];
-                                    NSIndexPath* indexPath=[arrayOfMarked objectAtIndex:i];
-                                    //[aarayOfMarkedCopy addObject:[arrayOfMarked objectAtIndex:i]];
-                                    AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
-                                    NSString* fileName = audioDetails.fileName;
-                                    
-                                    NSString* transferStatus = audioDetails.uploadStatus;
-                                    
-                                    if ([transferStatus isEqualToString:@"Transfer Failed"])
-                                    {
-                                        int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:fileName];
-                                        
-                                        NSString* date=[app getDateAndTimeString];
-                                        
-                                        [[Database shareddatabase] updateAudioFileUploadedStatus:@"ResendFailed" fileName:fileName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
-                                    }
-                                    
-                                    [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:fileName];
-                                    
-                                }
-                                
-                                [aarayOfMarkedCopy addObjectsFromArray:self.checkedIndexPath];
-                                
-                                [self clearSelectedArrays];
-                                
-                                [self prepareDataSourceForTableView]; // get the updated data(i.e. searched and long press uploaded) and after getting that data update predicate array with the updated data so when serach bar get clear "genericFilesArray" will get appropriate data
-                                
-                                self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:self.genericFilesArray];
-                                
-                                [self.tableView reloadData];
-                                
-                                if (![self.searchController.searchBar.text isEqualToString:@""])
-                                {
-                                    [self updateSerachBarManually]; // to update the search bar
-                                    
-                                    [self.searchController.searchBar becomeFirstResponder];
-                                    
-                                }
-                                
-                                
-                                //                            [self updateSerachBarManually];
-                                for (int i=0; i<aarayOfMarkedCopy.count; i++)
-                                {
-                                    NSString* fileName=[aarayOfMarkedCopy objectAtIndex:i];
-                                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                                        
-                                        APIManager* app=[APIManager sharedManager];
-                                        
-                                        [app uploadFileToServer:fileName jobName:FILE_UPLOAD_API];
-                                        
-                                    });
-                                }
-                                
-                            });
-                        }]; //You can use a block here to handle a press on this button
+            
+            dispatch_async(dispatch_get_main_queue(), ^(void) {
+                
+                [self updateUIAfterMultipleFilesUploadClicked];
+                
+                NSMutableArray* aarayOfMarkedCopy=[[NSMutableArray alloc]init];
+                for (int i=0; i<arrayOfMarked.count; i++)
+                {
+                    
+                    APIManager* app=[APIManager sharedManager];
+                    NSIndexPath* indexPath=[arrayOfMarked objectAtIndex:i];
+                    //[aarayOfMarkedCopy addObject:[arrayOfMarked objectAtIndex:i]];
+                    AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
+                    NSString* fileName = audioDetails.fileName;
+                    
+                    NSString* transferStatus = audioDetails.uploadStatus;
+                    
+                    if ([transferStatus isEqualToString:@"Transfer Failed"])
+                    {
+                        int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:fileName];
+                        
+                        NSString* date=[app getDateAndTimeString];
+                        
+                        [[Database shareddatabase] updateAudioFileUploadedStatus:@"ResendFailed" fileName:fileName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
+                    }
+                    
+                    [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:fileName];
+                    
+                }
+                
+                [aarayOfMarkedCopy addObjectsFromArray:self.checkedIndexPath];
+                
+                [self clearSelectedArrays];
+                
+                [self prepareDataSourceForTableView]; // get the updated data(i.e. searched and long press uploaded) and after getting that data update predicate array with the updated data so when serach bar get clear "genericFilesArray" will get appropriate data
+                
+                self.genericFilesPredicateArray = [[NSMutableArray alloc] initWithArray:self.genericFilesArray];
+                
+                [self.tableView reloadData];
+                
+                if (![self.searchController.searchBar.text isEqualToString:@""])
+                {
+                    [self updateSerachBarManually]; // to update the search bar
+                    
+                    [self.searchController.searchBar becomeFirstResponder];
+                    
+                }
+                
+                double delayInSeconds = 0.0;
+                //                            [self updateSerachBarManually];
+                for (int i=0; i<aarayOfMarkedCopy.count; i++)
+                {
+                    NSString* fileName=[aarayOfMarkedCopy objectAtIndex:i];
+                    
+//                    NSDictionary *info = [NSDictionary dictionaryWithObject: fileName forKey: @"fileName"];
+//
+//                    NSTimer* fileUploadTimer = [NSTimer scheduledTimerWithTimeInterval:2*(i+1)
+//                                                             target:self
+//                                                           selector:@selector(uploadFileAfterInterval:)
+//                                                           userInfo: info
+//                                                            repeats:YES];
+                    
+                  
+                    delayInSeconds += 1.0;
+                       dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                       dispatch_after(popTime, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void)
+                                      {
+                                          NSLog(@"Block");
+                                          [self performSelectorOnMainThread:@selector(uploadFileAfterInterval:)
+                                                                 withObject:fileName
+                                                              waitUntilDone:NO];
+
+                                   });
+                    
+//                    double delayInSeconds = 2.0;
+//                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//                    dispatch_after(popTime, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void)
+//                                   {
+//                        NSString* fileName=[aarayOfMarkedCopy objectAtIndex:i];
+//
+//                        NSLog(@"Filename = %@", fileName);
+//
+//                        APIManager* app=[APIManager sharedManager];
+//
+//                        [app uploadFileToServer:fileName jobName:FILE_UPLOAD_API];
+//                    });
+                }
+                
+            });
+        }]; //You can use a block here to handle a press on this button
         [alertController addAction:actionDelete];
         
         
@@ -1440,16 +1467,16 @@
                                                 style:UIAlertActionStyleCancel
                                               handler:^(UIAlertAction * action)
                         {
-                            [alertController dismissViewControllerAnimated:YES completion:nil];
-                            
-                            [self updateUIAfterMultipleFilesUploadClicked];
-                            
-                            [self clearSelectedArrays];
-                            
-                            [self prepareDataSourceForTableView];
-                            [self.tableView reloadData];
-                            
-                        }]; //You can use a block here to handle a press on this button
+            [alertController dismissViewControllerAnimated:YES completion:nil];
+            
+            [self updateUIAfterMultipleFilesUploadClicked];
+            
+            [self clearSelectedArrays];
+            
+            [self prepareDataSourceForTableView];
+            [self.tableView reloadData];
+            
+        }]; //You can use a block here to handle a press on this button
         [alertController addAction:actionCancel];
         
         searchBecomeResponsderFromUploadAlert = YES;
@@ -1473,7 +1500,32 @@
     
     
 }
+//- (void)uploadFileAfterInterval:(NSTimer *)uploadTimer
+//{
+//    NSDictionary* info = [uploadTimer userInfo];
+//
+//    NSString* fileName = [info valueForKey: @"fileName"];
+//
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//
+//                          APIManager* app=[APIManager sharedManager];
+//
+//                          [app uploadFileToServer:fileName jobName:FILE_UPLOAD_API];
+//
+//                      });
+//
+//}
 
+- (void)uploadFileAfterInterval:(NSString *)fileName
+{
+  
+        APIManager* app=[APIManager sharedManager];
+                          
+        [app uploadFileToServer:fileName jobName:FILE_UPLOAD_API];
+                          
+                
+    
+}
 -(void)updateUIAfterMultipleFilesUploadClicked
 {
     isMultipleFilesActivated = NO;
