@@ -182,29 +182,49 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     
 }
+
 -(void)uploadNextFile
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
+
         if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>0)
         {
-            
-//            if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count<=1 && [AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>1)
-//            {
-                
-                NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
-                
+
+
+                NSString* nextFileToBeUpload1 = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
+
                 [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
-                
-                [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload jobName:FILE_UPLOAD_API];
-                
+
+                [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload1 jobName:FILE_UPLOAD_API];
+
+        }
+
+    });
+}
+
+//-(void)uploadNextFile
+//{
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//
+//        if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>0)
+//        {
+//
+//            if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count<1 && [AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>1)
+//            {
+//
+//                NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
+//
+//                [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
+//
+//                [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload jobName:FILE_UPLOAD_API];
+//
 //                NSString* nextFileToBeUpload1 = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
 //
 //                [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
 //
 //                [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload1 jobName:FILE_UPLOAD_API];
-                
-                
+//
+//
 //            }
 //            else
 //            {
@@ -214,16 +234,15 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 //
 //                [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload jobName:FILE_UPLOAD_API];
 //            }
-            
-            
-        }
-        else
-        {
-        }
-        
-    });
-}
-
+//
+//
+//        }
+//        else
+//        {
+//        }
+//
+//    });
+//}
 
 - (void) checkAndCopyDatabase
 {
@@ -241,7 +260,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [[Database shareddatabase] updateUploadingFileDictationStatus];
     
-     [[Database shareddatabase] updateUploadingStuckedStatus];
+//     [[Database shareddatabase] updateUploadingStuckedStatus];
     
     // to resolve the previous build bug
     //    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"isVRSDeptColumnAdded"]) {
