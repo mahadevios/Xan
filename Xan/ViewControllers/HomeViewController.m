@@ -500,7 +500,7 @@
                                                    
                                                    dispatch_async(dispatch_get_main_queue(), ^(void) {
                                                        
-                                                       NSLog(@"Need to update [%@ != %@]", appStoreVersion, currentVersion);
+//                                                       NSLog(@"Need to update [%@ != %@]", appStoreVersion, currentVersion);
                                                        //
                                                        alertController = [UIAlertController alertControllerWithTitle:@"Update available for Cube dictate"
                                                                                                              message:nil
@@ -568,7 +568,7 @@
                                            [viewController presentViewController:storeViewController
                                                                         animated:YES
                                                                       completion:nil];
-                                       else NSLog(@"SKStoreProductViewController: %@", error);
+//                                       else NSLog(@"SKStoreProductViewController: %@", error);
                                    }];
     
 }

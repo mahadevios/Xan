@@ -1437,7 +1437,7 @@
                        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                        dispatch_after(popTime, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void)
                                       {
-                                          NSLog(@"Block");
+//                                          NSLog(@"Block");
                                           [self performSelectorOnMainThread:@selector(uploadFileAfterInterval:)
                                                                  withObject:fileName
                                                               waitUntilDone:NO];
