@@ -3672,7 +3672,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             
             sliderValue = playerDurationWithMilliSeconds;
             
-            NSLog(@"overwrite updatedInsertionTime = %f", playerDurationWithMilliSeconds);
+//            NSLog(@"overwrite updatedInsertionTime = %f", playerDurationWithMilliSeconds);
             
             if (sliderValue <= 0)
             {
@@ -3688,7 +3688,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         }
         else
         {
-            NSLog(@"overwrite updatedInsertionTime = %f", updatedInsertionTime);
+//            NSLog(@"overwrite updatedInsertionTime = %f", updatedInsertionTime);
 
             if (updatedInsertionTime <= 0)
             {
@@ -3767,7 +3767,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             }
             else
             {
-                NSLog(@"overwrite updatedInsertionTime = %f", updatedInsertionTime);
+//                NSLog(@"overwrite updatedInsertionTime = %f", updatedInsertionTime);
                 
                 if (updatedInsertionTime <= 0)
                 {
@@ -3806,16 +3806,16 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 //    updatedInsertionTime = CMTimeGetSeconds(time);
     updatedInsertionTime = newTime + oldTime;
-    NSLog(@"new time = %f", newTime);
-    NSLog(@"old time = %f", oldTime);
+//    NSLog(@"new time = %f", newTime);
+//    NSLog(@"old time = %f", oldTime);
 
 //    NSLog(@"insertion time = %f", updatedInsertionTime);
 
-    NSLog(@"insertion time = %f", updatedInsertionTime);
+//    NSLog(@"insertion time = %f", updatedInsertionTime);
     if (error)
     {
         // do something
-        NSLog(@"error in insertTimeRange = %@", error.localizedDescription);
+//        NSLog(@"error in insertTimeRange = %@", error.localizedDescription);
         [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
 //        editType = nil;
 

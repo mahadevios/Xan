@@ -985,7 +985,7 @@ static APIManager *singleton = nil;
                     [[Database shareddatabase] updateAudioFileUploadedStatus:@"TransferFailed" fileName:fileName dateAndTime:@"" mobiledictationidval:0];
                     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_API object:fileName];
                     
-                    NSLog(@"%@",fileName);
+//                    NSLog(@"%@",fileName);
                     
                     [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:[NSString stringWithFormat:@"Server connection lost!,file uploading failed"] withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
 
@@ -1344,17 +1344,17 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 
 -(void)uploadFileToServer:(NSString*)str jobName:(NSString*)jobName
 {
-    NSLog(@"uploadFileToServer function API Manager");
+//    NSLog(@"uploadFileToServer function API Manager");
     if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count<1)
     {
-        NSLog(@"loop1");
+//        NSLog(@"loop1");
         [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray addObject:str];
         [self uploadFileToServerUsingNSURLSession:str];
         
     }
     else
     {
-        NSLog(@"loop2");
+//        NSLog(@"loop2");
         [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray addObject:str];
     }
    

@@ -710,12 +710,12 @@
 
 -(void)speechRecognitionTaskWasCancelled:(SFSpeechRecognitionTask *)task
 {
-    NSLog(@"1");
+//    NSLog(@"1");
 }
 
 -(void)speechRecognitionTaskFinishedReadingAudio:(SFSpeechRecognitionTask *)task
 {
-     NSLog(@"2");
+//     NSLog(@"2");
     
     [[AppPreferences sharedAppPreferences] showHudWithTitle:@"Transcribing.." detailText:@"Please wait"];
     
@@ -723,7 +723,7 @@
 
 -(void)speechRecognitionTask:(SFSpeechRecognitionTask *)task didFinishSuccessfully:(BOOL)successfully
 {
-    NSLog(@"3");
+//    NSLog(@"3");
     
     isTranscripting = false;
 
@@ -743,7 +743,7 @@
 
 -(void)speechRecognitionTask:(SFSpeechRecognitionTask *)task didFinishRecognition:(SFSpeechRecognitionResult *)recognitionResult
 {
-    NSLog(@"4");
+//    NSLog(@"4");
    
     if(recognitionResult.isFinal)
     {
@@ -760,7 +760,7 @@
 
 -(void)speechRecognitionTask:(SFSpeechRecognitionTask *)task didHypothesizeTranscription:(SFTranscription *)transcription
 {
-    NSLog(@"5");
+//    NSLog(@"5");
     
     if (transcription != nil)
     {

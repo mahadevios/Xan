@@ -561,7 +561,7 @@
                 [pinCode3TextField resignFirstResponder];
                 [pinCode4TextField resignFirstResponder];
                 
-                NSLog(@"Entered PIN = %@", pin);
+//                NSLog(@"Entered PIN = %@", pin);
                 
                 [[APIManager sharedManager] validatePinMacID:macId Pin:pin];
                 

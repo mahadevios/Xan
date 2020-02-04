@@ -162,7 +162,7 @@
                 
             //}
            
-            NSLog(@"textview count = %d",textViewCount);
+//            NSLog(@"textview count = %d",textViewCount);
 
         }
 }
@@ -174,7 +174,7 @@
 //              {
     if ([elementName isEqualToString:@"w:p"])
     {
-                  NSLog(@"rootelement end");
+//                  NSLog(@"rootelement end");
     }
     
 }
