@@ -2426,7 +2426,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         }
         else
         {
-            NSLog(@"overwrite updatedInsertionTime = %f", updatedInsertionTime);
+//            NSLog(@"overwrite updatedInsertionTime = %f", updatedInsertionTime);
             
             if (updatedInsertionTime <= 0)
             {
@@ -2503,7 +2503,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                 }
                 else
                 {
-                    NSLog(@"overwrite updatedInsertionTime = %f", updatedInsertionTime);
+//                    NSLog(@"overwrite updatedInsertionTime = %f", updatedInsertionTime);
                     
                     if (updatedInsertionTime <= 0)
                     {
@@ -2567,12 +2567,12 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     //    updatedInsertionTime = CMTimeGetSeconds(time);
     updatedInsertionTime = newTime + oldTime;
-    NSLog(@"new time = %f", newTime);
-    NSLog(@"old time = %f", oldTime);
+//    NSLog(@"new time = %f", newTime);
+//    NSLog(@"old time = %f", oldTime);
     
     //    NSLog(@"insertion time = %f", updatedInsertionTime);
     
-    NSLog(@"insertion time = %f", updatedInsertionTime);
+//    NSLog(@"insertion time = %f", updatedInsertionTime);
     
     NSString* destpath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,existingAudioFileName]];
     
@@ -3246,9 +3246,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 //    int64_t totalTrackDuration = player.duration;
 //    CMTime time =   CMTimeMake(sliderValue, 1);
 //    CMTime time1 =   CMTimeMake(totalTrackDuration, 1);
-    NSLog(@"audiorecordslider deletetoend = %f", audioRecordSlider.value);
-    
-    NSLog(@"player duration deletetoend = %f", player.duration);
+//    NSLog(@"audiorecordslider deletetoend = %f", audioRecordSlider.value);
+//    
+//    NSLog(@"player duration deletetoend = %f", player.duration);
 
     CMTime time =   [self getTotalCMTimeFromMilliSeconds:audioRecordSlider.value];
     

@@ -24,9 +24,9 @@ static NSURLSession * sharedSession =nil;
         NSURLSessionConfiguration * backgroundConfig = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"com.xanadutec.ace"];
 
 //        backgroundConfig.sessionSendsLaunchEvents = false;
-        backgroundConfig.timeoutIntervalForRequest = 120;
+        backgroundConfig.timeoutIntervalForRequest = 120;// time wait for response
         
-        backgroundConfig.timeoutIntervalForResource = 120;
+        backgroundConfig.timeoutIntervalForResource = 1800;// time wait for upload
         
         sharedSession = [NSURLSession sessionWithConfiguration:backgroundConfig delegate:sender delegateQueue:[NSOperationQueue mainQueue]];
         
