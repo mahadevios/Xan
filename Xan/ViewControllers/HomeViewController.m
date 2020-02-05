@@ -502,7 +502,7 @@
                                                        
 //                                                       NSLog(@"Need to update [%@ != %@]", appStoreVersion, currentVersion);
                                                        //
-                                                       alertController = [UIAlertController alertControllerWithTitle:@"Update available for Cube dictate"
+                                                       alertController = [UIAlertController alertControllerWithTitle:@"Update available for Ace dictate"
                                                                                                              message:nil
                                                                                                       preferredStyle:UIAlertControllerStyleAlert];
                                                        
