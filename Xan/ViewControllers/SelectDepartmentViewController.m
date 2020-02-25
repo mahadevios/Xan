@@ -121,7 +121,15 @@
 {
     
     UITableViewCell *cell = [tableview dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+   
+       
     UILabel* departmentNameLabel=[cell viewWithTag:101];
+    
+    if (departmentNameLabel.text != nil)
+    {
+        departmentNameLabel.text = @"";
+     }
+    
     DepartMent* deptObj = [departmentNameArray objectAtIndex:indexPath.row];
     departmentNameLabel.text = deptObj.departmentName;
     return cell;
@@ -134,11 +142,19 @@
     
     deptObj = [departmentNameArray objectAtIndex:indexPath.row];
 
+    if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptObj.Id])
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+        
+        return;
+    }
+    
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:deptObj];
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
-
+    
+    
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isLoadedFirstTime"];
     
     [self setRootView];
