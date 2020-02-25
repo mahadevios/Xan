@@ -275,6 +275,8 @@
         
         NSMutableArray* deptForDatabaseArray=[[NSMutableArray alloc]init];
         
+        [AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray = [NSMutableArray new];
+        
         for (int i=0; i<departmentArray.count; i++)
         {
             DepartMent* deptObj=[[DepartMent alloc]init];
@@ -286,6 +288,13 @@
             deptObj.departmentName=[deptDict valueForKey:@"departmentName"];
             
             [deptForDatabaseArray addObject:deptObj];
+            
+            NSString* isActive = [deptDict valueForKey:@"isActive"];
+            
+            if (isActive)
+            {
+                [[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray addObject:isActive];
+            }
         }
         
         Database *db=[Database shareddatabase];

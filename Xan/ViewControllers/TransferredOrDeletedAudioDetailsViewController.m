@@ -633,10 +633,16 @@ else
     }
    
     UILabel* departmentLabel=[[UILabel alloc]initWithFrame:CGRectMake(40, 10, self.view.frame.size.width - 60.0f, 18)];
+    // Configure the cell...
+    
+    if ([cell viewWithTag:200] != nil)
+    {
+        [[cell viewWithTag:200] removeFromSuperview];
+    }
     UIButton* radioButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 18, 18)];
     departmentLabel.text = [departmentNamesArray objectAtIndex:indexPath.row];
-    departmentLabel.tag=indexPath.row+200;
-    radioButton.tag=indexPath.row+100;
+    departmentLabel.tag=200;
+    radioButton.tag=100;
     
     NSString* departmentName = self.audioDetails.department;
     
@@ -656,13 +662,20 @@ else
 {
     cell=[tableView cellForRowAtIndexPath:indexPath];
     
-    UILabel* departmentNameLanel= [cell viewWithTag:indexPath.row+200];
+    UILabel* departmentNameLanel= [cell viewWithTag:200];
     
-    UIButton* radioButton=[cell viewWithTag:indexPath.row+100];
+    UIButton* radioButton=[cell viewWithTag:100];
     
     DepartMent *deptObj = [[DepartMent alloc]init];
     
     NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text];
+    
+    if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptId])
+         {
+             [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+             
+             return;
+         }
     
     deptObj.Id = deptId;
     

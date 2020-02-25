@@ -43,7 +43,7 @@
 
 @property (nonatomic,strong) NSMutableArray*           filesInUploadingQueueArray;
 @property (nonatomic,strong) NSMutableArray*           filesInAwaitingQueueArray;
-//@property (nonatomic,strong) NSMutableArray*           tempalateListArray;
+@property (nonatomic,strong) NSMutableArray*           inActiveDepartmentIdsArray;
 @property (nonatomic,strong) NSMutableDictionary*      tempalateListDict;
 
 

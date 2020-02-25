@@ -12,9 +12,9 @@
 
 //#define  BASE_URL_PATH                        @"http://192.168.3.81:8089/xan-dictate" // Vrushali Mam
 //#define  BASE_URL_PATH                        @"http://192.168.3.79:8089/xan-dictate" // KK
-#define  BASE_URL_PATH                          @"http://192.168.3.76:8089/xan-dictate"  // Shruti
+//#define  BASE_URL_PATH                          @"http://192.168.3.76:8089/xan-dictate"  // Shruti
 //#define  BASE_URL_PATH                          @"http://192.168.3.80:8089/xan-dictate"  // Mahadev Mac
-//#define  BASE_URL_PATH                          @"http://192.168.3.82:8070/xan-dictate"  // Mahadev Windows
+#define  BASE_URL_PATH                          @"http://192.168.3.82:8089/xan-dictate"  // Mahadev Windows
 
 //#define  BASE_URL_PATH                        @"http://192.168.2.9:8089/xan-dictate"
 
@@ -144,6 +144,7 @@
 #define RECORDING_SAVED_MESSAGE                @"Recording duration length exceeded,your recording has been saved in awaiting transfer,please start new recording for further dictation"
 #define NO_INTERNET_TITLE_MESSAGE              @"No Internet Connection!"
 #define NO_INTERNET_DETAIL_MESSAGE             @"Please check your internet connection and try again."
+#define DEACTIVATE_DEPARTMENT_MESSAGE          @"This Department is Deactivated, please select other department"
 
 
 #define CURRENT_VESRION                        @"currentVersion"
