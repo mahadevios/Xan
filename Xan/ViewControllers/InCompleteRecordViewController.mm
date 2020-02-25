@@ -2856,6 +2856,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
+    if ([cell viewWithTag:200] != nil)
+        {
+            [[cell viewWithTag:200] removeFromSuperview];
+        }
+    
     // Configure the cell...
     UILabel* tableViewDepartmentLabel=[[UILabel alloc]initWithFrame:CGRectMake(40, 10, self.view.frame.size.width - 60.0f, 18)];
     
@@ -2863,9 +2868,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     tableViewDepartmentLabel.text = [departmentNamesArray objectAtIndex:indexPath.row];
     
-    tableViewDepartmentLabel.tag=indexPath.row+200;
+    tableViewDepartmentLabel.tag=200;
     
-    radioButton.tag=indexPath.row+100;
+    radioButton.tag=100;
     
 
 //    NSData *data = [[NSUserDefaults standardUser Defaults] objectForKey:SELECTED_DEPARTMENT_NAME];
@@ -2892,15 +2897,23 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     cell=[tableView cellForRowAtIndexPath:indexPath];
     
-    UILabel* departmentNameLanel= [cell viewWithTag:indexPath.row+200];
+    UILabel* departmentNameLanel= [cell viewWithTag:200];
     
-    UIButton* radioButton=[cell viewWithTag:indexPath.row+100];
+    
+    UIButton* radioButton=[cell viewWithTag:100];
     
     existingAudioDepartmentName = departmentNameLanel.text;
     
     DepartMent *deptObj = [[DepartMent alloc]init];
     
     NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text];
+    
+    if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptId])
+         {
+             [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+             
+             return;
+         }
     
     deptObj.Id=deptId;
     

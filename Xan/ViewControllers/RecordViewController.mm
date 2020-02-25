@@ -2907,8 +2907,13 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     UILabel* tabelViewDepartmentLabel=[[UILabel alloc]initWithFrame:CGRectMake(40, 10, self.view.frame.size.width - 60.0f, 18)];
     UIButton* radioButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 18, 18)];
     tabelViewDepartmentLabel.text = [departmentNamesArray objectAtIndex:indexPath.row];
-    tabelViewDepartmentLabel.tag=indexPath.row+200;
-    radioButton.tag=indexPath.row+100;
+    tabelViewDepartmentLabel.tag=200;
+    radioButton.tag=100;
+    
+    if ([cell viewWithTag:200] != nil)
+        {
+            [[cell viewWithTag:200] removeFromSuperview];
+        }
     
 //    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
 //    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
@@ -2930,13 +2935,23 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 {
     //MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
     cell=[tableView cellForRowAtIndexPath:indexPath];
-    UILabel* departmentNameLanel= [cell viewWithTag:indexPath.row+200];
-    UIButton* radioButton=[cell viewWithTag:indexPath.row+100];
+    UILabel* departmentNameLanel= [cell viewWithTag:200];
+    UIButton* radioButton=[cell viewWithTag:100];
+    
+   
+    
     //NSLog(@"%ld",indexPath.row);
    // NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
     DepartMent *deptObj = [[DepartMent alloc]init];
    NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text];
 
+    if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptId])
+       {
+           [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+           
+           return;
+       }
+    
     deptObj.Id=deptId;
     //deptObj.Id=indexPath.row;
     deptObj.departmentName = departmentNameLanel.text;
