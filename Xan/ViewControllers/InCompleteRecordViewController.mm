@@ -1920,6 +1920,15 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
+        NSString* deptId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:existingAudioDepartmentName];
+
+               if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptId])
+                       {
+                           [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                           
+                           return;
+                       }
+        
         alertController = [UIAlertController alertControllerWithTitle:TRANSFER_MESSAGE
                                                           message:@""
                                                    preferredStyle:UIAlertControllerStyleAlert];

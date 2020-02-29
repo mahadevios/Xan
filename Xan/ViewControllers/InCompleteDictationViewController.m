@@ -237,6 +237,14 @@
     UILabel* departmentNameLabel=[cell viewWithTag:103];
     departmentNameLabel.text = audioDetails.department;
     
+//     if ([audioDetails.department containsString:@"(Deleted)"]) {
+//
+//            long startIndex = [audioDetails.department length] - 9;
+//            
+//            NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:audioDetails.department];
+//            [string addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(startIndex,9)];
+//            departmentNameLabel.attributedText = string;
+//        }
     UILabel* dateLabel=[cell viewWithTag:104];
     
     if (dateAndTimeArray.count>2)

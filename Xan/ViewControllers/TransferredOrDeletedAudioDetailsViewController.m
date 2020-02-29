@@ -106,8 +106,9 @@
     
     self.dictatedByLabel.text = dictatorName;
     
-    if (([self.audioDetails.templateName isEqualToString:@"-1"] || self.audioDetails.templateName == nil) && selectedTemplateName == nil)
+    if (([self.audioDetails.templateName isEqualToString:@"-1"] || self.audioDetails.templateName == nil || [self.audioDetails.department containsString:@"(Deleted)"]) && selectedTemplateName == nil)
     {
+        self.audioDetails.templateName = @"Select Template";
         selectedTemplateName = @"Select Template";
     }
     else
@@ -447,6 +448,15 @@
 {
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
+        NSString* deptId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:self.audioDetails.department];
+
+               if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptId])
+                       {
+                           [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                           
+                           return;
+                       }
+        
         moreButton.userInteractionEnabled=NO;
 
     alertController = [UIAlertController alertControllerWithTitle:RESEND_MESSAGE
