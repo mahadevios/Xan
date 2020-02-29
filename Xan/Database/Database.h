@@ -136,7 +136,9 @@
 
 -(NSMutableArray*)getTemplateListfromDeptName:(NSString*)deptId;
 
--(NSString*)getTemplateNameFromFilename:(NSString*)filename;
+-(NSString*)getTemplateIdFromFilename:(NSString*)filename;
+
+-(NSString*)getTemplateIdFromTemplatename:(NSString*)filename;
 
 -(void)updatePriority:(NSString*)prioityId fileName:(NSString*)fileName;
 

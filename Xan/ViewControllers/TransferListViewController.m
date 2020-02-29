@@ -665,6 +665,16 @@
     UILabel* nameLabel=[cell viewWithTag:103];
     nameLabel.text = audioDetails.department;
     
+//    if ([audioDetails.department containsString:@"(Deleted)"]) {
+//
+//        long startIndex = [audioDetails.department length] - 9;
+//        
+//        NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:audioDetails.department];
+//        [string addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(startIndex,9)];
+//        nameLabel.attributedText = string;
+//    }
+    
+    
     UILabel* deleteStatusLabel=[cell viewWithTag:105];
     
     UILabel* dateLabel=[cell viewWithTag:104];
@@ -1362,6 +1372,42 @@
     }
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
+       
+        
+        if ([AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray.count > 0) {
+             NSMutableArray* inActivedeptArray = [[NSMutableArray alloc]init];
+            for (int i=0; i<arrayOfMarked.count; i++)
+            {
+                
+                NSIndexPath* indexPath=[arrayOfMarked objectAtIndex:i];
+                //[aarayOfMarkedCopy addObject:[arrayOfMarked objectAtIndex:i]];
+                AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
+                
+                 NSString* deptId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:audioDetails.department];
+                
+                if (deptId != nil)
+                {
+                    if (![inActivedeptArray containsObject:deptId]) {// dont add duplicate
+                        [inActivedeptArray addObject:deptId];
+                    }
+                     
+                }
+               
+                
+            }
+            for(NSString *inActiveDeptId in [AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray)
+            {
+                if([inActivedeptArray containsObject:inActiveDeptId])
+                {
+                    [self cancelUploadAndRestoreToNormal];
+                                              
+                                              [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:MULTIPLE_DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                    
+                    return;
+                }
+            }
+        }
+      
         
         alertController = [UIAlertController alertControllerWithTitle:transferMessage
                                                               message:@""
@@ -1372,6 +1418,7 @@
                         {
             
             dispatch_async(dispatch_get_main_queue(), ^(void) {
+                
                 
                 [self updateUIAfterMultipleFilesUploadClicked];
                 
@@ -1423,15 +1470,7 @@
                 for (int i=0; i<aarayOfMarkedCopy.count; i++)
                 {
                     NSString* fileName=[aarayOfMarkedCopy objectAtIndex:i];
-                    
-//                    NSDictionary *info = [NSDictionary dictionaryWithObject: fileName forKey: @"fileName"];
-//
-//                    NSTimer* fileUploadTimer = [NSTimer scheduledTimerWithTimeInterval:2*(i+1)
-//                                                             target:self
-//                                                           selector:@selector(uploadFileAfterInterval:)
-//                                                           userInfo: info
-//                                                            repeats:YES];
-                    
+  
                   
                     delayInSeconds += 1.0;
                        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
@@ -1444,18 +1483,7 @@
 
                                    });
                     
-//                    double delayInSeconds = 2.0;
-//                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-//                    dispatch_after(popTime, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void)
-//                                   {
-//                        NSString* fileName=[aarayOfMarkedCopy objectAtIndex:i];
-//
-//                        NSLog(@"Filename = %@", fileName);
-//
-//                        APIManager* app=[APIManager sharedManager];
-//
-//                        [app uploadFileToServer:fileName jobName:FILE_UPLOAD_API];
-//                    });
+
                 }
                 
             });
@@ -1488,16 +1516,23 @@
     
     else
     {
-        [self updateUIAfterMultipleFilesUploadClicked];
-        
-        [self clearSelectedArrays];
-        
-        [self prepareDataSourceForTableView];
-        [self.tableView reloadData];
+       
+        [self cancelUploadAndRestoreToNormal];
         
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
     }
     
+    
+}
+
+-(void) cancelUploadAndRestoreToNormal
+{
+    [self updateUIAfterMultipleFilesUploadClicked];
+           
+           [self clearSelectedArrays];
+           
+           [self prepareDataSourceForTableView];
+           [self.tableView reloadData];
     
 }
 //- (void)uploadFileAfterInterval:(NSTimer *)uploadTimer

@@ -2019,6 +2019,17 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     {
         if ([[AppPreferences sharedAppPreferences] isReachable])
         {
+            NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+            DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            
+
+                   if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptObj.Id])
+                           {
+                               [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                               
+                               return;
+                           }
+            
             alertController = [UIAlertController alertControllerWithTitle:TRANSFER_MESSAGE
                                                                   message:@""
                                                            preferredStyle:UIAlertControllerStyleAlert];

@@ -289,11 +289,11 @@
             
             [deptForDatabaseArray addObject:deptObj];
             
-            NSString* isActive = [deptDict valueForKey:@"isActive"];
+            NSString* isActive = [deptDict valueForKey:@"deptStatus"];
             
-            if (isActive)
+            if ([isActive isEqualToString:@"INACTIVE"] || [isActive isEqualToString:@"CANCEL"])
             {
-                [[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray addObject:isActive];
+                [[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray addObject:deptObj.Id];
             }
         }
         

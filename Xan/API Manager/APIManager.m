@@ -1268,8 +1268,13 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
     NSString* fileDuraion = [self getFileDurationInHMSFormat:duration];
     
-    NSString* templateCode = [[Database shareddatabase] getTemplateNameFromFilename:filenameForTaskIdentifier];
+    NSString* templateCode = [[Database shareddatabase] getTemplateIdFromFilename:filenameForTaskIdentifier];
+    //-(NSString*)getTemplateIdFromTemplatename:(NSString*)filename
+    NSString* templateName = [[Database shareddatabase] getTemplateIdFromTemplatename:templateCode];
     
+    if ([templateName isEqualToString:@"-1"]) {
+        templateCode = @"-1";
+    }
     NSString* priorityId = [[Database shareddatabase] getPriorityIdFromFilename:filenameForTaskIdentifier];
 
     NSDictionary *params = @{@"macId"     : macId,

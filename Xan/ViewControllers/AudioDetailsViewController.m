@@ -87,8 +87,9 @@
 
 -(void)setTemplateData
 {
-    if (([self.audioDetails.templateName isEqualToString:@"-1"] || self.audioDetails.templateName == NULL) && selectedTemplateName == nil)
+    if (([self.audioDetails.templateName isEqualToString:@"-1"] || self.audioDetails.templateName == NULL || [self.audioDetails.department containsString:@"(Deleted)"]) && selectedTemplateName == nil)
     {
+        self.audioDetails.templateName = @"Select Template";
         selectedTemplateName = @"Select Template";
     }
     else
@@ -410,9 +411,7 @@
         deleteRecordButton.layer.cornerRadius=5.0f;
         
         [deleteRecordButton addTarget:self action:@selector(deleteRecording) forControlEvents:UIControlEventTouchUpInside];
-        
-        
-        
+       
         UIButton* editRecordButton=[[UIButton alloc]initWithFrame:CGRectMake(deleteRecordButton.frame.origin.x+deleteRecordButton.frame.size.width+uploadRecordButton.frame.size.width*0.04, deleteRecordButton.frame.origin.y,uploadRecordButton.frame.size.width*0.48, deleteRecordButton.frame.size.height)];
         
         editRecordButton.tag = 803;
@@ -869,8 +868,14 @@
 {
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
-        
-        
+        NSString* deptId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:self.audioDetails.department];
+
+        if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptId])
+                {
+                    [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                    
+                    return;
+                }
         
         if ([self.selectedView isEqualToString:@"Transferred Today"])
         {

@@ -283,8 +283,65 @@ static Database *db;
     return templateArray;
 }
 
+-(NSString*)getTemplateIdFromTemplatename:(NSString*)filename
+{
+    Database *db=[Database shareddatabase];
+    NSString *dbPath=[db getDatabasePath];
+    sqlite3_stmt *statement = NULL;
+    NSString* temlateId = @"-1";
+    sqlite3* feedbackAndQueryTypesDB;
+    //NSMutableArray* departmentNameArray=[[NSMutableArray alloc]init];;
+    //    NSString *query3=[NSString stringWithFormat:@"Select FILENAME from TaskIdentifier Where TASKID='%@' and UserId = %d",taskIdentifier];
+    
+    NSString *query3=[NSString stringWithFormat:@"Select TemplateName from TemplateList Where TemplateId='%@'",filename];
+    
+    if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
+    {
+        if (sqlite3_prepare_v2(feedbackAndQueryTypesDB, [query3 UTF8String], -1, &statement, NULL) == SQLITE_OK)// 2. Prepare the query
+        {
+            while (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                
+                // [app.feedOrQueryDetailMessageArray addObject:[NSString stringWithUTF8String:message]];
+                temlateId=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+                // [departmentNameArray addObject:companyId];
+                
+            }
+        }
+        else
+        {
+            //NSLog(@"Can't preapre query due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+        }
+    }
+    else
+    {
+        //NSLog(@"can't open db due error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    if (sqlite3_finalize(statement) == SQLITE_OK)
+    {
+        //NSLog(@"statement is finalized");
+    }
+    else
+    {
+    }
+    //NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    
+    
+    if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
+    {
+        //NSLog(@"db is closed");
+    }
+    else
+    {
+        //NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    
+    return temlateId;
+}
 
--(NSString*)getTemplateNameFromFilename:(NSString*)filename
+-(NSString*)getTemplateIdFromFilename:(NSString*)filename
 {
     Database *db=[Database shareddatabase];
     NSString *dbPath=[db getDatabasePath];
@@ -1120,6 +1177,7 @@ static Database *db;
                 RecordItemName=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
                 RecordCreatedDate=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 1)];
                 Department=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
+                NSString* departmentCopy = Department;
                 TransferStatus=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 3)];
                 CurrentDuration=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
                 transferDate=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
@@ -1149,6 +1207,10 @@ static Database *db;
                 else
                 {}
                 
+                if ([departmentCopy isEqualToString:Department])
+                {
+                    Department = [NSString stringWithFormat:@"%@ (Deleted)",Department];
+                }
                 NSString *query5=[NSString stringWithFormat:@"Select TransferStatus from TransferStatus Where Id='%@'",TransferStatus];
                 
                 if (sqlite3_prepare_v2(feedbackAndQueryTypesDB, [query5 UTF8String], -1, &statement2, NULL) == SQLITE_OK)// 2. Prepare the query
@@ -1776,6 +1838,7 @@ static Database *db;
                 RecordItemName=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
                 Date=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 1)];
                 Department=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
+                NSString* departmentCopy = Department;
                 RecordCreateDate=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 3)];
                 status=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
                 transferDate=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
@@ -1797,6 +1860,10 @@ static Database *db;
                     //NSLog(@"Can't preapre query due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
                 }
                 
+                if ([departmentCopy isEqualToString:Department])
+                {
+                    Department = [NSString stringWithFormat:@"%@ (Deleted)",Department];
+                }
                 if (sqlite3_finalize(statement1) == SQLITE_OK)
                 {
                     //NSLog(@"statement1 is finalized");
