@@ -140,6 +140,8 @@
 
 -(NSString*)getTemplateIdFromTemplatename:(NSString*)filename;
 
+-(NSString*)getDepartMentNameFromDepartmentId:(NSString*)departmentId;
+
 -(void)updatePriority:(NSString*)prioityId fileName:(NSString*)fileName;
 
 -(NSString*)getPriorityIdFromFilename:(NSString*)filename;

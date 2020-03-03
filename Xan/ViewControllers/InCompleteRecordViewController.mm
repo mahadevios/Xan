@@ -88,6 +88,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     //    tapGestureRecogniser.delegate = self;
     [self.view addGestureRecognizer:tapGestureRecogniser];
+    
+    if ([self.existingAudioDepartmentName containsString:@"Unassigned"]) {
+        templateNamesDropdownMenu.userInteractionEnabled = false;
+    }
 }
 
 -(void)disMissTemplateDropDown:(UITapGestureRecognizer *)gestureRecognizer
@@ -2875,8 +2879,19 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UIButton* radioButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 18, 18)];
     
-    tableViewDepartmentLabel.text = [departmentNamesArray objectAtIndex:indexPath.row];
-    
+    NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:[departmentNamesArray objectAtIndex:indexPath.row]] ;
+          
+          if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptId])
+             {
+                 tableViewDepartmentLabel.text = [NSString stringWithFormat:@"%@ (INACTIVE)",[departmentNamesArray objectAtIndex:indexPath.row]];
+             }
+             else
+             {
+                     tableViewDepartmentLabel.text = [departmentNamesArray objectAtIndex:indexPath.row];
+
+
+             }
+        
     tableViewDepartmentLabel.tag=200;
     
     radioButton.tag=100;
@@ -2908,22 +2923,24 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UILabel* departmentNameLanel= [cell viewWithTag:200];
     
+    if ([departmentNameLanel.text containsString:@"(INACTIVE)"]) {
+           
+        [tableView reloadData];
+        
+           [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                     
+                     return;
+       }
     
     UIButton* radioButton=[cell viewWithTag:100];
-    
-    existingAudioDepartmentName = departmentNameLanel.text;
-    
+        
     DepartMent *deptObj = [[DepartMent alloc]init];
     
     NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text];
     
-    if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptId])
-         {
-             [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
-             
-             return;
-         }
     
+    existingAudioDepartmentName = departmentNameLanel.text;
+
     deptObj.Id=deptId;
     
     deptObj.departmentName=departmentNameLanel.text;
@@ -2954,12 +2971,27 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 -(void)save:(id)sender
 {
-    
+   
     NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
     
     [[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME_COPY];
     
     DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
+    
+    NSString* departmentName = deptObj.departmentName;
+       
+       if ([departmentName containsString:@"Unassigned"]) {
+           [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:SELECT_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+           return;
+       }
+    
+    if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptObj.Id])
+    {
+       
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+        
+        return;
+    }
     
     UILabel* transferredByLabel= [self.view viewWithTag:102];
     
@@ -2995,6 +3027,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [self.delegate updateData:delegateDict];
     
     [templateNamesDropdownMenu reloadAllComponents];
+    
+    templateNamesDropdownMenu.userInteractionEnabled = true;
     
     [popupView removeFromSuperview];
 }

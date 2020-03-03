@@ -12,7 +12,7 @@
 
 //#define  BASE_URL_PATH                        @"http://192.168.3.81:8089/xan-dictate" // Vrushali Mam
 //#define  BASE_URL_PATH                        @"http://192.168.3.79:8089/xan-dictate" // KK
-#define  BASE_URL_PATH                          @"http://192.168.3.76:8080/xan-dictate"  // Shruti
+#define  BASE_URL_PATH                          @"http://192.168.3.76:8089/xan-dictate"  // Shruti
 //#define  BASE_URL_PATH                          @"http://192.168.3.80:8089/xan-dictate"  // Mahadev Mac
 //#define  BASE_URL_PATH                          @"http://192.168.3.82:8089/xan-dictate"  // Mahadev Windows
 
@@ -146,6 +146,7 @@
 #define NO_INTERNET_DETAIL_MESSAGE             @"Please check your internet connection and try again."
 #define DEACTIVATE_DEPARTMENT_MESSAGE          @"This Department is Deactivated, please select other department"
 #define MULTIPLE_DEACTIVATE_DEPARTMENT_MESSAGE          @"Department of some of the selected files are inactive, please select only active department files."
+#define SELECT_DEPARTMENT_MESSAGE          @"Please select Department"
 
 
 #define CURRENT_VESRION                        @"currentVersion"

@@ -2917,7 +2917,19 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     // Configure the cell...
     UILabel* tabelViewDepartmentLabel=[[UILabel alloc]initWithFrame:CGRectMake(40, 10, self.view.frame.size.width - 60.0f, 18)];
     UIButton* radioButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 18, 18)];
-    tabelViewDepartmentLabel.text = [departmentNamesArray objectAtIndex:indexPath.row];
+    
+     NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:[departmentNamesArray objectAtIndex:indexPath.row]];
+    
+    if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptId]) {
+        
+        tabelViewDepartmentLabel.text = [NSString stringWithFormat:@"%@ (INACTIVE)",[departmentNamesArray objectAtIndex:indexPath.row]];
+
+    }
+    else
+    {
+        tabelViewDepartmentLabel.text = [departmentNamesArray objectAtIndex:indexPath.row];
+    }
+    
     tabelViewDepartmentLabel.tag=200;
     radioButton.tag=100;
     
@@ -2947,6 +2959,13 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     //MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
     cell=[tableView cellForRowAtIndexPath:indexPath];
     UILabel* departmentNameLanel= [cell viewWithTag:200];
+    if ([departmentNameLanel.text containsString:@"(INACTIVE)"]) {
+        
+        [tableView reloadData];
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                  
+                  return;
+    }
     UIButton* radioButton=[cell viewWithTag:100];
     
    
@@ -2954,14 +2973,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     //NSLog(@"%ld",indexPath.row);
    // NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
     DepartMent *deptObj = [[DepartMent alloc]init];
+    
+    
    NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text];
 
-    if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptId])
-       {
-           [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
-           
-           return;
-       }
     
     deptObj.Id=deptId;
     //deptObj.Id=indexPath.row;

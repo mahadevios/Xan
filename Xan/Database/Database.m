@@ -1209,7 +1209,7 @@ static Database *db;
                 
                 if ([departmentCopy isEqualToString:Department])
                 {
-                    Department = [NSString stringWithFormat:@"%@ (Deleted)",Department];
+                    Department = [NSString stringWithFormat:@"%@ (Unassigned)",Department];
                 }
                 NSString *query5=[NSString stringWithFormat:@"Select TransferStatus from TransferStatus Where Id='%@'",TransferStatus];
                 
@@ -1425,6 +1425,58 @@ static Database *db;
     
 }
 
+
+-(NSString*)getDepartMentNameFromDepartmentId:(NSString*)departmentId
+{
+    Database *db=[Database shareddatabase];
+    NSString *dbPath=[db getDatabasePath];
+    sqlite3_stmt *statement = NULL;
+    sqlite3* feedbackAndQueryTypesDB;
+    NSString* departmentName = @"Unassigned";
+    
+    NSString *query3=[NSString stringWithFormat:@"Select DepartmentName from DepartMentList Where Id='%@'",departmentId];
+    
+    if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
+    {
+        if (sqlite3_prepare_v2(feedbackAndQueryTypesDB, [query3 UTF8String], -1, &statement, NULL) == SQLITE_OK)// 2. Prepare the query
+        {
+            while (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                departmentName=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+            }
+        }
+        else
+        {
+            //NSLog(@"Can't preapre query due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+        }
+    }
+    else
+    {
+        //NSLog(@"can't open db due error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    if (sqlite3_finalize(statement) == SQLITE_OK)
+    {
+        //NSLog(@"statement is finalized");
+    }
+    else
+        // NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    {
+    }
+    
+    if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
+    {
+        // NSLog(@"db is closed");
+    }
+    else
+    {
+        //NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+  
+    return departmentName;
+    
+}
 -(NSString*)getDefaultDepartMentId
 {
     Database *db=[Database shareddatabase];
@@ -1862,7 +1914,7 @@ static Database *db;
                 
                 if ([departmentCopy isEqualToString:Department])
                 {
-                    Department = [NSString stringWithFormat:@"%@ (Deleted)",Department];
+                    Department = [NSString stringWithFormat:@"%@ (Unassigned)",Department];
                 }
                 if (sqlite3_finalize(statement1) == SQLITE_OK)
                 {
