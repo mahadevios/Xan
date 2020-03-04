@@ -687,7 +687,7 @@ else
     
     NSString* departmentName = self.audioDetails.department;
     
-    if ([departmentName isEqualToString:departmentLabel.text])
+    if ([departmentName isEqualToString:[departmentNamesArray objectAtIndex:indexPath.row]])
     {
         [radioButton setBackgroundImage:[UIImage imageNamed:@"RadioButton"] forState:UIControlStateNormal];
     }
@@ -705,33 +705,21 @@ else
     
     UILabel* departmentNameLanel= [cell viewWithTag:200];
     
-    UIButton* radioButton=[cell viewWithTag:100];
+     if ([departmentNameLanel.text containsString:@"(INACTIVE)"])
+       {
+           [tableView reloadData];
+           
+           [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+           
+           return;
+       }
+       
+       UIButton* radioButton=[cell viewWithTag:100];
+       
+       DepartMent *deptObj = [[DepartMent alloc]init];
+       
+       NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text] ;
     
-    DepartMent *deptObj = [[DepartMent alloc]init];
-    
-    NSString* department;
-    NSString* deptId;
-    if ([departmentNameLanel.text containsString:@"(INACTIVE)"]) {
-       NSArray* arr =  [departmentNameLanel.text componentsSeparatedByString:@"(INACTIVE)"];
-        department = [arr objectAtIndex:0];
-        deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:department];
-
-    }
-    else
-    {
-        deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text];
-
-    }
-    
-    
-    if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptId])
-         {
-             [tableView reloadData];
-             
-             [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
-             
-             return;
-         }
     
     deptObj.Id = deptId;
     
