@@ -121,17 +121,30 @@
 {
     
     UITableViewCell *cell = [tableview dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-   
-       
+    
     UILabel* departmentNameLabel=[cell viewWithTag:101];
+
     
-    if (departmentNameLabel.text != nil)
-    {
-        departmentNameLabel.text = @"";
-     }
+   if (departmentNameLabel.text != nil)
+      {
+          departmentNameLabel.text = @"";
+       }
+      
+       
     
-    DepartMent* deptObj = [departmentNameArray objectAtIndex:indexPath.row];
-    departmentNameLabel.text = deptObj.departmentName;
+    DepartMent* dept = [departmentNameArray objectAtIndex:indexPath.row];
+    
+    if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:dept.Id]) {
+          
+        departmentNameLabel.text = [NSString stringWithFormat:@"%@ (INACTIVE)",dept.departmentName];
+
+      }
+      else
+      {
+          departmentNameLabel.text = dept.departmentName;
+      }
+    
+   
     return cell;
 }
 - (void)tableView:(UITableView *)tableview didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -144,6 +157,7 @@
 
     if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptObj.Id])
     {
+        [tableView reloadData];
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
         
         return;

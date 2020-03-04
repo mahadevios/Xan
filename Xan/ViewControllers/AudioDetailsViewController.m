@@ -87,8 +87,9 @@
 
 -(void)setTemplateData
 {
-    if (([self.audioDetails.templateName isEqualToString:@"-1"] || self.audioDetails.templateName == NULL) && selectedTemplateName == nil)
+    if (([self.audioDetails.templateName isEqualToString:@"-1"] || self.audioDetails.templateName == NULL ) && selectedTemplateName == nil)
     {
+        self.audioDetails.templateName = @"Select Template";
         selectedTemplateName = @"Select Template";
     }
     else
@@ -97,7 +98,9 @@
             selectedTemplateName = self.audioDetails.templateName;
         }
     
-    
+    if ([self.audioDetails.department containsString:@"(Unassigned)"]) {
+        templateNamesDropdownMenu.userInteractionEnabled = false;
+    }
     NSString* deptName = self.audioDetails.department;
     
     NSString* deptId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:deptName];
@@ -410,9 +413,7 @@
         deleteRecordButton.layer.cornerRadius=5.0f;
         
         [deleteRecordButton addTarget:self action:@selector(deleteRecording) forControlEvents:UIControlEventTouchUpInside];
-        
-        
-        
+       
         UIButton* editRecordButton=[[UIButton alloc]initWithFrame:CGRectMake(deleteRecordButton.frame.origin.x+deleteRecordButton.frame.size.width+uploadRecordButton.frame.size.width*0.04, deleteRecordButton.frame.origin.y,uploadRecordButton.frame.size.width*0.48, deleteRecordButton.frame.size.height)];
         
         editRecordButton.tag = 803;
@@ -869,8 +870,14 @@
 {
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
-        
-        
+        NSString* deptId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:self.audioDetails.department];
+
+        if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptId])
+                {
+                    [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                    
+                    return;
+                }
         
         if ([self.selectedView isEqualToString:@"Transferred Today"])
         {
@@ -1243,14 +1250,24 @@
        }
  
     UIButton* radioButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 18, 18)];
-    
-    departmentLabel.text = [departmentNamesArray objectAtIndex:indexPath.row];
-    
+        
     departmentLabel.tag=200;
     
     radioButton.tag=100;
     
     NSString* departmentName = self.audioDetails.department;
+    
+    NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:[departmentNamesArray objectAtIndex:indexPath.row]] ;
+         
+         if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptId])
+            {
+                departmentLabel.text = [NSString stringWithFormat:@"%@ (INACTIVE)",[departmentNamesArray objectAtIndex:indexPath.row]];
+            }
+            else
+            {
+                departmentLabel.text = [departmentNamesArray objectAtIndex:indexPath.row];
+
+            }
     
     if ([departmentName isEqualToString:departmentLabel.text])
     {
@@ -1273,18 +1290,20 @@
     
     UILabel* departmentNameLanel= [cell viewWithTag:200];
     
+    if ([departmentNameLanel.text containsString:@"(INACTIVE)"])
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+        
+        return;
+    }
+    
     UIButton* radioButton=[cell viewWithTag:100];
     
     DepartMent *deptObj = [[DepartMent alloc]init];
     
     NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text] ;
     
-    if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptId])
-         {
-             [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
-             
-             return;
-         }
+    
     
     
     deptObj.Id=deptId;
@@ -1324,6 +1343,18 @@
     
     NSString* departmentName = self.audioDetails.department;
     
+    if ([departmentName containsString:@"Unassigned"]) {
+        [popupView removeFromSuperview];
+        return;
+    }
+    
+    if ([departmentName containsString:@"(INACTIVE)"])
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+        
+        return;
+    }
+    
     UILabel* transferredByLabel= [self.view viewWithTag:503];
     
     transferredByLabel.text = departmentName;
@@ -1344,6 +1375,10 @@
     self.audioDetails.templateName = @"Select Template";
     
     [self getTempliatFromDepartMentName:departmentId];
+    
+    if(![self.audioDetails.deleteStatus isEqualToString:@"Deleted"]){
+        templateNamesDropdownMenu.userInteractionEnabled = true;
+    }
     
     
     [self setDefaultTemplate];
@@ -1522,8 +1557,10 @@
     [dropdownMenu reloadAllComponents];
 }
 
+
 -(void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didCloseComponent:(NSInteger)component
 {
+    
     [self.scrollView setScrollEnabled:true];
     
     if ([selectedTemplateName isEqualToString:@"Select Template"] && recentlySelectedTemplateName!=nil)
@@ -1565,10 +1602,22 @@
 {
     NSString* templateId = [[AppPreferences sharedAppPreferences].tempalateListDict objectForKey:selectedTemplateName];
     
-    if (templateId == nil)
+    if (templateId == nil && [selectedTemplateName isEqualToString:@"Select Template"])//template was stored in db bt department unassigned later
     {
         templateId = @"-1";
     }
+    
+//    if (templateId == nil && ![self.audioDetails.department containsString:@"Unassigned"])//template was stored in db bt department unassigned later
+//       {
+//           templateId = @"-1";
+//       }
+    else
+    if (templateId == nil || [self.audioDetails.department containsString:@"Unassigned"]) {
+       // tempId = nill hence template is deleted || if dept is unassigned then no template key value will be available hence fetch existing code
+       templateId = [[Database shareddatabase] getTemplateIdFromFilename:self.audioDetails.fileName];
+//        templateId = selectedTemplateName;
+    }
+    
     
     [[Database shareddatabase] updateTemplateId:templateId fileName:self.audioDetails.fileName];
 }

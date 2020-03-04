@@ -106,8 +106,9 @@
     
     self.dictatedByLabel.text = dictatorName;
     
-    if (([self.audioDetails.templateName isEqualToString:@"-1"] || self.audioDetails.templateName == nil) && selectedTemplateName == nil)
+    if (([self.audioDetails.templateName isEqualToString:@"-1"] || self.audioDetails.templateName == nil ) && selectedTemplateName == nil)
     {
+        self.audioDetails.templateName = @"Select Template";
         selectedTemplateName = @"Select Template";
     }
     else
@@ -115,6 +116,10 @@
         {
             selectedTemplateName = self.audioDetails.templateName;
         }
+    
+    if ([self.audioDetails.department containsString:@"(Unassigned)"]) {
+           templateNamesDropdownMenu.userInteractionEnabled = false;
+       }
     
     [self.mkDropdwonRefView addSubview:templateNamesDropdownMenu];
     
@@ -447,6 +452,15 @@
 {
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
+        NSString* deptId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:self.audioDetails.department];
+
+               if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptId])
+                       {
+                           [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                           
+                           return;
+                       }
+        
         moreButton.userInteractionEnabled=NO;
 
     alertController = [UIAlertController alertControllerWithTitle:RESEND_MESSAGE
@@ -578,23 +592,38 @@ else
    
     NSString* departmentName = self.audioDetails.department;
     
+    if ([departmentName containsString:@"Unassigned"]) {
+           [popupView removeFromSuperview];
+           return;
+       }
+    
+    NSString* departmentId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentName];
+      
+      if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:departmentId])
+              {
+                 
+                  [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                  
+                  return;
+              }
+    
     UILabel* transferredByLabel= [self.view viewWithTag:503];
     
     transferredByLabel.text = departmentName;
     
     UILabel* filenameLabel=[self.view viewWithTag:501];
     
-    NSString* departmentId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentName];
-    
     [[Database shareddatabase] updateDepartment:departmentId fileName:filenameLabel.text];
     
     self.audioDetails.departmentCopy = departmentName;
 
-//    selectedTemplateName = @"Select Template";
-//
-//    [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.audioDetails.fileName];
     [self getTempliatFromDepartMentName:departmentId];
 
+    if(![self.audioDetails.deleteStatus isEqualToString:@"Deleted"]){
+          templateNamesDropdownMenu.userInteractionEnabled = true;
+      }
+      
+    
     [self setDefaultTemplate];
         
     [templateNamesDropdownMenu reloadAllComponents];
@@ -640,7 +669,19 @@ else
         [[cell viewWithTag:200] removeFromSuperview];
     }
     UIButton* radioButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 18, 18)];
-    departmentLabel.text = [departmentNamesArray objectAtIndex:indexPath.row];
+    
+    NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:[departmentNamesArray objectAtIndex:indexPath.row]] ;
+      
+      if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptId])
+         {
+             departmentLabel.text = [NSString stringWithFormat:@"%@ (INACTIVE)",[departmentNamesArray objectAtIndex:indexPath.row]];
+         }
+         else
+         {
+             departmentLabel.text = [departmentNamesArray objectAtIndex:indexPath.row];
+
+         }
+    
     departmentLabel.tag=200;
     radioButton.tag=100;
     
@@ -668,10 +709,25 @@ else
     
     DepartMent *deptObj = [[DepartMent alloc]init];
     
-    NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text];
+    NSString* department;
+    NSString* deptId;
+    if ([departmentNameLanel.text containsString:@"(INACTIVE)"]) {
+       NSArray* arr =  [departmentNameLanel.text componentsSeparatedByString:@"(INACTIVE)"];
+        department = [arr objectAtIndex:0];
+        deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:department];
+
+    }
+    else
+    {
+        deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text];
+
+    }
+    
     
     if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptId])
          {
+             [tableView reloadData];
+             
              [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
              
              return;
@@ -770,10 +826,16 @@ else
 {
     NSString* templateId = [[AppPreferences sharedAppPreferences].tempalateListDict objectForKey:selectedTemplateName];
     
-    if (templateId == nil)
-    {
-        templateId = @"-1";
-    }
+    if (templateId == nil && ![self.audioDetails.department containsString:@"Unassigned"])//template was stored in db bt department unassigned later
+           {
+               templateId = @"-1";
+           }
+        else
+        if ([self.audioDetails.department containsString:@"Unassigned"]) {
+           // if dept contain assigned template could be -1 or if default was set then ftech from db
+           templateId = [[Database shareddatabase] getTemplateIdFromFilename:self.audioDetails.fileName];
+    //        templateId = selectedTemplateName;
+        }
     
     [[Database shareddatabase] updateTemplateId:templateId fileName:self.audioDetails.fileName];
 }
