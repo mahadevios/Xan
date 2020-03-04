@@ -3809,11 +3809,22 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 -(void)updateTemplateIdForFileName
 {
     NSString* templateId = [[AppPreferences sharedAppPreferences].tempalateListDict objectForKey:selectedTemplateName];
-    
-    if (templateId == nil)
-    {
-        templateId = @"-1";
-    }
+   
+    if (templateId == nil && [selectedTemplateName isEqualToString:@"Select Template"])//template was stored in db bt department unassigned later
+        {
+            templateId = @"-1";
+        }
+        
+    //    if (templateId == nil && ![self.audioDetails.department containsString:@"Unassigned"])//template was stored in db bt department unassigned later
+    //       {
+    //           templateId = @"-1";
+    //       }
+        else
+        if (templateId == nil || [existingAudioDepartmentName containsString:@"Unassigned"]) {
+           // tempId = nill hence template is deleted || if dept is unassigned then no template key value will be available hence fetch existing code
+           templateId = [[Database shareddatabase] getTemplateIdFromFilename:recordedAudioFileName];
+    //        templateId = selectedTemplateName;
+        }
     
     [[Database shareddatabase] updateTemplateId:templateId fileName:self.existingAudioFileName];
 }

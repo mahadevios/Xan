@@ -3898,7 +3898,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1578"
             endingLineNumber = "1578"
-            landmarkName = "-dropdownMenu:didSelectRow:inComponent:"
+            landmarkName = "-dropdownMenu:didCloseComponent:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3914,7 +3914,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1552"
             endingLineNumber = "1552"
-            landmarkName = "-dropdownMenu:didCloseComponent:"
+            landmarkName = "-dropdownMenu:didOpenComponent:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
