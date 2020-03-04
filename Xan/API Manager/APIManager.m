@@ -344,7 +344,8 @@ static APIManager *singleton = nil;
         NSData* macIdData = [macID dataUsingEncoding:NSUTF8StringEncoding];
         NSData* usernameData = [username dataUsingEncoding:NSUTF8StringEncoding];
         NSData* passwordData = [password dataUsingEncoding:NSUTF8StringEncoding];
-        
+        NSData* deviceTypeData = [@"iOS" dataUsingEncoding:NSUTF8StringEncoding];
+
         NSData *macIdEncData = [macIdData AES256EncryptWithKey:SECRET_KEY];
         NSString* macIdEncString = [macIdEncData base64EncodedStringWithOptions:0];
 //        macIdEncString = [macIdEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
@@ -362,12 +363,18 @@ static APIManager *singleton = nil;
 //        passwordEncString = [passwordEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         NSString* passwordIV = [AppPreferences sharedAppPreferences].iniVector;
         passwordEncString = [[passwordEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:passwordIV];
+        
+         NSData *deviceTypeEncData = [deviceTypeData AES256EncryptWithKey:SECRET_KEY];
+                NSString* deviceTypeEncString = [deviceTypeEncData base64EncodedStringWithOptions:0];
+        //        passwordEncString = [passwordEncString stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+                NSString* deviceTypeIV = [AppPreferences sharedAppPreferences].iniVector;
+                deviceTypeEncString = [[deviceTypeEncString stringByAppendingString:@"__babacd_dcabab__"] stringByAppendingString:deviceTypeIV];
 
         //__babacd_dcabab__
         //        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
         
         
-        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"macId",usernameEncString,@"userName",passwordEncString,@"password", nil];
+        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:macIdEncString,@"macId",usernameEncString,@"userName",passwordEncString,@"password",deviceTypeEncString,@"deviceType", nil];
         
         NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
         
