@@ -1346,6 +1346,9 @@
     NSString* departmentName = self.audioDetails.department;
     
     if ([departmentName containsString:@"Unassigned"]) {
+        
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:SELECT_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+        
         [popupView removeFromSuperview];
         return;
     }
