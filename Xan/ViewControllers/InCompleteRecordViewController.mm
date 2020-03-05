@@ -2960,6 +2960,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 {
     NSString* departmentId = [[Database shareddatabase] getDepartMentIdForFileName:self.existingAudioFileName];
      
+    // will return dept code with unassigned string if not found
     NSString* departmentName = [[Database shareddatabase] getDepartMentNameFromDepartmentId:departmentId];
      
      
@@ -3016,28 +3017,36 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 else
 {
-    NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
     
-    [[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME_COPY];
-    
-    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
-    
-    NSString* departmentName = deptObj.departmentName;
+    NSString* departmentId = [[Database shareddatabase] getDepartMentIdForFileName:self.existingAudioFileName];
+//
+    // will return dept code with unassigned string if not found
+       NSString* departmentName = [[Database shareddatabase] getDepartMentNameFromDepartmentId:departmentId];
     
     if ([departmentName containsString:@"Unassigned"]) {
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:SELECT_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
-        
-        [self keepSameDepartmentSavedAfterOnlyRowSelection];
-        return;
-    }
+           [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:SELECT_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+           
+           [self keepSameDepartmentSavedAfterOnlyRowSelection];
+           return;
+       }
+       
     
-    if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptObj.Id])
-    {
-        
+    if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:departmentId]) {
+     
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
          [self keepSameDepartmentSavedAfterOnlyRowSelection];
         return;
+        
     }
+
+   
+    NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+
+    [[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME_COPY];
+
+    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
+
+//    NSString* departmentName = deptObj.departmentName;
     
     UILabel* transferredByLabel= [self.view viewWithTag:102];
     
