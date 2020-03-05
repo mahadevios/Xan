@@ -1473,7 +1473,9 @@ static Database *db;
         //NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
     }
     
-  
+    if ([departmentName isEqualToString:@"Unassigned"]) {
+        departmentName = [NSString stringWithFormat:@"%@ (Unassigned)", departmentId];
+    }
     return departmentName;
     
 }
