@@ -103,6 +103,8 @@
     
     BOOL checkBoxSelected;
     
+    BOOL isDepartmentRadioButtonSelcted;
+    
     NSString* recentlySelectedTemplateName;
 //    UIButton* uploadLaterButton;
 //    UIButton* recordNewButton;
