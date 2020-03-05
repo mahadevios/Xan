@@ -105,6 +105,8 @@
     
     BOOL isDepartmentRadioButtonSelcted;
     
+    BOOL isDeptRowSelcted;
+    
     NSString* recentlySelectedTemplateName;
 //    UIButton* uploadLaterButton;
 //    UIButton* recordNewButton;

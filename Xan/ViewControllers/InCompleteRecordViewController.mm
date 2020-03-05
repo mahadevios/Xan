@@ -2933,6 +2933,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                      return;
        }
     
+    isDeptRowSelcted = YES;
+    
     UIButton* radioButton=[cell viewWithTag:100];
         
     DepartMent *deptObj = [[DepartMent alloc]init];
@@ -2973,6 +2975,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
      
      if ([departmentName containsString:@"Unassigned"]) {
          [popupView removeFromSuperview];
+         isDeptRowSelcted = NO;
          existingAudioDepartmentName = [NSString stringWithFormat:@"%@ (Unassigned)", departmentId];
          return; // if dept radio button ON but cancel pressed then return
      }
@@ -2983,11 +2986,13 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
      else
      existingAudioDepartmentName = deptObj.departmentName;
      
+    isDeptRowSelcted = NO;
      [popupView removeFromSuperview];
 }
 -(void)cancel:(id)sender
 {
     if (!isDepartmentRadioButtonSelcted) {
+        isDeptRowSelcted = NO;
         [popupView removeFromSuperview]; // if dept radio button ON then jiust remove the popup
         
     }
@@ -3017,13 +3022,30 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 else
 {
+    if (!isDeptRowSelcted) {
+        NSString* departmentId = [[Database shareddatabase] getDepartMentIdForFileName:self.existingAudioFileName];
+        
+//         NSString* departmentName = [[Database shareddatabase] getDepartMentNameFromDepartmentId:departmentId];
+        
+        if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:departmentId]) {
+            
+               [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                [self keepSameDepartmentSavedAfterOnlyRowSelection];
+               return;
+               
+           }
+    }
+    NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+
+
+    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
     
-    NSString* departmentId = [[Database shareddatabase] getDepartMentIdForFileName:self.existingAudioFileName];
+    NSString* departmentId = deptObj.Id;
 //
     // will return dept code with unassigned string if not found
-       NSString* departmentName = [[Database shareddatabase] getDepartMentNameFromDepartmentId:departmentId];
+//       NSString* departmentName = [[Database shareddatabase] getDepartMentNameFromDepartmentId:departmentId];
     
-    if ([departmentName containsString:@"Unassigned"]) {
+    if ([deptObj.departmentName containsString:@"Unassigned"]) {
            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:SELECT_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
            
            [self keepSameDepartmentSavedAfterOnlyRowSelection];
@@ -3031,20 +3053,9 @@ else
        }
        
     
-    if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:departmentId]) {
-     
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
-         [self keepSameDepartmentSavedAfterOnlyRowSelection];
-        return;
-        
-    }
-
    
-    NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
 
     [[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME_COPY];
-
-    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
 
 //    NSString* departmentName = deptObj.departmentName;
     
@@ -3082,6 +3093,7 @@ else
     
     templateNamesDropdownMenu.userInteractionEnabled = true;
     
+    isDeptRowSelcted = NO;
     [popupView removeFromSuperview];
 }
 
