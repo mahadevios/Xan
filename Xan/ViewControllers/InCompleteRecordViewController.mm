@@ -2903,6 +2903,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     if ([existingAudioDepartmentName isEqualToString:[departmentNamesArray objectAtIndex:indexPath.row]])
     {
+        isDepartmentRadioButtonSelcted = YES;
         
         [radioButton setBackgroundImage:[UIImage imageNamed:@"RadioButton"] forState:UIControlStateNormal];
         
@@ -2954,24 +2955,67 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [tableView reloadData];
     
 }
+
+-(void)keepSameDepartmentSavedAfterOnlyRowSelection
+{
+    NSString* departmentId = [[Database shareddatabase] getDepartMentIdForFileName:self.existingAudioFileName];
+     
+    NSString* departmentName = [[Database shareddatabase] getDepartMentNameFromDepartmentId:departmentId];
+     
+     
+     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
+     
+     
+     [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
+     
+     DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+     
+     if ([departmentName containsString:@"Unassigned"]) {
+         [popupView removeFromSuperview];
+         existingAudioDepartmentName = [NSString stringWithFormat:@"%@ (Unassigned)", departmentId];
+         return; // if dept radio button ON but cancel pressed then return
+     }
+    else if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:departmentId])
+    {
+        existingAudioDepartmentName = departmentName;
+    }
+     else
+     existingAudioDepartmentName = deptObj.departmentName;
+     
+     [popupView removeFromSuperview];
+}
 -(void)cancel:(id)sender
 {
-    
-    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
-    
-    
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
-    
-    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    if (!isDepartmentRadioButtonSelcted) {
+        [popupView removeFromSuperview]; // if dept radio button ON then jiust remove the popup
+        
+    }
+    else
+    {
+        [self keepSameDepartmentSavedAfterOnlyRowSelection];
+        
+        isDepartmentRadioButtonSelcted = NO;
+    }
 
-    existingAudioDepartmentName = deptObj.departmentName;
-    
-    [popupView removeFromSuperview];
 }
 
 -(void)save:(id)sender
 {
-   
+    if (!isDepartmentRadioButtonSelcted) {
+        
+        UIView* popupView = [[[UIApplication sharedApplication] keyWindow] viewWithTag:504];
+        UITableView * tableView = [popupView viewWithTag:9000];
+        
+        [tableView reloadData];
+        
+        [self keepSameDepartmentSavedAfterOnlyRowSelection];
+        
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:SELECT_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+        
+        // return;
+}
+else
+{
     NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
     
     [[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME_COPY];
@@ -2979,17 +3023,19 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
     
     NSString* departmentName = deptObj.departmentName;
-       
-       if ([departmentName containsString:@"Unassigned"]) {
-           [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:SELECT_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
-           return;
-       }
+    
+    if ([departmentName containsString:@"Unassigned"]) {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:SELECT_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+        
+        [self keepSameDepartmentSavedAfterOnlyRowSelection];
+        return;
+    }
     
     if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptObj.Id])
     {
-       
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
         
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+         [self keepSameDepartmentSavedAfterOnlyRowSelection];
         return;
     }
     
@@ -3004,7 +3050,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     if (self.isOpenedFromAudioDetails)
     {
-       NSDictionary* audiorecordDict = [app.awaitingFileTransferNamesArray objectAtIndex:self.selectedRowOfAwaitingList];
+        NSDictionary* audiorecordDict = [app.awaitingFileTransferNamesArray objectAtIndex:self.selectedRowOfAwaitingList];
         
         [audiorecordDict setValue:deptObj.departmentName forKey:@"Department"];
         
@@ -3017,9 +3063,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [self getTempliatFromDepartMentName:deptObj.Id];
     
-//    selectedTemplateName = @"Select Template";
-//
-//    [[Database shareddatabase] updateTemplateId:@"-1" fileName:self.existingAudioFileName];
     [self setDefaultTemplate];
     
     NSDictionary* delegateDict = [[NSDictionary alloc] initWithObjectsAndKeys:selectedTemplateName,@"TemplateName", nil];
@@ -3032,6 +3075,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [popupView removeFromSuperview];
 }
+
+}
+
 
 
 - (void)didReceiveMemoryWarning

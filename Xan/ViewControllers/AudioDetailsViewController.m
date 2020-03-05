@@ -1301,16 +1301,16 @@
     
     UIButton* radioButton=[cell viewWithTag:100];
     
-    DepartMent *deptObj = [[DepartMent alloc]init];
+//    DepartMent *deptObj = [[DepartMent alloc]init];
     
-    NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text] ;
-    
-    
+//    NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text] ;
     
     
-    deptObj.Id=deptId;
     
-    deptObj.departmentName=departmentNameLanel.text;
+    
+//    deptObj.Id=deptId;
+    
+//    deptObj.departmentName=departmentNameLanel.text;
     
     self.audioDetails.department = departmentNameLanel.text;
     

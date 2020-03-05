@@ -164,7 +164,7 @@
 {
     UITableView *tableView=[[UITableView alloc]initWithFrame:frame];
     UIView* sectionHeaderView=[[UIView alloc]initWithFrame:CGRectMake(tableView.frame.origin.x, tableView.frame.origin.y, tableView.frame.size.width, 50)];
-    
+    tableView.tag = 9000;
     UILabel* sectionTitleLabel=[[UILabel alloc]initWithFrame:CGRectMake(16, 20, tableView.frame.size.width, 17)];
     [sectionTitleLabel setFont:[UIFont systemFontOfSize:16.0]];
     UIFont *currentFont = sectionTitleLabel.font;
