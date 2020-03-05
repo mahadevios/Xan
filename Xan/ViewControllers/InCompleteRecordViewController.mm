@@ -2901,7 +2901,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 //
 //    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     
-    if ([existingAudioDepartmentName isEqualToString:tableViewDepartmentLabel.text])
+    if ([existingAudioDepartmentName isEqualToString:[departmentNamesArray objectAtIndex:indexPath.row]])
     {
         
         [radioButton setBackgroundImage:[UIImage imageNamed:@"RadioButton"] forState:UIControlStateNormal];

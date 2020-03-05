@@ -1269,7 +1269,7 @@
 
             }
     
-    if ([departmentName isEqualToString:departmentLabel.text])
+    if ([departmentName isEqualToString:[departmentNamesArray objectAtIndex:indexPath.row]])
     {
         [radioButton setBackgroundImage:[UIImage imageNamed:@"RadioButton"] forState:UIControlStateNormal];
     }
@@ -1292,6 +1292,8 @@
     
     if ([departmentNameLanel.text containsString:@"(INACTIVE)"])
     {
+        [tableView reloadData];
+        
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
         
         return;
@@ -1348,7 +1350,9 @@
         return;
     }
     
-    if ([departmentName containsString:@"(INACTIVE)"])
+    NSString* departmentId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentName];
+    
+    if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:departmentId])
     {
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
         
@@ -1361,7 +1365,7 @@
     
     UILabel* filenameLabel=[self.view viewWithTag:501];
     
-    NSString* departmentId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentName];
+    
     
     //    if (![self.selectedView isEqualToString:@"Transferred Today"])
     //    {
