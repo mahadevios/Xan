@@ -1171,7 +1171,7 @@
     
     //Create a spacer.
     bi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    bi.width = 0.0f;
+    bi.width = 10.0f;
     [bi setTintColor:[UIColor whiteColor]];
     [buttons addObject:bi];
     
@@ -1180,11 +1180,18 @@
     [buttons addObject:bi];
     
     bi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    bi.width = 5.0f;
+    bi.width = 10.0f;
     [bi setTintColor:[UIColor whiteColor]];
     [buttons addObject:bi];
     
     bi = [[UIBarButtonItem alloc]initWithTitle:@"Select all" style:UIBarButtonItemStylePlain target:self action:@selector(selectAllFiles:)];
+    
+    [bi setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+    [UIFont fontWithName:@"Helvetica-Bold" size:14.0], NSFontAttributeName,
+    [UIColor whiteColor], NSForegroundColorAttributeName,
+    nil]
+                          forState:UIControlStateNormal];
+    
     bi.tag=102;
     [bi setTintColor:[UIColor whiteColor]];
     [buttons addObject:bi];

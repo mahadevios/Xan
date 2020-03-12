@@ -869,7 +869,7 @@ static APIManager *singleton = nil;
                                //NSLog(@"Reachable");
                                NSString* fileName = [[Database shareddatabase] getfileNameFromTaskIdentifier:taskIdentifier];
                                
-                                NSLog(@"Received Data filename = %@", fileName);
+//                                NSLog(@"Received Data filename = %@", fileName);
                 
                                [db updateAudioFileUploadedStatus:@"Transferred" fileName:fileName dateAndTime:date mobiledictationidval:[idvalString longLongValue]];
                                
@@ -881,12 +881,12 @@ static APIManager *singleton = nil;
                                
                                if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count>0)
                                {
-                                   NSLog(@"End Receiving Data filename 1 = %@", fileName);
+//                                   NSLog(@"End Receiving Data filename 1 = %@", fileName);
                                    
                                    [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
                                    
-                                   NSLog(@"End Receiving Data filename 2 = %@", fileName);
-                                   NSLog(@"Filename Removed from uploading queue = %@",fileName);
+//                                   NSLog(@"End Receiving Data filename 2 = %@", fileName);
+//                                   NSLog(@"Filename Removed from uploading queue = %@",fileName);
                                }
 //                               else
 //                               {

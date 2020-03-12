@@ -97,7 +97,7 @@
 {
     UITabBar *tabBar = self.tabBarController.tabBar;
    
-    NSLog(@"navi height = %f", tabBar.frame.size.height);
+//    NSLog(@"navi height = %f", tabBar.frame.size.height);
 
     CGSize imgSize = CGSizeMake(tabBar.frame.size.width/tabBar.items.count,tabBar.frame.size.height+0.5);
     
@@ -185,12 +185,14 @@
 
 -(void)checkFilesToBePurge
 {
+   NSString* dt = [[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DATA_DATE];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     
     formatter.dateFormat = @"yyyy-MM-dd";
     
     NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
     
+    [self deleteDictation];
     //for first time to check files to be purge are available or not
     if ([[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DATA_DATE]== NULL)
     {
