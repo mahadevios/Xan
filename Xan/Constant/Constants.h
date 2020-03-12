@@ -13,14 +13,14 @@
 //#define  BASE_URL_PATH                        @"http://192.168.3.81:8089/xan-dictate" // Vrushali Mam
 //#define  BASE_URL_PATH                        @"http://192.168.3.79:8089/xan-dictate" // KK
 //#define  BASE_URL_PATH                          @"http://192.168.3.76:8089/xan-dictate"  // Shruti
-#define  BASE_URL_PATH                          @"http://192.168.3.76:8080/xan-dictate"  // Shruti
+//#define  BASE_URL_PATH                          @"http://192.168.3.76:8080/xan-dictate"  // Shruti
 
 //#define  BASE_URL_PATH                          @"http://192.168.3.80:8089/xan-dictate"  // Mahadev Mac
 //#define  BASE_URL_PATH                          @"http://192.168.3.82:8089/xan-dictate"  // Mahadev Windows
 
 //#define  BASE_URL_PATH                        @"http://192.168.2.9:8089/xan-dictate"
 
-//#define  BASE_URL_PATH                          @"https://cfscommunicator.com:8443/xan_dictate"
+#define  BASE_URL_PATH                          @"https://cfscommunicator.com:8443/xan_dictate"
 
 //#define  BASE_URL_PATH                        @"http://192.168.3.80:8080/user"
 
