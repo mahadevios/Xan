@@ -3000,10 +3000,10 @@
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" tag="702" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Delete" translatesAutoresizingMaskIntoConstraints="NO" id="a78-Nx-9gR">
-                                        <rect key="frame" x="326" y="35.666666666666664" width="23" height="25"/>
+                                        <rect key="frame" x="331" y="36.666666666666664" width="18" height="23"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="23" id="P9C-GE-9OU"/>
-                                            <constraint firstAttribute="height" constant="25" id="ygp-sX-btX"/>
+                                            <constraint firstAttribute="width" constant="18" id="P9C-GE-9OU"/>
+                                            <constraint firstAttribute="height" constant="23" id="ygp-sX-btX"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" tag="701" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="63P-Hc-ukf">
@@ -6129,7 +6129,7 @@
         <image name="AlertGray" width="44" height="44"/>
         <image name="Back" width="13" height="21"/>
         <image name="CheckBoxUnSelected" width="25" height="25"/>
-        <image name="Delete" width="23" height="25"/>
+        <image name="Delete" width="15" height="21.333333969116211"/>
         <image name="DeleteGray" width="15" height="21.333333969116211"/>
         <image name="Department" width="16" height="16"/>
         <image name="Edit" width="18" height="21"/>

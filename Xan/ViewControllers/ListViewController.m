@@ -269,6 +269,12 @@
     bi = [[UIBarButtonItem alloc]initWithTitle:@"Select all" style:UIBarButtonItemStylePlain target:self action:@selector(selectAllFiles:)];
     bi.tag=102;
     [bi setTintColor:[UIColor whiteColor]];
+    [bi setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+    [UIFont fontWithName:@"Helvetica-Bold" size:14.0], NSFontAttributeName,
+    [UIColor whiteColor], NSForegroundColorAttributeName,
+    nil]
+                          forState:UIControlStateNormal];
+    
     [buttons addObject:bi];
    
     [tools setItems:buttons animated:NO];
