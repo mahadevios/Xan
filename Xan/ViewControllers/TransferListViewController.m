@@ -597,6 +597,7 @@
 }
 
 
+
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     
@@ -663,7 +664,7 @@
         timeLabel.text=[NSString stringWithFormat:@"%@ %@",[dateAndTimeArray objectAtIndex:1],[dateAndTimeArray objectAtIndex:2]];
     
     UILabel* nameLabel=[cell viewWithTag:103];
-    nameLabel.text = audioDetails.department;
+    nameLabel.text = audioDetails.department.departmentName;
     
 //    if ([audioDetails.department containsString:@"(Deleted)"]) {
 //
@@ -1390,7 +1391,7 @@
                 //[aarayOfMarkedCopy addObject:[arrayOfMarked objectAtIndex:i]];
                 AudioDetails* audioDetails = [self.genericFilesArray objectAtIndex:indexPath.row];
                 
-                 NSString* deptId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:audioDetails.department];
+                NSString* deptId = audioDetails.department.Id;
                 
                 if (deptId != nil)
                 {
@@ -1408,6 +1409,8 @@
                 {
                     [self cancelUploadAndRestoreToNormal];
                                               
+                    [self searchBarCancelButtonClicked:self.searchController.searchBar];
+                    
                                               [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:MULTIPLE_DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
                     
                     return;

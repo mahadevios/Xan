@@ -51,7 +51,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [self checkAndCopyDatabase];
     
-    NSString* currentVersion = [[NSUserDefaults standardUserDefaults] valueForKey:CURRENT_VESRION];
+//    NSString* currentVersion = [[NSUserDefaults standardUserDefaults] valueForKey:CURRENT_VESRION];
     
     NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
     
@@ -260,6 +260,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [[Database shareddatabase] updateUploadingFileDictationStatus];
     
+    [self updateDatabaseIfAny];
 //     [[Database shareddatabase] updateUploadingStuckedStatus];
     
     // to resolve the previous build bug
@@ -970,6 +971,30 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
 }
 
+
+- (void) updateDatabaseIfAny{
+    int fromVersion = [[Database shareddatabase] getUserDatabaseSchemaVersion]; // get current version
+     
+    // allow migrations to fall thru switch cases to do a complete run
+    // start with current version + 1
+    //[self beginTransaction];
+    switch (fromVersion + 1) {
+        case 2:
+            [[Database shareddatabase] addCommentColumnInCubeData];
+            
+//        case 3:
+//
+//
+//        case 4:
+//            {
+//
+//            }
+    }
+
+     [[Database shareddatabase] setUserDatabaseSchemaVersion:2];
+//    [self setSchemaVersion];
+    //[self endTransaction];
+}
 //-(void) application:(UIApplication *)application
 //handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler
 //{

@@ -29,13 +29,13 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    self.navigationItem.title = @"Select Department";
+    self.navigationItem.title = @"Clinical Speciality";
     self.navigationItem.hidesBackButton=YES;
     departmentNameArray = [[Database shareddatabase] getDepartMentObjList];
     
     if (departmentNameArray.count == 0)
     {
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No Departments Added" withMessage:@"Please contact ACE Administrator" withCancelText:@"Cancel" withOkText:nil withAlertTag:1000];
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No Clinical Speciality Added" withMessage:@"Please contact ACE Administrator" withCancelText:@"Cancel" withOkText:nil withAlertTag:1000];
     }
     [self setSearchController];
     [self prepareForSearchBar];

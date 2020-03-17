@@ -20,7 +20,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 @end
 
 @implementation InCompleteRecordViewController
-@synthesize player, recorder, recordedAudioFileName, recordedAudioURL,recordCreatedDateString,existingAudioFileName,existingAudioDate,existingAudioDepartmentName,playerAudioURL,hud,hud1,deleteButton,stopNewImageView,stopNewButton,stopLabel,animatedImageView,audioDurationInSeconds,isOpenedFromAudioDetails;
+@synthesize player, recorder, recordedAudioFileName, recordedAudioURL,recordCreatedDateString,existingAudioFileName,existingAudioDate,existingAudioDepartment,playerAudioURL,hud,hud1,deleteButton,stopNewImageView,stopNewButton,stopLabel,animatedImageView,audioDurationInSeconds,isOpenedFromAudioDetails;
 
 - (void)viewDidLoad
 {
@@ -89,7 +89,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     //    tapGestureRecogniser.delegate = self;
     [self.view addGestureRecognizer:tapGestureRecogniser];
     
-    if ([self.existingAudioDepartmentName containsString:@"Unassigned"]) {
+    if ([self.existingAudioDepartment.departmentName containsString:@"Unassigned"]) {
         templateNamesDropdownMenu.userInteractionEnabled = false;
     }
 }
@@ -176,7 +176,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         UILabel* transferredByLabel= [self.view viewWithTag:102];
         
           
-        transferredByLabel.text = existingAudioDepartmentName;
+        transferredByLabel.text = existingAudioDepartment.departmentName;
     
         UILabel* dateLabel= [self.view viewWithTag:103];
         
@@ -641,7 +641,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     }
     else
     {
-        NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Department", nil];
+        NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Clinical Speciality", nil];
         
         editPopUp=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+40, 160, 40) andSubViews:subViewArray :self];
         
@@ -1648,9 +1648,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 -(void)addAnimatedView
 {
-    NSString* deptId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:existingAudioDepartmentName];
-    
-    [self getTempliatFromDepartMentName:deptId];
+   
+    [self getTempliatFromDepartMentName:existingAudioDepartment.Id];
     
     [templateNamesDropdownMenu reloadAllComponents];
     
@@ -1700,6 +1699,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     UILabel* urgentLabel=[[UILabel alloc]initWithFrame:CGRectMake(urgentImageView.frame.origin.x + urgentImageView.frame.size.width + 10, urgentImageView.frame.origin.y, 200, 25)];
     urgentLabel.textAlignment = NSTextAlignmentLeft;
     [urgentLabel setText:@"Urgent"];
+    [urgentLabel setFont:[UIFont fontWithName:@"Helvetica" size:15.0]];
     
     UIButton* uploadAudioButton=[[UIButton alloc]initWithFrame:CGRectMake(animatedView.frame.size.width*0.1, urgentLabel.frame.origin.y +  urgentLabel.frame.size.height+10, animatedView.frame.size.width*0.8, 36)];
     
@@ -1757,6 +1757,20 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
    // recordNewButton.userInteractionEnabled=NO;
     
+    
+    // add comment option
+    UIImageView* commentImageView = [[UIImageView alloc]initWithFrame:CGRectMake(recordNewButton.frame.origin.x, urgentImageView.frame.origin.y, 25, 25)];
+    [commentImageView setImage:[UIImage imageNamed:@"Comment"]];
+    
+    UIButton* commentButton=[[UIButton alloc]initWithFrame:CGRectMake(commentImageView.frame.origin.x, urgentImageView.frame.origin.y, 36, 36)];
+    [commentButton setCenter:commentImageView.center];
+    [commentButton addTarget:self action:@selector(commentButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    commentLabel=[[UILabel alloc]initWithFrame:CGRectMake(commentImageView.frame.origin.x + commentImageView.frame.size.width + 10, commentImageView.frame.origin.y, 200, 25)];
+    commentLabel.textAlignment = NSTextAlignmentLeft;
+    [commentLabel setText:@"Add Comment"];
+    [commentLabel setFont:[UIFont fontWithName:@"Helvetica" size:15.0]];
+    
     [self prepareAudioPlayer];
     
     audioRecordSlider.continuous = YES;
@@ -1796,6 +1810,12 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [animatedView addSubview:uploadLaterButton];
     
     [animatedView addSubview:recordNewButton];
+    
+    [animatedView addSubview:commentImageView];
+    
+    [animatedView addSubview:commentButton];
+    
+    [animatedView addSubview:commentLabel];
     
     [animatedView addSubview:currentDuration];
     
@@ -1859,6 +1879,115 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
     }
 }
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+
+    if([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+
+    return YES;
+}
+
+
+-(void)commentButtonClicked:(UIButton*)sender
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Add Comment"
+                                                                             message:@"\n\n\n\n\n\n\n\n"
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+
+   
+
+    alertController.view.autoresizesSubviews = YES;
+    __block UITextView *textView = [[UITextView alloc] initWithFrame:CGRectZero];
+    textView.delegate = self;
+    textView.translatesAutoresizingMaskIntoConstraints = NO;
+    textView.autocorrectionType = UITextAutocorrectionTypeNo;
+    textView.editable = YES;
+    textView.returnKeyType = UIReturnKeyDone;
+    textView.dataDetectorTypes = UIDataDetectorTypeAll;
+    
+    UIAlertAction* okay = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                  handler:^(UIAlertAction * action) {
+                                                      commentLabel.text = textView.text;
+                                                  }];
+       UIAlertAction* cancel1 = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction * action) {
+                                                          [alertController dismissViewControllerAnimated:YES completion:nil];
+                                                      }];
+       [alertController addAction:okay];
+       [alertController addAction:cancel1];
+    
+    if (commentLabel.text == nil || [commentLabel.text isEqualToString:@""] || [commentLabel.text isEqualToString:@"Add Comment"]) {
+
+    }
+    else
+    {
+        textView.text =  commentLabel.text;
+    }
+    
+    textView.userInteractionEnabled = YES;
+    textView.backgroundColor = [UIColor whiteColor];
+    textView.scrollEnabled = YES;
+    NSLayoutConstraint *leadConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:-8.0];
+    NSLayoutConstraint *trailConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:8.0];
+
+    NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeTop multiplier:1.0 constant:-64.0];
+    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:64.0];
+    [alertController.view addSubview:textView];
+    [NSLayoutConstraint activateConstraints:@[leadConstraint, trailConstraint, topConstraint, bottomConstraint]];
+
+    [self presentViewController:alertController animated:YES completion:^{
+
+    }];
+    
+
+}
+
+//-(void)commentButtonClicked:(UIButton*)sender
+//{
+//   // use UIAlertController
+//   UIAlertController *alert= [UIAlertController
+//                                 alertControllerWithTitle:@"Add Comment"
+//                                 message:nil
+//                                 preferredStyle:UIAlertControllerStyleAlert];
+//
+//   UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+//                                              handler:^(UIAlertAction * action){
+//                                                  //Do Some action here
+//                                                  UITextField *textField = alert.textFields[0];
+//
+//                                                  commentLabel.text = textField.text;
+//
+//                                              }];
+//   UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+//                                                  handler:^(UIAlertAction * action) {
+//
+//
+//                                                      [alert dismissViewControllerAnimated:YES completion:nil];
+//
+//                                                  }];
+//
+//   [alert addAction:ok];
+//   [alert addAction:cancel];
+//
+//   [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+//
+//       if (commentLabel.text == nil || [commentLabel.text isEqualToString:@""] || [commentLabel.text isEqualToString:@"Add Comment"]) {
+//           textField.placeholder = @"Enter your comment here";
+//       }
+//       else
+//       {
+//           textField.text =  commentLabel.text;
+//       }
+//
+//       textField.keyboardType = UIKeyboardTypeDefault;
+//   }];
+//
+//   [self presentViewController:alert animated:YES completion:nil];
+//}
+
 #pragma mark:AudioSlider actions
 
 -(void)sliderValueChanged
@@ -1924,9 +2053,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
-        NSString* deptId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:existingAudioDepartmentName];
-
-               if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptId])
+               if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:existingAudioDepartment.Id])
                        {
                            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:DEACTIVATE_DEPARTMENT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
                            
@@ -2879,18 +3006,16 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UIButton* radioButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 18, 18)];
     
-    NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:[departmentNamesArray objectAtIndex:indexPath.row]] ;
+    DepartMent* dept = [departmentNamesArray objectAtIndex:indexPath.row] ;
           
-          if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptId])
-             {
-                 tableViewDepartmentLabel.text = [NSString stringWithFormat:@"%@ (INACTIVE)",[departmentNamesArray objectAtIndex:indexPath.row]];
-             }
-             else
-             {
-                     tableViewDepartmentLabel.text = [departmentNamesArray objectAtIndex:indexPath.row];
-
-
-             }
+    if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:dept.Id])
+    {
+        tableViewDepartmentLabel.text = [NSString stringWithFormat:@"%@ (INACTIVE)",dept.departmentName];
+    }
+    else
+    {
+        tableViewDepartmentLabel.text = dept.departmentName;
+    }
         
     tableViewDepartmentLabel.tag=200;
     
@@ -2899,9 +3024,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 //    NSData *data = [[NSUserDefaults standardUser Defaults] objectForKey:SELECTED_DEPARTMENT_NAME];
 //
-//    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    DepartMent *deptObj = [departmentNamesArray objectAtIndex:indexPath.row];
     
-    if ([existingAudioDepartmentName isEqualToString:[departmentNamesArray objectAtIndex:indexPath.row]])
+    if ([existingAudioDepartment.Id isEqualToString:deptObj.Id])
     {
         isDepartmentRadioButtonSelcted = YES;
         
@@ -2937,16 +3062,17 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UIButton* radioButton=[cell viewWithTag:100];
         
-    DepartMent *deptObj = [[DepartMent alloc]init];
+//    DepartMent *deptObj = [[DepartMent alloc]init];
     
-    NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text];
+//    NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text];
     
+     DepartMent *deptObj = [departmentNamesArray objectAtIndex:indexPath.row];
     
-    existingAudioDepartmentName = departmentNameLanel.text;
+    existingAudioDepartment = deptObj;
 
-    deptObj.Id=deptId;
-    
-    deptObj.departmentName=departmentNameLanel.text;
+//    deptObj.Id=deptId;
+//
+//    deptObj.departmentName=departmentNameLanel.text;
     
     NSData *data1 = [NSKeyedArchiver archivedDataWithRootObject:deptObj];
     
@@ -2976,15 +3102,16 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
      if ([departmentName containsString:@"Unassigned"]) {
          [popupView removeFromSuperview];
          isDeptRowSelcted = NO;
-         existingAudioDepartmentName = [NSString stringWithFormat:@"%@ (Unassigned)", departmentId];
+         existingAudioDepartment.departmentName = [NSString stringWithFormat:@"%@ (Unassigned)", departmentId];
+         
          return; // if dept radio button ON but cancel pressed then return
      }
     else if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:departmentId])
     {
-        existingAudioDepartmentName = departmentName;
+        existingAudioDepartment.departmentName = departmentName;
     }
      else
-     existingAudioDepartmentName = deptObj.departmentName;
+     existingAudioDepartment.departmentName = deptObj.departmentName;
      
     isDeptRowSelcted = NO;
      [popupView removeFromSuperview];
@@ -3063,7 +3190,7 @@ else
     
     transferredByLabel.text =deptObj.departmentName;
     
-    existingAudioDepartmentName = deptObj.departmentName;
+    existingAudioDepartment = deptObj;
     
     [[Database shareddatabase] updateDepartment:deptObj.Id fileName:self.existingAudioFileName];
     
@@ -3887,7 +4014,7 @@ else
     //           templateId = @"-1";
     //       }
         else
-        if (templateId == nil || [existingAudioDepartmentName containsString:@"Unassigned"]) {
+        if (templateId == nil || [existingAudioDepartment.departmentName containsString:@"Unassigned"]) {
            // tempId = nill hence template is deleted || if dept is unassigned then no template key value will be available hence fetch existing code
            templateId = [[Database shareddatabase] getTemplateIdFromFilename:recordedAudioFileName];
     //        templateId = selectedTemplateName;
@@ -3898,10 +4025,8 @@ else
 
 -(void)setDefaultTemplate
 {
-
-   NSString* departmentId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:self.existingAudioDepartmentName];
     
-    NSString* defaultTemplateName = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@DefaultTemplate",departmentId]];
+    NSString* defaultTemplateName = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@DefaultTemplate",self.existingAudioDepartment.Id]];
     
     if (!(defaultTemplateName == nil || [defaultTemplateName isEqualToString:@""]))
     {

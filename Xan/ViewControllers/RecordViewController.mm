@@ -181,7 +181,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     transferredByLabel.text = deptObj.departmentName;
    
-    existingDepartmentName = deptObj.departmentName;
+    existingDepartment = deptObj;
    
     // set date label text
     NSString* dateAndTimeString = [app getDateAndTimeString];
@@ -1825,9 +1825,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 //    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
 //    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
 
-    NSString* deptId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:existingDepartmentName];
     
-    [self getTempliatFromDepartMentName:deptId];
+    [self getTempliatFromDepartMentName:existingDepartment.Id];
     
     [templateNamesDropdownMenu reloadAllComponents];
     
@@ -1875,14 +1874,16 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
 //    [urgentImageView setBackgroundColor:[UIColor redColor]];
     
-    UIButton* urgentButton=[[UIButton alloc]initWithFrame:CGRectMake(urgentImageView.frame.origin.x, urgentImageView.frame.origin.y, 36, 36)];
+    UIButton* urgentButton=[[UIButton alloc]initWithFrame:CGRectMake(urgentImageView.frame.origin.x, urgentImageView.frame.origin.y, 43, 43)];
     [urgentButton setCenter:urgentImageView.center];
     [urgentButton addTarget:self action:@selector(urgentButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    UILabel* urgentLabel=[[UILabel alloc]initWithFrame:CGRectMake(urgentImageView.frame.origin.x + urgentImageView.frame.size.width + 10, urgentImageView.frame.origin.y, 200, 25)];
+    UILabel* urgentLabel=[[UILabel alloc]initWithFrame:CGRectMake(urgentImageView.frame.origin.x + urgentImageView.frame.size.width + 8, urgentImageView.frame.origin.y, 200, 25)];
     urgentLabel.textAlignment = NSTextAlignmentLeft;
     [urgentLabel setText:@"Urgent"];
+    [urgentLabel setFont:[UIFont fontWithName:@"Helvetica" size:15.0]];
 
+ 
     UIButton* uploadAudioButton=[[UIButton alloc]initWithFrame:CGRectMake(animatedView.frame.size.width*0.1, urgentLabel.frame.origin.y +  urgentLabel.frame.size.height+10, animatedView.frame.size.width*0.8, 36)];
     uploadAudioButton.backgroundColor=[UIColor darkHomeColor];
     uploadAudioButton.userInteractionEnabled=YES;
@@ -1905,6 +1906,21 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UIButton* recordNewButton=[[UIButton alloc]initWithFrame:CGRectMake(uploadLaterButton.frame.origin.x+uploadLaterButton.frame.size.width+uploadAudioButton.frame.size.width*0.04, uploadAudioButton.frame.origin.y+uploadAudioButton.frame.size.height+10, uploadAudioButton.frame.size.width*0.48, 36)];
 //    recordNewButton.backgroundColor=[UIColor colorWithRed:64/255.0 green:64/255.0 blue:64/255.0 alpha:1];
+    
+    // add comment option
+    UIImageView* commentImageView = [[UIImageView alloc]initWithFrame:CGRectMake(recordNewButton.frame.origin.x, urgentImageView.frame.origin.y, 25, 25)];
+    [commentImageView setImage:[UIImage imageNamed:@"Comment"]];
+    
+    UIButton* commentButton=[[UIButton alloc]initWithFrame:CGRectMake(commentImageView.frame.origin.x, urgentImageView.frame.origin.y, 43, 43)];
+    [commentButton setCenter:commentImageView.center];
+    [commentButton addTarget:self action:@selector(commentButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    commentLabel=[[UILabel alloc]initWithFrame:CGRectMake(commentImageView.frame.origin.x + commentImageView.frame.size.width + 8, commentImageView.frame.origin.y, 200, 25)];
+    commentLabel.textAlignment = NSTextAlignmentLeft;
+    [commentLabel setText:@"Add Comment"];
+    [commentLabel setFont:[UIFont fontWithName:@"Helvetica" size:15.0]];
+    
+    
     recordNewButton.backgroundColor=[UIColor lightHomeColor];
     [recordNewButton setTitle:@"Record New" forState:UIControlStateNormal];
     recordNewButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightSemibold];
@@ -1953,7 +1969,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [animatedView addSubview:urgentImageView];
     [animatedView addSubview:urgentButton];
     [animatedView addSubview:urgentLabel];
-
+    [animatedView addSubview:commentImageView];
+    [animatedView addSubview:commentButton];
+    [animatedView addSubview:commentLabel];
+    
     [animatedView addSubview:currentDuration];
     [animatedView addSubview:totalDuration];
     [animatedView addSubview:templateNamesDropdownMenu];
@@ -1991,6 +2010,118 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
          [[Database shareddatabase] updatePriority:[NSString stringWithFormat:@"%d", URGENT] fileName:self.recordedAudioFileName];
     }
 }
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+
+    if([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+
+    return YES;
+}
+
+
+-(void)commentButtonClicked:(UIButton*)sender
+{
+    [self showCommentTextView];
+}
+
+-(void)showCommentTextView
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Add Comment"
+                                                                                message:@"\n\n\n\n\n\n\n\n"
+                                                                         preferredStyle:UIAlertControllerStyleAlert];
+
+      
+
+       alertController.view.autoresizesSubviews = YES;
+       __block UITextView *textView = [[UITextView alloc] initWithFrame:CGRectZero];
+       textView.delegate = self;
+       textView.translatesAutoresizingMaskIntoConstraints = NO;
+       textView.autocorrectionType = UITextAutocorrectionTypeNo;
+       textView.editable = YES;
+       textView.returnKeyType = UIReturnKeyDone;
+       textView.dataDetectorTypes = UIDataDetectorTypeAll;
+       
+       UIAlertAction* okay = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * action) {
+                                                         commentLabel.text = textView.text;
+                                                     }];
+          UIAlertAction* cancel1 = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * action) {
+                                                             [alertController dismissViewControllerAnimated:YES completion:nil];
+                                                         }];
+          [alertController addAction:okay];
+          [alertController addAction:cancel1];
+       
+       if (commentLabel.text == nil || [commentLabel.text isEqualToString:@""] || [commentLabel.text isEqualToString:@"Add Comment"]) {
+
+       }
+       else
+       {
+           textView.text =  commentLabel.text;
+       }
+       
+       textView.userInteractionEnabled = YES;
+       textView.backgroundColor = [UIColor whiteColor];
+       textView.scrollEnabled = YES;
+       NSLayoutConstraint *leadConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:-8.0];
+       NSLayoutConstraint *trailConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:8.0];
+
+       NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeTop multiplier:1.0 constant:-64.0];
+       NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:64.0];
+       [alertController.view addSubview:textView];
+       [NSLayoutConstraint activateConstraints:@[leadConstraint, trailConstraint, topConstraint, bottomConstraint]];
+
+       [self presentViewController:alertController animated:YES completion:^{
+
+       }];
+       
+
+}
+//-(void)commentButtonClicked:(UIButton*)sender
+//{
+//   // use UIAlertController
+//   UIAlertController *alert= [UIAlertController
+//                                 alertControllerWithTitle:@"Add Comment"
+//                                 message:nil
+//                                 preferredStyle:UIAlertControllerStyleAlert];
+//
+//   UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+//                                              handler:^(UIAlertAction * action){
+//                                                  //Do Some action here
+//                                                  UITextField *textField = alert.textFields[0];
+//
+//                                                  commentLabel.text = textField.text;
+//
+//                                              }];
+//   UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+//                                                  handler:^(UIAlertAction * action) {
+//
+//
+//                                                      [alert dismissViewControllerAnimated:YES completion:nil];
+//
+//                                                  }];
+//
+//   [alert addAction:ok];
+//   [alert addAction:cancel];
+//
+//   [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+//
+//       if (commentLabel.text == nil || [commentLabel.text isEqualToString:@""] || [commentLabel.text isEqualToString:@"Add Comment"]) {
+//           textField.placeholder = @"Enter your comment here";
+//       }
+//       else
+//       {
+//           textField.text =  commentLabel.text;
+//       }
+//
+//       textField.keyboardType = UIKeyboardTypeDefault;
+//   }];
+//
+//   [self presentViewController:alert animated:YES completion:nil];
+//}
 
 -(void)presentRecordView
 {
@@ -2380,7 +2511,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         }
         else
         {
-            NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Department", nil];
+            NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Clinical Speciality", nil];
             editPopUp=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+40, 160, 40) andSubViews:subViewArray :self];
             // editPopUp.tag=888;
             [[[UIApplication sharedApplication] keyWindow] addSubview:editPopUp];
@@ -2389,7 +2520,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     }
     else
     {
-      NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Department", nil];
+      NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Clinical Speciality", nil];
       editPopUp=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+40, 160, 40) andSubViews:subViewArray :self];
        // editPopUp.tag=888;
       [[[UIApplication sharedApplication] keyWindow] addSubview:editPopUp];
@@ -2408,7 +2539,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 
 
--(void)ChangeDepartment
+-(void)ChangeClinicalSpeciality
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
     CGRect frame=CGRectMake(10.0f, self.view.center.y-150, self.view.frame.size.width - 20.0f, 200.0f);
@@ -2918,16 +3049,16 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     UILabel* tabelViewDepartmentLabel=[[UILabel alloc]initWithFrame:CGRectMake(40, 10, self.view.frame.size.width - 60.0f, 18)];
     UIButton* radioButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 18, 18)];
     
-     NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:[departmentNamesArray objectAtIndex:indexPath.row]];
+     DepartMent* dept = [departmentNamesArray objectAtIndex:indexPath.row];
     
-    if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptId]) {
+    if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:dept.Id]) {
         
         tabelViewDepartmentLabel.text = [NSString stringWithFormat:@"%@ (INACTIVE)",[departmentNamesArray objectAtIndex:indexPath.row]];
 
     }
     else
     {
-        tabelViewDepartmentLabel.text = [departmentNamesArray objectAtIndex:indexPath.row];
+        tabelViewDepartmentLabel.text = dept.departmentName;
     }
     
     tabelViewDepartmentLabel.tag=200;
@@ -2941,7 +3072,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 //    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
 //    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     
-    if ([existingDepartmentName isEqualToString:tabelViewDepartmentLabel.text])
+    if ([existingDepartment.departmentName isEqualToString:tabelViewDepartmentLabel.text] && [existingDepartment.Id isEqualToString:dept.Id])
     {
 
         [radioButton setBackgroundImage:[UIImage imageNamed:@"RadioButton"] forState:UIControlStateNormal];
@@ -2972,17 +3103,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     //NSLog(@"%ld",indexPath.row);
    // NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-    DepartMent *deptObj = [[DepartMent alloc]init];
-    
-    
-   NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text];
-
-    
-    deptObj.Id=deptId;
-    //deptObj.Id=indexPath.row;
-    deptObj.departmentName = departmentNameLanel.text;
-    
-    existingDepartmentName = departmentNameLanel.text;
+    DepartMent *deptObj = [departmentNamesArray objectAtIndex:indexPath.row];
+  
+    existingDepartment = deptObj;
     
     NSData *data1 = [NSKeyedArchiver archivedDataWithRootObject:deptObj];
 
@@ -3012,7 +3135,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 //    NSLog(@"%ld",deptObj.Id);
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
     DepartMent *deptObj1 = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    existingDepartmentName = deptObj1.departmentName;
+    existingDepartment = deptObj1;
 //    NSLog(@"%ld",deptObj1.Id);
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
     [popupView removeFromSuperview];
@@ -3027,7 +3150,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
     UILabel* transferredByLabel= [self.view viewWithTag:102];
     transferredByLabel.text=deptObj.departmentName;
-    existingDepartmentName = deptObj.departmentName;
+    existingDepartment = deptObj;
 
     [[Database shareddatabase] updateDepartment:deptObj.Id fileName:self.recordedAudioFileName];
 
@@ -4343,7 +4466,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     //           templateId = @"-1";
     //       }
         else
-        if (templateId == nil || [existingDepartmentName containsString:@"Unassigned"]) {
+        if (templateId == nil || [existingDepartment.departmentName containsString:@"Unassigned"]) {
            // tempId = nill hence template is deleted || if dept is unassigned then no template key value will be available hence fetch existing code
            templateId = [[Database shareddatabase] getTemplateIdFromFilename:recordedAudioFileName];
     //        templateId = selectedTemplateName;

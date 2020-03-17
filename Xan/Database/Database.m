@@ -712,12 +712,12 @@ static Database *db;
     Database *db=[Database shareddatabase];
     NSString *dbPath=[db getDatabasePath];
     sqlite3_stmt *statement = NULL;
-    NSString* companyId;
+    NSString* departmentName, *departmentId;
     sqlite3* feedbackAndQueryTypesDB;
     NSMutableArray* departmentNameArray=[[NSMutableArray alloc]init];
     //    NSString *query3=[NSString stringWithFormat:@"Select DepartMentName from DepartMentList Where UserId=%d"];
     
-    NSString *query3=[NSString stringWithFormat:@"Select DepartMentName from DepartMentList"];
+    NSString *query3=[NSString stringWithFormat:@"Select * from DepartMentList"];
     
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
     {
@@ -727,8 +727,13 @@ static Database *db;
             {
                 
                 // [app.feedOrQueryDetailMessageArray addObject:[NSString stringWithUTF8String:message]];
-                companyId=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
-                [departmentNameArray addObject:companyId];
+                 departmentId = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+                departmentName = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+                
+                DepartMent* dept = [DepartMent new];
+                dept.Id = departmentId;
+                dept.departmentName = departmentName;
+                [departmentNameArray addObject:dept];
                 
             }
         }
@@ -1325,10 +1330,13 @@ static Database *db;
                 
                 AudioDetails *audioDetails = [AudioDetails new];
                 
+                DepartMent* dept = [DepartMent new];
+                dept.Id = departmentCopy;
+                dept.departmentName = Department;
                 
                 audioDetails.fileName = RecordItemName;
                 audioDetails.recordingDate = recordCreatedDateString;
-                audioDetails.department = Department;
+                audioDetails.department = dept;
                 audioDetails.uploadStatus = TransferStatus;
                 audioDetails.currentDuration = CurrentDuration;
                 audioDetails.transferDate = transferDateString;
@@ -1750,60 +1758,60 @@ static Database *db;
     }
   
 }
-
--(void)AlterVRSTextFilesTableForDepartmentName
-{
-    
-    NSString *query3=[NSString stringWithFormat:@"ALTER TABLE DocFiles ADD COLUMN DepartmentName TEXT"];
-  
-    Database *db=[Database shareddatabase];
-    NSString *dbPath=[db getDatabasePath];
-    sqlite3_stmt *statement = NULL;
-    sqlite3* feedbackAndQueryTypesDB;
-    
-    
-    const char * queryi3=[query3 UTF8String];
-    if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB)==SQLITE_OK)
-    {
-        sqlite3_prepare_v2(feedbackAndQueryTypesDB, queryi3, -1, &statement, NULL);
-        if(sqlite3_step(statement)==SQLITE_DONE)
-        {
-          
-            self.isVRSTableAltered = @"Yes";
-            sqlite3_reset(statement);
-        }
-        else
-        {
-            NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
-        }
-    }
-    
-    else
-    {
-        //NSLog(@"errormsg=%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
-    }
-    
-    if (sqlite3_finalize(statement) == SQLITE_OK)
-    {
-        //NSLog(@"statement is finalized");
-    }
-    else
-        // NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
-    {
-    }
-    
-    if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
-    {
-        //NSLog(@"db is closed");
-    }
-    else
-    {
-        // NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
-    }
-    
-    
-    
-}
+//
+//-(void)AlterVRSTextFilesTableForDepartmentName
+//{
+//
+//    NSString *query3=[NSString stringWithFormat:@"ALTER TABLE DocFiles ADD COLUMN DepartmentName TEXT"];
+//
+//    Database *db=[Database shareddatabase];
+//    NSString *dbPath=[db getDatabasePath];
+//    sqlite3_stmt *statement = NULL;
+//    sqlite3* feedbackAndQueryTypesDB;
+//
+//
+//    const char * queryi3=[query3 UTF8String];
+//    if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB)==SQLITE_OK)
+//    {
+//        sqlite3_prepare_v2(feedbackAndQueryTypesDB, queryi3, -1, &statement, NULL);
+//        if(sqlite3_step(statement)==SQLITE_DONE)
+//        {
+//
+//            self.isVRSTableAltered = @"Yes";
+//            sqlite3_reset(statement);
+//        }
+//        else
+//        {
+//            NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+//        }
+//    }
+//
+//    else
+//    {
+//        //NSLog(@"errormsg=%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+//    }
+//
+//    if (sqlite3_finalize(statement) == SQLITE_OK)
+//    {
+//        //NSLog(@"statement is finalized");
+//    }
+//    else
+//        // NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+//    {
+//    }
+//
+//    if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
+//    {
+//        //NSLog(@"db is closed");
+//    }
+//    else
+//    {
+//        // NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+//    }
+//
+//
+//
+//}
 
 -(void)updateAudioFileName:(NSString*)existingAudioFileName duration:(float)duration;
 {
@@ -1989,9 +1997,12 @@ static Database *db;
                 NSString *transferDateString = [dateFormatter stringFromDate:transferDateY];
                 NSString *deleteDateString = [dateFormatter stringFromDate:deleteDate];
                 
+                DepartMent* dept = [DepartMent new];
+                dept.Id = departmentCopy;
+                dept.departmentName = Department;
                 
                 audioDetails.fileName = RecordItemName;
-                audioDetails.department = Department;
+                audioDetails.department = dept;
                 audioDetails.recordingDate = recordCreatedDateString;
                 audioDetails.transferDate = transferDateString;
                 audioDetails.currentDuration = duration;
@@ -2964,10 +2975,13 @@ static Database *db;
                 
                 AudioDetails *audioDetails = [AudioDetails new];
                 
+                DepartMent* dept = [DepartMent new];
+                dept.Id = departmentId;
+                dept.departmentName = Department;
                 
                 audioDetails.fileName = recordItemName;
                 audioDetails.recordingDate = recordCreatedDateString;
-                audioDetails.department = Department;
+                audioDetails.department = dept;
                 audioDetails.uploadStatus = TransferStatus;
                 audioDetails.currentDuration = CurrentDuration;
                 audioDetails.deleteStatus = deleteStatus;
@@ -3433,6 +3447,7 @@ static Database *db;
                 
                 // [app.feedOrQueryDetailMessageArray addObject:[NSString stringWithUTF8String:message]];
                 AudioDetails* audioDetails = [[AudioDetails alloc] init];
+              
                 
                 audioDetails.fileName = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
                 
@@ -3444,7 +3459,14 @@ static Database *db;
                 
                 audioDetails.fileSize = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
                 
-                audioDetails.department = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
+                NSString* departmentName = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
+                
+                
+                DepartMent* dept = [DepartMent new];
+                //                dept.Id = departmentCopy;
+                dept.departmentName = departmentName;
+                
+                audioDetails.department = dept;
                 
                 audioDetails.downloadStatus =  sqlite3_column_int(statement, 6);
                 
@@ -3873,5 +3895,140 @@ static Database *db;
     
 }
 
+-(void)addCommentColumnInCubeData
+{
+    
+    NSString *query3=[NSString stringWithFormat:@"ALTER TABLE CubeData ADD COLUMN Comment TEXT"];
+  
+    Database *db=[Database shareddatabase];
+    NSString *dbPath=[db getDatabasePath];
+    sqlite3_stmt *statement = NULL;
+    sqlite3* feedbackAndQueryTypesDB;
+    
+    
+    const char * queryi3=[query3 UTF8String];
+    if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB)==SQLITE_OK)
+    {
+        sqlite3_prepare_v2(feedbackAndQueryTypesDB, queryi3, -1, &statement, NULL);
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+          
+            sqlite3_reset(statement);
+        }
+        else
+        {
+            NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+        }
+    }
+    
+    else
+    {
+        //NSLog(@"errormsg=%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    if (sqlite3_finalize(statement) == SQLITE_OK)
+    {
+        //NSLog(@"statement is finalized");
+    }
+    else
+        // NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    {
+    }
+    
+    if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
+    {
+        //NSLog(@"db is closed");
+    }
+    else
+    {
+        // NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    
+    
+}
+
+-(int)getUserDatabaseSchemaVersion{
+    Database *db=[Database shareddatabase];
+    NSString *dbPath=[db getDatabasePath];
+    sqlite3* feedbackAndQueryTypesDB;
+    // get current database version of schema
+    static sqlite3_stmt *stmt_version;
+    int databaseVersion = 0;
+    if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB)==SQLITE_OK)
+    {
+    if(sqlite3_prepare_v2(feedbackAndQueryTypesDB, "PRAGMA USER_VERSION;", -1, &stmt_version, NULL) == SQLITE_OK) {
+        while(sqlite3_step(stmt_version) == SQLITE_ROW) {
+            databaseVersion = sqlite3_column_int(stmt_version, 0);
+            NSLog(@"%s: version %d", __FUNCTION__, databaseVersion);
+        }
+        NSLog(@"%s: the databaseVersion is: %d", __FUNCTION__, databaseVersion);
+    } else {
+        NSLog(@"%s: ERROR Preparing: , %s", __FUNCTION__, sqlite3_errmsg(feedbackAndQueryTypesDB) );
+    }
+    sqlite3_finalize(stmt_version);
+    }
+    if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
+      {
+          //NSLog(@"db is closed");
+      }
+      else
+      {
+          // NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+      }
+    return databaseVersion;
+}
+
+
+
+-(void)setUserDatabaseSchemaVersion:(int) version
+{
+    
+    NSString *query3=[NSString stringWithFormat:@"PRAGMA USER_VERSION = %i",version];
+    
+    Database *db=[Database shareddatabase];
+    NSString *dbPath=[db getDatabasePath];
+    sqlite3_stmt *statement = NULL;
+    sqlite3* feedbackAndQueryTypesDB;
+ 
+    const char * queryi3=[query3 UTF8String];
+    if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB)==SQLITE_OK)
+    {
+        sqlite3_prepare_v2(feedbackAndQueryTypesDB, queryi3, -1, &statement, NULL);
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+           
+            sqlite3_reset(statement);
+        }
+        else
+        {
+            //NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+        }
+    }
+    
+    else
+    {
+        //NSLog(@"errormsg=%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    if (sqlite3_finalize(statement) == SQLITE_OK)
+    {
+        //NSLog(@"statement is finalized");
+    }
+    else
+        // NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    {
+    }
+    
+    if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
+    {
+        //NSLog(@"db is closed");
+    }
+    else
+    {
+        // NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+  
+}
 
 @end
