@@ -163,7 +163,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     recordingDurationLabel.text=[NSString stringWithFormat:@"%02d:%02d:%02d",audioHour,audioMinutes,audioSeconds];
 
-    nameLabel.text = audioDetails.department;
+    nameLabel.text = audioDetails.department.departmentName;
 
     
     if ([audioDetails.dictationStatus isEqualToString:@"RecordingFileUpload"])

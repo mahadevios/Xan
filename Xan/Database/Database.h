@@ -148,4 +148,9 @@
 
 -(void)deleteTemplateListData;
 
+-(int)getUserDatabaseSchemaVersion;
+
+-(void)setUserDatabaseSchemaVersion:(int) version;
+
+-(void)addCommentColumnInCubeData;
 @end

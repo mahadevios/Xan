@@ -20,7 +20,7 @@
 - (void) myClassDelegateMethod: (AudioDetailsViewController *) sender;  //define delegate method to be implemented within another class
 @end //end protocol
 
-@interface AudioDetailsViewController : UIViewController<AVAudioPlayerDelegate,UIGestureRecognizerDelegate,UpdateModifiedData,MKDropdownMenuDelegate,MKDropdownMenuDataSource>
+@interface AudioDetailsViewController : UIViewController<AVAudioPlayerDelegate,UIGestureRecognizerDelegate,UpdateModifiedData,MKDropdownMenuDelegate,MKDropdownMenuDataSource,UITextViewDelegate>
 {
     NSDictionary* result;
     UIAlertController *alertController;
@@ -82,4 +82,7 @@
 @property (weak, nonatomic) IBOutlet UIView *insideView;
 - (IBAction)transferDictationButtonClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *urgentCheckboxButton;
+@property (weak, nonatomic) IBOutlet UILabel *commentLabel;
+@property (weak, nonatomic) IBOutlet UIButton *commentButton;
+- (IBAction)commentButtonClicked:(id)sender;
 @end

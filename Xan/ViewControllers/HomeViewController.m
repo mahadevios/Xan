@@ -192,7 +192,7 @@
     
     NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
     
-    [self deleteDictation];
+//    [self deleteDictation];
     //for first time to check files to be purge are available or not
     if ([[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DATA_DATE]== NULL)
     {

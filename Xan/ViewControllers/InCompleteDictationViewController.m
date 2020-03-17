@@ -235,7 +235,7 @@
   //  NSLog(@"%@",recordingDurationLabel.text);
     
     UILabel* departmentNameLabel=[cell viewWithTag:103];
-    departmentNameLabel.text = audioDetails.department;
+    departmentNameLabel.text = audioDetails.department.departmentName;
     
 //     if ([audioDetails.department containsString:@"(Deleted)"]) {
 //
@@ -289,7 +289,7 @@
     InCompleteRecordViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"InCompleteRecordViewController"];
     vc.existingAudioFileName=fileNameLabel.text;
     vc.audioDuration=recordingDurationLabel.text;
-    vc.existingAudioDepartmentName=nameLabel.text;
+    vc.existingAudioDepartment = audioDetails.department;
     vc.existingAudioDate=dateLabel.text;
     vc.audioDurationInSeconds = audioDurationInSeconds;
     vc.existingAudioTemplateName = audioDetails.templateName;

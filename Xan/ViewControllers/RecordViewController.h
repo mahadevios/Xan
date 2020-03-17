@@ -24,7 +24,7 @@
 //#include "CAStreamBasicDescription.h"
 //#include "ExtAudioFileConvert.mm"
 
-@interface RecordViewController : UIViewController<UIGestureRecognizerDelegate,AVAudioPlayerDelegate,MKDropdownMenuDelegate,MKDropdownMenuDataSource>
+@interface RecordViewController : UIViewController<UIGestureRecognizerDelegate,AVAudioPlayerDelegate,MKDropdownMenuDelegate,MKDropdownMenuDataSource,UITextViewDelegate>
 {
     Database* db;
     APIManager* app;
@@ -101,7 +101,7 @@
     
     float playerDurationWithMilliSeconds;
     
-    NSString* existingDepartmentName;
+    DepartMent* existingDepartment;
     
     MKDropdownMenu *templateNamesDropdownMenu;
     
@@ -112,6 +112,8 @@
     NSString* recentlySelectedTemplateName;
 //    bool recordingSavedToDatabaseFromBG;
     UIImageView* urgentImageView;
+    
+    UILabel* commentLabel;
     
     BOOL checkBoxSelected;
     

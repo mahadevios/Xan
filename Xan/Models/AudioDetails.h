@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DepartMent.h"
 
 @interface AudioDetails : NSObject
 
@@ -15,8 +16,8 @@
 @property(nonatomic, strong) NSString* dictationStatus;
 @property(nonatomic) int downloadStatus;
 @property(nonatomic, strong) NSString* transferDate;
-@property(nonatomic, strong) NSString* department;
-@property(nonatomic, strong) NSString* departmentCopy;
+@property(nonatomic, strong) DepartMent* department;
+@property(nonatomic, strong) DepartMent* departmentCopy;
 @property(nonatomic) int mobiledictationidval;
 @property(nonatomic, strong) NSString* currentDuration;
 @property(nonatomic, strong) NSString* recordingDate;

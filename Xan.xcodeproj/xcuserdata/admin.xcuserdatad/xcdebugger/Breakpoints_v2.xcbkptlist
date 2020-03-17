@@ -3245,10 +3245,10 @@
             timestampString = "600076969.443552"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3831"
-            endingLineNumber = "3831"
-            landmarkName = "-dropdownMenu:didCloseComponent:"
-            landmarkType = "7">
+            startingLineNumber = "3906"
+            endingLineNumber = "3906"
+            landmarkName = "InCompleteRecordViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3398,8 +3398,8 @@
             timestampString = "600076969.444237"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1826"
-            endingLineNumber = "1826"
+            startingLineNumber = "1832"
+            endingLineNumber = "1832"
             landmarkName = "-addAnimatedView"
             landmarkType = "7">
          </BreakpointContent>
@@ -3415,10 +3415,10 @@
             timestampString = "600076969.4443409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3857"
-            endingLineNumber = "3857"
-            landmarkName = "-dropdownMenu:didSelectRow:inComponent:"
-            landmarkType = "7">
+            startingLineNumber = "3932"
+            endingLineNumber = "3932"
+            landmarkName = "InCompleteRecordViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3432,8 +3432,8 @@
             timestampString = "600076969.4443851"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4252"
-            endingLineNumber = "4252"
+            startingLineNumber = "4357"
+            endingLineNumber = "4357"
             landmarkName = "-speechToTextButtonClicked:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3512,8 +3512,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1830"
-            endingLineNumber = "1830"
+            startingLineNumber = "1829"
+            endingLineNumber = "1829"
             landmarkName = "-addAnimatedView"
             landmarkType = "7">
          </BreakpointContent>
@@ -3528,8 +3528,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2836"
-            endingLineNumber = "2836"
+            startingLineNumber = "2949"
+            endingLineNumber = "2949"
             landmarkName = "-saveAudioRecordToDatabase"
             landmarkType = "7">
          </BreakpointContent>
@@ -3544,8 +3544,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2845"
-            endingLineNumber = "2845"
+            startingLineNumber = "2958"
+            endingLineNumber = "2958"
             landmarkName = "-saveAudioRecordToDatabase"
             landmarkType = "7">
          </BreakpointContent>
@@ -3672,8 +3672,8 @@
             filePath = "Xan/LoginViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "240"
-            endingLineNumber = "240"
+            startingLineNumber = "241"
+            endingLineNumber = "241"
             landmarkName = "-validatePinResponseCheck:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3736,8 +3736,8 @@
             filePath = "Xan/LoginViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "280"
-            endingLineNumber = "280"
+            startingLineNumber = "281"
+            endingLineNumber = "281"
             landmarkName = "-validatePinResponseCheck:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3784,8 +3784,8 @@
             filePath = "Xan/LoginViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "294"
-            endingLineNumber = "294"
+            startingLineNumber = "295"
+            endingLineNumber = "295"
             landmarkName = "-validatePinResponseCheck:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3880,8 +3880,8 @@
             filePath = "Xan/Database/Database.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1502"
-            endingLineNumber = "1502"
+            startingLineNumber = "1504"
+            endingLineNumber = "1504"
             landmarkName = "-getDefaultDepartMentId"
             landmarkType = "7">
          </BreakpointContent>
@@ -3928,8 +3928,8 @@
             filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1583"
-            endingLineNumber = "1583"
+            startingLineNumber = "1571"
+            endingLineNumber = "1571"
             landmarkName = "-dropdownMenu:didCloseComponent:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3944,8 +3944,8 @@
             filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1557"
-            endingLineNumber = "1557"
+            startingLineNumber = "1545"
+            endingLineNumber = "1545"
             landmarkName = "-dropdownMenu:didOpenComponent:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3985,22 +3985,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1A056134-2561-415B-9C0C-DCEF8495527C"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/ViewControllers/RecordViewController.mm"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2980"
-            endingLineNumber = "2980"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "DBB80E7F-8079-4B22-BF24-71A95CF4778B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -4008,8 +3992,8 @@
             filePath = "Xan/Database/Database.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1384"
-            endingLineNumber = "1384"
+            startingLineNumber = "1386"
+            endingLineNumber = "1386"
             landmarkName = "-getDepartMentIdFromDepartmentName:"
             landmarkType = "7">
          </BreakpointContent>
@@ -4024,9 +4008,9 @@
             filePath = "Xan/ViewControllers/InCompleteRecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2882"
-            endingLineNumber = "2882"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            startingLineNumber = "2957"
+            endingLineNumber = "2957"
+            landmarkName = "-getTotalCMTimeFromMilliSeconds:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4040,9 +4024,9 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2923"
-            endingLineNumber = "2923"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            startingLineNumber = "3036"
+            endingLineNumber = "3036"
+            landmarkName = "-tableView:numberOfRowsInSection:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4056,8 +4040,8 @@
             filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1348"
-            endingLineNumber = "1348"
+            startingLineNumber = "1336"
+            endingLineNumber = "1336"
             landmarkName = "-save:"
             landmarkType = "7">
          </BreakpointContent>
@@ -4072,9 +4056,9 @@
             filePath = "Xan/ViewControllers/InCompleteRecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2994"
-            endingLineNumber = "2994"
-            landmarkName = "-cancel:"
+            startingLineNumber = "3069"
+            endingLineNumber = "3069"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4120,9 +4104,9 @@
             filePath = "Xan/ViewControllers/InCompleteRecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3010"
-            endingLineNumber = "3010"
-            landmarkName = "-save:"
+            startingLineNumber = "3085"
+            endingLineNumber = "3085"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4136,25 +4120,9 @@
             filePath = "Xan/ViewControllers/InCompleteRecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2963"
-            endingLineNumber = "2963"
-            landmarkName = "-keepSameDepartmentSavedAfterOnlyRowSelection"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F9D39F4C-C8C3-4693-8A57-3C484FFB0441"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1336"
-            endingLineNumber = "1336"
-            landmarkName = "-cancel:"
+            startingLineNumber = "3037"
+            endingLineNumber = "3037"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4168,10 +4136,10 @@
             filePath = "Xan/ViewControllers/InCompleteRecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2904"
-            endingLineNumber = "2904"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
-            landmarkType = "7">
+            startingLineNumber = "2977"
+            endingLineNumber = "2977"
+            landmarkName = "InCompleteRecordViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4184,9 +4152,9 @@
             filePath = "Xan/ViewControllers/InCompleteRecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3056"
-            endingLineNumber = "3056"
-            landmarkName = "-save:"
+            startingLineNumber = "3131"
+            endingLineNumber = "3131"
+            landmarkName = "-cancel:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4251,6 +4219,166 @@
             startingLineNumber = "497"
             endingLineNumber = "497"
             landmarkName = "-needsUpdate"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "197FBAB5-6CC1-4FD0-B748-D3C6BCD8E216"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/Database/Database.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1340"
+            endingLineNumber = "1340"
+            landmarkName = "-getListOfFileTransfersOfStatus:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EF61A4B5-06BC-4EA0-82FC-067012FE2C72"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/ViewControllers/TransferListViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "667"
+            endingLineNumber = "667"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1AA7E3AA-12A8-4308-8FC0-58A40E34B91B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/Database/Database.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1380"
+            endingLineNumber = "1380"
+            landmarkName = "-getListOfFileTransfersOfStatus:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C82AD361-348B-4609-8F7C-DEF9CCA6544C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/ViewControllers/RecordViewController.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2583"
+            endingLineNumber = "2583"
+            landmarkName = "-gestureRecognizer:shouldReceiveTouch:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A0696BAC-D2A8-4846-BE4E-7A7CCFEB8C10"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/ViewControllers/InCompleteDictationViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "-viewWillAppear:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9B85302D-D4D6-4AC9-AFF6-E901157D2C6E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/ViewControllers/InCompleteDictationViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8D4A6A7D-FB2F-43ED-BE39-0202E1DA376B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/Database/Database.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3908"
+            endingLineNumber = "3908"
+            landmarkName = "-addCommentColumnInCubeData"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C08109A5-9C42-4B09-801B-758D168E1E0B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/LoginViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "-viewWillAppear:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F4812992-F038-4B6E-8D46-50C9EE654EB1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/Database/Database.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3936"
+            endingLineNumber = "3936"
+            landmarkName = "-addCommentColumnInCubeData"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "48034460-9422-4A7E-BA8C-A3A535783C95"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/AppDelegate.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "980"
+            endingLineNumber = "980"
+            landmarkName = "-migrateToSchemaFromVersion"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

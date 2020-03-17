@@ -753,7 +753,7 @@
     durationLabel.text=[NSString stringWithFormat:@"(%02d:%02d:%02d)",audioHour,audioMinutes,audioSeconds];
     //timeLabel.text=[NSString stringWithFormat:@"%@",@"Transferred 12:18:00 PM"];
 
-    transferByLabel.text = audioDetails.department;
+    transferByLabel.text = audioDetails.department.departmentName;
     
 //    if ([audioDetails.department containsString:@"(Deleted)"]) {
 //    
