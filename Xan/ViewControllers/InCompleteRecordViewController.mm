@@ -2152,7 +2152,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 }
 
--(void)ChangeDepartment
+-(void)ChangeClinicalSpeciality
 {
     
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
@@ -3188,7 +3188,6 @@ else
 
     DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
     
-    NSString* departmentId = deptObj.Id;
 //
     // will return dept code with unassigned string if not found
 //       NSString* departmentName = [[Database shareddatabase] getDepartMentNameFromDepartmentId:departmentId];
@@ -3220,7 +3219,7 @@ else
     {
         NSDictionary* audiorecordDict = [app.awaitingFileTransferNamesArray objectAtIndex:self.selectedRowOfAwaitingList];
         
-        [audiorecordDict setValue:deptObj.departmentName forKey:@"Department"];
+        [audiorecordDict setValue:deptObj forKey:@"Department"];
         
         [app.awaitingFileTransferNamesArray replaceObjectAtIndex:self.selectedRowOfAwaitingList withObject:audiorecordDict];
         

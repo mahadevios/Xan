@@ -3213,8 +3213,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1120"
             endingLineNumber = "1120"
-            landmarkName = "-URLSession:task:didSendBodyData:totalBytesSent:totalBytesExpectedToSend:"
-            landmarkType = "7">
+            landmarkName = "APIManager"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
