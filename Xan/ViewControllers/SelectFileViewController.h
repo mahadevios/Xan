@@ -13,7 +13,7 @@
 @interface SelectFileViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIDocumentInteractionControllerDelegate, UISplitViewControllerDelegate,UISearchBarDelegate, UISearchResultsUpdating>
 {
     NSTimer* newRequestTimer;
-
+    UIDocumentInteractionController* interactionController;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property(readwrite , assign) id<CommonDelegate>delegate;
