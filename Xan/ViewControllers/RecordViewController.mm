@@ -2513,13 +2513,13 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         if ([AppPreferences sharedAppPreferences].userObj != nil)
         {
             NSArray* subViewArray=[NSArray arrayWithObjects:@"User Settings", nil];
-            editPopUp=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+40, 160, 40) andSubViews:subViewArray :self];
+            editPopUp=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-200, self.view.frame.origin.y+40, 160, 40) andSubViews:subViewArray :self];
             [[[UIApplication sharedApplication] keyWindow] addSubview:editPopUp];
         }
         else
         {
             NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Clinical Speciality", nil];
-            editPopUp=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+40, 160, 40) andSubViews:subViewArray :self];
+            editPopUp=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-200, self.view.frame.origin.y+40, 200, 40) andSubViews:subViewArray :self];
             // editPopUp.tag=888;
             [[[UIApplication sharedApplication] keyWindow] addSubview:editPopUp];
         }
@@ -2528,7 +2528,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     else
     {
       NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Clinical Speciality", nil];
-      editPopUp=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+40, 160, 40) andSubViews:subViewArray :self];
+      editPopUp=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-200, self.view.frame.origin.y+40, 200, 40) andSubViews:subViewArray :self];
        // editPopUp.tag=888;
       [[[UIApplication sharedApplication] keyWindow] addSubview:editPopUp];
     }
@@ -3060,7 +3060,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:dept.Id]) {
         
-        tabelViewDepartmentLabel.text = [NSString stringWithFormat:@"%@ (INACTIVE)",[departmentNamesArray objectAtIndex:indexPath.row]];
+        tabelViewDepartmentLabel.text = [NSString stringWithFormat:@"%@ (INACTIVE)",dept.departmentName];
 
     }
     else

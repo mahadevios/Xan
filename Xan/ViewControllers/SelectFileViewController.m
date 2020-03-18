@@ -321,7 +321,7 @@
     
 //    NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@",DOC_VRS_FILES_FOLDER_NAME,fileNameLabel.text]];
     
-    NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@",AUDIO_FILES_FOLDER_NAME,@"TPr12d120200318-12"]];
+    NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@",AUDIO_FILES_FOLDER_NAME,@"TPr12d120200318-02"]];
     
 //    NSString* newDestPath = [destpath stringByAppendingFormat:@".txt"];
     
@@ -329,15 +329,15 @@
 
     if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
     {
-        UIDocumentInteractionController* interactionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:newDestPath]];
+        interactionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:newDestPath]];
         
 //        interactionController set
         interactionController.delegate = self;
         
-        
-//        [interactionController presentPreviewAnimated:true];
+       
+        [interactionController presentPreviewAnimated:true];
 
-        [interactionController presentOpenInMenuFromBarButtonItem:self.navigationItem.leftBarButtonItem animated:YES];
+//        [interactionController presentOpenInMenuFromBarButtonItem:self.navigationItem.leftBarButtonItem animated:YES];
     }
     else
     {
@@ -458,20 +458,20 @@
 
 
 
-//- (void)documentInteractionController:(UIDocumentInteractionController *)controller willBeginSendingToApplication:(NSString *)application {
-//    if ([self isWhatsApplication:application]) {
+- (void)documentInteractionController:(UIDocumentInteractionController *)controller willBeginSendingToApplication:(NSString *)application {
+    if ([self isWhatsApplication:application]) {
+
+        controller.UTI = @"net.whatsapp.image";
+    }
+}
 //
-//        controller.UTI = @"net.whatsapp.image";
-//    }
-//}
-//
-//- (BOOL)isWhatsApplication:(NSString *)application {
-//    if ([application rangeOfString:@"whats"].location == NSNotFound) { // unfortunately, no other way...
-//        return NO;
-//    } else {
-//        return YES;
-//    }
-//}
+- (BOOL)isWhatsApplication:(NSString *)application {
+    if ([application rangeOfString:@"whats"].location == NSNotFound) { // unfortunately, no other way...
+        return NO;
+    } else {
+        return YES;
+    }
+}
 
 -(void)setTimer
 {

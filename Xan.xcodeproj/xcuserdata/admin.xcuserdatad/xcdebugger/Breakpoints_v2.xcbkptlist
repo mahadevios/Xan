@@ -3211,8 +3211,8 @@
             timestampString = "599554298.4932311"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1103"
-            endingLineNumber = "1103"
+            startingLineNumber = "1120"
+            endingLineNumber = "1120"
             landmarkName = "-URLSession:task:didSendBodyData:totalBytesSent:totalBytesExpectedToSend:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3296,8 +3296,8 @@
             timestampString = "599554298.493804"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1294"
-            endingLineNumber = "1294"
+            startingLineNumber = "1311"
+            endingLineNumber = "1311"
             landmarkName = "-uploadFileAfterGettingdatabaseValues:departmentID:transferStatus:mobileDictationIdVal:isFileTypeAudio:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3313,8 +3313,8 @@
             timestampString = "599554298.494048"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1330"
-            endingLineNumber = "1330"
+            startingLineNumber = "1347"
+            endingLineNumber = "1347"
             landmarkName = "-uploadFileAfterGettingdatabaseValues:departmentID:transferStatus:mobileDictationIdVal:isFileTypeAudio:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3330,8 +3330,8 @@
             timestampString = "599554298.4942811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1471"
-            endingLineNumber = "1471"
+            startingLineNumber = "1488"
+            endingLineNumber = "1488"
             landmarkName = "-createBodyWithBoundary:parameters:paths:fieldName:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3542,8 +3542,8 @@
             filePath = "Xan/API Manager/APIManager.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1300"
-            endingLineNumber = "1300"
+            startingLineNumber = "1317"
+            endingLineNumber = "1317"
             landmarkName = "-uploadFileAfterGettingdatabaseValues:departmentID:transferStatus:mobileDictationIdVal:isFileTypeAudio:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3558,8 +3558,8 @@
             filePath = "Xan/API Manager/APIManager.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1123"
-            endingLineNumber = "1123"
+            startingLineNumber = "1140"
+            endingLineNumber = "1140"
             landmarkName = "APIManager"
             landmarkType = "3">
          </BreakpointContent>
@@ -3590,8 +3590,8 @@
             filePath = "Xan/API Manager/APIManager.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1271"
-            endingLineNumber = "1271"
+            startingLineNumber = "1288"
+            endingLineNumber = "1288"
             landmarkName = "-uploadFileAfterGettingdatabaseValues:departmentID:transferStatus:mobileDictationIdVal:isFileTypeAudio:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3782,8 +3782,8 @@
             filePath = "Xan/API Manager/APIManager.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1285"
-            endingLineNumber = "1285"
+            startingLineNumber = "1302"
+            endingLineNumber = "1302"
             landmarkName = "-uploadFileAfterGettingdatabaseValues:departmentID:transferStatus:mobileDictationIdVal:isFileTypeAudio:"
             landmarkType = "7">
          </BreakpointContent>
@@ -4159,22 +4159,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C82AD361-348B-4609-8F7C-DEF9CCA6544C"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/ViewControllers/RecordViewController.mm"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2590"
-            endingLineNumber = "2590"
-            landmarkName = "-gestureRecognizer:shouldReceiveTouch:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "A0696BAC-D2A8-4846-BE4E-7A7CCFEB8C10"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -4294,8 +4278,8 @@
             filePath = "Xan/API Manager/APIManager.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1156"
-            endingLineNumber = "1156"
+            startingLineNumber = "1173"
+            endingLineNumber = "1173"
             landmarkName = "-uploadFileToServerUsingNSURLSession:"
             landmarkType = "7">
          </BreakpointContent>
@@ -4326,8 +4310,8 @@
             filePath = "Xan/API Manager/APIManager.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1299"
-            endingLineNumber = "1299"
+            startingLineNumber = "1316"
+            endingLineNumber = "1316"
             landmarkName = "-uploadFileAfterGettingdatabaseValues:departmentID:transferStatus:mobileDictationIdVal:isFileTypeAudio:"
             landmarkType = "7">
          </BreakpointContent>
@@ -4432,7 +4416,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "8D9159DB-1497-4F9C-A109-409DBFE46EEB"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Xan/API Manager/APIManager.m"
@@ -4447,16 +4431,48 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "AAE89853-024F-480C-8160-CEBCDBAC0661"
+            uuid = "FE6D1A11-79AA-43A5-A837-93B772C91AB1"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Xan/API Manager/APIManager.m"
+            filePath = "Xan/ViewControllers/SelectFileViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "978"
-            endingLineNumber = "978"
-            landmarkName = "-URLSession:task:didCompleteWithError:"
+            startingLineNumber = "462"
+            endingLineNumber = "462"
+            landmarkName = "-documentInteractionController:willBeginSendingToApplication:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CD9F3632-1598-43B2-BDC3-749667866278"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/ViewControllers/SelectFileViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "469"
+            endingLineNumber = "469"
+            landmarkName = "-isWhatsApplication:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C645E146-2B90-4FB6-9E43-A8C35ACE9C4D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/ViewControllers/RecordViewController.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3061"
+            endingLineNumber = "3061"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
