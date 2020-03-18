@@ -794,7 +794,7 @@ static Database *db;
                 
                 // [app.feedOrQueryDetailMessageArray addObject:[NSString stringWithUTF8String:message]];
                  departmentId = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
-                departmentName = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+                departmentName = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 1)];
                 
                 DepartMent* dept = [DepartMent new];
                 dept.Id = departmentId;
