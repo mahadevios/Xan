@@ -294,6 +294,7 @@
     vc.audioDurationInSeconds = audioDurationInSeconds;
     vc.existingAudioTemplateName = audioDetails.templateName;
     vc.existingAudioPriorityId = audioDetails.priorityId;
+    vc.existingAudioComment = audioDetails.comment;
     vc.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:vc animated:YES completion:nil];
    

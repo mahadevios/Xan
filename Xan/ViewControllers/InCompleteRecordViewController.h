@@ -122,6 +122,7 @@
 @property (nonatomic)     NSString            *existingAudioTemplateName;//for use of prev controller
 @property (nonatomic)     NSString            *existingAudioDate;//for use of prev controller
 @property (nonatomic)     NSString            *existingAudioPriorityId;//for use of prev controller
+@property (nonatomic)     NSString            *existingAudioComment;//for use of prev controller
 
 @property (nonatomic)     int            audioDurationInSeconds;
 @property (nonatomic,strong)     NSURL               *recordedAudioURL;

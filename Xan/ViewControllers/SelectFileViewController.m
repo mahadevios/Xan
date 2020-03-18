@@ -319,14 +319,14 @@
     
     UILabel* fileNameLabel = [cell viewWithTag:101];
     
-   // [self.delegate setFileName:fileNameLabel.text];
-    NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@",DOC_VRS_FILES_FOLDER_NAME,fileNameLabel.text]];
+//    NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@",DOC_VRS_FILES_FOLDER_NAME,fileNameLabel.text]];
     
-    NSString* newDestPath = [destpath stringByAppendingFormat:@".txt"];
+    NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@",AUDIO_FILES_FOLDER_NAME,@"TPr12d120200318-12"]];
     
-//    NSURL* url = [[NSURL alloc] initFileURLWithPath:newDestPath];
+//    NSString* newDestPath = [destpath stringByAppendingFormat:@".txt"];
+    
+    NSString* newDestPath = [destpath stringByAppendingFormat:@".wav"];
 
-    
     if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
     {
         UIDocumentInteractionController* interactionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:newDestPath]];
@@ -335,8 +335,9 @@
         interactionController.delegate = self;
         
         
-        [interactionController presentPreviewAnimated:true];
+//        [interactionController presentPreviewAnimated:true];
 
+        [interactionController presentOpenInMenuFromBarButtonItem:self.navigationItem.leftBarButtonItem animated:YES];
     }
     else
     {
@@ -454,6 +455,8 @@
 
     //});
 }
+
+
 
 //- (void)documentInteractionController:(UIDocumentInteractionController *)controller willBeginSendingToApplication:(NSString *)application {
 //    if ([self isWhatsApplication:application]) {

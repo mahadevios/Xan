@@ -146,7 +146,7 @@
 #define RECORDING_SAVED_MESSAGE                @"Recording duration length exceeded,your recording has been saved in awaiting transfer,please start new recording for further dictation"
 #define NO_INTERNET_TITLE_MESSAGE              @"No Internet Connection!"
 #define NO_INTERNET_DETAIL_MESSAGE             @"Please check your internet connection and try again."
-#define DEACTIVATE_DEPARTMENT_MESSAGE          @"This Clinical Speciality is Deactivated, please select other department"
+#define DEACTIVATE_DEPARTMENT_MESSAGE          @"This Clinical Speciality is Deactivated, please select other Clinical Speciality"
 #define MULTIPLE_DEACTIVATE_DEPARTMENT_MESSAGE          @"Clinical Speciality of some of the selected files are inactive, please select only active Clinical Speciality files."
 #define SELECT_DEPARTMENT_MESSAGE          @"Please select Clinical Speciality"
 
