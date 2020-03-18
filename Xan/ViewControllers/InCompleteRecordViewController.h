@@ -24,7 +24,7 @@
 @end
 
 
-@interface InCompleteRecordViewController : UIViewController<UIGestureRecognizerDelegate,AVAudioPlayerDelegate,MKDropdownMenuDelegate,MKDropdownMenuDataSource>
+@interface InCompleteRecordViewController : UIViewController<UIGestureRecognizerDelegate,AVAudioPlayerDelegate,MKDropdownMenuDelegate,MKDropdownMenuDataSource,UITextViewDelegate>
 
 {
     int i;
@@ -108,6 +108,8 @@
     BOOL isDeptRowSelcted;
     
     NSString* recentlySelectedTemplateName;
+    
+     UILabel* commentLabel;
 //    UIButton* uploadLaterButton;
 //    UIButton* recordNewButton;
 //    UIView* animatedView;
@@ -116,10 +118,11 @@
 @property (nonatomic)     AVAudioRecorder     *recorder;
 @property (nonatomic,strong)     NSString            *recordedAudioFileName;
 @property (nonatomic,strong)     NSString            *existingAudioFileName;//for use of prev controller
-@property (nonatomic)     NSString            *existingAudioDepartmentName;//for use of prev controller
+@property (nonatomic)     DepartMent            *existingAudioDepartment;//for use of prev controller
 @property (nonatomic)     NSString            *existingAudioTemplateName;//for use of prev controller
 @property (nonatomic)     NSString            *existingAudioDate;//for use of prev controller
 @property (nonatomic)     NSString            *existingAudioPriorityId;//for use of prev controller
+@property (nonatomic)     NSString            *existingAudioComment;//for use of prev controller
 
 @property (nonatomic)     int            audioDurationInSeconds;
 @property (nonatomic,strong)     NSURL               *recordedAudioURL;

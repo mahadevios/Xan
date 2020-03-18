@@ -170,7 +170,7 @@
     UIFont *currentFont = sectionTitleLabel.font;
     UIFont *newFont = [UIFont fontWithName:[NSString stringWithFormat:@"%@-Bold",currentFont.fontName] size:currentFont.pointSize];
     sectionTitleLabel.font = newFont;
-    sectionTitleLabel.text=@"Select Department";
+    sectionTitleLabel.text=@"Select Clinical Speciality";
     [sectionHeaderView addSubview:sectionTitleLabel];
     
     tableView.tableHeaderView=sectionHeaderView;

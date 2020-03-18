@@ -13,14 +13,14 @@
 //#define  BASE_URL_PATH                        @"http://192.168.3.81:8089/xan-dictate" // Vrushali Mam
 //#define  BASE_URL_PATH                        @"http://192.168.3.79:8089/xan-dictate" // KK
 //#define  BASE_URL_PATH                          @"http://192.168.3.76:8089/xan-dictate"  // Shruti
-//#define  BASE_URL_PATH                          @"http://192.168.3.76:8080/xan-dictate"  // Shruti
+#define  BASE_URL_PATH                          @"http://192.168.3.76:8089/xan-dictate"  // Shruti
 
 //#define  BASE_URL_PATH                          @"http://192.168.3.80:8089/xan-dictate"  // Mahadev Mac
 //#define  BASE_URL_PATH                          @"http://192.168.3.82:8089/xan-dictate"  // Mahadev Windows
 
 //#define  BASE_URL_PATH                        @"http://192.168.2.9:8089/xan-dictate"
 
-#define  BASE_URL_PATH                          @"https://cfscommunicator.com:8443/xan_dictate"
+//#define  BASE_URL_PATH                          @"https://cfscommunicator.com:8443/xan_dictate"
 
 //#define  BASE_URL_PATH                        @"http://192.168.3.80:8080/user"
 
@@ -141,14 +141,14 @@
 #define TRANSFER_MESSAGE                       @"Are you sure you want to transfer this recording?"
 #define TRANSFER_MESSAGE_MULTIPLES             @"Are you sure you want to transfer these recordings?"
 #define RESEND_MESSAGE                         @"Are you sure you want to resend this recording?"
-#define PAUSE_STOP_MESSAGE                     @"Recording is on.Please pause/stop the recording"
+#define PAUSE_STOP_MESSAGE                     @"Recording is on. Please pause/stop the recording"
 #define MAXIMUM_RECORDING_LIMIT_MESSAGE        @"Recording duration length exceeded,please start new recording for further dictation"
 #define RECORDING_SAVED_MESSAGE                @"Recording duration length exceeded,your recording has been saved in awaiting transfer,please start new recording for further dictation"
 #define NO_INTERNET_TITLE_MESSAGE              @"No Internet Connection!"
 #define NO_INTERNET_DETAIL_MESSAGE             @"Please check your internet connection and try again."
-#define DEACTIVATE_DEPARTMENT_MESSAGE          @"This Department is Deactivated, please select other department"
-#define MULTIPLE_DEACTIVATE_DEPARTMENT_MESSAGE          @"Department of some of the selected files are inactive, please select only active department files."
-#define SELECT_DEPARTMENT_MESSAGE          @"Please select Department"
+#define DEACTIVATE_DEPARTMENT_MESSAGE          @"This Clinical Speciality is Deactivated, please select other Clinical Speciality"
+#define MULTIPLE_DEACTIVATE_DEPARTMENT_MESSAGE          @"Clinical Speciality of some of the selected files are inactive, please select only active Clinical Speciality files."
+#define SELECT_DEPARTMENT_MESSAGE          @"Please select Clinical Speciality"
 
 
 #define CURRENT_VESRION                        @"currentVersion"
