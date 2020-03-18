@@ -1915,7 +1915,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [commentButton setCenter:commentImageView.center];
     [commentButton addTarget:self action:@selector(commentButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    commentLabel=[[UILabel alloc]initWithFrame:CGRectMake(commentImageView.frame.origin.x + commentImageView.frame.size.width + 8, commentImageView.frame.origin.y, 200, 25)];
+    commentLabel=[[UILabel alloc]initWithFrame:CGRectMake(commentImageView.frame.origin.x + commentImageView.frame.size.width + 8, commentImageView.frame.origin.y, 120, 25)];
     commentLabel.textAlignment = NSTextAlignmentLeft;
     [commentLabel setText:@"Add Comment"];
     [commentLabel setFont:[UIFont fontWithName:@"Helvetica" size:15.0]];
@@ -2030,55 +2030,62 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 -(void)showCommentTextView
 {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Add Comment"
-                                                                                message:@"\n\n\n\n\n\n\n\n"
-                                                                         preferredStyle:UIAlertControllerStyleAlert];
-
-      
-
-       alertController.view.autoresizesSubviews = YES;
-       __block UITextView *textView = [[UITextView alloc] initWithFrame:CGRectZero];
-       textView.delegate = self;
-       textView.translatesAutoresizingMaskIntoConstraints = NO;
-       textView.autocorrectionType = UITextAutocorrectionTypeNo;
-       textView.editable = YES;
-       textView.returnKeyType = UIReturnKeyDone;
-       textView.dataDetectorTypes = UIDataDetectorTypeAll;
-       
-       UIAlertAction* okay = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                     handler:^(UIAlertAction * action) {
-                                                         commentLabel.text = textView.text;
-                                                     }];
-          UIAlertAction* cancel1 = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
-                                                         handler:^(UIAlertAction * action) {
-                                                             [alertController dismissViewControllerAnimated:YES completion:nil];
-                                                         }];
-          [alertController addAction:okay];
-          [alertController addAction:cancel1];
-       
-       if (commentLabel.text == nil || [commentLabel.text isEqualToString:@""] || [commentLabel.text isEqualToString:@"Add Comment"]) {
-
-       }
-       else
-       {
-           textView.text =  commentLabel.text;
-       }
-       
-       textView.userInteractionEnabled = YES;
-       textView.backgroundColor = [UIColor whiteColor];
-       textView.scrollEnabled = YES;
-       NSLayoutConstraint *leadConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:-8.0];
-       NSLayoutConstraint *trailConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:8.0];
-
-       NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeTop multiplier:1.0 constant:-64.0];
-       NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:64.0];
-       [alertController.view addSubview:textView];
-       [NSLayoutConstraint activateConstraints:@[leadConstraint, trailConstraint, topConstraint, bottomConstraint]];
-
-       [self presentViewController:alertController animated:YES completion:^{
-
-       }];
-       
-
+                                                                             message:@"\n\n\n\n\n\n\n\n"
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    
+    
+    alertController.view.autoresizesSubviews = YES;
+    __block UITextView *textView = [[UITextView alloc] initWithFrame:CGRectZero];
+    textView.delegate = self;
+    textView.translatesAutoresizingMaskIntoConstraints = NO;
+    textView.autocorrectionType = UITextAutocorrectionTypeNo;
+    textView.editable = YES;
+    textView.returnKeyType = UIReturnKeyDone;
+    textView.dataDetectorTypes = UIDataDetectorTypeAll;
+    
+    UIAlertAction* okay = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction * action) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^
+                       {
+            commentLabel.text = textView.text;
+            
+            [[Database shareddatabase] updateComment:commentLabel.text fileName:self.recordedAudioFileName];
+        });
+        
+    }];
+    UIAlertAction* cancel1 = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+                                                    handler:^(UIAlertAction * action) {
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [alertController addAction:okay];
+    [alertController addAction:cancel1];
+    
+    if (commentLabel.text == nil || [commentLabel.text isEqualToString:@""] || [commentLabel.text isEqualToString:@"Add Comment"]) {
+        
+    }
+    else
+    {
+        textView.text =  commentLabel.text;
+    }
+    
+    textView.userInteractionEnabled = YES;
+    textView.backgroundColor = [UIColor whiteColor];
+    textView.scrollEnabled = YES;
+    NSLayoutConstraint *leadConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:-8.0];
+    NSLayoutConstraint *trailConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:8.0];
+    
+    NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeTop multiplier:1.0 constant:-64.0];
+    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:64.0];
+    [alertController.view addSubview:textView];
+    [NSLayoutConstraint activateConstraints:@[leadConstraint, trailConstraint, topConstraint, bottomConstraint]];
+    
+    [self presentViewController:alertController animated:YES completion:^{
+        
+    }];
+    
+    
 }
 //-(void)commentButtonClicked:(UIButton*)sender
 //{
@@ -2982,7 +2989,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
        
         NSString* departmentId=[db getDepartMentIdFromDepartmentName:deptObj.departmentName];
         
-        NSDictionary* audioRecordDetailsDict=[[NSDictionary alloc]initWithObjectsAndKeys:self.recordedAudioFileName,@"recordItemName",recordCreatedDateString,@"recordCreatedDate",recordingDate,@"recordingDate",transferDate,@"transferDate",[NSString stringWithFormat:@"%d",dictationStatus],@"dictationStatus",[NSString stringWithFormat:@"%d",transferStatus],@"transferStatus",[NSString stringWithFormat:@"%d",deleteStatus],@"deleteStatus",deleteDate,@"deleteDate",fileSize,@"fileSize",currentDuration1,@"currentDuration",[NSString stringWithFormat:@"%d",newDataUpdate],@"newDataUpdate",[NSString stringWithFormat:@"%d",newDataSend],@"newDataSend",[NSString stringWithFormat:@"%d",mobileDictationIdVal],@"mobileDictationIdVal",departmentId,@"departmentName",templateId,@"templateId",@"0",@"priority",nil];
+        NSDictionary* audioRecordDetailsDict=[[NSDictionary alloc]initWithObjectsAndKeys:self.recordedAudioFileName,@"recordItemName",recordCreatedDateString,@"recordCreatedDate",recordingDate,@"recordingDate",transferDate,@"transferDate",[NSString stringWithFormat:@"%d",dictationStatus],@"dictationStatus",[NSString stringWithFormat:@"%d",transferStatus],@"transferStatus",[NSString stringWithFormat:@"%d",deleteStatus],@"deleteStatus",deleteDate,@"deleteDate",fileSize,@"fileSize",currentDuration1,@"currentDuration",[NSString stringWithFormat:@"%d",newDataUpdate],@"newDataUpdate",[NSString stringWithFormat:@"%d",newDataSend],@"newDataSend",[NSString stringWithFormat:@"%d",mobileDictationIdVal],@"mobileDictationIdVal",departmentId,@"departmentName",templateId,@"templateId",@"0",@"priority",@"",@"comment",nil];
         
         [db insertRecordingData:audioRecordDetailsDict];
         

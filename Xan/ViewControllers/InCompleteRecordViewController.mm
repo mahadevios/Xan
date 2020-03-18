@@ -84,6 +84,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     {
         checkBoxSelected = false;
     }
+    
+  
+    
     UITapGestureRecognizer* tapGestureRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(disMissTemplateDropDown:)];
     
     //    tapGestureRecogniser.delegate = self;
@@ -1766,9 +1769,15 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [commentButton setCenter:commentImageView.center];
     [commentButton addTarget:self action:@selector(commentButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    commentLabel=[[UILabel alloc]initWithFrame:CGRectMake(commentImageView.frame.origin.x + commentImageView.frame.size.width + 10, commentImageView.frame.origin.y, 200, 25)];
+    commentLabel=[[UILabel alloc]initWithFrame:CGRectMake(commentImageView.frame.origin.x + commentImageView.frame.size.width + 10, commentImageView.frame.origin.y, 120, 25)];
     commentLabel.textAlignment = NSTextAlignmentLeft;
-    [commentLabel setText:@"Add Comment"];
+    
+    if (self.existingAudioComment != nil || ![self.existingAudioComment isEqualToString:@""]) {
+        commentLabel.text = self.existingAudioComment;
+    }
+    else
+    commentLabel.text = @"Add Comment";
+    
     [commentLabel setFont:[UIFont fontWithName:@"Helvetica" size:15.0]];
     
     [self prepareAudioPlayer];
@@ -1908,10 +1917,22 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     textView.returnKeyType = UIReturnKeyDone;
     textView.dataDetectorTypes = UIDataDetectorTypeAll;
     
-    UIAlertAction* okay = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                  handler:^(UIAlertAction * action) {
-                                                      commentLabel.text = textView.text;
-                                                  }];
+    UIAlertAction* okay = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction * action) {
+        dispatch_async(dispatch_get_main_queue(), ^
+                       {
+            
+            NSString* commentString = textView.text;
+            commentLabel.text = commentString;
+            
+            [[Database shareddatabase] updateComment:commentString fileName:self.existingAudioFileName];
+            
+            NSDictionary* delegateDict = [[NSDictionary alloc] initWithObjectsAndKeys:commentString,@"Comment", nil];
+            
+            [self.delegate updateData:delegateDict];
+            
+        });
+    }];
        UIAlertAction* cancel1 = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction * action) {
                                                           [alertController dismissViewControllerAnimated:YES completion:nil];

@@ -87,7 +87,11 @@
     
     [self setAudioDetails];
 
-
+     if ([self.audioDetails.comment isEqualToString:@""] || self.audioDetails.comment == nil) {
+           self.commentLabel.text = @"-";
+          }
+    else
+    self.commentLabel.text = self.audioDetails.comment;
 }
 
 -(void)setTemplateDropDown
@@ -894,7 +898,12 @@ else
        
        UIAlertAction* okay = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                      handler:^(UIAlertAction * action) {
-                                                         self.commentLabel.text = textView.text;
+           dispatch_async(dispatch_get_main_queue(), ^
+                          {
+               self.commentLabel.text = textView.text;
+               self.audioDetails.comment = self.commentLabel.text;
+               [[Database shareddatabase] updateComment:self.commentLabel.text fileName:self.audioDetails.fileName];
+           });
                                                      }];
           UIAlertAction* cancel1 = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * action) {

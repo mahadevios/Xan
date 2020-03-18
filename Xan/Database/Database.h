@@ -153,4 +153,9 @@
 -(void)setUserDatabaseSchemaVersion:(int) version;
 
 -(void)addCommentColumnInCubeData;
+
+-(void)updateComment:(NSString*)comment fileName:(NSString*)fileName;
+
+-(NSString*)getCommentFromFilename:(NSString*)filename;
+
 @end

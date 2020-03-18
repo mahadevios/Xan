@@ -153,6 +153,13 @@
     
     [self setTemplateData];
     
+    if ([self.audioDetails.comment isEqualToString:@""] || self.audioDetails.comment == nil) {
+        self.commentLabel.text = @"-";
+       }
+    else
+    self.commentLabel.text = self.audioDetails.comment;
+    
+   
     if (![AppPreferences sharedAppPreferences].dismissAudioDetails && ![AppPreferences sharedAppPreferences].recordNew)
     {
         if (!transferDictationButton.isHidden) {// if not uploading then only keep more enabled
@@ -1440,6 +1447,7 @@
     
     vc.existingAudioDepartment= self.audioDetails.department;
     vc.existingAudioTemplateName = selectedTemplateName;
+    vc.existingAudioComment = self.commentLabel.text;
     self.audioDetails.templateName = selectedTemplateName;
     [self updateTemplateIdForFileName];
     
@@ -1473,7 +1481,8 @@
     NSString* departmentName = [delegateDict objectForKey:@"DepartmentName"];
     NSString* tempName = [delegateDict objectForKey:@"TemplateName"];
     NSString* priorityId = [delegateDict objectForKey:@"PriorityId"];
-    
+    NSString* comment = [delegateDict objectForKey:@"Comment"];
+
     if (!(departmentName == nil))
     {
         self.audioDetails.department.departmentName = departmentName;
@@ -1502,6 +1511,12 @@
             checkBoxSelected = false;
         }
     }
+    
+    if (!(comment == nil))
+       {
+           self.audioDetails.comment = comment;
+           self.commentLabel.text = comment;
+       }
     
 }
 
@@ -1707,10 +1722,17 @@
        textView.returnKeyType = UIReturnKeyDone;
        textView.dataDetectorTypes = UIDataDetectorTypeAll;
        
-       UIAlertAction* okay = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                     handler:^(UIAlertAction * action) {
-                                                         self.commentLabel.text = textView.text;
-                                                     }];
+    UIAlertAction* okay = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction * action) {
+        dispatch_async(dispatch_get_main_queue(), ^
+                       {
+            self.commentLabel.text = textView.text;
+            
+            self.audioDetails.comment = self.commentLabel.text;
+            
+            [[Database shareddatabase] updateComment:self.commentLabel.text fileName:self.audioDetails.fileName];
+        });
+    }];
           UIAlertAction* cancel1 = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * action) {
                                                              [alertController dismissViewControllerAnimated:YES completion:nil];

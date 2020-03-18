@@ -843,8 +843,6 @@ static APIManager *singleton = nil;
     {
         NSString* taskIdentifier = [[NSString stringWithFormat:@"%@",session.configuration.identifier] stringByAppendingString:[NSString stringWithFormat:@"%lu",(unsigned long)dataTask.taskIdentifier]];
         
-        
-        
         NSError* error1;
         result = [NSJSONSerialization JSONObjectWithData:data
                                                                     options:NSJSONReadingAllowFragments
@@ -922,6 +920,8 @@ static APIManager *singleton = nil;
             dispatch_async(dispatch_get_main_queue(), ^
                            {
                                //NSLog(@"Reachable");
+                                NSString* errorString = [result valueForKey:@"error"];
+
                                NSString* date= [[APIManager sharedManager] getDateAndTimeString];
                                
                                NSString* fileName = [[Database shareddatabase] getfileNameFromTaskIdentifier:taskIdentifier];
@@ -936,7 +936,11 @@ static APIManager *singleton = nil;
                                
                                [[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict removeObjectForKey:fileName];
                               
-                               [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:@"File uploading failed" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                NSString* failedMessage = @"File uploading failed";
+                if (errorString != nil || ![errorString isEqualToString:@""]) {
+                    failedMessage = [NSString stringWithFormat:@"%@, file uploading failed",errorString];
+                }
+                               [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:failedMessage withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
                                
                                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                    
@@ -985,41 +989,47 @@ static APIManager *singleton = nil;
         else
         {
 
-                dispatch_async(dispatch_get_main_queue(), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
                 
-                    NSString* fileName = [[Database shareddatabase] getfileNameFromTaskIdentifier:taskIdentifier];
-     
-                    [[Database shareddatabase] updateAudioFileUploadedStatus:@"TransferFailed" fileName:fileName dateAndTime:@"" mobiledictationidval:0];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_API object:fileName];
+                NSString* fileName = [[Database shareddatabase] getfileNameFromTaskIdentifier:taskIdentifier];
+                
+                [[Database shareddatabase] updateAudioFileUploadedStatus:@"TransferFailed" fileName:fileName dateAndTime:@"" mobiledictationidval:0];
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_API object:fileName];
+                
+                //                    NSLog(@"%@",fileName);
+                NSString* failedMessage = @"File uploading failed";
+                if (error.localizedDescription != nil || ![error.localizedDescription isEqualToString:@""]) {
+                    failedMessage = [NSString stringWithFormat:@"%@, file uploading failed",error.localizedDescription];
+                }
+                
+                
+                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:failedMessage withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                     
-//                    NSLog(@"%@",fileName);
-                    
-                    [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:[NSString stringWithFormat:@"Server connection lost!,file uploading failed"] withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
-
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>0)
+                    {
                         
-                        if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>0)
-                        {
-                            
-                            [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
-                            
-                            NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
-                            
-                            [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
-                            
-                            [self uploadFileToServer:nextFileToBeUpload jobName:FILE_UPLOAD_API];
-                            
-                        }
-                        else
-                        {
-                            [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
-                        }
-                     
-                    });
+                        [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
+                        
+                        NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
+                        
+                        [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
+                        
+                        [self uploadFileToServer:nextFileToBeUpload jobName:FILE_UPLOAD_API];
+                        
+                    }
+                    else
+                    {
+                        [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
+                    }
                     
-
-
                 });
+                
+                
+                
+            });
 
         }
         
@@ -1284,6 +1294,8 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 //    }
     NSString* priorityId = [[Database shareddatabase] getPriorityIdFromFilename:filenameForTaskIdentifier];
 
+    NSString* comment = [[Database shareddatabase] getCommentFromFilename:filenameForTaskIdentifier];
+    
     NSDictionary *params = @{@"macId"     : macId,
                              @"fileSize" :[NSString stringWithFormat:@"%d", filesizeint],
                              @"fileDuration" :fileDuraion,
@@ -1292,6 +1304,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
                              @"mobileDictationIdVal" : [NSString stringWithFormat:@"%d", mobileDictationIdVal],
                              @"templateCode" : templateCode,
                              @"urgentFl" : priorityId,
+                             @"comment" : comment,
                              };
     // NSString* authorisation=[NSString stringWithFormat:@"%@*%d*%ld*%d*%d",macId,filesizeint,deptObj.Id,1,0];
    
