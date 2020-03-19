@@ -1765,12 +1765,14 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     UIImageView* commentImageView = [[UIImageView alloc]initWithFrame:CGRectMake(recordNewButton.frame.origin.x, urgentImageView.frame.origin.y, 25, 25)];
     [commentImageView setImage:[UIImage imageNamed:@"Comment"]];
     
-    UIButton* commentButton=[[UIButton alloc]initWithFrame:CGRectMake(commentImageView.frame.origin.x, urgentImageView.frame.origin.y, 36, 36)];
+    UIButton* commentButton=[[UIButton alloc]initWithFrame:CGRectMake(commentImageView.frame.origin.x, urgentImageView.frame.origin.y, 220, 43)];
     [commentButton setCenter:commentImageView.center];
     [commentButton addTarget:self action:@selector(commentButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     commentLabel=[[UILabel alloc]initWithFrame:CGRectMake(commentImageView.frame.origin.x + commentImageView.frame.size.width + 10, commentImageView.frame.origin.y, 120, 25)];
     commentLabel.textAlignment = NSTextAlignmentLeft;
+    
+//    [commentButton setFrame:CGRectMake(commentButton.frame.origin.x, commentButton.frame.origin.y, commentImageView.frame.size.width + commentLabel.frame.size.width + 10, commentButton.frame.size.height)];
     
     if (self.existingAudioComment != nil || ![self.existingAudioComment isEqualToString:@""]) {
         commentLabel.text = self.existingAudioComment;
@@ -1922,14 +1924,30 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         dispatch_async(dispatch_get_main_queue(), ^
                        {
             
-            NSString* commentString = textView.text;
-            commentLabel.text = commentString;
-            
-            [[Database shareddatabase] updateComment:commentString fileName:self.existingAudioFileName];
-            
-            NSDictionary* delegateDict = [[NSDictionary alloc] initWithObjectsAndKeys:commentString,@"Comment", nil];
-            
-            [self.delegate updateData:delegateDict];
+            if ([textView.text isEqualToString:@""]) {
+                NSString* commentString = textView.text;
+                
+                commentLabel.text = @"Add Comment";
+                
+                [[Database shareddatabase] updateComment:commentString fileName:self.existingAudioFileName];
+                
+                NSDictionary* delegateDict = [[NSDictionary alloc] initWithObjectsAndKeys:@"",@"Comment", nil];
+                               
+                [self.delegate updateData:delegateDict];
+            }
+            else
+            {
+                NSString* commentString = textView.text;
+                
+                commentLabel.text = commentString;
+                
+                [[Database shareddatabase] updateComment:commentString fileName:self.existingAudioFileName];
+                
+                NSDictionary* delegateDict = [[NSDictionary alloc] initWithObjectsAndKeys:commentString,@"Comment", nil];
+                
+                [self.delegate updateData:delegateDict];
+            }
+           
             
         });
     }];
@@ -3123,16 +3141,23 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
      if ([departmentName containsString:@"Unassigned"]) {
          [popupView removeFromSuperview];
          isDeptRowSelcted = NO;
-         existingAudioDepartment.departmentName = [NSString stringWithFormat:@"%@ (Unassigned)", departmentId];
+         deptObj.Id = departmentId;
+         deptObj.departmentName = [NSString stringWithFormat:@"%@ (Unassigned)", departmentId];
+         existingAudioDepartment = deptObj;
          
          return; // if dept radio button ON but cancel pressed then return
      }
     else if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:departmentId])
     {
-        existingAudioDepartment.departmentName = departmentName;
+        deptObj.Id = departmentId;
+        deptObj.departmentName = departmentName;
+        existingAudioDepartment = deptObj;
     }
      else
-     existingAudioDepartment.departmentName = deptObj.departmentName;
+     {
+         existingAudioDepartment = deptObj;
+     }
+     
      
     isDeptRowSelcted = NO;
      [popupView removeFromSuperview];

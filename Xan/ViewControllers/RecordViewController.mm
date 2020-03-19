@@ -1911,13 +1911,21 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     UIImageView* commentImageView = [[UIImageView alloc]initWithFrame:CGRectMake(recordNewButton.frame.origin.x, urgentImageView.frame.origin.y, 25, 25)];
     [commentImageView setImage:[UIImage imageNamed:@"Comment"]];
     
-    UIButton* commentButton=[[UIButton alloc]initWithFrame:CGRectMake(commentImageView.frame.origin.x, urgentImageView.frame.origin.y, 43, 43)];
+    UIButton* commentButton=[[UIButton alloc]initWithFrame:CGRectMake(commentImageView.frame.origin.x, urgentImageView.frame.origin.y, 220, 43)];
     [commentButton setCenter:commentImageView.center];
     [commentButton addTarget:self action:@selector(commentButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     commentLabel=[[UILabel alloc]initWithFrame:CGRectMake(commentImageView.frame.origin.x + commentImageView.frame.size.width + 8, commentImageView.frame.origin.y, 120, 25)];
     commentLabel.textAlignment = NSTextAlignmentLeft;
-    [commentLabel setText:@"Add Comment"];
+    NSString* comment = [[Database shareddatabase] getCommentFromFilename:self.recordedAudioFileName];
+    if ([comment isEqualToString:@""] || comment == nil) {
+        commentLabel.text = @"Add Comment";
+    }
+    else
+    {
+        commentLabel.text = comment;
+    }
+//    [commentButton setFrame:CGRectMake(commentButton.frame.origin.x, commentButton.frame.origin.y, commentImageView.frame.size.width + commentLabel.frame.size.width + 10, commentButton.frame.size.height)];
     [commentLabel setFont:[UIFont fontWithName:@"Helvetica" size:15.0]];
     
     
@@ -2049,9 +2057,16 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         dispatch_async(dispatch_get_main_queue(), ^
                        {
-            commentLabel.text = textView.text;
+            if ([textView.text isEqualToString:@""]) {
+                commentLabel.text = @"Add Comment";
+            }
+            else{
+                
+                commentLabel.text = textView.text;
+                
+                [[Database shareddatabase] updateComment:commentLabel.text fileName:self.recordedAudioFileName];
+            }
             
-            [[Database shareddatabase] updateComment:commentLabel.text fileName:self.recordedAudioFileName];
         });
         
     }];
@@ -2135,17 +2150,17 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     recordingNew=YES;
     if ([AppPreferences sharedAppPreferences].selectedTabBarIndex==3)
     {
-            [AppPreferences sharedAppPreferences].recordNew=YES;
-
+        [AppPreferences sharedAppPreferences].recordNew=YES;
+        
     }
     [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"];
-
+    
     [AppPreferences sharedAppPreferences].recordNewOffline = YES;
     
     [self dismissViewControllerAnimated:NO completion:nil];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_RECORD_DISMISSED object:nil];
-
+    
     //[self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:NO completion:nil];
     
 }

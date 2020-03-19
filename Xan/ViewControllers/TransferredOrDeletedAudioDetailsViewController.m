@@ -88,7 +88,7 @@
     [self setAudioDetails];
 
      if ([self.audioDetails.comment isEqualToString:@""] || self.audioDetails.comment == nil) {
-           self.commentLabel.text = @"-";
+           self.commentLabel.text = @"Add Comment";
           }
     else
     self.commentLabel.text = self.audioDetails.comment;
@@ -175,6 +175,7 @@
     if (self.listSelected==1)
     {
         [moreButton setUserInteractionEnabled:NO];
+        [self.commentButton setUserInteractionEnabled:NO];
         [_mkDropdwonRefView setUserInteractionEnabled:NO];
         [self.urgentCheckboxButton setUserInteractionEnabled:NO];
         [resendButton setHidden:YES];
@@ -896,13 +897,21 @@ else
        textView.returnKeyType = UIReturnKeyDone;
        textView.dataDetectorTypes = UIDataDetectorTypeAll;
        
-       UIAlertAction* okay = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+       UIAlertAction* okay = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault
                                                      handler:^(UIAlertAction * action) {
            dispatch_async(dispatch_get_main_queue(), ^
                           {
-               self.commentLabel.text = textView.text;
-               self.audioDetails.comment = self.commentLabel.text;
-               [[Database shareddatabase] updateComment:self.commentLabel.text fileName:self.audioDetails.fileName];
+               if ([textView.text isEqualToString:@""]) {
+                              self.commentLabel.text = @"Add Comment";
+                          }
+                          else{
+                              self.commentLabel.text = textView.text;
+                                         
+                              self.audioDetails.comment = self.commentLabel.text;
+                              
+                              [[Database shareddatabase] updateComment:self.commentLabel.text fileName:self.audioDetails.fileName];
+                          }
+                         
            });
                                                      }];
           UIAlertAction* cancel1 = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
@@ -912,7 +921,7 @@ else
           [alertController addAction:okay];
           [alertController addAction:cancel1];
        
-       if (self.commentLabel.text == nil || [self.commentLabel.text isEqualToString:@""] || [self.commentLabel.text isEqualToString:@"-"]) {
+       if (self.commentLabel.text == nil || [self.commentLabel.text isEqualToString:@""] || [self.commentLabel.text isEqualToString:@"Add Comment"]) {
 
        }
        else
