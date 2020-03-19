@@ -319,13 +319,13 @@
     
     UILabel* fileNameLabel = [cell viewWithTag:101];
     
-//    NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@",DOC_VRS_FILES_FOLDER_NAME,fileNameLabel.text]];
+    NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@",DOC_VRS_FILES_FOLDER_NAME,fileNameLabel.text]];
     
-    NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@",AUDIO_FILES_FOLDER_NAME,@"TPr12d120200318-02"]];
+//    NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@",AUDIO_FILES_FOLDER_NAME,@"TPr12d120200318-02"]];
     
-//    NSString* newDestPath = [destpath stringByAppendingFormat:@".txt"];
+    NSString* newDestPath = [destpath stringByAppendingFormat:@".txt"];
     
-    NSString* newDestPath = [destpath stringByAppendingFormat:@".wav"];
+//    NSString* newDestPath = [destpath stringByAppendingFormat:@".wav"];
 
     if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
     {
