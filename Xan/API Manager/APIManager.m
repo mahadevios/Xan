@@ -920,7 +920,7 @@ static APIManager *singleton = nil;
             dispatch_async(dispatch_get_main_queue(), ^
                            {
                                //NSLog(@"Reachable");
-                                NSString* errorString = [result valueForKey:@"error"];
+                               
 
                                NSString* date= [[APIManager sharedManager] getDateAndTimeString];
                                
@@ -936,10 +936,25 @@ static APIManager *singleton = nil;
                                
                                [[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict removeObjectForKey:fileName];
                               
+                NSString* errorString = [result valueForKey:@"error"];
+                
+                NSString* messageString = [result valueForKey:@"message"];
+
                 NSString* failedMessage = @"File uploading failed";
-                if (errorString != nil || ![errorString isEqualToString:@""]) {
+                if (errorString != nil) {
                     failedMessage = [NSString stringWithFormat:@"%@, file uploading failed",errorString];
                 }
+                
+                if (errorString != nil && messageString != nil) {
+                    failedMessage = [NSString stringWithFormat:@"%@, %@, file uploading failed",errorString,messageString];
+                }
+                else if (messageString != nil){
+                    failedMessage = [NSString stringWithFormat:@"%@, file uploading failed",messageString];
+                    
+                }
+//                if (exceptionString != nil) {
+//                    failedMessage = [NSString stringWithFormat:@"%@,%@,%@, file uploading failed",errorString,exceptionString,messageString];
+//                }
                                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:failedMessage withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
                                
                                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -1303,8 +1318,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
                              @"transferStatus" : [NSString stringWithFormat:@"%d", transferStatus],
                              @"mobileDictationIdVal" : [NSString stringWithFormat:@"%d", mobileDictationIdVal],
                              @"templateCode" : templateCode,
-                             @"urgentFl" : priorityId,
-                             @"comment" : comment,
+                             @"urgentFl" : priorityId
                              };
     // NSString* authorisation=[NSString stringWithFormat:@"%@*%d*%ld*%d*%d",macId,filesizeint,deptObj.Id,1,0];
    
