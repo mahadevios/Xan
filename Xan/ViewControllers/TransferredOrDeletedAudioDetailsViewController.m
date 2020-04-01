@@ -180,6 +180,7 @@
         [self.urgentCheckboxButton setUserInteractionEnabled:NO];
         [resendButton setHidden:YES];
         [deleteDictationButton setHidden:YES];
+        [self.commentButton setUserInteractionEnabled:NO];
         NSString* transferStatusString;
         if (app.deletedListArray.count > 0)
         {

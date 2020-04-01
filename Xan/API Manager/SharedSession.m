@@ -26,7 +26,7 @@ static NSURLSession * sharedSession =nil;
 //        backgroundConfig.sessionSendsLaunchEvents = false;
 //        backgroundConfig.timeoutIntervalForRequest = 120;// time wait for response
         
-        backgroundConfig.timeoutIntervalForResource = 120;// time wait for upload
+        backgroundConfig.timeoutIntervalForResource = 30*60;// time wait for upload
         
         sharedSession = [NSURLSession sessionWithConfiguration:backgroundConfig delegate:sender delegateQueue:[NSOperationQueue mainQueue]];
         

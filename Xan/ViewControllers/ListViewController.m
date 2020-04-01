@@ -284,7 +284,7 @@
    
     self.navigationItem.leftBarButtonItem=nil;
     UIToolbar *tools1 = [[UIToolbar alloc]
-                         initWithFrame:CGRectMake(-70.0f, 0.0f, 80.0f, 44.01f)]; // 44.01 shifts it up 1px for some reason
+                         initWithFrame:CGRectMake(0.0f, 0.0f, 80.0f, 44.01f)]; // 44.01 shifts it up 1px for some reason
     tools1.barTintColor = [UIColor appColor];
     tools1.translucent = NO;
     tools1.tag=101;
@@ -564,7 +564,7 @@
         NSPredicate *transferDatePredicate;
         
         NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"fileName CONTAINS [cd] %@", self.searchController.searchBar.text];
-        NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"department CONTAINS [cd] %@", self.searchController.searchBar.text];
+        NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"department.departmentName CONTAINS [cd] %@", self.searchController.searchBar.text];
         
         NSPredicate *mainPredicate;
         

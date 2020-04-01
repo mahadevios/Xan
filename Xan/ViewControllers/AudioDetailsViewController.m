@@ -239,6 +239,8 @@
                     [self.urgentCheckboxButton setUserInteractionEnabled:NO];
                     
                     [templateNamesDropdownMenu setUserInteractionEnabled:NO];
+                    
+                    [self.commentButton setUserInteractionEnabled:false];
                 }
                 else
                 {
@@ -1204,6 +1206,8 @@
     [deleteDictationButton setHidden:YES];
     
     moreButton.userInteractionEnabled=NO;
+    
+    _commentButton.userInteractionEnabled=NO;
     
     if (checkBoxSelected)
     {

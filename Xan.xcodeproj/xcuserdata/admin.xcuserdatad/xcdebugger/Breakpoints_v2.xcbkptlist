@@ -3179,8 +3179,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1118"
             endingLineNumber = "1118"
-            landmarkName = "APIManager"
-            landmarkType = "3">
+            landmarkName = "-URLSession:task:didSendBodyData:totalBytesSent:totalBytesExpectedToSend:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3194,8 +3194,8 @@
             timestampString = "600076969.443552"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3937"
-            endingLineNumber = "3937"
+            startingLineNumber = "3943"
+            endingLineNumber = "3943"
             landmarkName = "-updateDictationStatus:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3798,8 +3798,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1565"
             endingLineNumber = "1565"
-            landmarkName = "-dropdownMenu:didOpenComponent:"
-            landmarkType = "7">
+            landmarkName = "AudioDetailsViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3860,8 +3860,8 @@
             filePath = "Xan/ViewControllers/InCompleteRecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2981"
-            endingLineNumber = "2981"
+            startingLineNumber = "2987"
+            endingLineNumber = "2987"
             landmarkName = "-getTotalCMTimeFromMilliSeconds:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3940,8 +3940,8 @@
             filePath = "Xan/ViewControllers/InCompleteRecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3001"
-            endingLineNumber = "3001"
+            startingLineNumber = "3007"
+            endingLineNumber = "3007"
             landmarkName = "InCompleteRecordViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -4359,22 +4359,6 @@
             startingLineNumber = "469"
             endingLineNumber = "469"
             landmarkName = "-isWhatsApplication:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C645E146-2B90-4FB6-9E43-A8C35ACE9C4D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/ViewControllers/RecordViewController.mm"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3076"
-            endingLineNumber = "3076"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
