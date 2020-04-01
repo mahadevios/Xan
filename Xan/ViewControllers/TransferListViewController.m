@@ -555,7 +555,7 @@
             predicate2 = [NSPredicate predicateWithFormat:@"recordingDate CONTAINS [cd] %@", self.searchController.searchBar.text];
         }
         
-        NSPredicate *predicate4 = [NSPredicate predicateWithFormat:@"department CONTAINS [cd] %@", self.searchController.searchBar.text];
+        NSPredicate *predicate4 = [NSPredicate predicateWithFormat:@"department.departmentName CONTAINS [cd] %@", self.searchController.searchBar.text];
         
         
         

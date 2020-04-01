@@ -1774,12 +1774,13 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
 //    [commentButton setFrame:CGRectMake(commentButton.frame.origin.x, commentButton.frame.origin.y, commentImageView.frame.size.width + commentLabel.frame.size.width + 10, commentButton.frame.size.height)];
     
-    if (self.existingAudioComment != nil || ![self.existingAudioComment isEqualToString:@""]) {
-        commentLabel.text = self.existingAudioComment;
-    }
-    else
-    commentLabel.text = @"Add Comment";
-    
+    if ([self.existingAudioComment isEqualToString:@""] || self.existingAudioComment == nil) {
+           commentLabel.text = @"Add Comment";
+       }
+       else
+       {
+           commentLabel.text = self.existingAudioComment;
+       }
     [commentLabel setFont:[UIFont fontWithName:@"Helvetica" size:15.0]];
     
     [self prepareAudioPlayer];
@@ -1929,7 +1930,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                 
                 commentLabel.text = @"Add Comment";
                 
+                self.existingAudioComment = @"";
+                
                 [[Database shareddatabase] updateComment:commentString fileName:self.existingAudioFileName];
+                
+                
                 
                 NSDictionary* delegateDict = [[NSDictionary alloc] initWithObjectsAndKeys:@"",@"Comment", nil];
                                
@@ -1940,6 +1945,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                 NSString* commentString = textView.text;
                 
                 commentLabel.text = commentString;
+                
+                self.existingAudioComment = commentString;
                 
                 [[Database shareddatabase] updateComment:commentString fileName:self.existingAudioFileName];
                 
