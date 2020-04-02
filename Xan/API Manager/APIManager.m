@@ -942,14 +942,14 @@ static APIManager *singleton = nil;
 
                 NSString* failedMessage = @"File uploading failed";
                 if (errorString != nil) {
-                    failedMessage = [NSString stringWithFormat:@"%@, file uploading failed",errorString];
+                    failedMessage = [NSString stringWithFormat:@"%@ file uploading failed",errorString];
                 }
                 
                 if (errorString != nil && messageString != nil) {
-                    failedMessage = [NSString stringWithFormat:@"%@, %@, file uploading failed",errorString,messageString];
+                    failedMessage = [NSString stringWithFormat:@"%@, %@ file uploading failed",errorString,messageString];
                 }
                 else if (messageString != nil){
-                    failedMessage = [NSString stringWithFormat:@"%@, file uploading failed",messageString];
+                    failedMessage = [NSString stringWithFormat:@"%@ file uploading failed",messageString];
                     
                 }
 //                if (exceptionString != nil) {
@@ -1014,7 +1014,7 @@ static APIManager *singleton = nil;
                 //                    NSLog(@"%@",fileName);
                 NSString* failedMessage = @"File uploading failed";
                 if (error.localizedDescription != nil || ![error.localizedDescription isEqualToString:@""]) {
-                    failedMessage = [NSString stringWithFormat:@"%@, file uploading failed",error.localizedDescription];
+                    failedMessage = [NSString stringWithFormat:@"%@ file uploading failed",error.localizedDescription];
                 }
                 
                 
