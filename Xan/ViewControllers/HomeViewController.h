@@ -12,6 +12,7 @@
 #import "APIManager.h"
 #import "AppPreferences.h"
 #import "Constants.h"
+#import "LoginViewController.h"
 
 @interface HomeViewController : UIViewController<UISplitViewControllerDelegate>
 {

@@ -80,6 +80,18 @@
                                              selector:@selector(validateFileUploadResponse) name:NOTIFICATION_FILE_UPLOAD_API
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(validateFileFailedResponse:) name:NOTIFICATION_FILE_UPLOAD_FAILED
+                                                  object:nil];
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                                selector:@selector(validateFileFailedResponse:) name:NOTIFICATION_FILE_UPLOAD_API
+//                                                     object:nil];
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(validateFileFailedResponse:) name:NOTIFICATION_FILE_UPLOAD_FAILED
+//                                                  object:nil];
+//
     // observer for completed doc API response
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(validateSendIdsResponse:) name:NOTIFICATION_SEND_DICTATION_IDS_API
@@ -113,11 +125,68 @@
     [tabBar setSelectionIndicatorImage:finalImg];
 }
 
+-(void)validateFileFailedResponse:(NSNotification*)notification
+{
+    NSString* msg = notification.object;
+    
+    if (msg == nil) {
+        msg = @"";
+    }
+    
+//    NSString* finalMessage = [NSString stringWithFormat:@"Your session has timed out. Please login using your PIN and try again."];
+//    alertController = [UIAlertController alertControllerWithTitle:finalMessage
+//                                                          message:nil
+//                                                   preferredStyle:UIAlertControllerStyleAlert];
+//
+//    actionDelete = [UIAlertAction actionWithTitle:@"Ok"
+//                                            style:UIAlertActionStyleDefault
+//                                          handler:^(UIAlertAction * action)
+//                    {
+//
+//        dispatch_async(dispatch_get_main_queue(), ^
+//        {
+
+            [self handleFileFailed];
+            
+            [self LogoutAndPresentLoginVC];
+//
+//        });
+//        //
+//    }]; //You can use a block here to handle a press on this button
+//    [alertController addAction:actionDelete];
+//
+//
+//    [[[[UIApplication sharedApplication] keyWindow] rootViewController]  presentViewController:alertController animated:YES completion:nil];
+    
+
+    
+}
 -(void)validateFileUploadResponse
 {
     [self getCountsOfTransferredAwaitingFiles];
     
     [self showTransferFailedCount];
+}
+-(void)handleFileFailed
+{
+    [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeAllObjects];
+    
+    [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeAllObjects];
+    
+    [[Database shareddatabase] updateUploadingFileDictationStatus];
+
+    self.tabBarController.selectedIndex=0;
+//    if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>0)
+                                  //    {
+//                                          [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
+                                          
+//                                          NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
+                                          
+//                                          [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
+                                          
+//                                          [self uploadFileToServer:nextFileToBeUpload jobName:FILE_UPLOAD_API];
+//
+//                                    //  }
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -192,7 +261,7 @@
     
     NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
     
-    [self deleteDictation];
+//    [self deleteDictation];
     //for first time to check files to be purge are available or not
     if ([[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DATA_DATE]== NULL)
     {
@@ -756,6 +825,33 @@
     [self.tabBarController presentViewController:vc animated:YES completion:nil];
 }
 
+-(void) LogoutAndPresentLoginVC
+{
+    [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+      
+      [AppPreferences sharedAppPreferences].userObj = nil;
+      
+      UIViewController* vc= [self.storyboard  instantiateViewControllerWithIdentifier:@"LoginViewController"];
+      
+      vc.modalPresentationStyle = UIModalPresentationFullScreen;
+      
+//      [self presentViewController:vc animated:true completion:nil];
+    UIViewController *topRootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    
+    while (topRootViewController.presentedViewController)
+    {
+        topRootViewController = topRootViewController.presentedViewController;
+    }
+    
+    if (![topRootViewController isKindOfClass: [LoginViewController class]])
+    {
+        vc.modalPresentationStyle = UIModalPresentationFullScreen;
+        [topRootViewController presentViewController:vc animated:YES completion:nil];
+        
+    }
+    
+//     [[[[UIApplication sharedApplication] keyWindow] rootViewController]  presentViewController:vc animated:YES completion:nil];
+}
 -(void)Logout
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
@@ -770,6 +866,7 @@
 
 //    [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
 }
+
 
 // dismiss popview ForMoreOptions
 -(void)dismissPopView:(id)sender

@@ -18,9 +18,9 @@
 //#define  BASE_URL_PATH                          @"http://192.168.3.80:8089/xan-dictate"  // Mahadev Mac
 //#define  BASE_URL_PATH                          @"http://192.168.3.82:8089/xan-dictate"  // Mahadev Windows
 
-//#define  BASE_URL_PATH                        @"http://192.168.2.9:8089/xan-dictate"
+#define  BASE_URL_PATH                        @"http://139.99.130.121:8080/xan_dictate"
 
-#define  BASE_URL_PATH                          @"https://cfscommunicator.com:8443/xan_dictate"
+//#define  BASE_URL_PATH                          @"https://cfscommunicator.com:8443/xan_dictate"
 
 //#define  BASE_URL_PATH                        @"http://192.168.3.80:8080/user"
 
@@ -106,6 +106,7 @@
 #define NOTIFICATION_DICTATIONS_INSERT_API          @"notificationForMobileDictationsInsert"
 #define NOTIFICATION_DATA_SYNCHRONISATION_API       @"notificationForMobileDataSynchronisation"
 #define NOTIFICATION_FILE_UPLOAD_API                @"notificationForMobileFileUpload"
+#define NOTIFICATION_FILE_UPLOAD_FAILED             @"notificationForMobileFileUploadFailed"
 #define NOTIFICATION_FILE_DOWNLOAD_API              @"notificationForMobileFileDownload"
 #define NOTIFICATION_SEND_DICTATION_IDS_API         @"notificationSendDictationIds"
 #define NOTIFICATION_ACCEPT_TANDC_API               @"notificationAcceptTandC"
@@ -141,7 +142,7 @@
 #define TRANSFER_MESSAGE                       @"Are you sure you want to transfer this recording?"
 #define TRANSFER_MESSAGE_MULTIPLES             @"Are you sure you want to transfer these recordings?"
 #define RESEND_MESSAGE                         @"Are you sure you want to resend this recording?"
-#define PAUSE_STOP_MESSAGE                     @"Recording is on.Please pause/stop the recording"
+#define PAUSE_STOP_MESSAGE                     @"Recording is on. Please pause/stop the recording"
 #define MAXIMUM_RECORDING_LIMIT_MESSAGE        @"Recording duration length exceeded,please start new recording for further dictation"
 #define RECORDING_SAVED_MESSAGE                @"Recording duration length exceeded,your recording has been saved in awaiting transfer,please start new recording for further dictation"
 #define NO_INTERNET_TITLE_MESSAGE              @"No Internet Connection!"

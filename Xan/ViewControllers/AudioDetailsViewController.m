@@ -156,8 +156,10 @@
     
     if (![AppPreferences sharedAppPreferences].dismissAudioDetails && ![AppPreferences sharedAppPreferences].recordNew)
     {
+        if (!transferDictationButton.isHidden) {// if not uploading then only keep more enabled
+            moreButton.userInteractionEnabled=YES;
+        }
         
-        moreButton.userInteractionEnabled=YES;
         
         
         if (isDeleteEditTransferButtonsRemovedAfterTransfer == false)
