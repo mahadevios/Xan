@@ -24,8 +24,8 @@
     poUpTableView.layer.cornerRadius=2.0f;
     app = [AppPreferences sharedAppPreferences];
 //
-    recordSettingsItemsarray=[[NSMutableArray alloc]initWithObjects:@"Pause recording after",@"Confirm before saving",@"Alert before recording",@"Back to home after dictation", nil];
-    
+    recordSettingsItemsarray=[[NSMutableArray alloc]initWithObjects:@"Pause recording after",@"Confirm before saving",@"Alert before recording",@"Back to home after dictation",@"Login everytime coming from background", nil];
+    //@"Login everytime when app opens"
     storageManagementItemsArray=[[NSMutableArray alloc]initWithObjects:@"Low storage threshold",@"Purge deleted and transferred data by", nil];
 
     PlaybackAutoRewindByArray=[[NSMutableArray alloc]initWithObjects:@"Change your pin", nil];
@@ -232,7 +232,7 @@
             UILabel* nameLabel= [cell viewWithTag:101];
             nameLabel.text=[recordSettingsItemsarray objectAtIndex:indexPath.row];
             
-            if (indexPath.row!=0 && indexPath.row!=4)
+            if (indexPath.row!=0)
             {
                 SwitchCreation* switchobj=[SwitchCreation new];
                 switchobj.tableview=tableview;
@@ -379,7 +379,11 @@
         {
             [onoff setOn:[[NSUserDefaults standardUserDefaults] boolForKey:BACK_TO_HOME_AFTER_DICTATION]];
         }
-
+        if (onoff.tag==4)
+        {
+            [onoff setOn:[[NSUserDefaults standardUserDefaults] boolForKey:LOGIN_EVERYTIME]];
+        }
+      
         [onoff addTarget: self action: @selector(flip:) forControlEvents:UIControlEventValueChanged];
         [sender.cell addSubview:onoff];
     }
@@ -406,6 +410,15 @@
     {
         bool backToHomeAfterDictation=sender.isOn;
         [[NSUserDefaults standardUserDefaults] setBool:backToHomeAfterDictation forKey:BACK_TO_HOME_AFTER_DICTATION];
+
+    }
+    if (sender.tag==4)
+    {
+        bool backToHomeAfterDictation=sender.isOn;
+        
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:LOGIN_EVERYTIME_SETTING_ALTERED];
+
+        [[NSUserDefaults standardUserDefaults] setBool:backToHomeAfterDictation forKey:LOGIN_EVERYTIME];
 
     }
     //NSLog(@"%ld",sender.tag);
@@ -479,15 +492,15 @@
             
         }
         
-        if (indexPath.section==0 && indexPath.row==4)
-        {
-            
-            abbreviationPopupView=  [[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+20, self.view.frame.origin.y+100, self.view.frame.size.width-40, 200) sender:self];
-            [abbreviationPopupView addGestureRecognizer:tap1];
-            abbreviationPopupView.tag=121;
-            [[[UIApplication sharedApplication] keyWindow] addSubview:abbreviationPopupView];
-            
-        }
+//        if (indexPath.section==0 && indexPath.row==4)
+//        {
+//
+//            abbreviationPopupView=  [[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+20, self.view.frame.origin.y+100, self.view.frame.size.width-40, 200) sender:self];
+//            [abbreviationPopupView addGestureRecognizer:tap1];
+//            abbreviationPopupView.tag=121;
+//            [[[UIApplication sharedApplication] keyWindow] addSubview:abbreviationPopupView];
+//
+//        }
         if (indexPath.section==2 && indexPath.row==0)
         {
             UIViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ChangePasswordViewController"];
