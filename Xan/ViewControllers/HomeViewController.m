@@ -79,6 +79,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(validateFileUploadResponse) name:NOTIFICATION_FILE_UPLOAD_API
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                              selector:@selector(validateFileFailedResponse:) name:NOTIFICATION_FILE_UPLOAD_FAILED
+                                                   object:nil];
     
     // observer for completed doc API response
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -118,6 +121,63 @@
     [self getCountsOfTransferredAwaitingFiles];
     
     [self showTransferFailedCount];
+}
+
+-(void)validateFileFailedResponse:(NSNotification*)notification
+{
+    NSString* msg = notification.object;
+    
+    if (msg == nil) {
+        msg = @"";
+    }
+    
+
+    [self handleFileFailed];
+    
+    [self LogoutAndPresentLoginVC];
+
+    
+}
+
+-(void)handleFileFailed
+{
+    [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeAllObjects];
+    
+    [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeAllObjects];
+    
+    [[Database shareddatabase] updateUploadingFileDictationStatus];
+
+    self.tabBarController.selectedIndex=0;
+
+}
+
+
+-(void) LogoutAndPresentLoginVC
+{
+    [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+      
+      [AppPreferences sharedAppPreferences].userObj = nil;
+      
+      UIViewController* vc= [self.storyboard  instantiateViewControllerWithIdentifier:@"LoginViewController"];
+      
+      vc.modalPresentationStyle = UIModalPresentationFullScreen;
+      
+//      [self presentViewController:vc animated:true completion:nil];
+    UIViewController *topRootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    
+    while (topRootViewController.presentedViewController)
+    {
+        topRootViewController = topRootViewController.presentedViewController;
+    }
+    
+    if (![topRootViewController isKindOfClass: [LoginViewController class]])
+    {
+        vc.modalPresentationStyle = UIModalPresentationFullScreen;
+        [topRootViewController presentViewController:vc animated:YES completion:nil];
+        
+    }
+    
+//     [[[[UIApplication sharedApplication] keyWindow] rootViewController]  presentViewController:vc animated:YES completion:nil];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -318,7 +378,8 @@
 
 
 -(void)validateTemplateListResponse:(NSNotification*)responseDictObj
-{
+{           
+    
     NSArray* responseArray= responseDictObj.object;
     
     [hud hideAnimated:true];

@@ -835,6 +835,7 @@ static APIManager *singleton = nil;
 
 
 
+
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
 {
     
@@ -842,6 +843,8 @@ static APIManager *singleton = nil;
     if (!(data == nil))
     {
         NSString* taskIdentifier = [[NSString stringWithFormat:@"%@",session.configuration.identifier] stringByAppendingString:[NSString stringWithFormat:@"%lu",(unsigned long)dataTask.taskIdentifier]];
+        
+        
         
         NSError* error1;
         result = [NSJSONSerialization JSONObjectWithData:data
@@ -921,62 +924,110 @@ static APIManager *singleton = nil;
                            {
                                //NSLog(@"Reachable");
                                
-
-                               NSString* date= [[APIManager sharedManager] getDateAndTimeString];
-                               
-                               NSString* fileName = [[Database shareddatabase] getfileNameFromTaskIdentifier:taskIdentifier];
-                               
-                               [[Database shareddatabase] updateAudioFileUploadedStatus:@"TransferFailed" fileName:fileName dateAndTime:date mobiledictationidval:0];
-                               
-                               [[Database shareddatabase] updateAudioFileStatus:@"RecordingComplete" fileName:fileName];
-                               
-                               [[Database shareddatabase] deleteIdentifierFromDatabase:taskIdentifier];
-                               
-                               [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_API object:fileName];
-                               
-                               [[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict removeObjectForKey:fileName];
                               
-                NSString* errorString = [result valueForKey:@"error"];
-                
-                NSString* messageString = [result valueForKey:@"message"];
+                               NSString* errorString = [result valueForKey:@"error"];
+                                
+                                NSString* messageString = [result valueForKey:@"message"];
 
-                NSString* failedMessage = @"File uploading failed";
-                if (errorString != nil) {
-                    failedMessage = [NSString stringWithFormat:@"%@ file uploading failed",errorString];
+                                NSString* failedMessage = @"File uploading failed";
+                                if (errorString != nil) {
+                                    failedMessage = [NSString stringWithFormat:@"%@, file uploading failed",errorString];
+                                }
+                                
+                                if (errorString != nil && messageString != nil) {
+                                    failedMessage = [NSString stringWithFormat:@"%@, %@, file uploading failed",errorString,messageString];
+                                }
+                                else if (messageString != nil){
+                                    failedMessage = [NSString stringWithFormat:@"%@, file uploading failed",messageString];
+                                    
+                                }
+                                              
+               NSString* date= [[APIManager sharedManager] getDateAndTimeString];
+               
+               NSString* fileName = [[Database shareddatabase] getfileNameFromTaskIdentifier:taskIdentifier];
+               
+               [[Database shareddatabase] updateAudioFileUploadedStatus:@"NotTransferred" fileName:fileName dateAndTime:date mobiledictationidval:0];
+               
+               [[Database shareddatabase] updateAudioFileStatus:@"RecordingComplete" fileName:fileName];
+               
+               [[Database shareddatabase] deleteIdentifierFromDatabase:taskIdentifier];
+               
+               [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_API object:fileName];
+               
+               [[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict removeObjectForKey:fileName];
+                               
+                if(errorString==nil)
+                {
+                    errorString = @"";
                 }
-                
-                if (errorString != nil && messageString != nil) {
-                    failedMessage = [NSString stringWithFormat:@"%@, %@ file uploading failed",errorString,messageString];
+                if (messageString==nil)
+                {
+                    messageString = @"";
                 }
-                else if (messageString != nil){
-                    failedMessage = [NSString stringWithFormat:@"%@ file uploading failed",messageString];
+                if ([errorString isEqualToString:@"Unauthorized"] || [messageString isEqualToString:@"Unauthorized"]) {
                     
+                    
+                      // if failed due to unauthorization then dont show it as failed
+                    [[Database shareddatabase] updateAudioFileUploadedStatus:@"NotTransferred" fileName:fileName dateAndTime:date mobiledictationidval:0];
+                    
+                    [[Database shareddatabase] updateAudioFileStatus:@"RecordingComplete" fileName:fileName];
+                    
+                    [[Database shareddatabase] deleteIdentifierFromDatabase:taskIdentifier];
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_API object:fileName];
+                    
+                    [[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict removeObjectForKey:fileName];
+                    
+                    failedMessage = @"Your session has timed out. Please login using your PIN and try again.";
+                    
+                     [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:failedMessage withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                    
+//                       [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PAUSE_RECORDING object:nil];//to pause ongoing recording if any
+                    
+                       [[NSNotificationCenter defaultCenter] postNotificationName: NOTIFICATION_FILE_UPLOAD_FAILED object:failedMessage];
+                    
+                 
+
+                   
                 }
-//                if (exceptionString != nil) {
-//                    failedMessage = [NSString stringWithFormat:@"%@,%@,%@, file uploading failed",errorString,exceptionString,messageString];
-//                }
-                               [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:failedMessage withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
-                               
-                               dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                                   
-                                   if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>0)
-                                   {
-                                       [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
-                                       
-                                       NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
-                                       
-                                       [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
-                                       
-                                       [self uploadFileToServer:nextFileToBeUpload jobName:FILE_UPLOAD_API];
-                                       
-                                   }
-                                   else
-                                   {
-                                       [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
-                                   }
-    
-                               });
-                               
+                else
+                {
+                    [[Database shareddatabase] updateAudioFileUploadedStatus:@"TransferFailed" fileName:fileName dateAndTime:date mobiledictationidval:0];
+                    
+                    [[Database shareddatabase] updateAudioFileStatus:@"RecordingComplete" fileName:fileName];
+                    
+                    [[Database shareddatabase] deleteIdentifierFromDatabase:taskIdentifier];
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_API object:fileName];
+                    
+                    [[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict removeObjectForKey:fileName];
+                                      
+                    
+ [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:failedMessage withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                    
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        
+                        if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>0)
+                        {
+                            [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
+                            
+                            NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
+                            
+                            [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
+                            
+                            [self uploadFileToServer:nextFileToBeUpload jobName:FILE_UPLOAD_API];
+                            
+                        }
+                        else
+                        {
+                            [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
+                        }
+                        
+                    });
+                                                   
+                }
+                            
+                
                            });
 
         }
@@ -984,6 +1035,7 @@ static APIManager *singleton = nil;
     }
     
 }
+
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)dataTask didCompleteWithError:(NSError *)error
 {
@@ -1341,6 +1393,8 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 //    [request setValue:authorisationEncString forHTTPHeaderField:@"Authorization"];
 
     NSString* jwtToken = [[NSUserDefaults standardUserDefaults] objectForKey:JWT_TOKEN];
+
+
     [request setValue:[NSString stringWithFormat:@"Bearer %@", jwtToken] forHTTPHeaderField:@"Authorization"];
     
     

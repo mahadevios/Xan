@@ -116,7 +116,8 @@
     NSString* responseTokenString=  [dict valueForKey:@"token"];
     
     [[NSUserDefaults standardUserDefaults] setObject:responseTokenString forKey:JWT_TOKEN];
-    
+//    [[NSUserDefaults standardUserDefaults] setObject:@"fdsfsdfdf" forKey:JWT_TOKEN];
+
     [hud hideAnimated:YES];
     
 //    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

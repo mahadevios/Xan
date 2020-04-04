@@ -90,7 +90,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:CONFIRM_BEFORE_SAVING_SETTING];
     }
-    
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:LOGIN_EVERYTIME_SETTING_ALTERED])// to set confirm before saving setting on by default, if user not aletered the setting then put it on
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:LOGIN_EVERYTIME];
+    }
         if ([[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DELETED_DATA]== NULL)
         {
             [[NSUserDefaults standardUserDefaults] setValue:@"15 days" forKey:PURGE_DELETED_DATA];
@@ -384,10 +387,15 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                 topRootViewController = topRootViewController.presentedViewController;
             }
             
+            //to avoid double pin login screen show: if kept in background by just openig login view
             if (![topRootViewController isKindOfClass: [LoginViewController class]])
             {
-                loginViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-                [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
+                if(LOGIN_EVERYTIME)// if settings on then only show login screen
+                {
+                    loginViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+                                   [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
+                }
+               
                 
             }
         }

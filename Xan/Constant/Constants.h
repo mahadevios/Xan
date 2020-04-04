@@ -20,8 +20,8 @@
 
 //#define  BASE_URL_PATH                        @"http://192.168.2.9:8089/xan-dictate"
 
-#define  BASE_URL_PATH                          @"https://cfscommunicator.com:8443/xan_dictate"
-//#define  BASE_URL_PATH                          @"http://139.99.130.121:8080/xan_dictate"
+//#define  BASE_URL_PATH                          @"https://cfscommunicator.com:8443/xan_dictate"
+#define  BASE_URL_PATH                          @"http://139.99.130.121:8080/xan_test_dictate/"
 
 //#define  BASE_URL_PATH                        @"http://192.168.3.80:8080/user"
 
@@ -107,6 +107,7 @@
 #define NOTIFICATION_DICTATIONS_INSERT_API          @"notificationForMobileDictationsInsert"
 #define NOTIFICATION_DATA_SYNCHRONISATION_API       @"notificationForMobileDataSynchronisation"
 #define NOTIFICATION_FILE_UPLOAD_API                @"notificationForMobileFileUpload"
+#define NOTIFICATION_FILE_UPLOAD_FAILED             @"notificationForMobileFileUploadFailed"
 #define NOTIFICATION_FILE_DOWNLOAD_API              @"notificationForMobileFileDownload"
 #define NOTIFICATION_SEND_DICTATION_IDS_API         @"notificationSendDictationIds"
 #define NOTIFICATION_ACCEPT_TANDC_API               @"notificationAcceptTandC"
@@ -130,8 +131,10 @@
 #define SAVE_DICTATION_WAITING_SETTING         @"Save dictation waiting by"
 #define CONFIRM_BEFORE_SAVING_SETTING          @"Confirm before saving"
 #define CONFIRM_BEFORE_SAVING_SETTING_ALTERED  @"Confirm before saving alter"
+#define LOGIN_EVERYTIME_SETTING_ALTERED        @"Login everytime alter"
 #define ALERT_BEFORE_RECORDING                 @"Alert before recording"
 #define BACK_TO_HOME_AFTER_DICTATION           @"Back to home after dictation"
+#define LOGIN_EVERYTIME                        @"Login everytime"
 #define RECORD_ABBREVIATION                    @"Record abbreviation"
 #define LOW_STORAGE_THRESHOLD                  @"Low storage threshold"
 #define PURGE_DELETED_DATA                     @"Purge data by"
