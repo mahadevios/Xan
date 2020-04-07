@@ -352,6 +352,26 @@
         }
     }
     
+    [self findDuplicateDepartmentNames];
+}
+
+-(void)findDuplicateDepartmentNames
+{
+    departmentNamesArray = [[Database shareddatabase] getDepartMentNames];
+       
+    NSMutableArray *unique = [NSMutableArray array];
+    duplicateDepartmentNamesArray = [NSMutableArray array];
+    
+    for (NSString* deptName in departmentNamesArray) {
+        if (![unique containsObject:deptName]) {
+            [unique addObject:deptName];
+        }
+        else
+        {
+            [duplicateDepartmentNamesArray addObject:deptName];
+        }
+    }
+   
 }
 
 -(void)setTransferStatus
@@ -1236,9 +1256,9 @@
 {
     Database* db=[Database shareddatabase];
     
-    departmentNamesArray=[db getDepartMentNames];
+    departmentObjectArray=[db getDepartMentObjList];
     
-    return departmentNamesArray.count;
+    return departmentObjectArray.count;
     
 }
 
@@ -1267,15 +1287,29 @@
     
     radioButton.tag=100;
     
-    DepartMent* dept= [departmentNamesArray objectAtIndex:indexPath.row] ;
+    DepartMent* dept= [departmentObjectArray objectAtIndex:indexPath.row] ;
          
          if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:dept.Id])
             {
-                departmentLabel.text = [NSString stringWithFormat:@"%@ (INACTIVE)",dept.departmentName];
+                if ([duplicateDepartmentNamesArray containsObject:dept.departmentName]) {
+                           
+                           departmentLabel.text = [NSString stringWithFormat:@"%@ (%@ INACTIVE)",dept.departmentName,dept.Id];
+                       }
+                       else
+                       {
+                           departmentLabel.text = [NSString stringWithFormat:@"%@ (INACTIVE)",dept.departmentName];
+                       }
+                
             }
             else
             {
-                departmentLabel.text = dept.departmentName;
+                if ([duplicateDepartmentNamesArray containsObject:dept.departmentName]) {
+                            
+                            departmentLabel.text = [NSString stringWithFormat:@"%@ (%@)",dept.departmentName,dept.Id];
+                        }
+                        else
+                        departmentLabel.text = dept.departmentName;
+               
 
             }
     
@@ -1311,7 +1345,7 @@
     
     UIButton* radioButton=[cell viewWithTag:100];
     
-    DepartMent *deptObj = [departmentNamesArray objectAtIndex:indexPath.row];
+    DepartMent *deptObj = [departmentObjectArray objectAtIndex:indexPath.row];
     
     self.audioDetails.department = deptObj;
     

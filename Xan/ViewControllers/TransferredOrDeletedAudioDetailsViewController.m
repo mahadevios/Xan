@@ -92,6 +92,28 @@
           }
     else
     self.commentLabel.text = self.audioDetails.comment;
+    
+    [self findDuplicateDepartmentNames];
+}
+
+
+-(void)findDuplicateDepartmentNames
+{
+    departmentNamesArray = [[Database shareddatabase] getDepartMentNames];
+       
+       NSMutableArray *unique = [NSMutableArray array];
+       duplicateDepartmentNamesArray = [NSMutableArray array];
+
+       for (NSString* deptName in departmentNamesArray) {
+           if (![unique containsObject:deptName]) {
+               [unique addObject:deptName];
+           }
+           else
+           {
+               [duplicateDepartmentNamesArray addObject:deptName];
+           }
+       }
+     
 }
 
 -(void)setTemplateDropDown
@@ -180,7 +202,6 @@
         [self.urgentCheckboxButton setUserInteractionEnabled:NO];
         [resendButton setHidden:YES];
         [deleteDictationButton setHidden:YES];
-        [self.commentButton setUserInteractionEnabled:NO];
         NSString* transferStatusString;
         if (app.deletedListArray.count > 0)
         {
@@ -480,11 +501,12 @@
 //                       NSString* date= [app getDateAndTimeString];
                         NSString* date = @"NotApplicable";
                         
-                           moreButton.userInteractionEnabled=NO;
+                        moreButton.userInteractionEnabled=NO;
                         NSString* filName = self.audioDetails.fileName;
                         [resendButton setHidden:YES];
                         [deleteDictationButton setHidden:YES];
-                        
+                        [self.commentButton setUserInteractionEnabled:NO];
+
                         [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
                                            int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
                                            
@@ -654,8 +676,8 @@ else
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     Database* db=[Database shareddatabase];
-    departmentNamesArray=[db getDepartMentNames];
-    return departmentNamesArray.count;
+    departmentObjectArray=[db getDepartMentObjList];
+    return departmentObjectArray.count;
     
 }
 
@@ -678,15 +700,28 @@ else
     }
     UIButton* radioButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 18, 18)];
     
-    DepartMent* dept = [departmentNamesArray objectAtIndex:indexPath.row] ;
+    DepartMent* dept = [departmentObjectArray objectAtIndex:indexPath.row] ;
       
       if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:dept.Id])
          {
-             departmentLabel.text = [NSString stringWithFormat:@"%@ (INACTIVE)",dept.departmentName];
+
+             if ([duplicateDepartmentNamesArray containsObject:dept.departmentName]) {
+                 
+                 departmentLabel.text = [NSString stringWithFormat:@"%@ (%@ INACTIVE)",dept.departmentName,dept.Id];
+             }
+             else
+             {
+                 departmentLabel.text = [NSString stringWithFormat:@"%@ (INACTIVE)",dept.departmentName];
+             }
          }
          else
          {
-             departmentLabel.text = dept.departmentName;
+             if ([duplicateDepartmentNamesArray containsObject:dept.departmentName]) {
+                         
+                         departmentLabel.text = [NSString stringWithFormat:@"%@ (%@)",dept.departmentName,dept.Id];
+                     }
+                     else
+                     departmentLabel.text = dept.departmentName;
 
          }
     
@@ -722,7 +757,7 @@ else
        
     UIButton* radioButton=[cell viewWithTag:100];
               
-    self.audioDetails.department = [departmentNamesArray objectAtIndex:indexPath.row];
+    self.audioDetails.department = [departmentObjectArray objectAtIndex:indexPath.row];
         
     [radioButton setBackgroundImage:[UIImage imageNamed:@"RadioButton"] forState:UIControlStateNormal];
     

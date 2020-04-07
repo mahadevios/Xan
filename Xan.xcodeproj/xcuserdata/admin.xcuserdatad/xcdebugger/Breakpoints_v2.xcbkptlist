@@ -3194,8 +3194,8 @@
             timestampString = "600076969.443552"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3943"
-            endingLineNumber = "3943"
+            startingLineNumber = "3979"
+            endingLineNumber = "3979"
             landmarkName = "-updateDictationStatus:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3298,8 +3298,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1486"
             endingLineNumber = "1486"
-            landmarkName = "-createBodyWithBoundary:parameters:paths:fieldName:"
-            landmarkType = "7">
+            landmarkName = "APIManager"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3347,8 +3347,8 @@
             timestampString = "600076969.444237"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1840"
-            endingLineNumber = "1840"
+            startingLineNumber = "1862"
+            endingLineNumber = "1862"
             landmarkName = "-addAnimatedView"
             landmarkType = "7">
          </BreakpointContent>
@@ -3364,9 +3364,9 @@
             timestampString = "600076969.4443851"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4379"
-            endingLineNumber = "4379"
-            landmarkName = "-speechToTextButtonClicked:"
+            startingLineNumber = "4408"
+            endingLineNumber = "4408"
+            landmarkName = "-startNewRecordingForEdit"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3444,8 +3444,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1829"
-            endingLineNumber = "1829"
+            startingLineNumber = "1846"
+            endingLineNumber = "1846"
             landmarkName = "-addAnimatedView"
             landmarkType = "7">
          </BreakpointContent>
@@ -3460,8 +3460,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2971"
-            endingLineNumber = "2971"
+            startingLineNumber = "2988"
+            endingLineNumber = "2988"
             landmarkName = "-saveAudioRecordToDatabase"
             landmarkType = "7">
          </BreakpointContent>
@@ -3476,8 +3476,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2980"
-            endingLineNumber = "2980"
+            startingLineNumber = "2997"
+            endingLineNumber = "2997"
             landmarkName = "-saveAudioRecordToDatabase"
             landmarkType = "7">
          </BreakpointContent>
@@ -3526,8 +3526,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1138"
             endingLineNumber = "1138"
-            landmarkName = "APIManager"
-            landmarkType = "3">
+            landmarkName = "-URLSession:task:didSendBodyData:totalBytesSent:totalBytesExpectedToSend:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3588,8 +3588,8 @@
             filePath = "Xan/Database/Database.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1269"
-            endingLineNumber = "1269"
+            startingLineNumber = "1267"
+            endingLineNumber = "1267"
             landmarkName = "-getListOfFileTransfersOfStatus:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3620,8 +3620,8 @@
             filePath = "Xan/Database/Database.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1255"
-            endingLineNumber = "1255"
+            startingLineNumber = "1253"
+            endingLineNumber = "1253"
             landmarkName = "-getListOfFileTransfersOfStatus:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3732,8 +3732,8 @@
             filePath = "Xan/Database/Database.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1578"
-            endingLineNumber = "1578"
+            startingLineNumber = "1576"
+            endingLineNumber = "1576"
             landmarkName = "-getDefaultDepartMentId"
             landmarkType = "7">
          </BreakpointContent>
@@ -3780,8 +3780,8 @@
             filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1591"
-            endingLineNumber = "1591"
+            startingLineNumber = "1625"
+            endingLineNumber = "1625"
             landmarkName = "-dropdownMenu:didCloseComponent:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3796,8 +3796,8 @@
             filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1565"
-            endingLineNumber = "1565"
+            startingLineNumber = "1599"
+            endingLineNumber = "1599"
             landmarkName = "AudioDetailsViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -3844,8 +3844,8 @@
             filePath = "Xan/Database/Database.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1460"
-            endingLineNumber = "1460"
+            startingLineNumber = "1458"
+            endingLineNumber = "1458"
             landmarkName = "-getDepartMentIdFromDepartmentName:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3860,8 +3860,8 @@
             filePath = "Xan/ViewControllers/InCompleteRecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2987"
-            endingLineNumber = "2987"
+            startingLineNumber = "3009"
+            endingLineNumber = "3009"
             landmarkName = "-getTotalCMTimeFromMilliSeconds:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3876,8 +3876,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3058"
-            endingLineNumber = "3058"
+            startingLineNumber = "3075"
+            endingLineNumber = "3075"
             landmarkName = "-tableView:numberOfRowsInSection:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3892,8 +3892,8 @@
             filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1343"
-            endingLineNumber = "1343"
+            startingLineNumber = "1377"
+            endingLineNumber = "1377"
             landmarkName = "-save:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3940,8 +3940,8 @@
             filePath = "Xan/ViewControllers/InCompleteRecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3007"
-            endingLineNumber = "3007"
+            startingLineNumber = "3029"
+            endingLineNumber = "3029"
             landmarkName = "InCompleteRecordViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -4020,8 +4020,8 @@
             filePath = "Xan/Database/Database.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1414"
-            endingLineNumber = "1414"
+            startingLineNumber = "1412"
+            endingLineNumber = "1412"
             landmarkName = "-getListOfFileTransfersOfStatus:"
             landmarkType = "7">
          </BreakpointContent>
@@ -4052,8 +4052,8 @@
             filePath = "Xan/Database/Database.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1454"
-            endingLineNumber = "1454"
+            startingLineNumber = "1452"
+            endingLineNumber = "1452"
             landmarkName = "-getListOfFileTransfersOfStatus:"
             landmarkType = "7">
          </BreakpointContent>
@@ -4100,8 +4100,8 @@
             filePath = "Xan/Database/Database.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3990"
-            endingLineNumber = "3990"
+            startingLineNumber = "3988"
+            endingLineNumber = "3988"
             landmarkName = "-addCommentColumnInCubeData"
             landmarkType = "7">
          </BreakpointContent>
@@ -4132,8 +4132,8 @@
             filePath = "Xan/Database/Database.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4018"
-            endingLineNumber = "4018"
+            startingLineNumber = "4016"
+            endingLineNumber = "4016"
             landmarkName = "-addCommentColumnInCubeData"
             landmarkType = "7">
          </BreakpointContent>
@@ -4164,8 +4164,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2208"
-            endingLineNumber = "2208"
+            startingLineNumber = "2225"
+            endingLineNumber = "2225"
             landmarkName = "-uploadAudio:"
             landmarkType = "7">
          </BreakpointContent>
@@ -4182,8 +4182,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1171"
             endingLineNumber = "1171"
-            landmarkName = "-uploadFileToServerUsingNSURLSession:"
-            landmarkType = "7">
+            landmarkName = "APIManager"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4196,8 +4196,8 @@
             filePath = "Xan/Database/Database.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1636"
-            endingLineNumber = "1636"
+            startingLineNumber = "1634"
+            endingLineNumber = "1634"
             landmarkName = "-getDepartMentIdForFileName:"
             landmarkType = "7">
          </BreakpointContent>
@@ -4333,22 +4333,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B660BA4E-AF8A-47F7-A9A0-C4CBED3B6220"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/ViewControllers/RecordViewController.mm"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2060"
-            endingLineNumber = "2060"
-            landmarkName = "-showCommentTextView"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "AD6A90F1-79A5-45ED-BF10-4634920E6280"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -4356,8 +4340,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1932"
-            endingLineNumber = "1932"
+            startingLineNumber = "1949"
+            endingLineNumber = "1949"
             landmarkName = "-addAnimatedView"
             landmarkType = "7">
          </BreakpointContent>
@@ -4374,7 +4358,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "993"
             endingLineNumber = "993"
-            landmarkName = "-URLSession:task:didCompleteWithError:"
+            landmarkName = "-URLSession:dataTask:didReceiveData:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

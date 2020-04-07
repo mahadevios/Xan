@@ -31,12 +31,12 @@
 {
     self.navigationItem.title = @"Clinical Speciality";
     self.navigationItem.hidesBackButton=YES;
-    departmentNameArray = [[Database shareddatabase] getDepartMentObjList];
-    
-    if (departmentNameArray.count == 0)
+    departmentObjectArray = [[Database shareddatabase] getDepartMentObjList];
+    if (departmentObjectArray.count == 0)
     {
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No Clinical Speciality Added" withMessage:@"Please contact ACE Administrator" withCancelText:@"Cancel" withOkText:nil withAlertTag:1000];
     }
+    [self findDuplicateDepartmentNames];
     [self setSearchController];
     [self prepareForSearchBar];
 //    self.definesPresentationContext = true;
@@ -45,6 +45,24 @@
     
 }
 
+-(void)findDuplicateDepartmentNames
+{
+    departmentNamesArray = [[Database shareddatabase] getDepartMentNames];
+       
+       NSMutableArray *unique = [NSMutableArray array];
+       duplicateDepartmentNamesArray = [NSMutableArray array];
+
+       for (NSString* deptName in departmentNamesArray) {
+           if (![unique containsObject:deptName]) {
+               [unique addObject:deptName];
+           }
+           else
+           {
+               [duplicateDepartmentNamesArray addObject:deptName];
+           }
+       }
+      
+}
 -(void)viewDidAppear:(BOOL)animated
 {
 //    [self setRootView];
@@ -73,7 +91,7 @@
     if ([self.searchController.searchBar.text isEqual:@""])
     {
         
-        departmentNameArray = [[NSMutableArray alloc] initWithArray:departmentNamesPredicateArray];
+        departmentObjectArray = [[NSMutableArray alloc] initWithArray:departmentNamesPredicateArray];
         
         [self.tableView reloadData];
         
@@ -91,7 +109,7 @@
         
         predicateResultArray = [departmentNamesPredicateArray filteredArrayUsingPredicate:mainPredicate];
         
-        departmentNameArray = [NSMutableArray arrayWithArray:predicateResultArray];
+        departmentObjectArray = [NSMutableArray arrayWithArray:predicateResultArray];
 
         [self.tableView reloadData];
     }
@@ -113,7 +131,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return departmentNameArray.count;
+    return departmentObjectArray.count;
     
 }
 
@@ -132,15 +150,28 @@
       
        
     
-    DepartMent* dept = [departmentNameArray objectAtIndex:indexPath.row];
+    DepartMent* dept = [departmentObjectArray objectAtIndex:indexPath.row];
     
     if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:dept.Id]) {
           
-        departmentNameLabel.text = [NSString stringWithFormat:@"%@ (INACTIVE)",dept.departmentName];
+        if ([duplicateDepartmentNamesArray containsObject:dept.departmentName]) {
+            
+            departmentNameLabel.text = [NSString stringWithFormat:@"%@ (%@ INACTIVE)",dept.departmentName,dept.Id];
+        }
+        else
+        {
+            departmentNameLabel.text = [NSString stringWithFormat:@"%@ (INACTIVE)",dept.departmentName];
+        }
+        
 
       }
       else
       {
+          if ([duplicateDepartmentNamesArray containsObject:dept.departmentName]) {
+              
+              departmentNameLabel.text = [NSString stringWithFormat:@"%@ (%@)",dept.departmentName,dept.Id];
+          }
+          else
           departmentNameLabel.text = dept.departmentName;
       }
     
@@ -153,7 +184,7 @@
    
     DepartMent* deptObj = [[DepartMent alloc] init];
     
-    deptObj = [departmentNameArray objectAtIndex:indexPath.row];
+    deptObj = [departmentObjectArray objectAtIndex:indexPath.row];
 
     if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:deptObj.Id])
     {

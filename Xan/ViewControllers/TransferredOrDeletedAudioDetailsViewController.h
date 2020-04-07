@@ -35,7 +35,10 @@
     UIView* popupView;
     PopUpCustomView* forTableViewObj;
     UITableViewCell *cell;
-    NSArray* departmentNamesArray;
+    NSMutableArray* departmentObjectArray;
+    NSMutableArray* departmentNamesArray;
+    NSMutableArray *duplicateDepartmentNamesArray;
+    
     UITapGestureRecognizer* tap;
     
     MKDropdownMenu *templateNamesDropdownMenu;
