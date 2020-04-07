@@ -206,9 +206,26 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME_COPY];
 
-
+    [self findDuplicateDepartmentNames];
 }
 
+-(void) findDuplicateDepartmentNames
+{
+    departmentNamesArray = [[Database shareddatabase] getDepartMentNames];
+       
+       NSMutableArray *unique = [NSMutableArray array];
+       duplicateDepartmentNamesArray = [NSMutableArray array];
+
+       for (NSString* deptName in departmentNamesArray) {
+           if (![unique containsObject:deptName]) {
+               [unique addObject:deptName];
+           }
+           else
+           {
+               [duplicateDepartmentNamesArray addObject:deptName];
+           }
+       }
+}
 -(void)setMinutesValueToPauseRecord
 {
     // get and set minutes value after which record should pause automatically
@@ -3052,8 +3069,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     Database* db=[Database shareddatabase];
-    departmentNamesArray=[db getDepartMentNames];
-    return departmentNamesArray.count;
+    departmentObjectArray=[db getDepartMentObjList];
+    return departmentObjectArray.count;
     
 }
 
@@ -3071,16 +3088,28 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     UILabel* tabelViewDepartmentLabel=[[UILabel alloc]initWithFrame:CGRectMake(40, 10, self.view.frame.size.width - 60.0f, 18)];
     UIButton* radioButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 18, 18)];
     
-     DepartMent* dept = [departmentNamesArray objectAtIndex:indexPath.row];
+     DepartMent* dept = [departmentObjectArray objectAtIndex:indexPath.row];
     
     if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:dept.Id]) {
         
-        tabelViewDepartmentLabel.text = [NSString stringWithFormat:@"%@ (INACTIVE)",dept.departmentName];
-
+        if ([duplicateDepartmentNamesArray containsObject:dept.departmentName]) {
+                   
+                   tabelViewDepartmentLabel.text = [NSString stringWithFormat:@"%@ (%@ INACTIVE)",dept.departmentName,dept.Id];
+               }
+               else
+               {
+                   tabelViewDepartmentLabel.text = [NSString stringWithFormat:@"%@ (INACTIVE)",dept.departmentName];
+               }
+        
     }
     else
     {
-        tabelViewDepartmentLabel.text = dept.departmentName;
+        if ([duplicateDepartmentNamesArray containsObject:dept.departmentName]) {
+                    
+                    tabelViewDepartmentLabel.text = [NSString stringWithFormat:@"%@ (%@)",dept.departmentName,dept.Id];
+                }
+                else
+                tabelViewDepartmentLabel.text = dept.departmentName;
     }
     
     tabelViewDepartmentLabel.tag=200;
@@ -3094,7 +3123,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 //    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
 //    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     
-    if ([existingDepartment.departmentName isEqualToString:tabelViewDepartmentLabel.text] && [existingDepartment.Id isEqualToString:dept.Id])
+    if ([existingDepartment.departmentName isEqualToString:dept.departmentName] && [existingDepartment.Id isEqualToString:dept.Id])
     {
 
         [radioButton setBackgroundImage:[UIImage imageNamed:@"RadioButton"] forState:UIControlStateNormal];
@@ -3102,6 +3131,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     }
     else
         [radioButton setBackgroundImage:[UIImage imageNamed:@"RadioButtonClear"] forState:UIControlStateNormal];
+    
+    
     [cell addSubview:radioButton];
     [cell addSubview:tabelViewDepartmentLabel];
     
@@ -3125,7 +3156,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     //NSLog(@"%ld",indexPath.row);
    // NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-    DepartMent *deptObj = [departmentNamesArray objectAtIndex:indexPath.row];
+    DepartMent *deptObj = [departmentObjectArray objectAtIndex:indexPath.row];
   
     existingDepartment = deptObj;
     

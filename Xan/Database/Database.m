@@ -773,12 +773,12 @@ static Database *db;
     
 }
 
--(NSMutableArray*)getDepartMentNames
+
+-(NSMutableArray*)getDepartMentObjList
 {
     Database *db=[Database shareddatabase];
     NSString *dbPath=[db getDatabasePath];
     sqlite3_stmt *statement = NULL;
-    NSString* departmentName, *departmentId;
     sqlite3* feedbackAndQueryTypesDB;
     NSMutableArray* departmentNameArray=[[NSMutableArray alloc]init];
     //    NSString *query3=[NSString stringWithFormat:@"Select DepartMentName from DepartMentList Where UserId=%d"];
@@ -791,16 +791,16 @@ static Database *db;
         {
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
+                DepartMent* obj=[[DepartMent alloc]init];
                 
                 // [app.feedOrQueryDetailMessageArray addObject:[NSString stringWithUTF8String:message]];
-                 departmentId = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
-                departmentName = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 1)];
+                //                obj.Id=sqlite3_column_int(statement, 0);
                 
-                DepartMent* dept = [DepartMent new];
-                dept.Id = departmentId;
-                dept.departmentName = departmentName;
-                [departmentNameArray addObject:dept];
+                obj.Id=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
                 
+                obj.departmentName=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 1)];
+                
+                [departmentNameArray addObject:obj];
             }
         }
         else
@@ -836,16 +836,17 @@ static Database *db;
     return departmentNameArray;
 }
 
--(NSMutableArray*)getDepartMentObjList
+-(NSMutableArray*)getDepartMentNames
 {
     Database *db=[Database shareddatabase];
     NSString *dbPath=[db getDatabasePath];
     sqlite3_stmt *statement = NULL;
+    NSString* departmentName;
     sqlite3* feedbackAndQueryTypesDB;
     NSMutableArray* departmentNameArray=[[NSMutableArray alloc]init];
     //    NSString *query3=[NSString stringWithFormat:@"Select DepartMentName from DepartMentList Where UserId=%d"];
     
-    NSString *query3=[NSString stringWithFormat:@"Select * from DepartMentList"];
+    NSString *query3=[NSString stringWithFormat:@"Select DepartmentName from DepartMentList"];
     
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
     {
@@ -853,16 +854,14 @@ static Database *db;
         {
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
-                DepartMent* obj=[[DepartMent alloc]init];
                 
                 // [app.feedOrQueryDetailMessageArray addObject:[NSString stringWithUTF8String:message]];
-                //                obj.Id=sqlite3_column_int(statement, 0);
                 
-                obj.Id=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+                departmentName = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
                 
-                obj.departmentName=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 1)];
+              
+                [departmentNameArray addObject:departmentName];
                 
-                [departmentNameArray addObject:obj];
             }
         }
         else

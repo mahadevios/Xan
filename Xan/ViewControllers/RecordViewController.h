@@ -37,7 +37,9 @@
     
     
     UITableViewCell *cell;
+    NSArray* departmentObjectArray;
     NSArray* departmentNamesArray;
+    NSMutableArray* duplicateDepartmentNamesArray;
     NSString* selectedDepartment;
 
     UISlider* audioRecordSlider;
