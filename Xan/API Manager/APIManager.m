@@ -1370,7 +1370,8 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
                              @"transferStatus" : [NSString stringWithFormat:@"%d", transferStatus],
                              @"mobileDictationIdVal" : [NSString stringWithFormat:@"%d", mobileDictationIdVal],
                              @"templateCode" : templateCode,
-                             @"urgentFl" : priorityId
+                             @"urgentFl" : priorityId,
+                             @"comment" : comment
                              };
     // NSString* authorisation=[NSString stringWithFormat:@"%@*%d*%ld*%d*%d",macId,filesizeint,deptObj.Id,1,0];
    
