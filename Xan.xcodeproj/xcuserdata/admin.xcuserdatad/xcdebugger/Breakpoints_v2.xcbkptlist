@@ -3382,7 +3382,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "333"
             endingLineNumber = "333"
-            landmarkName = "-validateTemplateListResponse:"
+            landmarkName = "-showTransferFailedCount"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3398,7 +3398,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "345"
             endingLineNumber = "345"
-            landmarkName = "-validateTemplateListResponse:"
+            landmarkName = "-showTransferFailedCount"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3958,7 +3958,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "197"
             endingLineNumber = "197"
-            landmarkName = "-checkFilesToBePurge"
+            landmarkName = "-viewWillAppear:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3990,7 +3990,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "474"
             endingLineNumber = "474"
-            landmarkName = "-needsUpdate"
+            landmarkName = "-validateSendIdsResponse:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4006,7 +4006,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "497"
             endingLineNumber = "497"
-            landmarkName = "-needsUpdate"
+            landmarkName = "-validateSendIdsResponse:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4148,8 +4148,8 @@
             filePath = "Xan/AppDelegate.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "980"
-            endingLineNumber = "980"
+            startingLineNumber = "985"
+            endingLineNumber = "985"
             landmarkName = "-updateDatabaseIfAny"
             landmarkType = "7">
          </BreakpointContent>
@@ -4215,22 +4215,6 @@
             startingLineNumber = "1314"
             endingLineNumber = "1314"
             landmarkName = "-uploadFileAfterGettingdatabaseValues:departmentID:transferStatus:mobileDictationIdVal:isFileTypeAudio:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E5F892A7-D358-4FC1-8013-2ACE82376392"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/API Manager/APIManager.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "929"
-            endingLineNumber = "929"
-            landmarkName = "-URLSession:dataTask:didReceiveData:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4317,22 +4301,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "8D9159DB-1497-4F9C-A109-409DBFE46EEB"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/API Manager/APIManager.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "842"
-            endingLineNumber = "842"
-            landmarkName = "-URLSession:dataTask:didReceiveData:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "FE6D1A11-79AA-43A5-A837-93B772C91AB1"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -4391,6 +4359,22 @@
             startingLineNumber = "1932"
             endingLineNumber = "1932"
             landmarkName = "-addAnimatedView"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FAF7E8D4-5DC0-4373-847B-192FE1393D89"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/API Manager/APIManager.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "993"
+            endingLineNumber = "993"
+            landmarkName = "-URLSession:task:didCompleteWithError:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
