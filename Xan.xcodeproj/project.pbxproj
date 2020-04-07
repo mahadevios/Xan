@@ -80,6 +80,7 @@
 		848B31041FC7EC8200CE3AC8 /* SpeechRecognitionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848B31031FC7EC8200CE3AC8 /* SpeechRecognitionViewController.m */; };
 		849094AF1FE92B6500B00C0B /* DocFileDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 849094AE1FE92B6500B00C0B /* DocFileDetails.m */; };
 		8490B1E2236D840200CA53FF /* MKDropdownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 8490B1E0236D840200CA53FF /* MKDropdownMenu.m */; };
+		84976EDF243C563A00BE95C4 /* ContactUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84976EDE243C563A00BE95C4 /* ContactUsViewController.m */; };
 		849A20791E080F000004DDD2 /* BrowseMusicViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 849A20781E080F000004DDD2 /* BrowseMusicViewController.mm */; };
 		849AF4AB2029CDCC008B6566 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 849AF4AA2029CDCC008B6566 /* libxml2.tbd */; };
 		849AF60D209C49A800C67980 /* Cube_DB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 849AF60C209C49A700C67980 /* Cube_DB.sqlite */; };
@@ -300,6 +301,8 @@
 		849094AE1FE92B6500B00C0B /* DocFileDetails.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DocFileDetails.m; sourceTree = "<group>"; };
 		8490B1E0236D840200CA53FF /* MKDropdownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKDropdownMenu.m; sourceTree = "<group>"; };
 		8490B1E1236D840200CA53FF /* MKDropdownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKDropdownMenu.h; sourceTree = "<group>"; };
+		84976EDD243C563A00BE95C4 /* ContactUsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactUsViewController.h; sourceTree = "<group>"; };
+		84976EDE243C563A00BE95C4 /* ContactUsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContactUsViewController.m; sourceTree = "<group>"; };
 		849A20771E080F000004DDD2 /* BrowseMusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseMusicViewController.h; sourceTree = "<group>"; };
 		849A20781E080F000004DDD2 /* BrowseMusicViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BrowseMusicViewController.mm; sourceTree = "<group>"; };
 		849A207A1E0811F40004DDD2 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -774,6 +777,8 @@
 				84F564191FCD4970006FC7AD /* SelectFileViewController.m */,
 				846B5A5020B43EAB0012F6D9 /* EmptyViewController.h */,
 				846B5A5120B43EAB0012F6D9 /* EmptyViewController.m */,
+				84976EDD243C563A00BE95C4 /* ContactUsViewController.h */,
+				84976EDE243C563A00BE95C4 /* ContactUsViewController.m */,
 				50BFF78222E7091F00A60099 /* SuperAdminHomeViewController.h */,
 				50BFF78322E7091F00A60099 /* SuperAdminHomeViewController.m */,
 				50A0210022EACF5100FAB114 /* ViewHospitalsTableViewController.h */,
@@ -1059,6 +1064,7 @@
 				8480AAFA1D787DD500473651 /* Keychain.m in Sources */,
 				840AC7581D82816000EF6AF7 /* ExtAudioFileConvert.mm in Sources */,
 				84CC5F791D747B8200D1E982 /* PinRegistrationViewController.m in Sources */,
+				84976EDF243C563A00BE95C4 /* ContactUsViewController.m in Sources */,
 				84D0B5281D81B4D70084E016 /* SBJson4Parser.m in Sources */,
 				84B87BD11D770D1D002B91FB /* SplashScreenViewController.m in Sources */,
 				843B341120452BD20080F355 /* aeskey.c in Sources */,

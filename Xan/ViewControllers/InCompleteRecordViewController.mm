@@ -278,6 +278,28 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
        }
 
     }
+    
+    [self findDuplicateDepartmentNames];
+}
+
+
+-(void)findDuplicateDepartmentNames
+{
+    departmentNamesArray = [[Database shareddatabase] getDepartMentNames];
+       
+       NSMutableArray *unique = [NSMutableArray array];
+       duplicateDepartmentNamesArray = [NSMutableArray array];
+
+       for (NSString* deptName in departmentNamesArray) {
+           if (![unique containsObject:deptName]) {
+               [unique addObject:deptName];
+           }
+           else
+           {
+               [duplicateDepartmentNamesArray addObject:deptName];
+           }
+       }
+       
 }
 
 -(void)pausePlayerFromBackGround
@@ -3025,9 +3047,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    departmentNamesArray=[db getDepartMentNames];
+    departmentObjectArray=[db getDepartMentObjList];
     
-    return departmentNamesArray.count;
+    return departmentObjectArray.count;
     
 }
 
@@ -3052,15 +3074,29 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UIButton* radioButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 18, 18)];
     
-    DepartMent* dept = [departmentNamesArray objectAtIndex:indexPath.row] ;
+    DepartMent* dept = [departmentObjectArray objectAtIndex:indexPath.row] ;
           
     if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:dept.Id])
     {
-        tableViewDepartmentLabel.text = [NSString stringWithFormat:@"%@ (INACTIVE)",dept.departmentName];
+        if ([duplicateDepartmentNamesArray containsObject:dept.departmentName]) {
+                   
+                   tableViewDepartmentLabel.text = [NSString stringWithFormat:@"%@ (%@ INACTIVE)",dept.departmentName,dept.Id];
+               }
+               else
+               {
+                   tableViewDepartmentLabel.text = [NSString stringWithFormat:@"%@ (INACTIVE)",dept.departmentName];
+               }
+               
     }
     else
     {
-        tableViewDepartmentLabel.text = dept.departmentName;
+        if ([duplicateDepartmentNamesArray containsObject:dept.departmentName]) {
+                     
+                     tableViewDepartmentLabel.text = [NSString stringWithFormat:@"%@ (%@)",dept.departmentName,dept.Id];
+                 }
+                 else
+                 tableViewDepartmentLabel.text = dept.departmentName;
+       
     }
         
     tableViewDepartmentLabel.tag=200;
@@ -3070,7 +3106,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 //    NSData *data = [[NSUserDefaults standardUser Defaults] objectForKey:SELECTED_DEPARTMENT_NAME];
 //
-    DepartMent *deptObj = [departmentNamesArray objectAtIndex:indexPath.row];
+    DepartMent *deptObj = [departmentObjectArray objectAtIndex:indexPath.row];
     
     if ([existingAudioDepartment.Id isEqualToString:deptObj.Id])
     {
@@ -3112,7 +3148,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
 //    NSString* deptId= [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text];
     
-     DepartMent *deptObj = [departmentNamesArray objectAtIndex:indexPath.row];
+     DepartMent *deptObj = [departmentObjectArray objectAtIndex:indexPath.row];
     
     existingAudioDepartment = deptObj;
 

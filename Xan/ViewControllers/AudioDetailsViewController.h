@@ -36,7 +36,11 @@
     UIView * overlay;
     UIBackgroundTaskIdentifier task;
     UITableViewCell *cell;
+    
     NSArray* departmentNamesArray;
+    NSMutableArray* departmentObjectArray;
+    NSMutableArray *duplicateDepartmentNamesArray;
+    
     UITapGestureRecognizer* tap;
     BOOL isDeleteEditTransferButtonsRemovedAfterTransfer;
     

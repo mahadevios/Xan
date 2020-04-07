@@ -33,7 +33,10 @@
     PopUpCustomView* obj;
     UIView* editPopUp;
     UITableViewCell *cell;
+    NSMutableArray* departmentObjectArray;
     NSArray* departmentNamesArray;
+    NSMutableArray *duplicateDepartmentNamesArray;
+    
     UISlider* audioRecordSlider;
     Database* db;
     APIManager* app;

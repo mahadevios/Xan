@@ -13,8 +13,10 @@
 
 @interface SelectDepartmentViewController : UIViewController<UISearchBarDelegate, UISearchResultsUpdating>
 {
-    NSMutableArray* departmentNameArray;
+    NSMutableArray* departmentObjectArray;
+    NSMutableArray* departmentNamesArray;
     NSMutableArray* departmentNamesPredicateArray;
+    NSMutableArray *duplicateDepartmentNamesArray;
 
 //    UIAlertController *alertController;
 //    UIAlertAction *actionDelete;

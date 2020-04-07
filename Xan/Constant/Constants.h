@@ -21,7 +21,7 @@
 //#define  BASE_URL_PATH                        @"http://192.168.2.9:8089/xan-dictate"
 
 //#define  BASE_URL_PATH                          @"https://cfscommunicator.com:8443/xan_dictate"
-#define  BASE_URL_PATH                          @"http://139.99.130.121:8080/xan_test_dictate/"
+#define  BASE_URL_PATH                          @"https://acedictate.com.au:8443/xan_dictate/"
 
 //#define  BASE_URL_PATH                        @"http://192.168.3.80:8080/user"
 
