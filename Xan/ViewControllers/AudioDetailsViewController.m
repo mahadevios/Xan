@@ -1386,7 +1386,9 @@
         return;
     }
     
-    NSString* departmentId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentName];
+//    NSString* departmentId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentName];
+    NSString* departmentId = self.audioDetails.department.Id;
+
     
     if ([[AppPreferences sharedAppPreferences].inActiveDepartmentIdsArray containsObject:departmentId])
     {

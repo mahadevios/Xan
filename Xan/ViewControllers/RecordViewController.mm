@@ -3019,8 +3019,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             templateId = @"-1";
         }
        
-        NSString* departmentId=[db getDepartMentIdFromDepartmentName:deptObj.departmentName];
-        
+//        NSString* departmentId=[db getDepartMentIdFromDepartmentName:deptObj.departmentName];
+        NSString* departmentId = deptObj.Id;
+
         NSDictionary* audioRecordDetailsDict=[[NSDictionary alloc]initWithObjectsAndKeys:self.recordedAudioFileName,@"recordItemName",recordCreatedDateString,@"recordCreatedDate",recordingDate,@"recordingDate",transferDate,@"transferDate",[NSString stringWithFormat:@"%d",dictationStatus],@"dictationStatus",[NSString stringWithFormat:@"%d",transferStatus],@"transferStatus",[NSString stringWithFormat:@"%d",deleteStatus],@"deleteStatus",deleteDate,@"deleteDate",fileSize,@"fileSize",currentDuration1,@"currentDuration",[NSString stringWithFormat:@"%d",newDataUpdate],@"newDataUpdate",[NSString stringWithFormat:@"%d",newDataSend],@"newDataSend",[NSString stringWithFormat:@"%d",mobileDictationIdVal],@"mobileDictationIdVal",departmentId,@"departmentName",templateId,@"templateId",@"0",@"priority",@"",@"comment",nil];
         
         [db insertRecordingData:audioRecordDetailsDict];
