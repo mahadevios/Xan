@@ -9,8 +9,9 @@
 #import "UserSettingsViewController.h"
 #import "SwitchCreation.h"
 #import "PopUpCustomView.h"
+#import <StoreKit/SKStoreProductViewController.h>
 
-@interface UserSettingsViewController ()
+@interface UserSettingsViewController ()<SKStoreProductViewControllerDelegate>
 
 @end
 
@@ -55,18 +56,32 @@
     
     _versionLabel.text = [NSString stringWithFormat:@"V %@",currentVersion];
     
-    if (app.isUpdateAvailable) {
-       
-        [_versionUpdateButton setHidden:NO];
-    }
-    else
-    {
-         _versionLabelXConstraint.constant = 0;// make it center to view
-        [self.view addConstraint:_versionLabelXConstraint];
-         [_versionUpdateButton setHidden:YES];
-    }
-    //NSLog(@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:LOW_STORAGE_THRESHOLD]);
+//    if (app.isUpdateAvailable) {
+//
+//        [_versionUpdateButton setHidden:NO];
+//    }
+//    else
+//    {
+//         _versionLabelXConstraint.constant = 0;// make it center to view
+//        [self.view addConstraint:_versionLabelXConstraint];
+//         [_versionUpdateButton setHidden:YES];
+//    }
+  
+    if (app.isReachable) {
+              [self checkCurrentVersion];
+         }
+         else
+         {
+             _versionLabelXConstraint.constant = 0;// make it center to view
+             [self.view addConstraint:_versionLabelXConstraint];
+             [_versionUpdateButton setHidden:YES];
+         }
     
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+   
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -707,8 +722,156 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (IBAction)versionUpdateButtonClicked:(id)sender {
-    [AppPreferences sharedAppPreferences].doOpeniTunesFromSettings = YES;
-    [self dismissViewControllerAnimated:true completion:nil];
+//    [AppPreferences sharedAppPreferences].doOpeniTunesFromSettings = YES;
+//    [self dismissViewControllerAnimated:true completion:nil];
+    
+
+           if ([AppPreferences sharedAppPreferences].isReachable)
+           {
+//               [self addHud];
+                              
+               [self openStoreProductViewControllerWithITunesItemIdentifier:app.kAppITunesItemIdentifier];
+           }
+       
     
 }
+
+-(void)addHud
+{
+    hud.minSize = CGSizeMake(150.f, 100.f);
+    hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.label.text = @"Checking for Update...";
+    hud.detailsLabel.text = @"Please wait";
+}
+
+-(void)changeButtonTitle:(NSString*)title
+{
+    if ([title isEqualToString:@"Checking for Update"]) {
+        [self.versionUpdateButton setTitle:@"Checking for Update" forState:UIControlStateNormal];
+        [self.versionUpdateButton setUserInteractionEnabled:NO];
+    }
+    else
+        if ([title isEqualToString:@"Already upto Date"]) {
+               [self.versionUpdateButton setTitle:@"Already upto Date" forState:UIControlStateNormal];
+               [self.versionUpdateButton setUserInteractionEnabled:NO];
+           }
+    else
+        if ([title isEqualToString:@"Update Available"]) {
+                      [self.versionUpdateButton setTitle:@"Update Available" forState:UIControlStateNormal];
+                      [self.versionUpdateButton setUserInteractionEnabled:YES];
+                  }
+}
+-(void) checkCurrentVersion
+{
+    [self changeButtonTitle:@"Checking for Update"];
+    NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    
+    NSString* bundleVersion = infoDictionary[@"CFBundleShortVersionString"];
+    
+    [[NSUserDefaults standardUserDefaults] setValue:bundleVersion forKey:CURRENT_VESRION];
+           
+       NSString* appID = infoDictionary[@"CFBundleIdentifier"];
+       
+       NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/lookup?bundleId=%@", appID]];
+       
+       NSURLSession         *  session = [NSURLSession sharedSession];
+       
+       
+       NSURLSessionDataTask *  theTask = [session dataTaskWithRequest: [NSURLRequest requestWithURL: url] completionHandler:
+                                          ^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                                          {
+                                              NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                                              
+                                              if ([lookup[@"resultCount"] integerValue] == 1)
+                                              {
+                                                  
+                                                  NSString* appStoreVersion = lookup[@"results"][0][@"version"];
+                                                 
+                                                  NSInteger kAppITunesItemIdentifier = [lookup[@"results"][0][@"trackId"] integerValue];
+
+                                                  [AppPreferences sharedAppPreferences].kAppITunesItemIdentifier = kAppITunesItemIdentifier;
+                                                  
+                                                  NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
+                                                 
+                                                  if (![appStoreVersion isEqualToString:currentVersion])
+
+                                                  {
+                                                      dispatch_async(dispatch_get_main_queue(), ^(void) {
+                                                         [self changeButtonTitle:@"Update Available"];
+                                                             });
+//                                                      [AppPreferences sharedAppPreferences].isUpdateAvailable = true;
+                                                  }
+                                                  else
+                                                  {
+                                                      dispatch_async(dispatch_get_main_queue(), ^(void) {
+                                                      [self changeButtonTitle:@"Already upto Date"];
+                                                          });
+//                                                      [AppPreferences sharedAppPreferences].isUpdateAvailable = false;
+                                                  }
+                                              }
+           else
+           {
+               dispatch_async(dispatch_get_main_queue(), ^(void) {
+                    _versionLabelXConstraint.constant = 0;// make it center to view
+                          [self.view addConstraint:_versionLabelXConstraint];
+                          [_versionUpdateButton setHidden:YES];
+                   });
+           }
+       }];
+                                                  
+    [theTask resume];
+}
+#pragma mark: SKStoreVC to check and open new update
+
+
+- (void)openStoreProductViewControllerWithITunesItemIdentifier:(NSInteger)iTunesItemIdentifier {
+    
+    SKStoreProductViewController *storeViewController = [[SKStoreProductViewController alloc] init];
+     storeViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    storeViewController.delegate = self;
+    
+    NSNumber *identifier = [NSNumber numberWithInteger:iTunesItemIdentifier];
+    
+    NSDictionary *parameters = @{ SKStoreProductParameterITunesItemIdentifier:identifier };
+   
+    [storeViewController loadProductWithParameters:parameters
+                                   completionBlock:^(BOOL result, NSError *error) {
+                                       if (result)
+                                       {
+                                           UIViewController *topRootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+                                               
+                                               while (topRootViewController.presentedViewController)
+                                               {
+                                                   topRootViewController = topRootViewController.presentedViewController;
+                                               }
+                                               
+                                           //    UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+                                               UIViewController *viewController = topRootViewController;
+                                          
+                                           dispatch_async(dispatch_get_main_queue(), ^(void) {
+                                               [hud removeFromSuperview];
+                                                  });
+                                           
+                                           [viewController presentViewController:storeViewController
+                                             animated:YES
+                                           completion:nil];
+                                       }
+                                       else{
+                                           dispatch_async(dispatch_get_main_queue(), ^(void) {
+                                                                                         [hud removeFromSuperview];
+                                                                                            });
+                                       }
+                                           
+//                                       else NSLog(@"SKStoreProductViewController: %@", error);
+                                   }];
+    
+}
+
+
+- (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController {
+    [viewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+
 @end

@@ -1313,6 +1313,7 @@
             self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
             
             toolBarAdded=NO;
+            isMultipleFilesActivated = NO;
             [db updateAudioFileStatus:@"RecordingDelete" fileName:fileName dateAndTime:dateAndTimeString];
             [app deleteFile:fileName];
             [app deleteFile:[NSString stringWithFormat:@"%@backup",fileName]];

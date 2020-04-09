@@ -339,7 +339,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                 //to avoid double pin login screen show: if kept in background by just openig login view
                 if (![topRootViewController isKindOfClass: [LoginViewController class]])
                 {
-                    if(LOGIN_EVERYTIME)// if settings on then only show login screen
+                    if([[NSUserDefaults standardUserDefaults] boolForKey:LOGIN_EVERYTIME])// if settings on then only show login screen
                     {
                         loginViewController.modalPresentationStyle = UIModalPresentationFullScreen;
                         [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
@@ -381,7 +381,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             //to avoid double pin login screen show: if kept in background by just openig login view
             if (![topRootViewController isKindOfClass: [LoginViewController class]])
             {
-                if(LOGIN_EVERYTIME)// if settings on then only show login screen
+                if([[NSUserDefaults standardUserDefaults] boolForKey:LOGIN_EVERYTIME])// if settings on then only show login screen
                 {
                     loginViewController.modalPresentationStyle = UIModalPresentationFullScreen;
                                    [topRootViewController presentViewController:loginViewController animated:YES completion:nil];

@@ -180,12 +180,7 @@
     
     [super viewWillAppear:true];
     
-    if ([AppPreferences sharedAppPreferences].doOpeniTunesFromSettings) {
-        [AppPreferences sharedAppPreferences].doOpeniTunesFromSettings = NO;
-        
-        [self openStoreProductViewControllerWithITunesItemIdentifier:self.kAppITunesItemIdentifier];
-        
-    }
+   
     if (!isTemplateDataReceived)
     {
         if ([AppPreferences sharedAppPreferences].isReachable)
@@ -227,7 +222,7 @@
     // check files tobe purge
     [self checkFilesToBePurge];
     
-    [self checkCurrentVersion];
+//    [self checkCurrentVersion];
 //    [self setSplitViewController];
     
 //    [self deleteDictation];
@@ -237,51 +232,8 @@
 
 }
 
--(void) checkCurrentVersion
-{
-    NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    
-    NSString* bundleVersion = infoDictionary[@"CFBundleShortVersionString"];
-    
-    [[NSUserDefaults standardUserDefaults] setValue:bundleVersion forKey:CURRENT_VESRION];
-           
-       NSString* appID = infoDictionary[@"CFBundleIdentifier"];
-       
-       NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/lookup?bundleId=%@", appID]];
-       
-       NSURLSession         *  session = [NSURLSession sharedSession];
-       
-       
-       NSURLSessionDataTask *  theTask = [session dataTaskWithRequest: [NSURLRequest requestWithURL: url] completionHandler:
-                                          ^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
-                                          {
-                                              NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-                                              
-                                              if ([lookup[@"resultCount"] integerValue] == 1)
-                                              {
-                                                  
-                                                  NSString* appStoreVersion = lookup[@"results"][0][@"version"];
-                                                 
-                                                  NSInteger kAppITunesItemIdentifier = [lookup[@"results"][0][@"trackId"] integerValue];
 
-                                                  self.kAppITunesItemIdentifier = kAppITunesItemIdentifier;
-                                                  
-                                                  NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
-                                                 
-                                                  if (![appStoreVersion isEqualToString:currentVersion])
 
-                                                  {
-                                                      [AppPreferences sharedAppPreferences].isUpdateAvailable = true;
-                                                  }
-                                                  else
-                                                  {
-                                                      [AppPreferences sharedAppPreferences].isUpdateAvailable = false;
-                                                  }
-                                              }
-       }];
-                                                  
-    [theTask resume];
-}
 #pragma mark:Split VC delegate
 
 -(BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController
@@ -662,8 +614,9 @@
 
 
 - (void)openStoreProductViewControllerWithITunesItemIdentifier:(NSInteger)iTunesItemIdentifier {
-    SKStoreProductViewController *storeViewController = [[SKStoreProductViewController alloc] init];
     
+    SKStoreProductViewController *storeViewController = [[SKStoreProductViewController alloc] init];
+     storeViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     storeViewController.delegate = self;
     
     NSNumber *identifier = [NSNumber numberWithInteger:iTunesItemIdentifier];
@@ -685,10 +638,19 @@
                                                
                                            //    UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
                                                UIViewController *viewController = topRootViewController;
+                                          
+                                           dispatch_async(dispatch_get_main_queue(), ^(void) {
+                                               [hud removeFromSuperview];
+                                                  });
                                            
                                            [viewController presentViewController:storeViewController
                                              animated:YES
                                            completion:nil];
+                                       }
+                                       else{
+                                           dispatch_async(dispatch_get_main_queue(), ^(void) {
+                                                                                         [hud removeFromSuperview];
+                                                                                            });
                                        }
                                            
 //                                       else NSLog(@"SKStoreProductViewController: %@", error);
