@@ -4404,8 +4404,8 @@
             filePath = "Xan/ViewControllers/UserSettingsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "751"
-            endingLineNumber = "751"
+            startingLineNumber = "760"
+            endingLineNumber = "760"
             landmarkName = "-changeButtonTitle:"
             landmarkType = "7">
          </BreakpointContent>
