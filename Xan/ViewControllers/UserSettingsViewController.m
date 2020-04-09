@@ -22,6 +22,7 @@
     [super viewDidLoad];
    
     poUpTableView.layer.cornerRadius=2.0f;
+    _versionUpdateButton.layer.cornerRadius = 4.0f;
     app = [AppPreferences sharedAppPreferences];
 //
     recordSettingsItemsarray=[[NSMutableArray alloc]initWithObjects:@"Pause recording after",@"Confirm before saving",@"Alert before recording",@"Back to home after dictation",@"Login everytime coming from background", nil];
@@ -50,7 +51,20 @@
     self.navigationItem.title=@"User Settings";
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
     
-   
+    NSString* currentVersion = [[NSUserDefaults standardUserDefaults] valueForKey:CURRENT_VESRION];
+    
+    _versionLabel.text = [NSString stringWithFormat:@"V %@",currentVersion];
+    
+    if (app.isUpdateAvailable) {
+       
+        [_versionUpdateButton setHidden:NO];
+    }
+    else
+    {
+         _versionLabelXConstraint.constant = 0;// make it center to view
+        [self.view addConstraint:_versionLabelXConstraint];
+         [_versionUpdateButton setHidden:YES];
+    }
     //NSLog(@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:LOW_STORAGE_THRESHOLD]);
     
 }
@@ -691,5 +705,10 @@
 - (IBAction)backButtonPressed:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+- (IBAction)versionUpdateButtonClicked:(id)sender {
+    [AppPreferences sharedAppPreferences].doOpeniTunesFromSettings = YES;
+    [self dismissViewControllerAnimated:true completion:nil];
+    
 }
 @end

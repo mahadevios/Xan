@@ -53,27 +53,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
 //    NSString* currentVersion = [[NSUserDefaults standardUserDefaults] valueForKey:CURRENT_VESRION];
     
-    NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    
-    NSString* bundleVersion = infoDictionary[@"CFBundleShortVersionString"];
-    
-    //    NSString* isDateFormatUpdated = [[NSUserDefaults standardUserDefaults] valueForKey:IS_DATE_FORMAT_UPDATED];
-    //
-    //    if (isDateFormatUpdated == nil)
-    //    {
-    //        [[AppPreferences sharedAppPreferences] createDatabaseReplica];
-    //
-    //        [[Database shareddatabase] updateDateFormat];
-    //
-    //        [[NSUserDefaults standardUserDefaults] setValue:@"Updated" forKey:IS_DATE_FORMAT_UPDATED];
-    //
-    //    }
-    
-    //    [[Database shareddatabase] createFileNameidentifierRelationshipTable];
-    
-    //    [[Database shareddatabase] createDocFileAndDownloadedDocxFileTable];
-    
-    [[NSUserDefaults standardUserDefaults] setValue:bundleVersion forKey:CURRENT_VESRION];
+   
     
     if ([[NSUserDefaults standardUserDefaults] valueForKey:LOW_STORAGE_THRESHOLD]== NULL)
     {
@@ -350,10 +330,21 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                     topRootViewController = topRootViewController.presentedViewController;
                 }
                 
+//                if (![topRootViewController isKindOfClass: [LoginViewController class]])
+//                {
+//                    loginViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+//                    [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
+//
+//                }
+                //to avoid double pin login screen show: if kept in background by just openig login view
                 if (![topRootViewController isKindOfClass: [LoginViewController class]])
                 {
-                    loginViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-                    [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
+                    if(LOGIN_EVERYTIME)// if settings on then only show login screen
+                    {
+                        loginViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+                        [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
+                    }
+                    
                     
                 }
             }
