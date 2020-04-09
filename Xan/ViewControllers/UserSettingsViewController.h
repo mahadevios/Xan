@@ -11,6 +11,7 @@
 #import "APIManager.h"
 #import "AppPreferences.h"
 #import "Constants.h"
+#import "MBProgressHUD.h"
 
 @interface UserSettingsViewController : UIViewController<UIGestureRecognizerDelegate,UITextFieldDelegate>
 {
@@ -21,10 +22,11 @@
     NSMutableArray* radioButtonArray;
     UITapGestureRecognizer* tap;
     UITapGestureRecognizer* tap1;
-    
+    MBProgressHUD* hud;
     UIView* abbreviationPopupView;
     AppPreferences* app;
 }
+@property (weak, nonatomic) IBOutlet UIView *versioSuperView;
 @property (weak, nonatomic) IBOutlet UITableView *poUpTableView;
 @property (weak, nonatomic) IBOutlet UITableView *userSettingsTableView;
 - (IBAction)backButtonPressed:(id)sender;

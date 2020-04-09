@@ -27,7 +27,7 @@
 @property(nonatomic,strong) NSString* bsackUpAudioFileName;
 @property(nonatomic,strong) NSString* iniVector;
 @property(nonatomic) BOOL isUpdateAvailable;
-@property(nonatomic) BOOL doOpeniTunesFromSettings;
+@property(nonatomic) __block NSInteger kAppITunesItemIdentifier;
 @property (nonatomic,assign)    BOOL                        recordNew;
 @property (nonatomic,assign)    BOOL                        recordingNew;  // may not used anywhere
 @property (nonatomic,assign)    BOOL                        recordNewOffline;
