@@ -52,9 +52,7 @@
     self.navigationItem.title=@"User Settings";
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
     
-    NSString* currentVersion = [[NSUserDefaults standardUserDefaults] valueForKey:CURRENT_VESRION];
-    
-    _versionLabel.text = [NSString stringWithFormat:@"V %@",currentVersion];
+   
     
 //    if (app.isUpdateAvailable) {
 //
@@ -67,6 +65,16 @@
 //         [_versionUpdateButton setHidden:YES];
 //    }
   
+    NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
+       
+       NSString* bundleVersion = infoDictionary[@"CFBundleShortVersionString"];
+       
+       [[NSUserDefaults standardUserDefaults] setValue:bundleVersion forKey:CURRENT_VESRION];
+    
+    NSString* currentVersion = [[NSUserDefaults standardUserDefaults] valueForKey:CURRENT_VESRION];
+       
+       _versionLabel.text = [NSString stringWithFormat:@"V %@",currentVersion];
+    
     if (app.isReachable) {
               [self checkCurrentVersion];
          }
@@ -76,6 +84,7 @@
              [self.view addConstraint:_versionLabelXConstraint];
              [_versionUpdateButton setHidden:YES];
          }
+  
     
 }
 
@@ -728,7 +737,7 @@
 
            if ([AppPreferences sharedAppPreferences].isReachable)
            {
-//               [self addHud];
+               [self addHud];
                               
                [self openStoreProductViewControllerWithITunesItemIdentifier:app.kAppITunesItemIdentifier];
            }
@@ -741,7 +750,7 @@
     hud.minSize = CGSizeMake(150.f, 100.f);
     hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
-    hud.label.text = @"Checking for Update...";
+    hud.label.text = @"Connecting";
     hud.detailsLabel.text = @"Please wait";
 }
 
