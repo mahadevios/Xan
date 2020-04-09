@@ -2076,6 +2076,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                        {
             if ([textView.text isEqualToString:@""]) {
                 commentLabel.text = @"Add Comment";
+                 [[Database shareddatabase] updateComment:@"" fileName:self.recordedAudioFileName];
             }
             else{
                 

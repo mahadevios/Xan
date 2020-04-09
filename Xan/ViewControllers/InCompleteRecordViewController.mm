@@ -1954,7 +1954,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                 
                 self.existingAudioComment = @"";
                 
-                [[Database shareddatabase] updateComment:commentString fileName:self.existingAudioFileName];
+                [[Database shareddatabase] updateComment:@"" fileName:self.existingAudioFileName];
                 
                 
                 

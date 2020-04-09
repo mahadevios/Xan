@@ -22,6 +22,7 @@
 - (IBAction)submitButtonClicked:(id)sender;
 @property (strong, nonatomic) UIWindow *window;
 @property (weak, nonatomic) MBProgressHUD *hud;
+- (IBAction)contactUsButtonClicked:(id)sender;
 
 //@property(nonatomic,strong) UIView* username;
 //@property(nonatomic,weak) UIView* dummyName;

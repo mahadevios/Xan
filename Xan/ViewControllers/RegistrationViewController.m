@@ -12,6 +12,7 @@
 #import "AppPreferences.h"
 #import "Constants.h"
 #import "Keychain.h"
+#import "ContactUsViewController.h"
 
 @interface RegistrationViewController ()
 
@@ -37,7 +38,7 @@
     IDTextField.delegate=self;
     passwordTextfield.delegate=self;
     
-    [IDTextField becomeFirstResponder];
+//    [IDTextField becomeFirstResponder];
     
 }
 
@@ -208,4 +209,7 @@
 }
 
 
+- (IBAction)contactUsButtonClicked:(id)sender {
+    [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"ContactUsViewController"] animated:true completion:nil];
+}
 @end
