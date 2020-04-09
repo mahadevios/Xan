@@ -2546,7 +2546,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         if ([AppPreferences sharedAppPreferences].userObj != nil)
         {
             NSArray* subViewArray=[NSArray arrayWithObjects:@"User Settings", nil];
-            editPopUp=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-200, self.view.frame.origin.y+40, 160, 40) andSubViews:subViewArray :self];
+            editPopUp=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+40, 160, 40) andSubViews:subViewArray :self];
             [[[UIApplication sharedApplication] keyWindow] addSubview:editPopUp];
         }
         else
