@@ -939,6 +939,8 @@ else
                           {
                if ([textView.text isEqualToString:@""]) {
                               self.commentLabel.text = @"Add Comment";
+                   self.audioDetails.comment = @"";
+                    [[Database shareddatabase] updateComment:@"" fileName:self.audioDetails.fileName];
                           }
                           else{
                               self.commentLabel.text = textView.text;

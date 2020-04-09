@@ -982,7 +982,7 @@ static APIManager *singleton = nil;
                     
                      [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:failedMessage withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
                     
-//                       [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PAUSE_RECORDING object:nil];//to pause ongoing recording if any
+                       [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PAUSE_RECORDING object:nil];//to pause ongoing recording if any
                     
                        [[NSNotificationCenter defaultCenter] postNotificationName: NOTIFICATION_FILE_UPLOAD_FAILED object:failedMessage];
                     

@@ -32,6 +32,7 @@
     NSURLSession* session;
     BOOL isTemplateDataReceived;
     
+    
 }
 @property (weak, nonatomic) IBOutlet UIView *transferredView;
 @property (weak, nonatomic) IBOutlet UIView *awaitingTransferView;
@@ -51,5 +52,5 @@
 @property (weak, nonatomic) IBOutlet UIView *subAwaitingView;
 @property (weak, nonatomic) IBOutlet UIView *subVRSView;
 @property (weak, nonatomic) IBOutlet UILabel *dictatorNameLabel;
-
+@property (nonatomic) __block NSInteger kAppITunesItemIdentifier;
 @end

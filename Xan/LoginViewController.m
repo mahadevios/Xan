@@ -116,18 +116,8 @@
     NSString* responseTokenString=  [dict valueForKey:@"token"];
     
     [[NSUserDefaults standardUserDefaults] setObject:responseTokenString forKey:JWT_TOKEN];
-//    [[NSUserDefaults standardUserDefaults] setObject:@"fdsfsdfdf" forKey:JWT_TOKEN];
 
     [hud hideAnimated:YES];
-    
-//    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    
-//    PinRegistrationViewController* regiController = (PinRegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"PinRegistrationViewController"];
-    
-//    [passwordTextfield resignFirstResponder];
-    
-//    [self presentViewController:regiController animated:NO completion:nil];
-    
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"])
     {
@@ -572,8 +562,7 @@
                 [pinCode3TextField resignFirstResponder];
                 [pinCode4TextField resignFirstResponder];
                 
-//                NSLog(@"Entered PIN = %@", pin);
-                
+//                [self manualLogin];
                 [[APIManager sharedManager] validatePinMacID:macId Pin:pin];
                 
             }
@@ -588,6 +577,19 @@
     
 }
 
+-(void) manualLogin
+{
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"])
+       {
+           SelectDepartmentViewController* viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"];
+           
+           viewController.modalPresentationStyle = UIModalPresentationFullScreen;
+           
+           [self presentViewController:viewController animated:NO completion:nil];
+       }
+       else
+           [self dismissViewControllerAnimated:NO completion:nil];
+}
 
 - (IBAction)cancelButtonClicked:(id)sender
 {

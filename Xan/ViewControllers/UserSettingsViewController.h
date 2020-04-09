@@ -28,4 +28,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *poUpTableView;
 @property (weak, nonatomic) IBOutlet UITableView *userSettingsTableView;
 - (IBAction)backButtonPressed:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *versionLabelXConstraint;
+- (IBAction)versionUpdateButtonClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *versionUpdateButton;
 @end

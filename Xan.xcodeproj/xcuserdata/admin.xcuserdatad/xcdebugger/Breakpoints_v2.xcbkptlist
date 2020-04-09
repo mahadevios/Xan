@@ -3366,8 +3366,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "4408"
             endingLineNumber = "4408"
-            landmarkName = "-speechToTextButtonClicked:"
-            landmarkType = "7">
+            landmarkName = "RecordViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3380,9 +3380,9 @@
             filePath = "Xan/ViewControllers/HomeViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "333"
-            endingLineNumber = "333"
-            landmarkName = "-showTransferFailedCount"
+            startingLineNumber = "337"
+            endingLineNumber = "337"
+            landmarkName = "-showActivityIndicator"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3396,9 +3396,9 @@
             filePath = "Xan/ViewControllers/HomeViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "345"
-            endingLineNumber = "345"
-            landmarkName = "-showTransferFailedCount"
+            startingLineNumber = "349"
+            endingLineNumber = "349"
+            landmarkName = "-showActivityIndicator"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3412,9 +3412,9 @@
             filePath = "Xan/ViewControllers/HomeViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "385"
-            endingLineNumber = "385"
-            landmarkName = "-validateTemplateListResponse:"
+            startingLineNumber = "389"
+            endingLineNumber = "389"
+            landmarkName = "-showTransferFailedCount"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3511,22 +3511,6 @@
             startingLineNumber = "1315"
             endingLineNumber = "1315"
             landmarkName = "-uploadFileAfterGettingdatabaseValues:departmentID:transferStatus:mobileDictationIdVal:isFileTypeAudio:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C768465E-5FB9-42C3-92EC-E9F5E7205B40"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/API Manager/APIManager.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1138"
-            endingLineNumber = "1138"
-            landmarkName = "-URLSession:task:didSendBodyData:totalBytesSent:totalBytesExpectedToSend:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3956,8 +3940,8 @@
             filePath = "Xan/ViewControllers/HomeViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "197"
-            endingLineNumber = "197"
+            startingLineNumber = "203"
+            endingLineNumber = "203"
             landmarkName = "-viewWillAppear:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3972,9 +3956,9 @@
             filePath = "Xan/ViewControllers/HomeViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "674"
-            endingLineNumber = "674"
-            landmarkName = "-deleteDictation"
+            startingLineNumber = "680"
+            endingLineNumber = "680"
+            landmarkName = "-openStoreProductViewControllerWithITunesItemIdentifier:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3988,9 +3972,9 @@
             filePath = "Xan/ViewControllers/HomeViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "474"
-            endingLineNumber = "474"
-            landmarkName = "-validateSendIdsResponse:"
+            startingLineNumber = "478"
+            endingLineNumber = "478"
+            landmarkName = "-validateTemplateListResponse:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4004,9 +3988,9 @@
             filePath = "Xan/ViewControllers/HomeViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "497"
-            endingLineNumber = "497"
-            landmarkName = "-validateSendIdsResponse:"
+            startingLineNumber = "501"
+            endingLineNumber = "501"
+            landmarkName = "-validateTemplateListResponse:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4365,16 +4349,64 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "66083642-D1EE-4202-9548-2FF8475C87A8"
+            uuid = "065F3F30-C9C7-4E29-9936-254B83FE1CED"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Xan/ViewControllers/TransferListViewController.m"
+            filePath = "Xan/AppDelegate.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "650"
-            endingLineNumber = "650"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            startingLineNumber = "340"
+            endingLineNumber = "340"
+            landmarkName = "-applicationWillEnterForeground:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "52AA9A03-77A9-46D8-8F49-AB0A0C161D02"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/ViewControllers/RecordTabViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "-viewWillAppear:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EBB9FF1F-A021-4BC7-8981-39701DFF558A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/ViewControllers/RecordTabViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "-viewWillAppear:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3CA903DD-0280-407C-9F0B-B5012F2DD6A5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/ViewControllers/RecordTabViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "-viewWillAppear:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
