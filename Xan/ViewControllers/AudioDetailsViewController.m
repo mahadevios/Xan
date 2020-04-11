@@ -1738,6 +1738,14 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
 
+    if (textView.text.length == 255) {
+        
+           [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:@"You have reached the maximum comment length to be entered" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+           
+           return NO;
+                                   
+       }
+    
     if([text isEqualToString:@"\n"]) {
         [textView resignFirstResponder];
         return NO;
@@ -1774,11 +1782,7 @@
         dispatch_async(dispatch_get_main_queue(), ^
                        {
             
-            if (textView.text.length>254) {
-                           [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:@"Added comment is too large to save, please enter smaller comment" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
-                           
-                           return;
-                       }
+           
             if ([textView.text isEqualToString:@""]) {
                 self.commentLabel.text = @"Add Comment";
                 self.audioDetails.comment = @"";
