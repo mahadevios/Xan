@@ -3366,8 +3366,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "4417"
             endingLineNumber = "4417"
-            landmarkName = "RecordViewController"
-            landmarkType = "3">
+            landmarkName = "-startNewRecordingForEdit"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
