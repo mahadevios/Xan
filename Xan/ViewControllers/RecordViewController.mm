@@ -2074,6 +2074,12 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         dispatch_async(dispatch_get_main_queue(), ^
                        {
+            
+            if (textView.text.length>254) {
+                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:@"Added comment is too large to save, please enter smaller comment" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                
+                return;
+            }
             if ([textView.text isEqualToString:@""]) {
                 commentLabel.text = @"Add Comment";
                  [[Database shareddatabase] updateComment:@"" fileName:self.recordedAudioFileName];
