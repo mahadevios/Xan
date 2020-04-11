@@ -937,6 +937,11 @@ else
                                                      handler:^(UIAlertAction * action) {
            dispatch_async(dispatch_get_main_queue(), ^
                           {
+               if (textView.text.length>254) {
+                              [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:@"Added comment is too large to save, please enter smaller comment" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                              
+                              return;
+                          }
                if ([textView.text isEqualToString:@""]) {
                               self.commentLabel.text = @"Add Comment";
                    self.audioDetails.comment = @"";
