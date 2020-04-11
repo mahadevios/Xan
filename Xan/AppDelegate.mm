@@ -330,12 +330,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                     topRootViewController = topRootViewController.presentedViewController;
                 }
                 
-//                if (![topRootViewController isKindOfClass: [LoginViewController class]])
-//                {
-//                    loginViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-//                    [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
-//
-//                }
                 //to avoid double pin login screen show: if kept in background by just openig login view
                 if (![topRootViewController isKindOfClass: [LoginViewController class]])
                 {
@@ -393,9 +387,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         // });
     }
     
-    //  });
-    
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
 
