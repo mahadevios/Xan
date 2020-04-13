@@ -1782,12 +1782,17 @@
         dispatch_async(dispatch_get_main_queue(), ^
                        {
             
-           
+           NSCharacterSet *set = [NSCharacterSet whitespaceCharacterSet];
             if ([textView.text isEqualToString:@""]) {
                 self.commentLabel.text = @"Add Comment";
                 self.audioDetails.comment = @"";
                 
                 [[Database shareddatabase] updateComment:@"" fileName:self.audioDetails.fileName];
+            }
+            else
+            if ([[textView.text stringByTrimmingCharactersInSet: set] length] == 0)
+            {
+                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:@"Comment can't contain only white spaces" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
             }
             else{
                 self.commentLabel.text = textView.text;
