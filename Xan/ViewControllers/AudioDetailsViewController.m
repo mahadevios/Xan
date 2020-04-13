@@ -1738,7 +1738,7 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
 
-    if (textView.text.length >= 255 && !([text length] == 0 && range.length > 0)) {
+    if (textView.text.length == 255 && !([text length] == 0 && range.length > 0)) {
         
            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:@"You have reached the maximum comment length to be entered" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
            
