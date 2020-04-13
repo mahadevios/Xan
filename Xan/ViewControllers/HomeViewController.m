@@ -375,11 +375,39 @@
 
 
 -(void)validateTemplateListResponse:(NSNotification*)responseDictObj
-{           
-    
+{
+     [hud hideAnimated:true];
+    if ([responseDictObj.object isKindOfClass:[NSDictionary class]]) {
+        
+        NSString* errorString = [responseDictObj.object valueForKey:@"error"];
+        
+        NSString* messageString = [responseDictObj.object valueForKey:@"message"];
+        
+        NSString* failedMessage = @"File uploading failed";
+        if (errorString != nil) {
+            failedMessage = [NSString stringWithFormat:@"%@, file uploading failed",errorString];
+        }
+        
+        if (errorString != nil && messageString != nil) {
+            failedMessage = [NSString stringWithFormat:@"%@, %@, file uploading failed",errorString,messageString];
+        }
+        else if (messageString != nil){
+            failedMessage = [NSString stringWithFormat:@"%@, file uploading failed",messageString];
+            
+        }
+        
+         if ([errorString isEqualToString:@"Unauthorized"] || [messageString isEqualToString:@"Unauthorized"]) {
+            failedMessage = @"Your session has timed out. Please login using your PIN and try again.";
+             
+             [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:failedMessage withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+        }
+          [self LogoutAndPresentLoginVC];
+        
+        return;
+    }
     NSArray* responseArray= responseDictObj.object;
     
-    [hud hideAnimated:true];
+   
     
 //    [AppPreferences sharedAppPreferences].tempalateListDict = [NSMutableDictionary new];
     isTemplateDataReceived = true;
