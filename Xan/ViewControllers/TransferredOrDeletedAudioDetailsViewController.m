@@ -926,70 +926,75 @@ else
 -(void)showCommentTextView
 {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Add Comment"
-                                                                                message:@"\n\n\n\n\n\n\n\n"
-                                                                         preferredStyle:UIAlertControllerStyleAlert];
-
-      
-
-       alertController.view.autoresizesSubviews = YES;
-       __block UITextView *textView = [[UITextView alloc] initWithFrame:CGRectZero];
-       textView.delegate = self;
-       textView.translatesAutoresizingMaskIntoConstraints = NO;
-       textView.autocorrectionType = UITextAutocorrectionTypeNo;
-       textView.editable = YES;
-       textView.returnKeyType = UIReturnKeyDone;
-       textView.dataDetectorTypes = UIDataDetectorTypeAll;
-       
-       UIAlertAction* okay = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault
-                                                     handler:^(UIAlertAction * action) {
-           dispatch_async(dispatch_get_main_queue(), ^
-                          {
-              
-               if ([textView.text isEqualToString:@""]) {
-                              self.commentLabel.text = @"Add Comment";
-                   self.audioDetails.comment = @"";
-                    [[Database shareddatabase] updateComment:@"" fileName:self.audioDetails.fileName];
-                          }
-                          else{
-                              self.commentLabel.text = textView.text;
-                                         
-                              self.audioDetails.comment = self.commentLabel.text;
-                              
-                              [[Database shareddatabase] updateComment:self.commentLabel.text fileName:self.audioDetails.fileName];
-                          }
-                         
-           });
-                                                     }];
-          UIAlertAction* cancel1 = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
-                                                         handler:^(UIAlertAction * action) {
-                                                             [alertController dismissViewControllerAnimated:YES completion:nil];
-                                                         }];
-          [alertController addAction:okay];
-          [alertController addAction:cancel1];
-       
-       if (self.commentLabel.text == nil || [self.commentLabel.text isEqualToString:@""] || [self.commentLabel.text isEqualToString:@"Add Comment"]) {
-
-       }
-       else
-       {
-           textView.text =  self.commentLabel.text;
-       }
-       
-       textView.userInteractionEnabled = YES;
-       textView.backgroundColor = [UIColor whiteColor];
-       textView.scrollEnabled = YES;
-       NSLayoutConstraint *leadConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:-8.0];
-       NSLayoutConstraint *trailConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:8.0];
-
-       NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeTop multiplier:1.0 constant:-64.0];
-       NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:64.0];
-       [alertController.view addSubview:textView];
-       [NSLayoutConstraint activateConstraints:@[leadConstraint, trailConstraint, topConstraint, bottomConstraint]];
-
-       [self presentViewController:alertController animated:YES completion:^{
-
-       }];
-       
-
+                                                                             message:@"\n\n\n\n\n\n\n\n"
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    
+    
+    alertController.view.autoresizesSubviews = YES;
+    __block UITextView *textView = [[UITextView alloc] initWithFrame:CGRectZero];
+    textView.delegate = self;
+    textView.translatesAutoresizingMaskIntoConstraints = NO;
+    textView.autocorrectionType = UITextAutocorrectionTypeNo;
+    textView.editable = YES;
+    textView.returnKeyType = UIReturnKeyDone;
+    textView.dataDetectorTypes = UIDataDetectorTypeAll;
+    
+    UIAlertAction* okay = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction * action) {
+        dispatch_async(dispatch_get_main_queue(), ^
+                       {
+            NSCharacterSet *set = [NSCharacterSet whitespaceCharacterSet];
+            if ([textView.text isEqualToString:@""]) {
+                self.commentLabel.text = @"Add Comment";
+                self.audioDetails.comment = @"";
+                [[Database shareddatabase] updateComment:@"" fileName:self.audioDetails.fileName];
+            }
+            else
+                if ([[textView.text stringByTrimmingCharactersInSet: set] length] == 0)
+                {
+                    [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:@"Comment can't contain only white spaces" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                }
+                else{
+                    self.commentLabel.text = textView.text;
+                    
+                    self.audioDetails.comment = self.commentLabel.text;
+                    
+                    [[Database shareddatabase] updateComment:self.commentLabel.text fileName:self.audioDetails.fileName];
+                }
+            
+        });
+    }];
+    UIAlertAction* cancel1 = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+                                                    handler:^(UIAlertAction * action) {
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [alertController addAction:okay];
+    [alertController addAction:cancel1];
+    
+    if (self.commentLabel.text == nil || [self.commentLabel.text isEqualToString:@""] || [self.commentLabel.text isEqualToString:@"Add Comment"]) {
+        
+    }
+    else
+    {
+        textView.text =  self.commentLabel.text;
+    }
+    
+    textView.userInteractionEnabled = YES;
+    textView.backgroundColor = [UIColor whiteColor];
+    textView.scrollEnabled = YES;
+    NSLayoutConstraint *leadConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:-8.0];
+    NSLayoutConstraint *trailConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:8.0];
+    
+    NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeTop multiplier:1.0 constant:-64.0];
+    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:alertController.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:64.0];
+    [alertController.view addSubview:textView];
+    [NSLayoutConstraint activateConstraints:@[leadConstraint, trailConstraint, topConstraint, bottomConstraint]];
+    
+    [self presentViewController:alertController animated:YES completion:^{
+        
+    }];
+    
+    
 }
 @end

@@ -1955,9 +1955,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         dispatch_async(dispatch_get_main_queue(), ^
                        {
             
-        
+        NSCharacterSet *set = [NSCharacterSet whitespaceCharacterSet];
+            
             if ([textView.text isEqualToString:@""]) {
-               
+                
                 
                 commentLabel.text = @"Add Comment";
                 
@@ -1968,23 +1969,28 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                 
                 
                 NSDictionary* delegateDict = [[NSDictionary alloc] initWithObjectsAndKeys:@"",@"Comment", nil];
-                               
+                
                 [self.delegate updateData:delegateDict];
             }
             else
-            {
-                NSString* commentString = textView.text;
-                
-                commentLabel.text = commentString;
-                
-                self.existingAudioComment = commentString;
-                
-                [[Database shareddatabase] updateComment:commentString fileName:self.existingAudioFileName];
-                
-                NSDictionary* delegateDict = [[NSDictionary alloc] initWithObjectsAndKeys:commentString,@"Comment", nil];
-                
-                [self.delegate updateData:delegateDict];
-            }
+                if ([[textView.text stringByTrimmingCharactersInSet: set] length] == 0)
+                {
+                    [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:@"Comment can't contain only white spaces" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                }
+                else
+                {
+                    NSString* commentString = textView.text;
+                    
+                    commentLabel.text = commentString;
+                    
+                    self.existingAudioComment = commentString;
+                    
+                    [[Database shareddatabase] updateComment:commentString fileName:self.existingAudioFileName];
+                    
+                    NSDictionary* delegateDict = [[NSDictionary alloc] initWithObjectsAndKeys:commentString,@"Comment", nil];
+                    
+                    [self.delegate updateData:delegateDict];
+                }
            
             
         });

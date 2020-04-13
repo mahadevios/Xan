@@ -2046,6 +2046,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         return NO;
                                 
     }
+    
+    
+    
     if([text isEqualToString:@"\n"]) {
         [textView resignFirstResponder];
         return NO;
@@ -2083,17 +2086,26 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         dispatch_async(dispatch_get_main_queue(), ^
                        {
             
-
+            NSCharacterSet *set = [NSCharacterSet whitespaceCharacterSet];
             if ([textView.text isEqualToString:@""]) {
                 commentLabel.text = @"Add Comment";
-                 [[Database shareddatabase] updateComment:@"" fileName:self.recordedAudioFileName];
+                [[Database shareddatabase] updateComment:@"" fileName:self.recordedAudioFileName];
             }
-            else{
-                
-                commentLabel.text = textView.text;
-                
-                [[Database shareddatabase] updateComment:commentLabel.text fileName:self.recordedAudioFileName];
-            }
+            else
+                if ([[textView.text stringByTrimmingCharactersInSet: set] length] == 0)
+                {
+                    [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:@"Comment can't contain only white spaces" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                }
+                else
+                {
+                    
+                    commentLabel.text = textView.text;
+                    
+                    [[Database shareddatabase] updateComment:commentLabel.text fileName:self.recordedAudioFileName];
+                    
+               }
+            
+            
             
         });
         
