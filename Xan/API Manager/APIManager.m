@@ -642,43 +642,43 @@ static APIManager *singleton = nil;
     
 }
 
--(void)sendDictationIds:(NSString*)dictationIdArray
-{
-    if ([[AppPreferences sharedAppPreferences] isReachable])
-    {
-        //[[AppPreferences sharedAppPreferences] showHudWithTitle:@"Loading Files" detailText:@"Please wait.."];
-        
-        NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
-        
-        NSError* error;
-        
-        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macId,@"macid",dictationIdArray,@"DictationID", nil];
-        
-        
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
-                                                           options:0 // Pass 0 if you don't care about the readability of the generated string
-                                                             error:&error];
-        
-        
-        NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
-        
-        
-        
-        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
-        
-        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
-        
-        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
-        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:SEND_DICTATION_IDS_API withRequestParameter:array withResourcePath:SEND_DICTATION_IDS_API withHttpMethd:POST downloadMethodType:@""];
-        [downloadmetadatajob startMetaDataDownLoad];
-    }
-    else
-    {
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-    }
-    
-    
-}
+//-(void)sendDictationIds:(NSString*)dictationIdArray
+//{
+//    if ([[AppPreferences sharedAppPreferences] isReachable])
+//    {
+//        //[[AppPreferences sharedAppPreferences] showHudWithTitle:@"Loading Files" detailText:@"Please wait.."];
+//        
+//        NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
+//        
+//        NSError* error;
+//        
+//        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macId,@"macid",dictationIdArray,@"DictationID", nil];
+//        
+//        
+//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
+//                                                           options:0 // Pass 0 if you don't care about the readability of the generated string
+//                                                             error:&error];
+//        
+//        
+//        NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
+//        
+//        
+//        
+//        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
+//        
+//        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
+//        
+//        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
+//        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:SEND_DICTATION_IDS_API withRequestParameter:array withResourcePath:SEND_DICTATION_IDS_API withHttpMethd:POST downloadMethodType:@""];
+//        [downloadmetadatajob startMetaDataDownLoad];
+//    }
+//    else
+//    {
+//        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//    }
+//    
+//    
+//}
 
 -(void) downloadAudioFile
 {
@@ -714,76 +714,76 @@ static APIManager *singleton = nil;
 
 -(void)downloadFileUsingConnection:(NSString*)mobielDictationIdVal
 {
-    if ([[AppPreferences sharedAppPreferences] isReachable])
-    {
-        NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
-        
-        NSError* error;
-        
-        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macId,@"macid",mobielDictationIdVal,@"DictationID", nil];
-        
-        
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
-                                                           options:0 // Pass 0 if you don't care about the readability of the generated string
-                                                             error:&error];
-        
-        
-        NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
-        
-        
-        
-        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
-        
-        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
-        
-        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
-        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:FILE_DOWNLOAD_API withRequestParameter:array withResourcePath:FILE_DOWNLOAD_API withHttpMethd:POST downloadMethodType:@""];
-        [downloadmetadatajob startMetaDataDownLoad];
-    }
-    else
-    {
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-    }
-    
+//    if ([[AppPreferences sharedAppPreferences] isReachable])
+//    {
+//        NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
+//        
+//        NSError* error;
+//        
+//        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macId,@"macid",mobielDictationIdVal,@"DictationID", nil];
+//        
+//        
+//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
+//                                                           options:0 // Pass 0 if you don't care about the readability of the generated string
+//                                                             error:&error];
+//        
+//        
+//        NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
+//        
+//        
+//        
+//        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
+//        
+//        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
+//        
+//        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
+//        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:FILE_DOWNLOAD_API withRequestParameter:array withResourcePath:FILE_DOWNLOAD_API withHttpMethd:POST downloadMethodType:@""];
+//        [downloadmetadatajob startMetaDataDownLoad];
+//    }
+//    else
+//    {
+//        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//    }
+//    
     
 }
 
 -(void)sendComment:(NSString*)comment dictationId:(NSString*)mobielDictationIdVal
 {
-    if ([[AppPreferences sharedAppPreferences] isReachable])
-    {
-        NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
-        
-        NSError* error;
-        
-        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macId,@"macid",mobielDictationIdVal,@"DictationID",comment,@"strComment", nil];
-        
-        
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
-                                                           options:0 // Pass 0 if you don't care about the readability of the generated string
-                                                             error:&error];
-        
-        
-        NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
-        
-        
-        
-        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
-        
-        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
-        
-        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
-        
-        [[AppPreferences sharedAppPreferences] showHudWithTitle:@"Submitting..." detailText:@"Please wait"];
-        
-        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:SEND_COMMENT_API withRequestParameter:array withResourcePath:SEND_COMMENT_API withHttpMethd:POST downloadMethodType:@""];
-        
-        [downloadmetadatajob startMetaDataDownLoad];
-    }
-    else
-    {
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-    }
+//    if ([[AppPreferences sharedAppPreferences] isReachable])
+//    {
+//        NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
+//        
+//        NSError* error;
+//        
+//        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macId,@"macid",mobielDictationIdVal,@"DictationID",comment,@"strComment", nil];
+//        
+//        
+//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
+//                                                           options:0 // Pass 0 if you don't care about the readability of the generated string
+//                                                             error:&error];
+//        
+//        
+//        NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
+//        
+//        
+//        
+//        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
+//        
+//        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
+//        
+//        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
+//        
+//        [[AppPreferences sharedAppPreferences] showHudWithTitle:@"Submitting..." detailText:@"Please wait"];
+//        
+//        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:SEND_COMMENT_API withRequestParameter:array withResourcePath:SEND_COMMENT_API withHttpMethd:POST downloadMethodType:@""];
+//        
+//        [downloadmetadatajob startMetaDataDownLoad];
+//    }
+//    else
+//    {
+//        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//    }
     
     
 }
@@ -1264,7 +1264,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
         filePath = [NSHomeDirectory() stringByAppendingPathComponent:
                     [NSString stringWithFormat:@"Documents/%@/%@.Docx",DOCX_FILES_FOLDER_NAME,filename] ];
         
-        url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", BASE_URL_PATH, DOCX_FILE_UPLOAD_API]];
+        url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", BASE_URL_PATH, @"encedecr_MobileUploadDocFile"]];
         
     }
    
@@ -1654,42 +1654,42 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 -(void)uploadDocxFileToServerUsingNSURLSession:(NSString*)docxFileName
 {
     
-    if ([[AppPreferences sharedAppPreferences] isReachable])
-    {
-        
-        dispatch_async(dispatch_get_main_queue(), ^
-                       {
-                          NSString* departmentId= [[Database shareddatabase] getDepartMentIdForFileName:docxFileName];
-                           
-                          int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:docxFileName];
-
-                           NSString* downloadMethodType = @"urlConnection";
-                           
-                           NSArray * requestParamArray = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%@",departmentId], [NSString stringWithFormat:@"%d",mobileDictationIdVal], nil];
-                           
-                           dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                               
-                                DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:DOCX_FILE_UPLOAD_API withRequestParameter:requestParamArray withResourcePath:DOCX_FILE_UPLOAD_API withHttpMethd:POST downloadMethodType:downloadMethodType];
-                               
-                               NSDictionary *params = @{@"filename"     : docxFileName,
-                                                                                     };
-                               
-                               downloadmetadatajob.requestParameter = params;
-                               
-//                               [downloadmetadatajob uploadDocxFileAfterGettingdatabaseValues:docxFileName];
-                               
-                           });
-                           
-                       });
-        
-        
-        
-    }
-    else
-    {
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-    }
-    
+//    if ([[AppPreferences sharedAppPreferences] isReachable])
+//    {
+//
+//        dispatch_async(dispatch_get_main_queue(), ^
+//                       {
+//                          NSString* departmentId= [[Database shareddatabase] getDepartMentIdForFileName:docxFileName];
+//
+//                          int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:docxFileName];
+//
+//                           NSString* downloadMethodType = @"urlConnection";
+//
+//                           NSArray * requestParamArray = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%@",departmentId], [NSString stringWithFormat:@"%d",mobileDictationIdVal], nil];
+//
+//                           dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//
+//                                DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:DOCX_FILE_UPLOAD_API withRequestParameter:requestParamArray withResourcePath:DOCX_FILE_UPLOAD_API withHttpMethd:POST downloadMethodType:downloadMethodType];
+//
+//                               NSDictionary *params = @{@"filename"     : docxFileName,
+//                                                                                     };
+//
+//                               downloadmetadatajob.requestParameter = params;
+//
+////                               [downloadmetadatajob uploadDocxFileAfterGettingdatabaseValues:docxFileName];
+//
+//                           });
+//
+//                       });
+//
+//
+//
+//    }
+//    else
+//    {
+//        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//    }
+//
     
 }
 
