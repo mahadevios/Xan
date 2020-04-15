@@ -3203,23 +3203,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6FE3CAE8-F31A-4FEF-BEA9-9C9F0F19CDDF"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/API Manager/DownloadMetaDataJob.m"
-            timestampString = "596966260.058059"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "655"
-            endingLineNumber = "655"
-            landmarkName = "-connectionDidFinishLoading:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "945F5C82-A1C5-47B8-A63D-0F16121E21BC"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -3231,23 +3214,6 @@
             startingLineNumber = "307"
             endingLineNumber = "307"
             landmarkName = "-submitButtonClicked:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "A3248D34-8DA6-4981-8DB7-8E4F014DAF01"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/API Manager/APIManager.m"
-            timestampString = "599554298.493562"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "566"
-            endingLineNumber = "566"
-            landmarkName = "-changePinOldPin:NewPin:macID:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3316,23 +3282,6 @@
             startingLineNumber = "74"
             endingLineNumber = "74"
             landmarkName = "-sendNewRequestWithResourcePath:withRequestParameter:withJobName:withMethodType:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "33FF7599-13C4-44F6-A187-316391B0F475"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/API Manager/DownloadMetaDataJob.m"
-            timestampString = "596966260.0582581"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "567"
-            endingLineNumber = "567"
-            landmarkName = "-connectionDidFinishLoading:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

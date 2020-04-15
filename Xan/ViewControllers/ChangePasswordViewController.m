@@ -353,41 +353,81 @@
 }
 
 
+
+-(void) LogoutAndPresentLoginVC
+{
+    [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+    
+    [AppPreferences sharedAppPreferences].userObj = nil;
+    
+    UIViewController* vc= [self.storyboard  instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
+      
+//      [self presentViewController:vc animated:true completion:nil];
+    UIViewController *topRootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    
+    while (topRootViewController.presentedViewController)
+    {
+        topRootViewController = topRootViewController.presentedViewController;
+    }
+    
+    if (![topRootViewController isKindOfClass: [LoginViewController class]])
+    {
+        vc.modalPresentationStyle = UIModalPresentationFullScreen;
+        [topRootViewController presentViewController:vc animated:YES completion:nil];
+        
+    }
+    
+//     [[[[UIApplication sharedApplication] keyWindow] rootViewController]  presentViewController:vc animated:YES completion:nil];
+}
+
 -(void)pinChangeResponseCheck:(NSNotification*)notificationObject
 {
-  //  NSDictionary* dic=notificationObject.object;
-//    " Case 1:
-//    {
-//        "code": 200,
-//        "pinChangeSuccess":true,
-//        "oldpin":"true"
-//    }
-//    
-//    Case 2:
-//    {
-//        "code": 401,
-//        "pinChangeSuccess":false,
-//        "oldpin":"true/false"
-//        
-//    } "}
+    [hud removeFromSuperview];
+    NSString* errorString = [notificationObject.object valueForKey:@"error"];
     
+    NSString* messageString = [notificationObject.object valueForKey:@"message"];
+           
+    if (errorString != nil && messageString != nil) {
+        
+        NSString* failedMessage = @"File uploading failed";
+        if (errorString != nil) {
+            failedMessage = [NSString stringWithFormat:@"%@, file uploading failed",errorString];
+        }
+        
+        if (errorString != nil && messageString != nil) {
+            failedMessage = [NSString stringWithFormat:@"%@, %@, file uploading failed",errorString,messageString];
+        }
+        else if (messageString != nil){
+            failedMessage = [NSString stringWithFormat:@"%@, file uploading failed",messageString];
+            
+        }
+        // to logout user out of the application once session expires
+         if ([errorString isEqualToString:@"Unauthorized"] || [messageString isEqualToString:@"Unauthorized"]) {
+            failedMessage = @"Your session has timed out. Please login using your PIN and try again.";
+             
+             [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:failedMessage withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+             
+             [self clearAllTestFields];
+             
+             [self LogoutAndPresentLoginVC];
+        }
+          
+        
+        return;
+    }
+        
     NSDictionary* responseDict=notificationObject.object;
     NSString* responseCodeString=  [responseDict valueForKey:RESPONSE_CODE];
     NSString* pinChangeSuccess=  [responseDict valueForKey:@"pinChangeSuccess"];
     NSString* oldPin=  [responseDict valueForKey:@"oldDevicePin"];
 
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    [hud removeFromSuperview];
+   
     if ([responseCodeString intValue]==200 && [pinChangeSuccess intValue]==1 && [oldPin intValue]==1)
     {
-        //gotResponse=true;
-//        [self.window.rootViewController.presentedViewController dismissViewControllerAnimated:NO completion:nil];
-//        
-//        RegistrationViewController* regiController=(RegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"RegistrationViewController"];
-//        [self.window.rootViewController presentViewController:regiController
-//                                                     animated:NO
-//                                                   completion:nil];
-        //[self dismissViewControllerAnimated:NO completion:nil];
+
         
         alertController = [UIAlertController alertControllerWithTitle:@"Pin changed successfully"
                                                               message:@"Please login with new Pin"
@@ -433,14 +473,7 @@
                                                     style:UIAlertActionStyleDefault
                                                   handler:^(UIAlertAction * action)
                             {
-                                pinCode1TextField.text=@"";
-                                pinCode2TextField.text=@"";
-                                pinCode3TextField.text=@"";
-                                pinCode4TextField.text=@"";
-                                pinCode5TextField.text=@"";
-                                pinCode6TextField.text=@"";
-                                pinCode7TextField.text=@"";
-                                pinCode8TextField.text=@"";
+                                [self clearAllTestFields];
                                 [pinCode1TextField becomeFirstResponder];
                                 [alertController dismissViewControllerAnimated:YES completion:nil];
                             
@@ -464,14 +497,8 @@
                                                         style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction * action)
                                 {
-                                    pinCode1TextField.text=@"";
-                                    pinCode2TextField.text=@"";
-                                    pinCode3TextField.text=@"";
-                                    pinCode4TextField.text=@"";
-                                    pinCode5TextField.text=@"";
-                                    pinCode6TextField.text=@"";
-                                    pinCode7TextField.text=@"";
-                                    pinCode8TextField.text=@"";
+                                    [self clearAllTestFields];
+                    
                                     [pinCode1TextField becomeFirstResponder];
                                     [alertController dismissViewControllerAnimated:YES completion:nil];
                                     
@@ -485,9 +512,39 @@
 
                 
             }
+    else
+    {
+        alertController = [UIAlertController alertControllerWithTitle:@"Pin change failed"
+                                                                message:@"Please try again!"
+                                                         preferredStyle:UIAlertControllerStyleAlert];
+          actionDelete = [UIAlertAction actionWithTitle:@"OK"
+                                                  style:UIAlertActionStyleDefault
+                                                handler:^(UIAlertAction * action)
+                          {
+                              [self clearAllTestFields];
+              
+                              [pinCode1TextField becomeFirstResponder];
+                              [alertController dismissViewControllerAnimated:YES completion:nil];
+                              
+                          }]; //You can use a block here to handle a press on this button
+          [alertController addAction:actionDelete];
+          
+          
+        
+          
+          [self presentViewController:alertController animated:YES completion:nil];
+    }
 
 }
     - (IBAction)cancelButtonClicked:(id)sender
+{
+    [self clearAllTestFields];
+    
+    [pinCode1TextField becomeFirstResponder];
+    
+}
+
+-(void) clearAllTestFields
 {
     pinCode1TextField.text=@"";
     pinCode2TextField.text=@"";
@@ -497,6 +554,5 @@
     pinCode6TextField.text=@"";
     pinCode7TextField.text=@"";
     pinCode8TextField.text=@"";
-    [pinCode1TextField becomeFirstResponder];}
-
+}
 @end

@@ -23,8 +23,6 @@
 //#define  BASE_URL_PATH                          @"https://cfscommunicator.com:8443/xan_dictate"
 #define  BASE_URL_PATH                          @"https://acedictate.com.au:8443/xan_dictate"
 
-//#define  BASE_URL_PATH                        @"http://192.168.3.80:8080/user"
-
 #define  AUDIO_DOWNLOAD_API                    @"download3"
 
 #define  FILE_UPLOAD_API                        @"mobileUploadAudio"
@@ -44,46 +42,13 @@
 #define  TEST_API                             @"check"
 #define  TEMPLATE_LIST_API                    @"getTemplateByDevicePractitioner"
 
-
-//#define  BASE_URL_PATH                        @"http://www.xanadutec.net/cubeagent_webapi/api"
-//
-//#define  BASE_URL_PATH                        @"http://192.168.3.150:8081/CubeAPI/api"
-//#define  CHECK_DEVICE_REGISTRATION            @"MobileCheckDeviceRegistration"
-//#define  AUTHENTICATE_API                     @"MobileAuthenticate"
-//#define  ACCEPT_PIN_API                       @"MobileAcceptPIN"
-//#define  VALIDATE_PIN_API                     @"MobileValidatePIN"
-//#define  DICTATIONS_INSERT_API                @"MobileDictationsInsert"
-//#define  DATA_SYNCHRONISATION_API             @"MobileDataSynchronisation"
-//#define  FILE_UPLOAD_API                      @"MobileFileUpload"
-//#define  PIN_CANGE_API                        @"MobilePINChange"
-
-//#define  BASE_URL_PATH                        @"http://www.xanadutec.net/cubeagent_webapi/api"
-//#define  BASE_URL_PATH                        @"https://www.cubescribe.com/cubeagent_webapi/api"
-
-//#define  BASE_URL_PATH                        @"http://192.168.3.156:8081/CubeAPI/api"
-//#define  CHECK_DEVICE_REGISTRATION            @"encrdecr_MobileCheckDeviceRegistration"
 #define  AUTHENTICATE_API                     @"encrdecr_MobileAuthenticate"
-//#define  ACCEPT_PIN_API                       @"encrdecr_MobileAcceptPIN"
-//#define  VALIDATE_PIN_API                     @"encrdecr_MobileValidatePIN"
-//#define  FILE_UPLOAD_API                      @"encrdecr_MobileFileUpload"
-//#define  PIN_CANGE_API                        @"encrdecr_MobilePINChange"
-#define  FILE_DOWNLOAD_API                    @"encedecr_MobileDownloadDocFile"
-#define  SEND_DICTATION_IDS_API               @"encrdecr_MobileRequestForCompleteFiles"
-#define  SEND_COMMENT_API                     @"encdecr_MobileDocFileComment"
-#define  DOCX_FILE_UPLOAD_API                 @"encedecr_MobileUploadDocFile"
-
-
 
 
 #define  SECRET_KEY                           @"an@%c*(a&ax/e!*6"
 #define  IV                                   @"t6*a$d)e&1@c*!ex"
 #define  CONTENT_TYPE_JSON                    @"JSON"
 
-//#define  IV                                   @"abcdefghijklmn8p"
-//#define  IV                                   @"90Ji0arv0fkpeCwH"
-
-
-//#define  SECRET_KEY                           @"d00529f30eb8325a64522b87dd372964"
 
 #define  POST                           @"POST"
 #define  GET                            @"GET"
@@ -104,16 +69,12 @@
 #define NOTIFICATION_AUTHENTICATE_API               @"notificationForMobileAuthenticate"
 #define NOTIFICATION_ACCEPT_PIN_API                 @"notificationForMobileAcceptPIN"
 #define NOTIFICATION_VALIDATE_PIN_API               @"notificationForMobileValidatePIN"
-#define NOTIFICATION_DICTATIONS_INSERT_API          @"notificationForMobileDictationsInsert"
-#define NOTIFICATION_DATA_SYNCHRONISATION_API       @"notificationForMobileDataSynchronisation"
 #define NOTIFICATION_FILE_UPLOAD_API                @"notificationForMobileFileUpload"
 #define NOTIFICATION_FILE_UPLOAD_FAILED             @"notificationForMobileFileUploadFailed"
-#define NOTIFICATION_FILE_DOWNLOAD_API              @"notificationForMobileFileDownload"
-#define NOTIFICATION_SEND_DICTATION_IDS_API         @"notificationSendDictationIds"
 #define NOTIFICATION_ACCEPT_TANDC_API               @"notificationAcceptTandC"
 #define NOTIFICATION_TEMPLATE_LIST_API              @"notificationTemplateList"
-
 #define NOTIFICATION_PIN_CANGE_API                  @"notificationForMobilePINChange"
+
 #define NOTIFICATION_PAUSE_RECORDING                @"pauseRecording"
 #define NOTIFICATION_INTERNET_MESSAGE               @"internetMessage"
 #define NOTIFICATION_PAUSE_AUDIO_PALYER             @"pausePlayer"
@@ -121,7 +82,6 @@
 #define NOTIFICATION_SAVE_RECORDING                 @"saveRecording"
 #define NOTIFICATION_FILE_IMPORTED                  @"fileImportingCompleted"
 #define NOTIFICATION_UPLOAD_NEXT_FILE               @"uploadNextFile"
-#define NOTIFICATION_SEND_COMMENT_API               @"commentNotification"
 #define NOTIFICATION_FILE_UPLOAD_CLICKED            @"fileUploadClicked"
 #define NOTIFICATION_STOP_VRS                       @"stopVRS"
 #define NOTIFICATION_RECORD_DISMISSED               @"recordDismissed"

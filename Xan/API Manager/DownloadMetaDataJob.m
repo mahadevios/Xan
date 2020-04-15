@@ -513,167 +513,155 @@
         }
     }
     else
-    if ([self.downLoadEntityJobName isEqualToString:SEND_DICTATION_IDS_API])
-    {
-        
-        if (response != nil)
-        {
-            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
-            
-            if ([[response objectForKey:@"code"] isEqualToString:@"200"])
-            {
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SEND_DICTATION_IDS_API object:response];
+       if ([self.downLoadEntityJobName isEqualToString:PIN_CANGE_API])
+       {
+           
+           if (response != nil)
+           {
                
-            }
-            else
-            {
-                
-            }
-        }else
-        {
-            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
-            
-            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-        }
-    }
-    else
-    if ([self.downLoadEntityJobName isEqualToString:SEND_COMMENT_API])
-    {
-        
-        if (response != nil)
-        {
-            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
-            
-            if ([[response objectForKey:@"code"] isEqualToString:@"200"])
-            {
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SEND_COMMENT_API object:response];
-                
-                
-            }else
-            {
-                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-            }
-        }else
-        {
-            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
-            
-            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-        }
-    }
-    else
-        if([self.downLoadEntityJobName isEqualToString:AUDIO_DOWNLOAD_API])
-        {
-//            NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:byteCodeString options:0];
-//            NSString* fileName = [response valueForKey:@"fileName"];
+             
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PIN_CANGE_API object:response];
+                   
+           }else
+           {
+               [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+               
+               [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+           }
+       }
+//    else
+//    if ([self.downLoadEntityJobName isEqualToString:SEND_DICTATION_IDS_API])
+//    {
+//        
+//        if (response != nil)
+//        {
+//            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+//            
+//            if ([[response objectForKey:@"code"] isEqualToString:@"200"])
+//            {
+//                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SEND_DICTATION_IDS_API object:response];
+//               
+//            }
+//            else
+//            {
+//                
+//            }
+//        }else
+//        {
+//            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+//            
+//            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//        }
+//    }
+//    else
+//    if ([self.downLoadEntityJobName isEqualToString:SEND_COMMENT_API])
+//    {
 //
-//            NSData* fileData = [response valueForKey:@"fileData"];
-
-            NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads/%@",@"database3"]];
-            
-            NSString* newDestPath = [destpath stringByAppendingPathExtension:@"properties"];
-            
-            NSString* filePath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads"]];
-            
-            
-            if (![[NSFileManager defaultManager] fileExistsAtPath:newDestPath])
-            {
-                NSError* error;
-                if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
-                    [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
-                
-                [responseData writeToFile:newDestPath atomically:YES];
-                
-            }
-            else
-            {
-                [responseData writeToFile:destpath atomically:YES];
-                
-            }
-            
-        }
-    else
-    if ([self.downLoadEntityJobName isEqualToString:FILE_DOWNLOAD_API])
-    {
-        
-        if (response != nil)
-        {
-            
-            if ([[response objectForKey:@"code"] isEqualToString:@"200"])
-            {
-                
-                NSString* byteCodeString = [response valueForKey:@"ByteDocForDownload"];
-                
-                NSString* DictationID = [response valueForKey:@"DictationID"];
-                
-                NSString* fileName = [[Database shareddatabase] getfileNameFromDictationID:DictationID];
-                
-                NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:byteCodeString options:0];
-                
-                
-                NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads/%@",fileName]];
-                
-                NSString* newDestPath = [destpath stringByAppendingPathExtension:@"doc"];
-                
-                NSString* filePath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads"]];
-                
-                
-                if (![[NSFileManager defaultManager] fileExistsAtPath:newDestPath])
-                {
-                    NSError* error;
-                    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
-                        [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
-                    
-                    [decodedData writeToFile:newDestPath atomically:YES];
-                    
-                }
-                else
-                {
-                    [decodedData writeToFile:destpath atomically:YES];
-                    
-                }
-                
-                [[Database shareddatabase] updateDownloadingStatus:DOWNLOADED dictationId:8103552];
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_DOWNLOAD_API object:response];
-                
-                
-            }else
-            {
-                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-            }
-        }else
-        {
-            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
-            
-            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-        }
-    }
-    else
-    if ([self.downLoadEntityJobName isEqualToString:PIN_CANGE_API])
-    {
-        
-        if (response != nil)
-        {
-            
-            if ([[response objectForKey:@"code"]intValue]==200)
-            {
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PIN_CANGE_API object:response];
-                
-                
-            }else
-            {
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PIN_CANGE_API object:response];
-                
-                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"PIN changed failed, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-            }
-        }else
-        {
-            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
-            
-            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-        }
-    }
-    
+//        if (response != nil)
+//        {
+//            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+//
+//            if ([[response objectForKey:@"code"] isEqualToString:@"200"])
+//            {
+//                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SEND_COMMENT_API object:response];
+//
+//
+//            }else
+//            {
+//                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//            }
+//        }else
+//        {
+//            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+//
+//            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//        }
+//    }
+//    else
+//        if([self.downLoadEntityJobName isEqualToString:AUDIO_DOWNLOAD_API])
+//        {
+//
+//            NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads/%@",@"database3"]];
+//
+//            NSString* newDestPath = [destpath stringByAppendingPathExtension:@"properties"];
+//
+//            NSString* filePath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads"]];
+//
+//
+//            if (![[NSFileManager defaultManager] fileExistsAtPath:newDestPath])
+//            {
+//                NSError* error;
+//                if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
+//                    [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+//
+//                [responseData writeToFile:newDestPath atomically:YES];
+//
+//            }
+//            else
+//            {
+//                [responseData writeToFile:destpath atomically:YES];
+//
+//            }
+//
+//        }
+//    else
+//    if ([self.downLoadEntityJobName isEqualToString:FILE_DOWNLOAD_API])
+//    {
+//
+//        if (response != nil)
+//        {
+//
+//            if ([[response objectForKey:@"code"] isEqualToString:@"200"])
+//            {
+//
+//                NSString* byteCodeString = [response valueForKey:@"ByteDocForDownload"];
+//
+//                NSString* DictationID = [response valueForKey:@"DictationID"];
+//
+//                NSString* fileName = [[Database shareddatabase] getfileNameFromDictationID:DictationID];
+//
+//                NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:byteCodeString options:0];
+//
+//
+//                NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads/%@",fileName]];
+//
+//                NSString* newDestPath = [destpath stringByAppendingPathExtension:@"doc"];
+//
+//                NSString* filePath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads"]];
+//
+//
+//                if (![[NSFileManager defaultManager] fileExistsAtPath:newDestPath])
+//                {
+//                    NSError* error;
+//                    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
+//                        [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+//
+//                    [decodedData writeToFile:newDestPath atomically:YES];
+//
+//                }
+//                else
+//                {
+//                    [decodedData writeToFile:destpath atomically:YES];
+//
+//                }
+//
+//                [[Database shareddatabase] updateDownloadingStatus:DOWNLOADED dictationId:8103552];
+//
+//                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_DOWNLOAD_API object:response];
+//
+//
+//            }else
+//            {
+//                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//            }
+//        }else
+//        {
+//            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+//
+//            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//        }
+//    }
+   
     
 }
 
@@ -681,31 +669,31 @@
 -(void)downloadFile:(NSArray*)dataArray
 {
     
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-    NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", BASE_URL_PATH, FILE_DOWNLOAD_API]];
-    
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-    
-    [request setHTTPMethod:@"POST"];
-    
-    NSError* error;
-    
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    
-    NSData *requestData = [NSJSONSerialization dataWithJSONObject:dataArray options:kNilOptions error:&error];
-    
-    [request setHTTPBody:requestData];
-    
-    session = [SharedSession getSharedSession:[APIManager sharedManager]];
-    
-    [request setHTTPMethod:@"POST"];
-    
-    NSURLSessionDownloadTask* downloadTask = [session downloadTaskWithRequest:request];
-    
-    [downloadTask resume];
+//    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+//    
+//    NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", BASE_URL_PATH, FILE_DOWNLOAD_API]];
+//    
+//    
+//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+//    
+//    [request setHTTPMethod:@"POST"];
+//    
+//    NSError* error;
+//    
+//    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+//    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+//    
+//    NSData *requestData = [NSJSONSerialization dataWithJSONObject:dataArray options:kNilOptions error:&error];
+//    
+//    [request setHTTPBody:requestData];
+//    
+//    session = [SharedSession getSharedSession:[APIManager sharedManager]];
+//    
+//    [request setHTTPMethod:@"POST"];
+//    
+//    NSURLSessionDownloadTask* downloadTask = [session downloadTaskWithRequest:request];
+//    
+//    [downloadTask resume];
     
 }
 
