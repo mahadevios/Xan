@@ -84,9 +84,9 @@
                                                    object:nil];
     
     // observer for completed doc API response
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(validateSendIdsResponse:) name:NOTIFICATION_SEND_DICTATION_IDS_API
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(validateSendIdsResponse:) name:NOTIFICATION_SEND_DICTATION_IDS_API
+//                                               object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(validateTemplateListResponse:) name:NOTIFICATION_TEMPLATE_LIST_API
