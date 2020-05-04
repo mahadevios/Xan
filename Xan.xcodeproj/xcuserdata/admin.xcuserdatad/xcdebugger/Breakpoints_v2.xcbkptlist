@@ -3195,9 +3195,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3979"
-            endingLineNumber = "3979"
-            landmarkName = "-editRecord"
-            landmarkType = "7">
+            endingLineNumber = "3979">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3298,7 +3296,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1862"
             endingLineNumber = "1862"
-            landmarkName = "-addAnimatedView"
+            landmarkName = "-uploadAudio:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3411,7 +3409,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2997"
             endingLineNumber = "2997"
-            landmarkName = "-convertAudio"
+            landmarkName = "-saveAudioRecordToDatabase"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3427,8 +3425,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3006"
             endingLineNumber = "3006"
-            landmarkName = "RecordViewController"
-            landmarkType = "3">
+            landmarkName = "-saveAudioRecordToDatabase"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3795,7 +3793,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3009"
             endingLineNumber = "3009"
-            landmarkName = "-getTotalCMTimeFromMilliSeconds:"
+            landmarkName = "-save:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3811,7 +3809,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3084"
             endingLineNumber = "3084"
-            landmarkName = "-saveAudioRecordToDatabase"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3875,7 +3873,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3029"
             endingLineNumber = "3029"
-            landmarkName = "-getTotalCMTimeFromMilliSeconds:"
+            landmarkName = "-save:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4308,6 +4306,22 @@
             startingLineNumber = "203"
             endingLineNumber = "203"
             landmarkName = "-connection:didFailWithError:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4038A0BA-3A7C-4F11-8806-767684DF94A3"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/ViewControllers/RecordViewController.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3012"
+            endingLineNumber = "3012"
+            landmarkName = "-saveAudioRecordToDatabase"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
