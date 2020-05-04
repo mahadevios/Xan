@@ -588,38 +588,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         {
             [self updateDictationStatus:@"RecordingPause"];
         }
-//
-//        if (!stopped && !edited)
-//        {
-//            NSLog(@"in save");
-//
-//            [self saveAudioRecordToDatabase];
-//
-//            NSString* destinationPath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]];
-//
-//            NSError* error1;
-//
-//            [[NSFileManager defaultManager] moveItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] toPath:destinationPath error:&error1];
-//
-//            [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error1];
-//
-//            [[NSNotificationCenter defaultCenter] removeObserver:self];
-//
-//        }
-//        else
-//            if (!stopped && edited)
-//            {
-//                NSError* error1;
-//
-//                [self updateDictationStatus:@"RecordingPause"];
-//
-//                NSString* destinationPath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]];
-//
-//                [[NSFileManager defaultManager] moveItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] toPath:destinationPath error:&error1];
-//
-//                [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@editedCopy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error1];
-//            }
-//
+
     }
 }
 
@@ -988,7 +957,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                 if ([startRecordingImageView.image isEqual:[UIImage imageNamed:@"Play"]] || !player.isPlaying)
                 {
                     
-                    sliderTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updateSliderTime:) userInfo:nil repeats:YES];
+                    sliderTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(keepUpdatingSliderTimeWhileAudioPlaying:) userInfo:nil repeats:YES];
                     
                     [self prepareAudioPlayer];
                     
@@ -1294,7 +1263,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             
             [self updateDictationStatus:@"RecordingComplete"];
 
-
+            playerDurationWithMilliSeconds = player.duration;
+            
             if ([[NSUserDefaults standardUserDefaults] boolForKey:BACK_TO_HOME_AFTER_DICTATION])
             {
                 [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
@@ -1328,6 +1298,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                 
                                 [self updateDictationStatus:@"RecordingComplete"];
 
+                                playerDurationWithMilliSeconds = player.duration;
+                
                                 if ([[NSUserDefaults standardUserDefaults] boolForKey:BACK_TO_HOME_AFTER_DICTATION])
                                 {
                                     [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
@@ -1357,7 +1329,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
     }
     
-    playerDurationWithMilliSeconds = player.duration;
+   
 
 
 }
@@ -2423,7 +2395,12 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
     player.currentTime = audioRecordSlider.value;
     
-    playerDurationWithMilliSeconds = audioRecordSlider.value;
+    if (audioRecordSlider.value > 0.1) {
+        playerDurationWithMilliSeconds = audioRecordSlider.value - 0.03;// to adjust accuracy and file compose failure;
+    }else{
+        playerDurationWithMilliSeconds = audioRecordSlider.value;
+    }
+    
     
     int currentTime=audioRecordSlider.value;
     int minutes = currentTime/60;
@@ -2461,7 +2438,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     
 }
--(void)updateSliderTime:(UISlider*)sender
+-(void)keepUpdatingSliderTimeWhileAudioPlaying:(UISlider*)sender
 {
     playerDurationWithMilliSeconds = player.currentTime;
     
@@ -2904,7 +2881,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     int minutes=currentTime/60;
     int seconds=currentTime%60;
     currentDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];//for slider label time label
-    
+    totalDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];//for slider label time label
     if (minutes>99)//foe more than 99 min show time in 3 digits
     {
         currentDuration.text=[NSString stringWithFormat:@"%03d:%02d",minutes,seconds];//for slider label time label
@@ -2968,13 +2945,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     NSError* error1;
     
     if (error) {
-        // delete output file if it exists since an error was returned during the conversion process
-//        if ([[NSFileManager defaultManager] fileExistsAtPath:destinationFilePath]) {
-//            [[NSFileManager defaultManager] removeItemAtPath:destinationFilePath error:nil];
-//        }
-//        NSString* destinationPath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]];
-//          [[NSFileManager defaultManager] moveItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] toPath:destinationPath error:&error1];
-//        printf("DoConvertFile failed! %d\n", (int)error);
+
         dispatch_async(dispatch_get_main_queue(), ^
                        {
                            //NSLog(@"Reachable");
@@ -3630,6 +3601,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         }
         else
         {
+            time = CMTimeMakeWithSeconds(audioRecordSlider.value, 1);
+                       time1 = CMTimeMakeWithSeconds(player.duration, 1);
+                       timeRange = CMTimeRangeMake(time, time1);
             [appendedAudioTrack removeTimeRange:timeRange];
             
         }
@@ -3916,9 +3890,15 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
        
         if (updatedInsertionTime == 0)
         {
-            float_t sliderValue;
-            
-            sliderValue = playerDurationWithMilliSeconds;
+            float_t sliderValue = 0.0;
+                       
+            if (playerDurationWithMilliSeconds > 0.1) {
+                sliderValue = playerDurationWithMilliSeconds - 0.03;// to adjust accuracy and file compose failure;
+            }else{
+                sliderValue = playerDurationWithMilliSeconds;// to adjust accuracy and file compose failure;
+            }
+                       
+                       
             
 //            NSLog(@"overwrite updatedInsertionTime = %f", playerDurationWithMilliSeconds);
             
@@ -3958,9 +3938,13 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     {
         if (updatedInsertionTime == 0)
         {
-            float_t sliderValue;
-        
-            sliderValue = playerDurationWithMilliSeconds;
+             float_t sliderValue = 0.0;
+                       
+            if (playerDurationWithMilliSeconds > 0.1) {
+                sliderValue = playerDurationWithMilliSeconds - 0.03;// to adjust accuracy and file compose failure;
+            }else{
+                sliderValue = playerDurationWithMilliSeconds;// to adjust accuracy and file compose failure;
+            }
 
             if (sliderValue <= 0)
             {
