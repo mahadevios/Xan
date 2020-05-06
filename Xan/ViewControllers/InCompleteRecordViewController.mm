@@ -3352,8 +3352,8 @@ else
         else
         {
             time = CMTimeMakeWithSeconds(audioRecordSlider.value, 1);
-                       time1 = CMTimeMakeWithSeconds(player.duration, 1);
-                       timeRange = CMTimeRangeMake(time, time1);
+            time1 = CMTimeMakeWithSeconds(player.duration - audioRecordSlider.value, 1);
+            timeRange = CMTimeRangeMake(time, time1);
             [appendedAudioTrack removeTimeRange:timeRange];
             if (CMTimeGetSeconds(time)>=0) {
                            playerDurationWithMilliSeconds = CMTimeGetSeconds(time);
