@@ -3602,8 +3602,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         else
         {
             time = CMTimeMakeWithSeconds(audioRecordSlider.value, 1);
-                       time1 = CMTimeMakeWithSeconds(player.duration, 1);
-                       timeRange = CMTimeRangeMake(time, time1);
+            time1 = CMTimeMakeWithSeconds(player.duration - audioRecordSlider.value, 1);
+            timeRange = CMTimeRangeMake(time, time1);
             [appendedAudioTrack removeTimeRange:timeRange];
             
         }
@@ -3900,11 +3900,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                        
                        
             
-//            NSLog(@"overwrite updatedInsertionTime = %f", playerDurationWithMilliSeconds);
+            NSLog(@"overwrite updatedInsertionTime = %f", playerDurationWithMilliSeconds);
             
             if (sliderValue <= 0)
             {
-                totalTime = [self getTotalCMTimeFromMilliSeconds:0]; // if slider pos. <= 0 then dont subtrat
+                totalTime = [self getTotalCMTimeFromMilliSeconds:sliderValue]; // if slider pos. <= 0 then dont subtrat
                 
             }
             else
@@ -3916,11 +3916,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         }
         else
         {
-//            NSLog(@"overwrite updatedInsertionTime = %f", updatedInsertionTime);
+            NSLog(@"overwrite updatedInsertionTime = %f", updatedInsertionTime);
 
             if (updatedInsertionTime <= 0)
             {
-                totalTime = [self getTotalCMTimeFromMilliSeconds:0];
+                totalTime = [self getTotalCMTimeFromMilliSeconds:updatedInsertionTime];
 
             }
             else
@@ -3965,7 +3965,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             
             if (updatedInsertionTime <= 0)
             {
-                totalTime = [self getTotalCMTimeFromMilliSeconds:0];
+                totalTime = [self getTotalCMTimeFromMilliSeconds:updatedInsertionTime];
                 
             }
             else
