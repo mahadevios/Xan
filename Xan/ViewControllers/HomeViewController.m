@@ -570,6 +570,7 @@
     NSURLSessionDataTask *  theTask = [session dataTaskWithRequest: [NSURLRequest requestWithURL: url] completionHandler:
                                        ^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
                                        {
+        if (data != nil) {
                                            NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
                                            
                                            if ([lookup[@"resultCount"] integerValue] == 1)
@@ -632,7 +633,7 @@
                                                }
                                                    //return YES;
                                                }
-                                           
+        }
                                        }];
     
     [theTask resume];
