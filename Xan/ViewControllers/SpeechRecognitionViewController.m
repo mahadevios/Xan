@@ -76,7 +76,7 @@
     
     audioFileName = [[AVAudioFile alloc] initForWriting:url settings:audioCompressionSettings error:nil];
 
-    self.navigationItem.title = @"Speech Transcription(Beta)";
+    self.navigationItem.title = @"Speech Transcription";
     
 //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
     
