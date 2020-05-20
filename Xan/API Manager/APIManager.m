@@ -1601,6 +1601,14 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
     NSString *mimetype = CFBridgingRelease(UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType));
     
+    NSString *ExtensionStr = (__bridge NSString *)extension;
+    //audio/x-caf
+    if ([ExtensionStr isEqualToString:@"caf"]) {
+        mimetype = @"audio/x-caf";
+    }
+    else if (mimetype == nil){
+        mimetype = @"audio/wav";
+    }
     assert(mimetype != NULL);
     
     CFRelease(UTI);
