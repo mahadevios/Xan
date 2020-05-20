@@ -17,14 +17,14 @@
 
 //#define  BASE_URL_PATH                          @"http://192.168.3.80:8089/xan-dictate"  // Mahadev Mac
 
-//#define  BASE_URL_PATH     @"http://172.20.10.3:8089/xan_dictate"
+#define  BASE_URL_PATH     @"http://172.20.10.3:8089/xan_dictate"
 //#define  BASE_URL_PATH                          @"http://192.168.3.82:8089/xan-dictate"  // Mahadev Windows
 
 //#define  BASE_URL_PATH                        @"http://192.168.2.9:8089/xan-dictate"
 
 //#define  BASE_URL_PATH                          @"https://cfscommunicator.com:8443/xan_dictate"
 //#define  BASE_URL_PATH                          @"https://acedictate.com.au:8443/xan_dictate"
-#define  BASE_URL_PATH                          @"https://acedictate.com.au/xan_dictate"
+//#define  BASE_URL_PATH                          @"https://acedictate.com.au/xan_dictate"
 
 #define  AUDIO_DOWNLOAD_API                    @"download3"
 
@@ -112,9 +112,9 @@
 #define MAXIMUM_RECORDING_LIMIT_MESSAGE        @"Recording duration length exceeded,please start new recording for further dictation"
 #define RECORDING_SAVED_MESSAGE                @"Recording duration length exceeded,your recording has been saved in awaiting transfer,please start new recording for further dictation"
 #define NO_INTERNET_TITLE_MESSAGE              @"No Internet Connection!"
-#define NO_INTERNET_DETAIL_MESSAGE             @"Please check your internet connection and try again."
+#define NO_INTERNET_DETAIL_MESSAGE             @"Please check your Internet connection and try again."
 #define DEACTIVATE_DEPARTMENT_MESSAGE          @"This Clinical Speciality is Deactivated, please select other Clinical Speciality"
-#define MULTIPLE_DEACTIVATE_DEPARTMENT_MESSAGE          @"Clinical Speciality of some of the selected files are inactive, please select only active Clinical Speciality files."
+#define MULTIPLE_DEACTIVATE_DEPARTMENT_MESSAGE          @"Please select active Clinical Speciality files"
 #define SELECT_DEPARTMENT_MESSAGE          @"Please select Clinical Speciality"
 
 

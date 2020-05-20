@@ -3313,8 +3313,8 @@
             timestampString = "600076969.4443851"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4417"
-            endingLineNumber = "4417"
+            startingLineNumber = "4418"
+            endingLineNumber = "4418"
             landmarkName = "-startNewRecordingForEdit"
             landmarkType = "7">
          </BreakpointContent>
@@ -4321,8 +4321,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4150"
-            endingLineNumber = "4150"
+            startingLineNumber = "4151"
+            endingLineNumber = "4151"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -4337,8 +4337,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3769"
-            endingLineNumber = "3769"
+            startingLineNumber = "3770"
+            endingLineNumber = "3770"
             landmarkName = "-deleteToEnd"
             landmarkType = "7">
          </BreakpointContent>
@@ -4353,8 +4353,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4158"
-            endingLineNumber = "4158"
+            startingLineNumber = "4159"
+            endingLineNumber = "4159"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -4369,8 +4369,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3817"
-            endingLineNumber = "3817"
+            startingLineNumber = "3818"
+            endingLineNumber = "3818"
             landmarkName = "-deleteToEnd"
             landmarkType = "7">
          </BreakpointContent>
@@ -4385,8 +4385,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3877"
-            endingLineNumber = "3877"
+            startingLineNumber = "3878"
+            endingLineNumber = "3878"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -4401,8 +4401,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4040"
-            endingLineNumber = "4040"
+            startingLineNumber = "4041"
+            endingLineNumber = "4041"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -4417,8 +4417,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4092"
-            endingLineNumber = "4092"
+            startingLineNumber = "4093"
+            endingLineNumber = "4093"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -4433,8 +4433,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3741"
-            endingLineNumber = "3741"
+            startingLineNumber = "3742"
+            endingLineNumber = "3742"
             landmarkName = "-deleteToEnd"
             landmarkType = "7">
          </BreakpointContent>
@@ -4449,8 +4449,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3891"
-            endingLineNumber = "3891"
+            startingLineNumber = "3892"
+            endingLineNumber = "3892"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -4465,8 +4465,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3895"
-            endingLineNumber = "3895"
+            startingLineNumber = "3896"
+            endingLineNumber = "3896"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -4481,8 +4481,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3921"
-            endingLineNumber = "3921"
+            startingLineNumber = "3922"
+            endingLineNumber = "3922"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -4497,8 +4497,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4085"
-            endingLineNumber = "4085"
+            startingLineNumber = "4086"
+            endingLineNumber = "4086"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -4513,24 +4513,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3604"
-            endingLineNumber = "3604"
-            landmarkName = "-deleteToEnd"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "0D526D5F-8C61-43ED-9D18-39EB7ADAD80A"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/ViewControllers/RecordViewController.mm"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3590"
-            endingLineNumber = "3590"
+            startingLineNumber = "3605"
+            endingLineNumber = "3605"
             landmarkName = "-deleteToEnd"
             landmarkType = "7">
          </BreakpointContent>
@@ -4545,8 +4529,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3669"
-            endingLineNumber = "3669"
+            startingLineNumber = "3670"
+            endingLineNumber = "3670"
             landmarkName = "-deleteToEnd"
             landmarkType = "7">
          </BreakpointContent>
@@ -4561,24 +4545,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3692"
-            endingLineNumber = "3692"
-            landmarkName = "-deleteToEnd"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "4D941E15-CAD2-404F-B1B3-C4E085B2DB3D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/ViewControllers/RecordViewController.mm"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3577"
-            endingLineNumber = "3577"
+            startingLineNumber = "3693"
+            endingLineNumber = "3693"
             landmarkName = "-deleteToEnd"
             landmarkType = "7">
          </BreakpointContent>
@@ -4609,8 +4577,8 @@
             filePath = "Xan/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3729"
-            endingLineNumber = "3729"
+            startingLineNumber = "3730"
+            endingLineNumber = "3730"
             landmarkName = "-deleteToEnd"
             landmarkType = "7">
          </BreakpointContent>
