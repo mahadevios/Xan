@@ -179,18 +179,30 @@ static APIManager *singleton = nil;
 
 -(BOOL)deleteFile:(NSString*)fileName
 {
-    NSError* error;
-    NSString* filePath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,fileName]];
-    
-    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
-    {
-        return  false;
-    }
-    else
-    {
-        [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
-        return true;
-    }
+     NSError* error;
+       // check if newly added .caf exist if not then check if wav exist
+       NSString* filePath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.caf",AUDIO_FILES_FOLDER_NAME,fileName]];
+       
+       if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
+          {
+              filePath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,fileName]];
+              
+             if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
+                {
+                    return  false;
+                }
+              else
+                {
+                    [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+                    return true;
+                }
+          }
+      
+       else
+       {
+           [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+           return true;
+       }
 }
 
 -(BOOL)deleteDocxFile:(NSString*)fileName
@@ -1252,9 +1264,22 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
     });
     
-    NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:
-                          [NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,filename] ];
+    NSString* filenameForTaskIdentifier = filename;
+       
     
+     NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:
+                             [NSString stringWithFormat:@"Documents/%@/%@.caf",AUDIO_FILES_FOLDER_NAME,filename] ];
+       
+
+       if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
+       {
+           filePath = [NSHomeDirectory() stringByAppendingPathComponent:
+           [NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,filename] ];
+           filename = [filename stringByAppendingPathExtension:@"wav"];
+       }else{
+           filename = [filename stringByAppendingPathExtension:@"caf"];
+
+       }
 //    NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", BASE_URL_PATH, FILE_UPLOAD_API]];
     
     NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", BASE_URL_PATH, FILE_UPLOAD_API]];
@@ -1271,9 +1296,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
     NSString *boundary = [self generateBoundaryString];
     
-    NSString* filenameForTaskIdentifier = filename;
-    
-    filename = [filename stringByAppendingPathExtension:@"wav"];
+   
     
    
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
