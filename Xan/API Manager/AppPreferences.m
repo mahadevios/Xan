@@ -209,7 +209,7 @@ static AppPreferences *singleton = nil;
 {
 //    if (![self isReachable])
 //    {
-//        [self showAlertViewWithTitle:@"No internet connection" withMessage:@"Please turn on your inernet connection to access this feature" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//        [self showAlertViewWithTitle:@"No internet connection" withMessage:@"Please turn on your Internet connection to access this feature" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
 //    }
 }
 
