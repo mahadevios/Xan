@@ -3119,6 +3119,8 @@ else
         [self.delegate updateData:delegateDict];
     }
     
+    recentlySelectedTemplateName = nil;
+    
     [self getTempliatFromDepartMentName:deptObj.Id];
     
     [self setDefaultTemplate];
