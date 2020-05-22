@@ -3196,8 +3196,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3898"
             endingLineNumber = "3898"
-            landmarkName = "-dropdownMenu:didCloseComponent:"
-            landmarkType = "7">
+            landmarkName = "InCompleteRecordViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3298,7 +3298,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1862"
             endingLineNumber = "1862"
-            landmarkName = "-keepUpdatingSliderTimeWhileAudioPlaying:"
+            landmarkName = "-sliderValueChanged"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3706,22 +3706,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "5A4BE9EB-D297-47B6-BB3E-AB3CABEE19E5"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1627"
-            endingLineNumber = "1627"
-            landmarkName = "AudioDetailsViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "6FE01405-E2B8-4815-A74D-DA7A7A9FEF59"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -3729,8 +3713,8 @@
             filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1601"
-            endingLineNumber = "1601"
+            startingLineNumber = "1602"
+            endingLineNumber = "1602"
             landmarkName = "-dropdownMenu:attributedTitleForComponent:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3825,8 +3809,8 @@
             filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1377"
-            endingLineNumber = "1377"
+            startingLineNumber = "1378"
+            endingLineNumber = "1378"
             landmarkName = "-cancel:"
             landmarkType = "7">
          </BreakpointContent>
@@ -4177,8 +4161,8 @@
             filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "156"
-            endingLineNumber = "156"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
             landmarkName = "-viewWillAppear:"
             landmarkType = "7">
          </BreakpointContent>
