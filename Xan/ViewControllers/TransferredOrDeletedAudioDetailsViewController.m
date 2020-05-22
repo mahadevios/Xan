@@ -663,6 +663,7 @@ else
           templateNamesDropdownMenu.userInteractionEnabled = true;
       }
       
+    recentlySelectedTemplateName = nil;
     
     [self setDefaultTemplate];
         
@@ -893,7 +894,7 @@ else
 {
     selectedTemplateName = recentlySelectedTemplateName;
     
-    [self updateTemplateIdForFileName];
+//    [self updateTemplateIdForFileName];
 }
 
 - (IBAction)urgentCheckBoxButtonClicked:(id)sender
