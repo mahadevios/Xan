@@ -1546,6 +1546,7 @@
     {
         self.audioDetails.templateName = tempName;
         selectedTemplateName = tempName;
+        recentlySelectedTemplateName = tempName;
     }
     
     if (!(priorityId == nil))
