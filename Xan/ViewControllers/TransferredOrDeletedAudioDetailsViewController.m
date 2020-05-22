@@ -141,6 +141,7 @@
         if (selectedTemplateName == nil)
         {
             selectedTemplateName = self.audioDetails.templateName;
+            recentlySelectedTemplateName = self.audioDetails.templateName;
         }
     
     if ([self.audioDetails.department.departmentName containsString:@"(Unassigned)"]) {

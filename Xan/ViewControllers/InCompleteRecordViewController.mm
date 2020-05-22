@@ -71,8 +71,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     {
         selectedTemplateName = @"Select Template";
     }
-    else
-    selectedTemplateName = self.existingAudioTemplateName;
+    else{
+        selectedTemplateName = self.existingAudioTemplateName;
+        recentlySelectedTemplateName = self.existingAudioTemplateName;
+    }
+    
     
     [templateNamesDropdownMenu reloadAllComponents];
     
