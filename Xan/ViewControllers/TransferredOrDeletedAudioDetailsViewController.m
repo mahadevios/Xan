@@ -846,6 +846,8 @@ else
 {
     selectedTemplateName = [templateNamesArray objectAtIndex:row];
     
+    recentlySelectedTemplateName = selectedTemplateName;
+    
     [dropdownMenu closeAllComponentsAnimated:YES];
     
     [dropdownMenu reloadAllComponents];
