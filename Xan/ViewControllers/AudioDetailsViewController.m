@@ -1435,6 +1435,7 @@
         templateNamesDropdownMenu.userInteractionEnabled = true;
     }
     
+    recentlySelectedTemplateName = nil;
     
     [self setDefaultTemplate];
     
@@ -1716,7 +1717,7 @@
 {
     selectedTemplateName = recentlySelectedTemplateName;
     
-    [self updateTemplateIdForFileName];
+//    [self updateTemplateIdForFileName];
 }
 
 - (IBAction)urgentCheckBoxButtonClicked:(id)sender
