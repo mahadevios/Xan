@@ -1928,14 +1928,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                             
                             
                             [app uploadFileToServer:self.existingAudioFileName jobName:FILE_UPLOAD_API];
-                            
-                         
-                            
-                            
+                           
                             dispatch_async(dispatch_get_main_queue(), ^
                                                                   {
                                                                      
-                                                                      
                                                                       sender.userInteractionEnabled=NO;
                                                                       
                                                                       deleteButton.userInteractionEnabled=NO;
@@ -3968,7 +3964,7 @@ else
         else
         if (templateId == nil || [existingAudioDepartment.departmentName containsString:@"Unassigned"]) {
            // tempId = nill hence template is deleted || if dept is unassigned then no template key value will be available hence fetch existing code
-           templateId = [[Database shareddatabase] getTemplateIdFromFilename:recordedAudioFileName];
+           templateId = [[Database shareddatabase] getTemplateIdFromFilename:self.existingAudioFileName];
     //        templateId = selectedTemplateName;
         }
     
