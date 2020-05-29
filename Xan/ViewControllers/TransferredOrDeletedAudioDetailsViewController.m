@@ -861,7 +861,12 @@ else
     
     if (templateId == nil && ![self.audioDetails.department.departmentName containsString:@"Unassigned"])//template was stored in db bt department unassigned later
            {
-               templateId = @"-1";
+               if (![selectedTemplateName isEqualToString:@"Select Template"]) {
+                   templateId = selectedTemplateName;// here selectedTemplateName is a code, bcas template got removed from web hence only code remains
+               }else{
+                    templateId = @"-1";
+               }
+              
            }
         else
         if ([self.audioDetails.department.departmentName containsString:@"Unassigned"]) {

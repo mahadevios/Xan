@@ -4379,7 +4379,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "30449375-F0E1-4983-B5A4-6A7377D1F88E"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Xan/API Manager/APIManager.m"
@@ -4452,6 +4452,38 @@
             startingLineNumber = "3917"
             endingLineNumber = "3917"
             landmarkName = "-dropdownMenu:didCloseComponent:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D2B8AF88-9A78-44EB-82EE-2CD8928815D3"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/ViewControllers/TransferredOrDeletedAudioDetailsViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "862"
+            endingLineNumber = "862"
+            landmarkName = "-updateTemplateIdForFileName"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A4C33CE2-7423-40CD-93C3-11D7D447BBED"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/API Manager/APIManager.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1385"
+            endingLineNumber = "1385"
+            landmarkName = "-uploadFileAfterGettingdatabaseValues:departmentID:transferStatus:mobileDictationIdVal:isFileTypeAudio:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
