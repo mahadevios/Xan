@@ -74,7 +74,7 @@
             
             [userSettingsButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
             
-            NSString* selector=[NSString stringWithFormat:@"%@",[subViewNamesArray objectAtIndex:i]];
+            NSString* selector=[NSString stringWithFormat:@"%@",[subViewNamesArray objectAtIndex:i]];// change clinical speciality
             selector = [selector stringByReplacingOccurrencesOfString:@" " withString:@""];
             selector = [selector stringByReplacingOccurrencesOfString:@"." withString:@""];
             selector = [selector stringByReplacingOccurrencesOfString:@"(" withString:@""];

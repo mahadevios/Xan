@@ -195,7 +195,9 @@
     IDTextField.text=@"";
     passwordTextfield.text=@"";
     [IDTextField becomeFirstResponder];
-    [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Hit home button to exit" withMessage:@"" withCancelText:nil withOkText:@"OK" withAlertTag:1000];}
+    [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Hit home button to exit" withMessage:@"" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+    
+}
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {

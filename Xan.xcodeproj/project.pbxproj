@@ -15,6 +15,7 @@
 		840AC7551D8280F200EF6AF7 /* CAStreamBasicDescription.mm in Sources */ = {isa = PBXBuildFile; fileRef = 840AC7511D8280F200EF6AF7 /* CAStreamBasicDescription.mm */; };
 		840AC7561D8280F200EF6AF7 /* CAXException.mm in Sources */ = {isa = PBXBuildFile; fileRef = 840AC7531D8280F200EF6AF7 /* CAXException.mm */; };
 		840AC7581D82816000EF6AF7 /* ExtAudioFileConvert.mm in Sources */ = {isa = PBXBuildFile; fileRef = 840AC7571D82816000EF6AF7 /* ExtAudioFileConvert.mm */; };
+		84253AB2249CD03000026E38 /* CustomSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84253AB0249CD02E00026E38 /* CustomSplitViewController.m */; };
 		8427DC4A1E124D9B0071C038 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8427DC491E124D9B0071C038 /* ShareViewController.m */; };
 		8427DC4D1E124D9B0071C038 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8427DC4B1E124D9B0071C038 /* MainInterface.storyboard */; };
 		8427DC511E124D9B0071C038 /* Copy to Ace Dictate.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8427DC461E124D9B0071C038 /* Copy to Ace Dictate.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -164,6 +165,8 @@
 		840AC7531D8280F200EF6AF7 /* CAXException.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAXException.mm; sourceTree = "<group>"; };
 		840AC7541D8280F200EF6AF7 /* CAXException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAXException.h; sourceTree = "<group>"; };
 		840AC7571D82816000EF6AF7 /* ExtAudioFileConvert.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ExtAudioFileConvert.mm; sourceTree = "<group>"; };
+		84253AB0249CD02E00026E38 /* CustomSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSplitViewController.m; sourceTree = "<group>"; };
+		84253AB1249CD02F00026E38 /* CustomSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSplitViewController.h; sourceTree = "<group>"; };
 		8427DC461E124D9B0071C038 /* Copy to Ace Dictate.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Copy to Ace Dictate.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8427DC481E124D9B0071C038 /* ShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareViewController.h; sourceTree = "<group>"; };
 		8427DC491E124D9B0071C038 /* ShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
@@ -783,6 +786,8 @@
 				50BFF78322E7091F00A60099 /* SuperAdminHomeViewController.m */,
 				50A0210022EACF5100FAB114 /* ViewHospitalsTableViewController.h */,
 				50A0210122EACF5100FAB114 /* ViewHospitalsTableViewController.m */,
+				84253AB1249CD02F00026E38 /* CustomSplitViewController.h */,
+				84253AB0249CD02E00026E38 /* CustomSplitViewController.m */,
 				501F331B22EB042C0003EE94 /* HospitalListViewController.h */,
 				501F331C22EB042C0003EE94 /* HospitalListViewController.m */,
 			);
@@ -1090,6 +1095,7 @@
 				84FCCFA51D48CE3700E3D7AE /* HomeViewController.m in Sources */,
 				84FCCFB11D48D01000E3D7AE /* MainTabBarViewController.m in Sources */,
 				843B341D20452BD20080F355 /* unzip.c in Sources */,
+				84253AB2249CD03000026E38 /* CustomSplitViewController.m in Sources */,
 				847D95951D5F14DC00145C32 /* AppPreferences.m in Sources */,
 				848B31041FC7EC8200CE3AC8 /* SpeechRecognitionViewController.m in Sources */,
 				847D95B31D5F157C00145C32 /* MBProgressHUD.m in Sources */,
@@ -1379,7 +1385,7 @@
 				PROVISIONING_PROFILE = "f49954c7-7a84-46c2-a188-f37f052d8ade";
 				PROVISIONING_PROFILE_SPECIFIER = AceDevelopment;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1411,7 +1417,7 @@
 				PROVISIONING_PROFILE = "1053c5ee-d822-4b57-a364-b7526972681b";
 				PROVISIONING_PROFILE_SPECIFIER = AceDistribution;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

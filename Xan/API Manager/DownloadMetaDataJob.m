@@ -116,7 +116,7 @@
         int count = 0;
         for (NSString* key in dic)
         {
-            
+       
             NSString* value = dic[key];
             
             if (count==0)
@@ -306,7 +306,7 @@
                 
                 //            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
                 
-                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Could not connect to the sever, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Could not connect to the server, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
             }
         }else
         {

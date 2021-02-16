@@ -20,7 +20,7 @@
 @end
 
 @implementation AlertViewController
-@synthesize VRSDocFilesArray;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -71,9 +71,7 @@
     app.incompleteFileTransferCount= [db getCountOfTransfersOfDicatationStatus:@"RecordingPause"];
     
     [[Database shareddatabase] getlistOfimportedFilesAudioDetailsArray:5];
-    
-    VRSDocFilesArray = [[Database shareddatabase] getVRSDocFiles];
-    
+        
     [self.tableView reloadData];
     
     [self.tabBarController.tabBar setHidden:NO];

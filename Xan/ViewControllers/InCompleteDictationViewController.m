@@ -237,28 +237,11 @@
     UILabel* departmentNameLabel=[cell viewWithTag:103];
     departmentNameLabel.text = audioDetails.department.departmentName;
     
-//     if ([audioDetails.department containsString:@"(Deleted)"]) {
-//
-//            long startIndex = [audioDetails.department length] - 9;
-//            
-//            NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:audioDetails.department];
-//            [string addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(startIndex,9)];
-//            departmentNameLabel.attributedText = string;
-//        }
     UILabel* dateLabel=[cell viewWithTag:104];
     
     if (dateAndTimeArray.count>2)
     {
-        
-//        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-//        NSString* dateStr = [NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
-//        NSDate *date = [dateFormatter dateFromString:dateStr];
-//
-//        // Convert date object into desired format
-//        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
-//        NSString *newDateString = [dateFormatter stringFromDate:date];
-        
+
         dateLabel.text = [dateAndTimeArray objectAtIndex:0];
 
         
@@ -280,7 +263,6 @@
     UITableViewCell* cell= [tableView cellForRowAtIndexPath:indexPath];
     UILabel* fileNameLabel=[cell viewWithTag:101];
     UILabel* recordingDurationLabel=[cell viewWithTag:102];
-    UILabel* nameLabel=[cell viewWithTag:103];
     UILabel* dateLabel=[cell viewWithTag:104];
     AudioDetails* audioDetails = [app.inCompleteFileTransferNamesArray objectAtIndex:indexPath.row];
 

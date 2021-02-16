@@ -111,13 +111,13 @@
 
 -(void)generateTokenResponseCheck:(NSNotification* )dictObj
 {
+    [hud hideAnimated:YES];
+
     NSDictionary* dict=dictObj.object;
     
     NSString* responseTokenString=  [dict valueForKey:@"token"];
-    
+       
     [[NSUserDefaults standardUserDefaults] setObject:responseTokenString forKey:JWT_TOKEN];
-
-    [hud hideAnimated:YES];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"])
     {
@@ -129,6 +129,7 @@
     }
     else
         [self dismissViewControllerAnimated:NO completion:nil];
+    
     
 }
 //-(void)validatePinResponseCheck:(NSNotification*)dictObj;

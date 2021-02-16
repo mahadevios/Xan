@@ -480,7 +480,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "BD749D90-6211-4D52-BAC9-6D2265D1567D - ddf9c759ff0b7de"
+                  uuid = "BD749D90-6211-4D52-BAC9-6D2265D1567D - 9edbac49f52ae14"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -496,7 +496,7 @@
                   offsetFromSymbolStart = "468">
                </Location>
                <Location
-                  uuid = "BD749D90-6211-4D52-BAC9-6D2265D1567D - ddf9c759ff0b7de"
+                  uuid = "BD749D90-6211-4D52-BAC9-6D2265D1567D - 9edbac49f52ae14"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1143,7 +1143,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "93683E06-FF77-4C85-9C3B-165263174D67 - 2d0448f1c56e9d0b"
+                  uuid = "93683E06-FF77-4C85-9C3B-165263174D67 - 29366e40c5ccec4b"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1159,7 +1159,7 @@
                   offsetFromSymbolStart = "24">
                </Location>
                <Location
-                  uuid = "93683E06-FF77-4C85-9C3B-165263174D67 - 5d65b3ce177fbc98"
+                  uuid = "93683E06-FF77-4C85-9C3B-165263174D67 - 5957957f17ddcc1e"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3079,6 +3079,38 @@
             endingLineNumber = "408"
             landmarkName = "-deleteMutipleFiles"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E19C3774-2AAC-4A3C-8C8C-611D2E9494AF - 41e82f54ad04f7e9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__40-[ListViewController deleteMutipleFiles]_block_invoke"
+                  moduleName = "Ace Dictate"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Work/Xan/Xan/ViewControllers/ListViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "408"
+                  endingLineNumber = "408"
+                  offsetFromSymbolStart = "58">
+               </Location>
+               <Location
+                  uuid = "E19C3774-2AAC-4A3C-8C8C-611D2E9494AF - 7db6328c65747456"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__40-[ListViewController deleteMutipleFiles]_block_invoke_2"
+                  moduleName = "Ace Dictate"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Work/Xan/Xan/ViewControllers/ListViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "408"
+                  endingLineNumber = "408"
+                  offsetFromSymbolStart = "15">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3196,7 +3228,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3898"
             endingLineNumber = "3898"
-            landmarkName = "-dropdownMenu:didCloseComponent:"
+            landmarkName = "-setDefaultTemplate"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3298,7 +3330,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1862"
             endingLineNumber = "1862"
-            landmarkName = "-sliderValueChanged"
+            landmarkName = "-uploadAudio:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3607,7 +3639,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "3304BB17-B15C-4641-9B48-E5E7A1045B1C - 2f6b771674a26c48"
+                  uuid = "3304BB17-B15C-4641-9B48-E5E7A1045B1C - 6d629f01eb2149f2"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3622,7 +3654,7 @@
                   offsetFromSymbolStart = "988">
                </Location>
                <Location
-                  uuid = "3304BB17-B15C-4641-9B48-E5E7A1045B1C - 2f6b771674a26c48"
+                  uuid = "3304BB17-B15C-4641-9B48-E5E7A1045B1C - 6d629f01eb2149f2"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3667,8 +3699,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1576"
             endingLineNumber = "1576"
-            landmarkName = "-getDefaultDepartMentId"
-            landmarkType = "7">
+            landmarkName = "Database"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3699,8 +3731,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "298"
             endingLineNumber = "298"
-            landmarkName = "-getTemplateIdFromTemplatename:"
-            landmarkType = "7">
+            landmarkName = "Database"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3715,7 +3747,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1604"
             endingLineNumber = "1604"
-            landmarkName = "-dropdownMenu:attributedTitleForComponent:"
+            landmarkName = "-dropdownMenu:attributedTitleForRow:forComponent:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3763,7 +3795,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1458"
             endingLineNumber = "1458"
-            landmarkName = "-getDepartMentIdFromDepartmentName:"
+            landmarkName = "-getListOfFileTransfersOfStatus:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3779,7 +3811,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3023"
             endingLineNumber = "3023"
-            landmarkName = "-keepSameDepartmentSavedAfterOnlyRowSelection"
+            landmarkName = "-save:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3796,22 +3828,6 @@
             startingLineNumber = "3084"
             endingLineNumber = "3084"
             landmarkName = "-saveAudioRecordToDatabase"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "B948573B-3BAE-4682-B63F-4E2AB30F3424"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Xan/ViewControllers/AudioDetailsViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1378"
-            endingLineNumber = "1378"
-            landmarkName = "-cancel:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3859,7 +3875,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3043"
             endingLineNumber = "3043"
-            landmarkName = "-cancel:"
+            landmarkName = "-save:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4402,9 +4418,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3955"
-            endingLineNumber = "3955"
-            landmarkName = "-updateTemplateIdForFileName"
-            landmarkType = "7">
+            endingLineNumber = "3955">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4419,7 +4433,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3907"
             endingLineNumber = "3907"
-            landmarkName = "-dropdownMenu:didCloseComponent:"
+            landmarkName = "-setRecentlySelectedTemplate"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4434,9 +4448,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3993"
-            endingLineNumber = "3993"
-            landmarkName = "-setRecentlySelectedTemplate"
-            landmarkType = "7">
+            endingLineNumber = "3993">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4450,9 +4462,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3917"
-            endingLineNumber = "3917"
-            landmarkName = "-dropdownMenu:didCloseComponent:"
-            landmarkType = "7">
+            endingLineNumber = "3917">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4484,6 +4494,38 @@
             startingLineNumber = "1385"
             endingLineNumber = "1385"
             landmarkName = "-uploadFileAfterGettingdatabaseValues:departmentID:transferStatus:mobileDictationIdVal:isFileTypeAudio:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9D819244-12A7-4C14-8BE9-E5892ADE88EF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/API Manager/DownloadMetaDataJob.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
+            landmarkName = "-sendNewRequestWithResourcePath:withRequestParameter:withJobName:withMethodType:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B743CF68-38C3-46D2-9D0E-B5AF29BFAEC8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Xan/ViewControllers/PinRegistrationViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "295"
+            endingLineNumber = "295"
+            landmarkName = "-textField:shouldChangeCharactersInRange:replacementString:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

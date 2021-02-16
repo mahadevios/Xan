@@ -200,7 +200,7 @@
                         AudioDetails *audioDetails = [self.genericFilesArray objectAtIndex:i];
                         
                         //                        NSDictionary* dict  = [AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict;
-                        if (!(audioDetails.fileName || [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray containsObject:audioDetails.fileName]))
+                        if (!([[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray containsObject:audioDetails.fileName] || [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray containsObject:audioDetails.fileName]))
                         {
                             isWithoutUploadingFileAvailable = true;
                             
@@ -293,6 +293,8 @@
     //                detailVC.listSelected = 0;
     
     detailVC.selectedRow = selectedIndex;
+    
+    [detailVC setAudioDetails:[self.genericFilesArray objectAtIndex:selectedIndex]];
     
     [self.splitViewController showDetailViewController:detailVC sender:self];
     

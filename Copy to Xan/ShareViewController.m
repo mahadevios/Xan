@@ -307,7 +307,7 @@ SLComposeSheetConfigurationItem *item;
                  {
                      updatedFileDict=[NSMutableDictionary new];
                      
-                     [updatedFileDict setObject:@"NO" forKey:fileNameKeyString];
+                     [updatedFileDict setObject:@"NO" forKey:fileNameKeyString];// thids is newly imported file...and not saved to database n directory
                      
                      [sharedDefaults setObject:updatedFileDict forKey:@"updatedFileDict"];
                      
@@ -589,9 +589,9 @@ SLComposeSheetConfigurationItem *item;
     
     NSString* sharedAudioFolderPathString=[sharedDefaults objectForKey:@"audioFolderPath"];
     
-    NSMutableArray* sharedAudioNamesArray=[NSMutableArray new];
-    
-    sharedAudioNamesArray=[sharedDefaults objectForKey:@"audioNamesArray"];
+//    NSMutableArray* sharedAudioNamesArray=[NSMutableArray new];
+//
+//    sharedAudioNamesArray=[sharedDefaults objectForKey:@"audioNamesArray"];
     
     
     NSString* sharedAudioFileNameString=fileName;
@@ -602,11 +602,10 @@ SLComposeSheetConfigurationItem *item;
     NSString* sharedAudioFilePathString=[sharedAudioFolderPathUrl.path stringByAppendingPathComponent:sharedAudioFileNameString];
     
     NSString* audioFilePath = sharedAudioFilePathString;
-    // audioFilePath=[audioFilePath stringByAppendingPathExtension:@"wav"];
     
     NSString* waveFileName=[audioFilePath lastPathComponent];
     
-    [sharedDefaults setObject:waveFileName forKey:@"waveFileName"];
+//    [sharedDefaults setObject:waveFileName forKey:@"waveFileName"];//not used
 
         NSDictionary* dict1=[NSDictionary new];
         
@@ -674,7 +673,7 @@ SLComposeSheetConfigurationItem *item;
                 
                 [sharedDefaults setObject:isFileInsertedDict forKey:@"isFileInsertedDict"];
 
-                [sharedDefaults setObject:waveFileName forKey:@"waveFileName"];
+//                [sharedDefaults setObject:waveFileName forKey:@"waveFileName"];
 
                 [sharedDefaults synchronize];
             }
@@ -686,7 +685,7 @@ SLComposeSheetConfigurationItem *item;
                 
                 [sharedDefaults setObject:isFileInsertedDict forKey:@"isFileInsertedDict"];
                 
-                [sharedDefaults setObject:waveFileName forKey:@"waveFileName"];
+//                [sharedDefaults setObject:waveFileName forKey:@"waveFileName"];
 
                 [sharedDefaults synchronize];
             }

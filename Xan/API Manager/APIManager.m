@@ -958,15 +958,15 @@ static APIManager *singleton = nil;
                
                NSString* fileName = [[Database shareddatabase] getfileNameFromTaskIdentifier:taskIdentifier];
                
-               [[Database shareddatabase] updateAudioFileUploadedStatus:@"NotTransferred" fileName:fileName dateAndTime:date mobiledictationidval:0];
-               
-               [[Database shareddatabase] updateAudioFileStatus:@"RecordingComplete" fileName:fileName];
-               
-               [[Database shareddatabase] deleteIdentifierFromDatabase:taskIdentifier];
-               
-               [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_API object:fileName];
-               
-               [[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict removeObjectForKey:fileName];
+//               [[Database shareddatabase] updateAudioFileUploadedStatus:@"NotTransferred" fileName:fileName dateAndTime:date mobiledictationidval:0];
+//
+//               [[Database shareddatabase] updateAudioFileStatus:@"RecordingComplete" fileName:fileName];
+//
+//               [[Database shareddatabase] deleteIdentifierFromDatabase:taskIdentifier];
+//
+//               [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_API object:fileName];
+//
+//               [[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict removeObjectForKey:fileName];
                                
                 if(errorString==nil)
                 {

@@ -37,8 +37,6 @@
     
     [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
 //    }
-     
-    detailVC.delegate = self;
 
 //    self.definesPresentationContext = true;
 //
@@ -432,9 +430,7 @@
                             [self clearSelectedArrays];
                             
                             [self prepareDataSourceForTableView];
-                            
-                          
-                            
+                           
                             self.transferredListPredicateArray = [[NSMutableArray alloc] initWithArray:[APIManager sharedManager].transferredListArray];
                             
                             self.deletedListPredicateArray = [[NSMutableArray alloc] initWithArray:[APIManager sharedManager].deletedListArray];
