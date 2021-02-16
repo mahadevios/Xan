@@ -34,7 +34,8 @@
     
     NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:@"By agreeing to use our service you agree to our privacy policy"];
     
-    [str addAttribute: NSLinkAttributeName value: @"http://xanadutec.com.au/privacy-policy.html" range: NSMakeRange(48, 14)];
+//    [str addAttribute: NSLinkAttributeName value: @"http://xanadutec.com.au/privacy-policy.html" range: NSMakeRange(48, 14)];
+     [str addAttribute: NSLinkAttributeName value: @"https://xanadutec.com.au/privacy-policy/" range: NSMakeRange(48, 14)];
     
     self.privacyPolicyLinkTextVIew.scrollEnabled = NO;
     self.privacyPolicyLinkTextVIew.editable = NO;

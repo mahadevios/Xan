@@ -71,10 +71,14 @@
     
     [self.view addSubview:self.navigationView];
     
-    [self.view addSubview:self.textFileContentTextView];
-    
+    if (UIScreen.mainScreen.traitCollection.userInterfaceStyle==UIUserInterfaceStyleDark){
+        self.textFileContentTextView.backgroundColor = [UIColor whiteColor];
+        self.webView.backgroundColor = [UIColor whiteColor];
 
+    }
     
+    [self.view addSubview:self.textFileContentTextView];
+        
 }
 
 -(void)setEmptyVCForDocFileView:(int)index
@@ -96,6 +100,11 @@
     
     self.textFileContentTextView.text = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
     
+    if (UIScreen.mainScreen.traitCollection.userInterfaceStyle==UIUserInterfaceStyleDark){
+        self.textFileContentTextView.backgroundColor = [UIColor whiteColor];
+        self.webView.backgroundColor = [UIColor whiteColor];
+
+    }
 }
 
 //-(void)webViewDidFinishLoad:(UIWebView *)webView

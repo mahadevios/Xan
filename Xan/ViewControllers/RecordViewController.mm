@@ -1958,7 +1958,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
     }
     
-    
+    [urgentLabel setTextColor:[UIColor blackColor]];
+    [currentDuration setTextColor:[UIColor blackColor]];
+    [totalDuration setTextColor:[UIColor blackColor]];
+    [commentLabel setTextColor:[UIColor blackColor]];
+
     [animatedView addSubview:audioRecordSlider];
     [animatedView addSubview:uploadAudioButton];
     [animatedView addSubview:uploadLaterButton];
@@ -2041,7 +2045,19 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                                                              message:@"\n\n\n\n\n\n\n\n"
                                                                       preferredStyle:UIAlertControllerStyleAlert];
     
+
+        if (UIScreen.mainScreen.traitCollection.userInterfaceStyle==UIUserInterfaceStyleDark){
+            alertController.view.tintColor = [UIColor lightGrayColor];
+                                UIView *firstSubview = alertController.view.subviews.firstObject;
+
+                                UIView *alertContentView = firstSubview.subviews.firstObject;
+                                for (UIView *subSubView in alertContentView.subviews) { //This is main catch
+                                    subSubView.backgroundColor = [UIColor colorWithRed:240/255.0 green:249/255.0 blue:249/255.0 alpha:1];//Here you change background
+                                }
+        
+    }
     
+
     
     alertController.view.autoresizesSubviews = YES;
     __block UITextView *textView = [[UITextView alloc] initWithFrame:CGRectZero];
@@ -2051,7 +2067,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     textView.editable = YES;
     textView.returnKeyType = UIReturnKeyDone;
     textView.dataDetectorTypes = UIDataDetectorTypeAll;
-    
+    textView.textColor = [UIColor blackColor];
     UIAlertAction* okay = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault
                                                  handler:^(UIAlertAction * action) {
         
@@ -2093,6 +2109,15 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                                     handler:^(UIAlertAction * action) {
         [alertController dismissViewControllerAnimated:YES completion:nil];
     }];
+    
+
+        if (UIScreen.mainScreen.traitCollection.userInterfaceStyle==UIUserInterfaceStyleDark){
+            
+    [okay setValue:[UIColor lightHomeCopyColor] forKey:@"titleTextColor"];
+            
+    [cancel1 setValue:[UIColor lightHomeCopyColor] forKey:@"titleTextColor"];
+        }
+        
     [alertController addAction:okay];
     [alertController addAction:cancel1];
     
@@ -2548,7 +2573,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         }
         else
         {
-            NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Clinical Speciality", nil];
+            NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Department", nil];
             editPopUp=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-200, self.view.frame.origin.y+40, 200, 40) andSubViews:subViewArray :self];
             // editPopUp.tag=888;
             [[[UIApplication sharedApplication] keyWindow] addSubview:editPopUp];
@@ -2557,7 +2582,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     }
     else
     {
-      NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Clinical Speciality", nil];
+      NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Department", nil];
       editPopUp=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-200, self.view.frame.origin.y+40, 200, 40) andSubViews:subViewArray :self];
        // editPopUp.tag=888;
       [[[UIApplication sharedApplication] keyWindow] addSubview:editPopUp];
@@ -2576,7 +2601,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 
 
--(void)ChangeClinicalSpeciality
+-(void)ChangeDepartment
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
     CGRect frame=CGRectMake(10.0f, self.view.center.y-150, self.view.frame.size.width - 20.0f, 200.0f);

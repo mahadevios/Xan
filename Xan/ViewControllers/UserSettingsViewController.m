@@ -113,6 +113,7 @@
         sectionHeaderView.backgroundColor=[UIColor colorWithRed:214/255.0 green:214/255.0 blue:226/255.0 alpha:1];
         
         UILabel* sectionTitleLabel=[[UILabel alloc]initWithFrame:CGRectMake(16, 20, tableView.frame.size.width*0.9, 17)];
+        [sectionTitleLabel setTextColor:[UIColor blackColor]];
         [sectionTitleLabel setFont:[UIFont systemFontOfSize:16.0]];
         [sectionHeaderView addSubview:sectionTitleLabel];
         
@@ -157,7 +158,7 @@
 
         UILabel* sectionTitleLabel=[[UILabel alloc]initWithFrame:CGRectMake(16, 20, tableView.frame.size.width, 17)];
         //sectionTitleLabel.backgroundColor=[UIColor whiteColor];
-        
+        [sectionTitleLabel setTextColor:[UIColor blackColor]];
         [sectionTitleLabel setFont:[UIFont systemFontOfSize:16.0]];
         UIFont *currentFont = sectionTitleLabel.font;
         UIFont *newFont = [UIFont fontWithName:[NSString stringWithFormat:@"%@-Bold",currentFont.fontName] size:currentFont.pointSize];
@@ -258,7 +259,7 @@
         {
             UILabel* nameLabel= [cell viewWithTag:101];
             nameLabel.text=[recordSettingsItemsarray objectAtIndex:indexPath.row];
-            
+            [nameLabel setTextColor:[UIColor blackColor]];
             if (indexPath.row!=0)
             {
                 SwitchCreation* switchobj=[SwitchCreation new];
@@ -287,11 +288,13 @@
         {
             UILabel* nameLabel= [cell viewWithTag:101];
             nameLabel.text=[storageManagementItemsArray objectAtIndex:indexPath.row];
+            [nameLabel setTextColor:[UIColor blackColor]];
         }
         if (indexPath.section==2)
         {
             UILabel* nameLabel= [cell viewWithTag:101];
             nameLabel.text=[PlaybackAutoRewindByArray objectAtIndex:indexPath.row];
+            [nameLabel setTextColor:[UIColor blackColor]];
         }
         
         return cell;
@@ -301,7 +304,8 @@
         UITableViewCell *cell1 = [tableview dequeueReusableCellWithIdentifier:@"cell1" forIndexPath:indexPath];
         UILabel* selectOptionLabel= [cell1 viewWithTag:114];
         selectOptionLabel.text=[popUpOptionsArray objectAtIndex:indexPath.row];
-        
+        [selectOptionLabel setTextColor:[UIColor blackColor]];
+
         if (radioButtonArray.count==0)
         {
             UIButton* button=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 19, 19)];
@@ -545,6 +549,7 @@
         if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRowAndSection"] isEqualToString:@"00"])
         {
             UILabel* timeLabel= [selectedCell viewWithTag:114];
+            [timeLabel setTextColor:[UIColor blackColor]];
             [[NSUserDefaults standardUserDefaults] setValue:timeLabel.text forKey:SAVE_DICTATION_WAITING_SETTING];
             
             UIButton* button = [radioButtonArray objectAtIndex:indexPath.row];
@@ -571,6 +576,7 @@
         if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRowAndSection"] isEqualToString:@"10"])
         {
             UILabel* timeLabel= [selectedCell viewWithTag:114];
+            [timeLabel setTextColor:[UIColor blackColor]];
             [[NSUserDefaults standardUserDefaults] setValue:timeLabel.text forKey:LOW_STORAGE_THRESHOLD];
             
             
@@ -593,6 +599,7 @@
         if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRowAndSection"] isEqualToString:@"11"])
         {
             UILabel* timeLabel= [selectedCell viewWithTag:114];
+            [timeLabel setTextColor:[UIColor blackColor]];
             [[NSUserDefaults standardUserDefaults] setValue:timeLabel.text forKey:PURGE_DELETED_DATA];
             
             for (int i=0; i<radioButtonArray.count; i++)

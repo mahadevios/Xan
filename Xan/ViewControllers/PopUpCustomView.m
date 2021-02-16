@@ -165,18 +165,26 @@
     UITableView *tableView=[[UITableView alloc]initWithFrame:frame];
     UIView* sectionHeaderView=[[UIView alloc]initWithFrame:CGRectMake(tableView.frame.origin.x, tableView.frame.origin.y, tableView.frame.size.width, 50)];
     tableView.tag = 9000;
+    [sectionHeaderView setBackgroundColor:[UIColor whiteColor]];
+    [sectionHeaderView setTintColor:[UIColor blackColor]];
+
+
     UILabel* sectionTitleLabel=[[UILabel alloc]initWithFrame:CGRectMake(16, 20, tableView.frame.size.width, 17)];
-    [sectionTitleLabel setFont:[UIFont systemFontOfSize:16.0]];
-    UIFont *currentFont = sectionTitleLabel.font;
-    UIFont *newFont = [UIFont fontWithName:[NSString stringWithFormat:@"%@-Bold",currentFont.fontName] size:currentFont.pointSize];
-    sectionTitleLabel.font = newFont;
-    sectionTitleLabel.text=@"Select Clinical Speciality";
+//    [sectionTitleLabel setFont:[UIFont systemFontOfSize:19.0]];
+//    UIFont *currentFont = sectionTitleLabel.font;
+//    UIFont *newFont = [UIFont fontWithName:[NSString stringWithFormat:@"%@-Bold",currentFont.fontName] size:currentFont.pointSize];
+//    sectionTitleLabel.font = newFont;
+//    sectionTitleLabel.font=[UIFont systemFontOfSize:16];
+
+    sectionTitleLabel.text=@"Select Department";
+    sectionTitleLabel.translatesAutoresizingMaskIntoConstraints;
+    sectionTitleLabel.textColor = [UIColor blackColor];
     [sectionHeaderView addSubview:sectionTitleLabel];
-    
     tableView.tableHeaderView=sectionHeaderView;
     tableView.dataSource=sender;
     tableView.delegate=sender;
     UITableViewCell * cell=[[UITableViewCell alloc]init];
+    [cell setBackgroundColor:[UIColor whiteColor]];
     [tableView addSubview:cell];
     tableView.layer.cornerRadius=2.0f;
     return tableView;

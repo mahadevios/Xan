@@ -78,7 +78,9 @@
     [self.searchController.searchBar resignFirstResponder];
     
     [self.searchController.searchBar setShowsCancelButton:NO animated:NO];
-    
+     if (UIScreen.mainScreen.traitCollection.userInterfaceStyle==UIUserInterfaceStyleDark){
+    self.tableView.backgroundColor = [UIColor whiteColor];
+     }
     [self.tableView reloadData];
 
 }
@@ -147,6 +149,12 @@
     
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     [self.serachBarBGView addSubview:self.searchController.searchBar];
+    if (UIScreen.mainScreen.traitCollection.userInterfaceStyle==UIUserInterfaceStyleDark){
+             self.searchController.searchBar.barTintColor = [UIColor whiteColor];
+             self.searchController.searchBar.searchTextField.textColor = [UIColor blackColor];
+        self.searchController.searchBar.searchTextField.leftView.tintColor = [UIColor blackColor];
+
+         }
     self.searchController.searchResultsUpdater = self;
     self.searchController.searchBar.delegate = self;
     //    self.tableView.tableHeaderView = self.searchController.searchBar;
@@ -300,6 +308,10 @@
     departmentLabel.text = docFileDetails.departmentName;
     
     fileNameLabel.text = docFileDetails.docFileName;
+    
+     if (UIScreen.mainScreen.traitCollection.userInterfaceStyle==UIUserInterfaceStyleDark){
+         cell.backgroundColor = [UIColor whiteColor];
+     }
     
     return cell;
     

@@ -397,7 +397,7 @@
         // to logout user out of the application once session expires
          if ([errorString isEqualToString:@"Unauthorized"] || [messageString isEqualToString:@"Unauthorized"]) {
             failedMessage = @"Your session has timed out. Please login using your PIN and try again.";
-             
+             //[hud isHidden];
              [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:failedMessage withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
              
              [self clearAllTestFields];
