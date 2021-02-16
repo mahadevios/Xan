@@ -624,7 +624,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     }
     else
     {
-        NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Clinical Speciality", nil];
+        NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Department", nil];
         
         editPopUp=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-200, self.view.frame.origin.y+40, 200, 40) andSubViews:subViewArray :self];
         
@@ -1581,7 +1581,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         currentDuration.text=[NSString stringWithFormat:@"%03d:%02d",minutes,seconds];//for slider label time label
         
     }
-    
+    [currentDuration setTextColor:[UIColor blackColor]];
+    [totalDuration setTextColor:[UIColor blackColor]];
+    [urgentLabel setTextColor:[UIColor blackColor]];
+    [commentLabel setTextColor:[UIColor blackColor]];
+
     [animatedView addSubview:audioRecordSlider];
     
     [animatedView addSubview:uploadAudioButton];
@@ -1965,7 +1969,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 }
 
--(void)ChangeClinicalSpeciality
+-(void)ChangeDepartment
 {
     
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];

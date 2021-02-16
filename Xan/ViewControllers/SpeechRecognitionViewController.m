@@ -114,6 +114,8 @@
      self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
     
     self.transcriptionTextView.delegate = self;
+    
+    self.transcriptionTextView.backgroundColor = [UIColor whiteColor];
 }
 
 -(void)stopVRSFromBackGround

@@ -113,6 +113,12 @@
     
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     [self.serachBarBGView addSubview:self.searchController.searchBar];
+    if (UIScreen.mainScreen.traitCollection.userInterfaceStyle==UIUserInterfaceStyleDark){
+             self.searchController.searchBar.barTintColor = [UIColor whiteColor];
+             self.searchController.searchBar.searchTextField.textColor = [UIColor blackColor];
+        self.searchController.searchBar.searchTextField.leftView.tintColor = [UIColor blackColor];
+
+         }
     self.searchController.searchResultsUpdater = self;
     self.searchController.searchBar.delegate = self;
     //    self.tableView.tableHeaderView = self.searchController.searchBar;

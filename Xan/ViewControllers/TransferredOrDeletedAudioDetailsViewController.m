@@ -574,13 +574,13 @@ else
 {
     [templateNamesDropdownMenu closeAllComponentsAnimated:true];
     
-    NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Clinical Speciality", nil];
+    NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Department", nil];
     UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-200, self.view.frame.origin.y+40, 200, 40) andSubViews:subViewArray :self];
     
     [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
 }
 
--(void)ChangeClinicalSpeciality
+-(void)ChangeDepartment
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
     CGRect frame=CGRectMake(10.0f, self.view.center.y-150, self.view.frame.size.width - 20.0f, 200.0f);

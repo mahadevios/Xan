@@ -522,21 +522,21 @@
 {
     [templateNamesDropdownMenu closeAllComponentsAnimated:true];
     
-    NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Clinical Speciality", nil];
+    NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Department", nil];
     
     UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-200, self.view.frame.origin.y+40, 200, 40) andSubViews:subViewArray :self];
     
     [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
 }
 
--(void)ChangeClinicalSpeciality
+-(void)ChangeDepartment
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
     
     CGRect frame=CGRectMake(10.0f, self.view.center.y-150, self.view.frame.size.width - 20.0f, 200.0f);
     
     UITableView* tab= [forTableViewObj tableView:self frame:frame];
-    
+//    [tab setBackgroundColor:[UIColor whiteColor]];
     [popupView addSubview:tab];
     
     //[popupView addGestureRecognizer:tap];
@@ -1274,6 +1274,15 @@
     return departmentObjectArray.count;
     
 }
+//- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+//{
+//    if (UIScreen.mainScreen.traitCollection.userInterfaceStyle==UIUserInterfaceStyleDark){
+//    if([view isKindOfClass:[UITableViewHeaderFooterView class]]){
+//        UITableViewHeaderFooterView * headerView = (UITableViewHeaderFooterView *) view;
+//        headerView.textLabel.textColor  = [UIColor blackColor];
+//    }
+//    }
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableview cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -1334,8 +1343,10 @@
         [radioButton setBackgroundImage:[UIImage imageNamed:@"RadioButtonClear"] forState:UIControlStateNormal];
     
     [cell addSubview:radioButton];
-    
+//    [departmentLabel setTextColor:[UIColor blackColor]];
     [cell addSubview:departmentLabel];
+    
+//    cell.backgroundColor = [UIColor whiteColor];
     
     return cell;
     

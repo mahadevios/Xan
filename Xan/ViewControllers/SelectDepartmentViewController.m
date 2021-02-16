@@ -17,6 +17,7 @@
 
 @interface SelectDepartmentViewController ()
 
+//my comment
 @end
 
 @implementation SelectDepartmentViewController
@@ -29,12 +30,14 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    self.navigationItem.title = @"Clinical Speciality";
+//    self.navigationItem.title = @"Clinical Speciality";
+    self.navigationItem.title = @"Department";
     self.navigationItem.hidesBackButton=YES;
+//    [self.serachBarBGView setBackgroundColor:[UIColor whiteColor]];
     departmentObjectArray = [[Database shareddatabase] getDepartMentObjList];
     if (departmentObjectArray.count == 0)
     {
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No Clinical Speciality Added" withMessage:@"Please contact ACE Administrator" withCancelText:@"Cancel" withOkText:nil withAlertTag:1000];
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No Department Added" withMessage:@"Please contact ACE Administrator" withCancelText:@"Cancel" withOkText:nil withAlertTag:1000];
     }
     [self findDuplicateDepartmentNames];
     [self setSearchController];
@@ -73,6 +76,14 @@
 {
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     [self.serachBarBGView addSubview:self.searchController.searchBar];
+    
+       if (UIScreen.mainScreen.traitCollection.userInterfaceStyle==UIUserInterfaceStyleDark){
+           self.searchController.searchBar.barTintColor = [UIColor whiteColor];
+           self.searchController.searchBar.searchTextField.textColor = [UIColor blackColor];
+           self.searchController.searchBar.searchTextField.leftView.tintColor = [UIColor blackColor];
+
+       }
+    
     self.searchController.searchResultsUpdater = self;
     self.searchController.searchBar.delegate = self;
     self.searchController.obscuresBackgroundDuringPresentation = NO;
@@ -140,6 +151,7 @@
     
     UITableViewCell *cell = [tableview dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
+    
     UILabel* departmentNameLabel=[cell viewWithTag:101];
 
     
@@ -174,14 +186,15 @@
           else
           departmentNameLabel.text = dept.departmentName;
       }
-    
    
     return cell;
 }
 - (void)tableView:(UITableView *)tableview didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-   
+//if (UIScreen.mainScreen.traitCollection.userInterfaceStyle==UIUserInterfaceStyleDark){
+//
+//   [[tableView cellForRowAtIndexPath:indexPath] setBackgroundColor:[UIColor redColor]];
+//}
     DepartMent* deptObj = [[DepartMent alloc] init];
     
     deptObj = [departmentObjectArray objectAtIndex:indexPath.row];
@@ -204,6 +217,34 @@
     
     [self setRootView];
 }
+
+//- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (UIScreen.mainScreen.traitCollection.userInterfaceStyle==UIUserInterfaceStyleDark){
+//    NSIndexPath *currentSelectedIndexPath = [tableView indexPathForSelectedRow];
+//    if (currentSelectedIndexPath != nil)
+//    {
+//        [[tableView cellForRowAtIndexPath:currentSelectedIndexPath] setBackgroundColor:[UIColor whiteColor]];
+//    }
+//    }
+//    return indexPath;
+//}
+//
+//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (UIScreen.mainScreen.traitCollection.userInterfaceStyle==UIUserInterfaceStyleDark){
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//
+//    if (cell.isSelected == YES)
+//    {
+//        [cell setBackgroundColor: [UIColor redColor]];
+//    }
+//    else
+//    {
+//        [cell setBackgroundColor:[UIColor whiteColor]];
+//    }
+//    }
+//}
 
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
