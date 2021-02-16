@@ -1,0 +1,105 @@
+BCSymbolMap Version: 2.0
+-[ShareViewController isContentValid]
+-[ShareViewController loadView]
+-[ShareViewController orientation]
+-[ShareViewController viewWillLayoutSubviews]
+-[ShareViewController shouldAutorotate]
+-[ShareViewController stopRotation:]
+-[ShareViewController configurationItems]
+___41-[ShareViewController configurationItems]_block_invoke
+-[ShareViewController didSelectPost]
+___36-[ShareViewController didSelectPost]_block_invoke
+-[ShareViewController cancelExtensionButtonClicked:]
+-[ShareViewController copyAudioFileButtonClicked:]
+___50-[ShareViewController copyAudioFileButtonClicked:]_block_invoke
+___50-[ShareViewController copyAudioFileButtonClicked:]_block_invoke_2
+___copy_helper_block_e8_32s
+___destroy_helper_block_e8_32s
+___50-[ShareViewController copyAudioFileButtonClicked:]_block_invoke.147
+___50-[ShareViewController copyAudioFileButtonClicked:]_block_invoke.174
+___50-[ShareViewController copyAudioFileButtonClicked:]_block_invoke.186
+___50-[ShareViewController copyAudioFileButtonClicked:]_block_invoke_2.204
+___50-[ShareViewController copyAudioFileButtonClicked:]_block_invoke_3
+___50-[ShareViewController copyAudioFileButtonClicked:]_block_invoke_4
+___copy_helper_block_e8_32s40s
+___destroy_helper_block_e8_32s40s
+___copy_helper_block_e8_32s40s48s
+___destroy_helper_block_e8_32s40s48s
+___50-[ShareViewController copyAudioFileButtonClicked:]_block_invoke.235
+___50-[ShareViewController copyAudioFileButtonClicked:]_block_invoke_2.236
+-[ShareViewController saveAudio:]
+-[ShareViewController convertToWavCopy]
+-[ShareViewController getDateAndTimeString]
+-[ShareViewController audioFilePathString]
+-[ShareViewController setAudioFilePathString:]
+-[ShareViewController fileName]
+-[ShareViewController setFileName:]
+-[ShareViewController isFileAvailable]
+-[ShareViewController setIsFileAvailable:]
+-[ShareViewController navigationView]
+-[ShareViewController setNavigationView:]
+-[ShareViewController cpyAudioFileButton]
+-[ShareViewController setCpyAudioFileButton:]
+-[ShareViewController titleLabel]
+-[ShareViewController setTitleLabel:]
+-[ShareViewController fileNamePathExtension]
+-[ShareViewController setFileNamePathExtension:]
+-[ShareViewController .cxx_destruct]
+_OBJC_IVAR_$_ShareViewController.fileNameLabel
+_OBJC_IVAR_$_ShareViewController.cpyAudioFileButton
+_OBJC_IVAR_$_ShareViewController.navigationView
+_OBJC_IVAR_$_ShareViewController.titleLabel
+_OBJC_IVAR_$_ShareViewController.screenRect
+_OBJC_IVAR_$_ShareViewController.screenWidth
+_OBJC_IVAR_$_ShareViewController.screenHeight
+_item
+___block_descriptor_32_e5_v8?0l
+___block_literal_global
+___block_descriptor_32_e27_v24?0"NSURL"8"NSError"16l
+___block_literal_global.116
+_OBJC_IVAR_$_ShareViewController.alertController
+___block_descriptor_40_e8_32s_e23_v16?0"UIAlertAction"8l
+_OBJC_IVAR_$_ShareViewController.actionCancel
+___block_descriptor_40_e8_32s_e5_v8?0l
+_OBJC_IVAR_$_ShareViewController.isFileAvailable
+_OBJC_IVAR_$_ShareViewController.fileName
+___block_descriptor_40_e8_32s_e21_v16?0"UITextField"8l
+___block_descriptor_48_e8_32s40s_e5_v8?0l
+_OBJC_IVAR_$_ShareViewController.fileNamePathExtension
+___block_descriptor_56_e8_32s40s48s_e23_v16?0"UIAlertAction"8l
+_OBJC_IVAR_$_ShareViewController.actionSave
+___block_descriptor_48_e8_32s40s_e27_v24?0"NSURL"8"NSError"16l
+_OBJC_IVAR_$_ShareViewController.audioFilePathString
+_OBJC_IVAR_$_ShareViewController.fileNameForViewString
+_OBJC_IVAR_$_ShareViewController.url
+_OBJC_IVAR_$_ShareViewController.mySession
+_OBJC_IVAR_$_ShareViewController.result
+__OBJC_PROTOCOL_$_NSObject
+__OBJC_LABEL_PROTOCOL_$_NSObject
+__OBJC_PROTOCOL_$_UITextFieldDelegate
+__OBJC_LABEL_PROTOCOL_$_UITextFieldDelegate
+_OBJC_METACLASS_$_ShareViewController
+_OBJC_CLASS_$_ShareViewController
+Apple clang version 11.0.0 (clang-1100.0.33.16)
+/Work/Xan/Copy to Xan/ShareViewController.m
+/Work/Xan
+Copy to Xan/ShareViewController.m
+Copy to Xan/ShareViewController.h
+__50-[ShareViewController copyAudioFileButtonClicked:]_block_invoke_2.236
+__50-[ShareViewController copyAudioFileButtonClicked:]_block_invoke.235
+__destroy_helper_block_e8_32s40s48s
+__copy_helper_block_e8_32s40s48s
+__destroy_helper_block_e8_32s40s
+__copy_helper_block_e8_32s40s
+__50-[ShareViewController copyAudioFileButtonClicked:]_block_invoke_4
+__50-[ShareViewController copyAudioFileButtonClicked:]_block_invoke_3
+__50-[ShareViewController copyAudioFileButtonClicked:]_block_invoke_2.204
+__50-[ShareViewController copyAudioFileButtonClicked:]_block_invoke.186
+__50-[ShareViewController copyAudioFileButtonClicked:]_block_invoke.174
+__50-[ShareViewController copyAudioFileButtonClicked:]_block_invoke.147
+__destroy_helper_block_e8_32s
+__copy_helper_block_e8_32s
+__50-[ShareViewController copyAudioFileButtonClicked:]_block_invoke_2
+__50-[ShareViewController copyAudioFileButtonClicked:]_block_invoke
+__36-[ShareViewController didSelectPost]_block_invoke
+__41-[ShareViewController configurationItems]_block_invoke

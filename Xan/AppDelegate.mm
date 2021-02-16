@@ -543,209 +543,209 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
 }
 
+//
+//-(void) convertToWav:(int)insertedFileCount
+//{
+//    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:SHARED_GROUP_IDENTIFIER];
+//
+//    NSString* sharedAudioFolderPathString=[sharedDefaults objectForKey:@"audioFolderPath"];
+//
+//    NSMutableArray* sharedAudioNamesArray=[NSMutableArray new];
+//
+//    sharedAudioNamesArray=[sharedDefaults objectForKey:@"audioNamesArray"];
+//
+//
+//    for (long i=0+insertedFileCount; i<sharedAudioNamesArray.count; i++)
+//    {
+//
+//        NSString* sharedAudioFileNameString=[NSString stringWithFormat:@"%@",[sharedAudioNamesArray objectAtIndex:i]];
+//
+//        NSURL* sharedAudioFolderPathUrl=[NSURL URLWithString:sharedAudioFolderPathString];
+//
+//
+//        NSString* sharedAudioFilePathString=[sharedAudioFolderPathUrl.path stringByAppendingPathComponent:sharedAudioFileNameString];
+//
+//
+//        NSURL* newAssetUrl = [NSURL fileURLWithPath:sharedAudioFilePathString];
+//
+//        audioFilePath=[NSString stringWithFormat:@"%@",newAssetUrl.path] ;
+//
+//        NSString* audioFilePathForDestination= [newAssetUrl.path stringByDeletingPathExtension];
+//
+//        audioFilePathForDestination=[NSString stringWithFormat:@"%@copied.caf",audioFilePathForDestination];
+//
+//        destinationFilePath= [NSString stringWithFormat:@"%@",audioFilePathForDestination];
+//
+//        destinationURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)destinationFilePath, kCFURLPOSIXPathStyle, false);
+//
+//        sourceURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)audioFilePath, kCFURLPOSIXPathStyle, false);
+//
+//        outputFormat = kAudioFormatMPEG4AAC;
+//
+//        sampleRate = 16000.0;
+//
+//        NSLog(@"%@",[sharedDefaults objectForKey:@"output1"]);
+//
+//        OSStatus error = DoConvertFile(sourceURL, destinationURL, outputFormat, sampleRate);
+//
+//        NSError* error1;
+//
+//        if (error)
+//        {
+//
+//            NSLog(@"%d", (int)error);
+//            //return false;
+//        }
+//
+//        else
+//        {
+//            NSLog(@"Converted");
+//
+//            NSError* error;
+//
+//            NSString* folderPath=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:AUDIO_FILES_FOLDER_NAME]];
+//
+//            if (![[NSFileManager defaultManager] fileExistsAtPath:folderPath])
+//
+//                [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+//
+//            NSString* originalFileNameString=[sharedAudioFilePathString lastPathComponent];//store on same name as shared file name
+//
+//
+//            NSString* homeDirectoryFileName=[sharedAudioFilePathString lastPathComponent];//store on same name as shared file name
+//
+//            homeDirectoryFileName=[homeDirectoryFileName stringByDeletingPathExtension];
+//
+//            if ([[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.caf",AUDIO_FILES_FOLDER_NAME,homeDirectoryFileName]]])
+//            {
+//                [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.caf",AUDIO_FILES_FOLDER_NAME,homeDirectoryFileName]] error:nil];
+//            }
+//
+//            [[NSFileManager defaultManager] copyItemAtPath:destinationFilePath toPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.caf",AUDIO_FILES_FOLDER_NAME,homeDirectoryFileName]] error:&error1];
+//
+//            NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:SHARED_GROUP_IDENTIFIER];
+//
+//            NSDictionary* copyDict=[sharedDefaults objectForKey:@"updatedFileDict"];
+//
+//            NSMutableDictionary* updatedFileDict=[copyDict mutableCopy];
+//
+//            [updatedFileDict setObject:@"NO" forKey:originalFileNameString];
+//
+//            [sharedDefaults setObject:updatedFileDict forKey:@"updatedFileDict"];
+//
+//            [sharedDefaults synchronize];
+//
+//            //return true;
+//        }
+//
+//    }
+//
+//}
 
--(void) convertToWav:(int)insertedFileCount
-{
-    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:SHARED_GROUP_IDENTIFIER];
-    
-    NSString* sharedAudioFolderPathString=[sharedDefaults objectForKey:@"audioFolderPath"];
-    
-    NSMutableArray* sharedAudioNamesArray=[NSMutableArray new];
-    
-    sharedAudioNamesArray=[sharedDefaults objectForKey:@"audioNamesArray"];
-    
-    
-    for (long i=0+insertedFileCount; i<sharedAudioNamesArray.count; i++)
-    {
-        
-        NSString* sharedAudioFileNameString=[NSString stringWithFormat:@"%@",[sharedAudioNamesArray objectAtIndex:i]];
-        
-        NSURL* sharedAudioFolderPathUrl=[NSURL URLWithString:sharedAudioFolderPathString];
-        
-        
-        NSString* sharedAudioFilePathString=[sharedAudioFolderPathUrl.path stringByAppendingPathComponent:sharedAudioFileNameString];
-        
-        
-        NSURL* newAssetUrl = [NSURL fileURLWithPath:sharedAudioFilePathString];
-        
-        audioFilePath=[NSString stringWithFormat:@"%@",newAssetUrl.path] ;
-        
-        NSString* audioFilePathForDestination= [newAssetUrl.path stringByDeletingPathExtension];
-        
-        audioFilePathForDestination=[NSString stringWithFormat:@"%@copied.caf",audioFilePathForDestination];
-        
-        destinationFilePath= [NSString stringWithFormat:@"%@",audioFilePathForDestination];
-        
-        destinationURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)destinationFilePath, kCFURLPOSIXPathStyle, false);
-        
-        sourceURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)audioFilePath, kCFURLPOSIXPathStyle, false);
-        
-        outputFormat = kAudioFormatMPEG4AAC;
-        
-        sampleRate = 16000.0;
-        
-        NSLog(@"%@",[sharedDefaults objectForKey:@"output1"]);
-        
-        OSStatus error = DoConvertFile(sourceURL, destinationURL, outputFormat, sampleRate);
-        
-        NSError* error1;
-        
-        if (error)
-        {
-            
-            NSLog(@"%d", (int)error);
-            //return false;
-        }
-        
-        else
-        {
-            NSLog(@"Converted");
-            
-            NSError* error;
-            
-            NSString* folderPath=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:AUDIO_FILES_FOLDER_NAME]];
-            
-            if (![[NSFileManager defaultManager] fileExistsAtPath:folderPath])
-                
-                [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
-            
-            NSString* originalFileNameString=[sharedAudioFilePathString lastPathComponent];//store on same name as shared file name
-            
-            
-            NSString* homeDirectoryFileName=[sharedAudioFilePathString lastPathComponent];//store on same name as shared file name
-            
-            homeDirectoryFileName=[homeDirectoryFileName stringByDeletingPathExtension];
-            
-            if ([[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.caf",AUDIO_FILES_FOLDER_NAME,homeDirectoryFileName]]])
-            {
-                [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.caf",AUDIO_FILES_FOLDER_NAME,homeDirectoryFileName]] error:nil];
-            }
-            
-            [[NSFileManager defaultManager] copyItemAtPath:destinationFilePath toPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.caf",AUDIO_FILES_FOLDER_NAME,homeDirectoryFileName]] error:&error1];
-            
-            NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:SHARED_GROUP_IDENTIFIER];
-            
-            NSDictionary* copyDict=[sharedDefaults objectForKey:@"updatedFileDict"];
-            
-            NSMutableDictionary* updatedFileDict=[copyDict mutableCopy];
-            
-            [updatedFileDict setObject:@"NO" forKey:originalFileNameString];
-            
-            [sharedDefaults setObject:updatedFileDict forKey:@"updatedFileDict"];
-            
-            [sharedDefaults synchronize];
-            
-            //return true;
-        }
-        
-    }
-    
-}
 
-
-
--(void)setCompressAudioFileName:(NSString*)audioFileNameString
-{
-    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:SHARED_GROUP_IDENTIFIER];
-    
-    NSString* sharedAudioFolderPathString=[sharedDefaults objectForKey:@"audioFolderPath"];
-    
-    NSMutableArray* sharedAudioNamesArray=[NSMutableArray new];
-    
-    sharedAudioNamesArray=[sharedDefaults objectForKey:@"audioNamesArray"];
-    
-    NSString* sharedAudioFileNameString=[NSString stringWithFormat:@"%@",audioFileNameString];
-    
-    NSURL* sharedAudioFolderPathUrl=[NSURL URLWithString:sharedAudioFolderPathString];
-    
-    
-    NSString* sharedAudioFilePathString=[sharedAudioFolderPathUrl.path stringByAppendingPathComponent:sharedAudioFileNameString];
-    
-    
-    NSURL* newAssetUrl = [NSURL fileURLWithPath:sharedAudioFilePathString];
-    
-    audioFilePath=[NSString stringWithFormat:@"%@",newAssetUrl.path] ;
-    
-    NSString* audioFilePathForDestination= [newAssetUrl.path stringByDeletingPathExtension];
-    
-    audioFilePathForDestination=[NSString stringWithFormat:@"%@copied.caf",audioFilePathForDestination];
-    
-    destinationFilePath= [NSString stringWithFormat:@"%@",audioFilePathForDestination];
-    
-    destinationURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)destinationFilePath, kCFURLPOSIXPathStyle, false);
-    
-    sourceURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)audioFilePath, kCFURLPOSIXPathStyle, false);
-    
-    outputFormat = kAudioFormatMPEG4AAC;
-    
-    sampleRate = 16000.0;
-    
-    NSLog(@"%@",[sharedDefaults objectForKey:@"output1"]);
-    
-    OSStatus error = DoConvertFile(sourceURL, destinationURL, outputFormat, sampleRate);
-    
-    NSError* error1;
-    
-    if (error)
-    {
-        
-        NSLog(@"%d", (int)error);
-        //return false;
-    }
-    
-    else
-    {
-        NSLog(@"Converted");
-        
-        NSError* error;
-        
-        NSString* folderPath=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:AUDIO_FILES_FOLDER_NAME]];
-        
-        if (![[NSFileManager defaultManager] fileExistsAtPath:folderPath])
-            
-            [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
-        
-        NSString* originalFileNameString=[sharedAudioFilePathString lastPathComponent];//store on same name as shared file name
-        
-        
-        NSString* homeDirectoryFileName=[sharedAudioFilePathString lastPathComponent];//store on same name as shared file name
-        
-        homeDirectoryFileName=[homeDirectoryFileName stringByDeletingPathExtension];
-        
-        if ([[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.caf",AUDIO_FILES_FOLDER_NAME,homeDirectoryFileName]]])
-        {
-            [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.caf",AUDIO_FILES_FOLDER_NAME,homeDirectoryFileName]] error:nil];
-        }
-        
-        [[NSFileManager defaultManager] copyItemAtPath:destinationFilePath toPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.caf",AUDIO_FILES_FOLDER_NAME,homeDirectoryFileName]] error:&error1];
-        
-        if ([[NSFileManager defaultManager] fileExistsAtPath:destinationFilePath])
-        {
-            [[NSFileManager defaultManager] removeItemAtPath:destinationFilePath error:&error];//remove temporary file which was used to store compression result
-        }
-        if ([[NSFileManager defaultManager] fileExistsAtPath:audioFilePath])
-        {
-            [[NSFileManager defaultManager] removeItemAtPath:audioFilePath error:&error];//remove file stored at shared storage(i.e. in path extension)
-        }
-        
-        NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:SHARED_GROUP_IDENTIFIER];
-        
-        NSDictionary* copyDict=[sharedDefaults objectForKey:@"updatedFileDict"];
-        
-        NSMutableDictionary* updatedFileDict=[copyDict mutableCopy];
-        
-        [updatedFileDict setObject:@"NO" forKey:originalFileNameString];
-        
-        [sharedDefaults setObject:updatedFileDict forKey:@"updatedFileDict"];
-        
-        [sharedDefaults synchronize];
-        
-        //return true;
-    }
-    
-    
-    
-}
+//
+//-(void)setCompressAudioFileName:(NSString*)audioFileNameString
+//{
+//    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:SHARED_GROUP_IDENTIFIER];
+//
+//    NSString* sharedAudioFolderPathString=[sharedDefaults objectForKey:@"audioFolderPath"];
+//
+//    NSMutableArray* sharedAudioNamesArray=[NSMutableArray new];
+//
+//    sharedAudioNamesArray=[sharedDefaults objectForKey:@"audioNamesArray"];
+//
+//    NSString* sharedAudioFileNameString=[NSString stringWithFormat:@"%@",audioFileNameString];
+//
+//    NSURL* sharedAudioFolderPathUrl=[NSURL URLWithString:sharedAudioFolderPathString];
+//
+//
+//    NSString* sharedAudioFilePathString=[sharedAudioFolderPathUrl.path stringByAppendingPathComponent:sharedAudioFileNameString];
+//
+//
+//    NSURL* newAssetUrl = [NSURL fileURLWithPath:sharedAudioFilePathString];
+//
+//    audioFilePath=[NSString stringWithFormat:@"%@",newAssetUrl.path] ;
+//
+//    NSString* audioFilePathForDestination= [newAssetUrl.path stringByDeletingPathExtension];
+//
+//    audioFilePathForDestination=[NSString stringWithFormat:@"%@copied.caf",audioFilePathForDestination];
+//
+//    destinationFilePath= [NSString stringWithFormat:@"%@",audioFilePathForDestination];
+//
+//    destinationURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)destinationFilePath, kCFURLPOSIXPathStyle, false);
+//
+//    sourceURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)audioFilePath, kCFURLPOSIXPathStyle, false);
+//
+//    outputFormat = kAudioFormatMPEG4AAC;
+//
+//    sampleRate = 16000.0;
+//
+//    NSLog(@"%@",[sharedDefaults objectForKey:@"output1"]);
+//
+//    OSStatus error = DoConvertFile(sourceURL, destinationURL, outputFormat, sampleRate);
+//
+//    NSError* error1;
+//
+//    if (error)
+//    {
+//
+//        NSLog(@"%d", (int)error);
+//        //return false;
+//    }
+//
+//    else
+//    {
+//        NSLog(@"Converted");
+//
+//        NSError* error;
+//
+//        NSString* folderPath=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:AUDIO_FILES_FOLDER_NAME]];
+//
+//        if (![[NSFileManager defaultManager] fileExistsAtPath:folderPath])
+//
+//            [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+//
+//        NSString* originalFileNameString=[sharedAudioFilePathString lastPathComponent];//store on same name as shared file name
+//
+//
+//        NSString* homeDirectoryFileName=[sharedAudioFilePathString lastPathComponent];//store on same name as shared file name
+//
+//        homeDirectoryFileName=[homeDirectoryFileName stringByDeletingPathExtension];
+//
+//        if ([[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.caf",AUDIO_FILES_FOLDER_NAME,homeDirectoryFileName]]])
+//        {
+//            [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.caf",AUDIO_FILES_FOLDER_NAME,homeDirectoryFileName]] error:nil];
+//        }
+//
+//        [[NSFileManager defaultManager] copyItemAtPath:destinationFilePath toPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.caf",AUDIO_FILES_FOLDER_NAME,homeDirectoryFileName]] error:&error1];
+//
+//        if ([[NSFileManager defaultManager] fileExistsAtPath:destinationFilePath])
+//        {
+//            [[NSFileManager defaultManager] removeItemAtPath:destinationFilePath error:&error];//remove temporary file which was used to store compression result
+//        }
+//        if ([[NSFileManager defaultManager] fileExistsAtPath:audioFilePath])
+//        {
+//            [[NSFileManager defaultManager] removeItemAtPath:audioFilePath error:&error];//remove file stored at shared storage(i.e. in path extension)
+//        }
+//
+//        NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:SHARED_GROUP_IDENTIFIER];
+//
+//        NSDictionary* copyDict=[sharedDefaults objectForKey:@"updatedFileDict"];
+//
+//        NSMutableDictionary* updatedFileDict=[copyDict mutableCopy];
+//
+//        [updatedFileDict setObject:@"NO" forKey:originalFileNameString];
+//
+//        [sharedDefaults setObject:updatedFileDict forKey:@"updatedFileDict"];
+//
+//        [sharedDefaults synchronize];
+//
+//        //return true;
+//    }
+//
+//
+//
+//}
 
 
 -(void)prepareAudioPlayer:(NSString*)filePath
@@ -874,16 +874,16 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 -(void)saveAudioRecordToDatabaseFileName:(NSString*) fileNAme
 {
     NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:SHARED_GROUP_IDENTIFIER];
-    
-    NSMutableArray* sharedAudioNamesArray=[NSMutableArray new];
-    
-    NSMutableDictionary* sharedAudioNamesAndDateDict=[NSMutableDictionary new];
-    
-    sharedAudioNamesArray=[sharedDefaults objectForKey:@"audioNamesArray"];
-    
-    sharedAudioNamesAndDateDict=[sharedDefaults objectForKey:@"audioNamesAndDateDict"];
-    
-    NSLog(@"%ld",sharedAudioNamesAndDateDict.count);
+//
+//    NSMutableArray* sharedAudioNamesArray=[NSMutableArray new];
+//
+//    NSMutableDictionary* sharedAudioNamesAndDateDict=[NSMutableDictionary new];
+//
+//    sharedAudioNamesArray=[sharedDefaults objectForKey:@"audioNamesArray"];
+//
+//    sharedAudioNamesAndDateDict=[sharedDefaults objectForKey:@"audioNamesAndDateDict"];
+//
+//    NSLog(@"%ld",sharedAudioNamesAndDateDict.count);
     
     
     NSString* originalFileName=fileNAme;
@@ -905,7 +905,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     NSString* updatedDate = [dateAndFileNAmeDict objectForKey:originalFileName];
     
-    NSString* recordCreatedDateString=updatedDate;//recording createdDate
+    NSString* recordCreatedDateString = updatedDate;//recording createdDate
     
     NSString* recordingDate=@"";//recording updated date
     

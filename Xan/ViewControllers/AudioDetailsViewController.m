@@ -1015,12 +1015,6 @@
                     
                   
                     [self updateTempUrgentAndUIAfterUpload];
-                    
-                    if ([AppPreferences sharedAppPreferences].isReachable)
-                    {
-                        [AppPreferences sharedAppPreferences].fileUploading=YES;
-                    }
-                   
                    
                     
                     if ([transferStatus isEqualToString:@"Transfer Failed"])

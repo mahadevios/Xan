@@ -418,7 +418,7 @@
     
     for (NSDictionary* responseDict in responseArray)
     {
-        
+
         NSString* templateCode = [responseDict valueForKey:@"templateCode"];
         
         NSString* templateName = [responseDict valueForKey:@"templateName"];
@@ -914,7 +914,7 @@
 //    }
     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
     {
-        UISplitViewController* splitVC = [UISplitViewController new];
+        CustomSplitViewController* splitVC = [CustomSplitViewController new];
         
         UINavigationController* navVC = [[UINavigationController alloc] initWithRootViewController:vc];;
         //

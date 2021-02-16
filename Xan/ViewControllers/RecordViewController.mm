@@ -2324,16 +2324,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 -(void)updateTimer
 {
     //for dictation waiting by
-    if (recorder.isRecording)
-    {
-        //NSLog(@"recording");
-
-    }
-    else
-    {
-        //NSLog(@"Not recording");
-
-    }
+   
     ++dictationTimerSeconds;
     //++totalSecondsOfAudio;
     
@@ -2374,10 +2365,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             
             [self composeAudio];
         }
-     //   [UIApplication sharedApplication].idleTimerDisabled = NO;
+  
 
     }
-//    [UIApplication sharedApplication].idleTimerDisabled = YES;
+
     if(![self.view viewWithTag:701].hidden && recorder.isRecording)
     {
     [[self.view viewWithTag:701] setHidden:YES];
@@ -2475,7 +2466,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     currentDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];//for slider label time label
 
     if (minutes>99)//foe more than 99 min show time in 3 digits
-    {
+    { 
         currentDuration.text=[NSString stringWithFormat:@"%03d:%02d",minutes,seconds];//for slider label time label
 
     }
@@ -4331,11 +4322,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 {
     CMTime totalTime;
     
-    int64_t seconds = floor(totalMilliSeconds);
+    int64_t seconds = floor(totalMilliSeconds);//13, 13.34
     
-    CMTime timeInSeconds =   CMTimeMake(seconds, 1);
+    CMTime timeInSeconds =   CMTimeMake(seconds, 1);// get the seconds : 13
     
-    float_t milliSeconds = fmod(totalMilliSeconds, floor(totalMilliSeconds));
+    float_t milliSeconds = fmod(totalMilliSeconds, floor(totalMilliSeconds));// get the milliseconds : .34
     
     int64_t value = 0;
     

@@ -1,0 +1,30 @@
+-x
+objective-c
+-target
+x86_64-apple-ios9.2-simulator
+-std=gnu99
+-fobjc-arc
+-fmodules
+-gmodules
+-fmodules-cache-path=/Users/admin/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
+-fpascal-strings
+-O0
+-fno-common
+-DOBJC_OLD_DISPATCH_PROTOTYPES=0
+-isysroot
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator14.0.sdk
+-fasm-blocks
+-g
+-fobjc-abi-version=2
+-fobjc-legacy-dispatch
+-iquote
+-iquote
+-I/Users/Shared/Relocated Items/Security/Work/Xan/Build/Products/Debug-iphonesimulator/include
+-I/Developer/Extras/CoreAudio/PublicUtility
+-I/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator14.0.sdk/usr/include/libxml2
+-I/Users/Shared/Relocated Items/Security/Work/Xan/Build/Intermediates/Xan.build/Debug-iphonesimulator/Xan.build/DerivedSources-normal/x86_64
+-F/Users/Shared/Relocated Items/Security/Work/Xan/Build/Products/Debug-iphonesimulator
+x86_64-apple-darwin19.6.0
+"Apple LLVM 12.0.0 (clang-1200.0.32.2)"
+SDK_PRODUCT_BUILD_VERSION=18A390
+18A390

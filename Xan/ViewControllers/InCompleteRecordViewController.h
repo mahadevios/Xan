@@ -71,13 +71,12 @@
     
     //for audio compression
     
-    NSString *destinationFilePath;
+    NSString *destinationFileExtension;
     CFURLRef sourceURL;
     CFURLRef destinationURL;
     OSType   outputFormat;
     Float64  sampleRate;
     UIBackgroundTaskIdentifier task;
-    NSString* bsackUpAudioFileName;
     bool composed;
     bool isRecording;
     UIView* circleView;

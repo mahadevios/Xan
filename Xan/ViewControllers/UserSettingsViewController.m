@@ -52,18 +52,7 @@
     self.navigationItem.title=@"User Settings";
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
     
-   
-    
-//    if (app.isUpdateAvailable) {
-//
-//        [_versionUpdateButton setHidden:NO];
-//    }
-//    else
-//    {
-//         _versionLabelXConstraint.constant = 0;// make it center to view
-//        [self.view addConstraint:_versionLabelXConstraint];
-//         [_versionUpdateButton setHidden:YES];
-//    }
+ 
   
     NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
        
@@ -396,7 +385,7 @@
 -(void)createSwitch:(SwitchCreation*)sender
 {
     BOOL flag=false;
-    for (UIView* subview in sender.cell.subviews)
+    for (UIView* subview in sender.cell.subviews)// to avoid the switch creation multiple times on scroll or on refresh
     {
         if ([subview isKindOfClass:[UISwitch class]])
         {

@@ -1,0 +1,26 @@
+-x
+c
+-target
+x86_64-apple-ios9.2-simulator
+-std=gnu99
+-fmodules
+-gmodules
+-fmodules-cache-path=/Users/admin/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
+-fpascal-strings
+-O0
+-fno-common
+-isysroot
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator13.2.sdk
+-fasm-blocks
+-g
+-iquote
+-iquote
+-I/Work/Xan/Build/Products/Debug-iphonesimulator/include
+-I/Developer/Extras/CoreAudio/PublicUtility
+-I/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator13.2.sdk/usr/include/libxml2
+-I/Work/Xan/Build/Intermediates/Xan.build/Debug-iphonesimulator/Xan.build/DerivedSources-normal/x86_64
+-F/Work/Xan/Build/Products/Debug-iphonesimulator
+x86_64-apple-darwin18.5.0
+"4.2.1 Compatible Apple LLVM 11.0.0 (clang-1100.0.33.16)"
+SDK_PRODUCT_BUILD_VERSION=17B102
+17B102

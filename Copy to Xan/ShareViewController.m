@@ -590,7 +590,7 @@ SLComposeSheetConfigurationItem *item;
     NSString* sharedAudioFolderPathString=[sharedDefaults objectForKey:@"audioFolderPath"];
     
     NSMutableArray* sharedAudioNamesArray=[NSMutableArray new];
-    
+
     sharedAudioNamesArray=[sharedDefaults objectForKey:@"audioNamesArray"];
     
     

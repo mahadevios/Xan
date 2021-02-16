@@ -131,18 +131,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         timerSeconds = audioHourByMod % 60;
         
-        
-        
-//        NSArray* audioMinutesAndSecondsArray= [self.audioDuration componentsSeparatedByString:@":"];
-//        
-//        timerHour= [[audioMinutesAndSecondsArray objectAtIndex:0]intValue];
-//        
-//        timerMinutes=[[audioMinutesAndSecondsArray objectAtIndex:1]intValue];
-//        
-//        timerSeconds=[[audioMinutesAndSecondsArray objectAtIndex:2]intValue];
-        
-        //timerHour = audioHour;
-        
         audioDurationLAbel.text=[NSString stringWithFormat:@"%02d:%02d:%02d",timerHour,timerMinutes,timerSeconds];
     
         UIView* startRecordingView1= [self.view viewWithTag:203];
@@ -341,12 +329,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     {
         [APIManager sharedManager].userSettingsOpened=NO;
     }
-//
-    if (![APIManager sharedManager].userSettingsOpened)
-    {
 
-    }
-    
 }
 
 
@@ -389,7 +372,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             [appl endBackgroundTask:task];
             task = UIBackgroundTaskInvalid;
         }];
-        
+
 //        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
             [self performSelectorOnMainThread:@selector(showHud) withObject:nil waitUntilDone:NO];
@@ -604,7 +587,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 -(void)disMis
 {
-    [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismis"];
     
     [self dismissViewControllerAnimated:YES completion:nil];
     
@@ -1305,7 +1287,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         playerDurationWithMilliSeconds = player.duration- 0.03;// to adjust accuracy and file compose failure;
 
         [self setCompressAudio];
-//        [self performSelector:@selector(setCompressAudio) withObject:nil afterDelay:0.0];
 
     }
     
@@ -1380,7 +1361,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [[Database shareddatabase] getlistOfimportedFilesAudioDetailsArray:5];//get count of imported non transferred files
     
-    int importedFileCount=[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray.count;
+    int importedFileCount = [AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray.count;
     
     [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%d",count+importedFileCount] forKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
     
@@ -1783,48 +1764,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 }
 
-//-(void)commentButtonClicked:(UIButton*)sender
-//{
-//   // use UIAlertController
-//   UIAlertController *alert= [UIAlertController
-//                                 alertControllerWithTitle:@"Add Comment"
-//                                 message:nil
-//                                 preferredStyle:UIAlertControllerStyleAlert];
-//
-//   UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-//                                              handler:^(UIAlertAction * action){
-//                                                  //Do Some action here
-//                                                  UITextField *textField = alert.textFields[0];
-//
-//                                                  commentLabel.text = textField.text;
-//
-//                                              }];
-//   UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
-//                                                  handler:^(UIAlertAction * action) {
-//
-//
-//                                                      [alert dismissViewControllerAnimated:YES completion:nil];
-//
-//                                                  }];
-//
-//   [alert addAction:ok];
-//   [alert addAction:cancel];
-//
-//   [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-//
-//       if (commentLabel.text == nil || [commentLabel.text isEqualToString:@""] || [commentLabel.text isEqualToString:@"Add Comment"]) {
-//           textField.placeholder = @"Enter your comment here";
-//       }
-//       else
-//       {
-//           textField.text =  commentLabel.text;
-//       }
-//
-//       textField.keyboardType = UIKeyboardTypeDefault;
-//   }];
-//
-//   [self presentViewController:alert animated:YES completion:nil];
-//}
+
 
 #pragma mark:AudioSlider actions
 
@@ -2243,33 +2183,13 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     if(![[NSFileManager defaultManager] fileExistsAtPath:source]){
         source=[filePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.wav",existingAudioFileName]];
     }
-    NSArray  *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    
-    NSString *documentsDirectory = [paths objectAtIndex:0];
     
     if ([[source pathExtension] isEqualToString:@"caf"]) {
-        destinationFilePath= [[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:AUDIO_FILES_FOLDER_NAME]] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@compressed.caf",existingAudioFileName]];
+        destinationFileExtension = @"caf";
     }else{
-        destinationFilePath= [[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:AUDIO_FILES_FOLDER_NAME]] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@compressed.wav",existingAudioFileName]];
+        destinationFileExtension= @"wav";
     }
     
-    
-    destinationURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)destinationFilePath, kCFURLPOSIXPathStyle, false);
-    
-    sourceURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)source, kCFURLPOSIXPathStyle, false);
-    
-    NSError* erro;
-    
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAudioProcessing error:&erro];
-    
-    if (erro)
-    {
-        printf("Setting the AVAudioSessionCategoryAudioProcessing Category failed! %ld\n", (long)erro.code);
-        
-        [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
-
-        return;
-    }
     
     [self convertAudio];
     
@@ -2283,7 +2203,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
       NSString* fileToRemovePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.caf",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] ;
     
-    if ([[destinationFilePath pathExtension] isEqualToString:@"wav"]) {
+    if ([destinationFileExtension isEqualToString:@"wav"]) {
         
         fileToRemovePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]];
     }
@@ -2326,8 +2246,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 -(void)composeAudio
 {
-    
-    bsackUpAudioFileName = existingAudioFileName;
     
     AVMutableComposition* composition = [AVMutableComposition composition];
     
@@ -2600,14 +2518,15 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
        [[NSFileManager defaultManager] removeItemAtPath:outputUrlPath error:&error];
     }
     
+       exportSession.outputURL = [NSURL fileURLWithPath:outputUrlPath];//composed audio url,later on this will be deleted
     
     if ([[[existingFileUrl path] pathExtension] isEqualToString:@"caf"]) {
-           exportSession.outputURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.caf",AUDIO_FILES_FOLDER_NAME,existingAudioFileName]]];//composed audio url,later on this will be deleted
+        
            exportSession.outputFileType = AVFileTypeAppleM4A;
 
        }
        else{
-           exportSession.outputURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,existingAudioFileName]]];//composed audio url,later on this will be deleted
+          
            exportSession.outputFileType = AVFileTypeWAVE;
 
        }
@@ -2673,9 +2592,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                          [self setCompressAudio];
                                          
                                          playerDurationWithMilliSeconds = player.duration - 0.03;// to adjust accuracy and file compose failure;
-                                         
-//                                         NSLog(@"duration = %f", player.duration);
-                                         
+                                                                                  
                                           [db updateAudioFileName:existingAudioFileName duration:player.duration];
                                          
                                          if ([[NSUserDefaults standardUserDefaults] boolForKey:BACK_TO_HOME_AFTER_DICTATION])
@@ -2936,7 +2853,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     if ([existingAudioDepartment.Id isEqualToString:deptObj.Id])
     {
-        isDepartmentRadioButtonSelcted = YES;
+        isDepartmentRadioButtonSelcted = YES; // if radio button is selected
         
         [radioButton setBackgroundImage:[UIImage imageNamed:@"RadioButton"] forState:UIControlStateNormal];
         
@@ -2966,7 +2883,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                      return;
        }
     
-    isDeptRowSelcted = YES;
+    isDeptRowSelcted = YES; //isActiveDepartmentSelected: to check if user have selected dept other than inactive dept, if this is true hence user have selected dept other than inactive and
     
     UIButton* radioButton=[cell viewWithTag:100];
         
@@ -3064,7 +2981,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 else
 {
-    if (!isDeptRowSelcted) {
+    if (!isDeptRowSelcted) {// Dept1 (inactive) and is already selected but when you try to save it again it should raise a popup
         NSString* departmentId = [[Database shareddatabase] getDepartMentIdForFileName:self.existingAudioFileName];
         
 //         NSString* departmentName = [[Database shareddatabase] getDepartMentNameFromDepartmentId:departmentId];
@@ -3111,11 +3028,11 @@ else
     
     if (self.isOpenedFromAudioDetails)
     {
-        NSDictionary* audiorecordDict = [app.awaitingFileTransferNamesArray objectAtIndex:self.selectedRowOfAwaitingList];
-        
-        [audiorecordDict setValue:deptObj forKey:@"Department"];
-        
-        [app.awaitingFileTransferNamesArray replaceObjectAtIndex:self.selectedRowOfAwaitingList withObject:audiorecordDict];
+//        NSDictionary* audiorecordDict = [app.awaitingFileTransferNamesArray objectAtIndex:self.selectedRowOfAwaitingList];
+//
+//        [audiorecordDict setValue:deptObj forKey:@"Department"];
+//
+//        [app.awaitingFileTransferNamesArray replaceObjectAtIndex:self.selectedRowOfAwaitingList withObject:audiorecordDict];
         
         NSDictionary* delegateDict = [[NSDictionary alloc] initWithObjectsAndKeys:deptObj.departmentName,@"DepartmentName", nil];
         
@@ -3208,7 +3125,7 @@ else
                                                               
                                                               [[self.view viewWithTag:702] setHidden:YES];
                                                               
-                                                              [[self.view viewWithTag:703] setHidden:YES];//edit button and image
+                                                              [[self.view viewWithTag:703] setHidden:YES];//delete button and image
                                                               
                                                               [[self.view viewWithTag:704] setHidden:YES];
                                                               [self startNewRecordingForEdit];
