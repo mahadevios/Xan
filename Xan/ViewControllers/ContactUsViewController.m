@@ -22,9 +22,9 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     
-      NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:@"https://xanadutec.com.au/ace-dictate-product.html"];
+      NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:@"https://xanadutec.com.au/ace-dictate/"];
       
-      [str addAttribute: NSLinkAttributeName value: @"https://xanadutec.com.au/ace-dictate-product.html" range: NSMakeRange(0, 49)];
+      [str addAttribute: NSLinkAttributeName value: @"https://xanadutec.com.au/ace-dictate/" range: NSMakeRange(0, 37)];
       
       self.productsLinkTextVIew.scrollEnabled = NO;
       self.productsLinkTextVIew.editable = NO;
@@ -33,6 +33,15 @@
       self.productsLinkTextVIew.delegate = self;
       self.productsLinkTextVIew.attributedText = str;
       self.productsLinkTextVIew.font = [UIFont systemFontOfSize:15];
+    
+  
+          if (UIScreen.mainScreen.traitCollection.userInterfaceStyle==UIUserInterfaceStyleDark){
+              self.productsLinkTextVIew.backgroundColor = [UIColor whiteColor];
+              self.productsLinkTextVIew.linkTextAttributes = @{
+                  NSForegroundColorAttributeName: [UIColor blackColor]
+              };
+          }
+    
 }
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)url inRange:(NSRange)characterRange
 {
